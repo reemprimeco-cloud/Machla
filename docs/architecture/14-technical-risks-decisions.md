@@ -117,6 +117,25 @@ timeline, potentially involving native-speaker review for language
 quality (especially Telugu, Sinhala, Nepali, where automated translation
 quality is more likely to need a human check).
 
+**Phase 5 status — partly mitigated, partly still open.**
+
+*Mitigated:* the type/brand split
+(`11-product-catalog-architecture.md` §7.2) cut the translation surface
+from ~295 records to 168. Names live on the *type*, so a new brand or size
+adds a row with **zero** new translation work, and the nine names stay
+consistent across every variant of a type by construction. This bounds the
+growth of the problem, which was the sharper half of the risk.
+
+*Still open:* the 168 × 9 translations shipped **without native-speaker
+review**, and the product list itself was authored from general knowledge
+rather than verified against real Kuwaiti shelves (recorded in the
+`_provenance` block of `products.json`, and in §7.1). Telugu, Sinhala and
+Nepali remain the most likely to need correction, exactly as flagged here
+at Phase 0. This is a content task, not an engineering one: both a
+translation fix and a product-list fix are edits to
+`catalog-import/data/*.json` followed by a re-run of the importer — no UI
+change, no redeploy, no schema change.
+
 ## 14. Risk (not a decision): RTL + 9-language UI testing surface
 
 Phase 2/9/10 testing surface is large (9 languages × RTL for 2 of them ×

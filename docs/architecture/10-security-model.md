@@ -154,6 +154,31 @@ design in §1. The linter cannot see the internal check.
 Every function also pins `search_path` at definition time, so a caller
 cannot influence name resolution inside a `SECURITY DEFINER` body.
 
+Phase 5 adds two more, on the same footing:
+
+| Function | anon | authenticated |
+|---|:---:|:---:|
+| `search_products` | ✗ | ✓ (`SECURITY INVOKER` — the catalogue's RLS is `using (true)`, so definer rights would unlock nothing) |
+| `products_refresh_search_text` | ✗ | ✗ (trigger context only) |
+
+## 5C. Extensions belong outside `public`
+
+A Postgres extension installed into `public` puts every function it ships
+into the schema PostgREST exposes, and extension functions carry EXECUTE
+for `PUBLIC` — so they become callable over `/rest/v1/rpc/<name>` by
+anyone holding the anon key. That is the same shape of hole as §5B, just
+arriving through a different door, and the privilege assertions in
+`02_function_grants_test.sql` deliberately *exclude* extension members, so
+they will not catch it.
+
+Phase 5 therefore installs `pg_trgm` into `extensions`, not `public`, and
+`03_phase5_catalog_test.sql` asserts that placement directly. Any function
+that needs a relocated extension's operators must include `extensions` in
+its pinned `search_path` (`search_products` does).
+
+The rule for future phases: **no extension is created in `public`.**
+Supabase's linter reports this as `extension_in_public`.
+
 ## 6. Secrets
 
 - The Supabase **service role** key is used only by the offline catalog

@@ -1,0 +1,255 @@
+{
+  "_comment": [
+    "The 15 V1 categories (master plan Section 7), ordered by the canonical",
+    "display order in Section 16A — which is the order the household side",
+    "groups a shopping list by. sort_order is what makes that grouping",
+    "deterministic (docs/architecture/13-shopping-list-grouping-checklist.md).",
+    "",
+    "Changing sort_order here changes the grouping order everywhere, with no",
+    "code change. Changing a `key` is a breaking change: product rows and",
+    "shopping_list_items reference categories by id, resolved from key at",
+    "import time."
+  ],
+  "categories": [
+    {
+      "key": "fruits_vegetables",
+      "icon": "🥬",
+      "sort_order": 1,
+      "names": {
+        "en": "Fruits & Vegetables",
+        "ar": "الخضار والفواكه",
+        "hi": "फल और सब्ज़ियाँ",
+        "te": "పండ్లు మరియు కూరగాయలు",
+        "ur": "پھل اور سبزیاں",
+        "fil": "Prutas at Gulay",
+        "ne": "फलफूल र तरकारी",
+        "id": "Buah & Sayur",
+        "si": "පලතුරු සහ එළවළු"
+      }
+    },
+    {
+      "key": "dairy_eggs",
+      "icon": "🥛",
+      "sort_order": 2,
+      "names": {
+        "en": "Dairy & Eggs",
+        "ar": "الألبان والبيض",
+        "hi": "डेयरी और अंडे",
+        "te": "పాల ఉత్పత్తులు మరియు గుడ్లు",
+        "ur": "ڈیری اور انڈے",
+        "fil": "Gatas at Itlog",
+        "ne": "दुग्धजन्य र अण्डा",
+        "id": "Susu & Telur",
+        "si": "කිරි නිෂ්පාදන සහ බිත්තර"
+      }
+    },
+    {
+      "key": "meat_chicken_fish",
+      "icon": "🍗",
+      "sort_order": 3,
+      "names": {
+        "en": "Meat, Chicken & Fish",
+        "ar": "اللحوم والدجاج والسمك",
+        "hi": "मांस, चिकन और मछली",
+        "te": "మాంసం, చికెన్ మరియు చేపలు",
+        "ur": "گوشت، چکن اور مچھلی",
+        "fil": "Karne, Manok at Isda",
+        "ne": "मासु, कुखुरा र माछा",
+        "id": "Daging, Ayam & Ikan",
+        "si": "මස්, කුකුල් මස් සහ මාළු"
+      }
+    },
+    {
+      "key": "bakery",
+      "icon": "🍞",
+      "sort_order": 4,
+      "names": {
+        "en": "Bakery",
+        "ar": "المخبوزات",
+        "hi": "बेकरी",
+        "te": "బేకరీ",
+        "ur": "بیکری",
+        "fil": "Tinapay",
+        "ne": "बेकरी",
+        "id": "Roti & Kue",
+        "si": "බේකරි"
+      }
+    },
+    {
+      "key": "rice_pasta_grains",
+      "icon": "🍚",
+      "sort_order": 5,
+      "names": {
+        "en": "Rice, Pasta & Grains",
+        "ar": "الأرز والمعكرونة والحبوب",
+        "hi": "चावल, पास्ता और अनाज",
+        "te": "బియ్యం, పాస్తా మరియు ధాన్యాలు",
+        "ur": "چاول، پاستا اور اناج",
+        "fil": "Bigas, Pasta at Butil",
+        "ne": "चामल, पास्ता र अन्न",
+        "id": "Beras, Pasta & Biji-bijian",
+        "si": "සහල්, පැස්ටා සහ ධාන්‍ය"
+      }
+    },
+    {
+      "key": "cooking_pantry",
+      "icon": "🫒",
+      "sort_order": 6,
+      "names": {
+        "en": "Cooking & Pantry",
+        "ar": "مواد الطبخ",
+        "hi": "खाना पकाने का सामान",
+        "te": "వంట సామాగ్రి",
+        "ur": "کھانا پکانے کا سامان",
+        "fil": "Panluto at Pantry",
+        "ne": "पकाउने सामग्री",
+        "id": "Bumbu & Bahan Masak",
+        "si": "ආහාර පිසීමේ ද්‍රව්‍ය"
+      }
+    },
+    {
+      "key": "canned_sauces",
+      "icon": "🥫",
+      "sort_order": 7,
+      "names": {
+        "en": "Canned & Sauces",
+        "ar": "المعلبات والصلصات",
+        "hi": "डिब्बाबंद और सॉस",
+        "te": "డబ్బా ఆహారం మరియు సాస్‌లు",
+        "ur": "ڈبہ بند اور ساس",
+        "fil": "De-lata at Sarsa",
+        "ne": "क्यानबन्द र सस",
+        "id": "Kalengan & Saus",
+        "si": "ටින් කළ ආහාර සහ සෝස්"
+      }
+    },
+    {
+      "key": "frozen",
+      "icon": "❄️",
+      "sort_order": 8,
+      "names": {
+        "en": "Frozen",
+        "ar": "المجمدات",
+        "hi": "फ्रोज़न",
+        "te": "ఫ్రోజెన్ ఆహారం",
+        "ur": "منجمد اشیاء",
+        "fil": "Frozen",
+        "ne": "फ्रोजन",
+        "id": "Makanan Beku",
+        "si": "ශීතකළ ආහාර"
+      }
+    },
+    {
+      "key": "drinks",
+      "icon": "🧃",
+      "sort_order": 9,
+      "names": {
+        "en": "Drinks",
+        "ar": "المشروبات",
+        "hi": "पेय",
+        "te": "పానీయాలు",
+        "ur": "مشروبات",
+        "fil": "Inumin",
+        "ne": "पेय पदार्थ",
+        "id": "Minuman",
+        "si": "පාන වර්ග"
+      }
+    },
+    {
+      "key": "snacks_sweets",
+      "icon": "🍫",
+      "sort_order": 10,
+      "names": {
+        "en": "Snacks & Sweets",
+        "ar": "الوجبات الخفيفة والحلويات",
+        "hi": "स्नैक्स और मिठाई",
+        "te": "స్నాక్స్ మరియు స్వీట్లు",
+        "ur": "اسنیکس اور مٹھائیاں",
+        "fil": "Meryenda at Matamis",
+        "ne": "खाजा र मिठाई",
+        "id": "Camilan & Manisan",
+        "si": "කෙටි ආහාර සහ රසකැවිලි"
+      }
+    },
+    {
+      "key": "cleaning",
+      "icon": "🧼",
+      "sort_order": 11,
+      "names": {
+        "en": "Cleaning",
+        "ar": "التنظيف",
+        "hi": "सफ़ाई",
+        "te": "శుభ్రపరిచే వస్తువులు",
+        "ur": "صفائی",
+        "fil": "Panlinis",
+        "ne": "सरसफाइ",
+        "id": "Pembersih",
+        "si": "පිරිසිදු කිරීම"
+      }
+    },
+    {
+      "key": "personal_care",
+      "icon": "🧴",
+      "sort_order": 12,
+      "names": {
+        "en": "Personal Care",
+        "ar": "العناية الشخصية",
+        "hi": "व्यक्तिगत देखभाल",
+        "te": "వ్యక్తిగత సంరక్షణ",
+        "ur": "ذاتی نگہداشت",
+        "fil": "Personal na Pangangalaga",
+        "ne": "व्यक्तिगत हेरचाह",
+        "id": "Perawatan Pribadi",
+        "si": "පුද්ගලික සත්කාරය"
+      }
+    },
+    {
+      "key": "household",
+      "icon": "🏠",
+      "sort_order": 13,
+      "names": {
+        "en": "Household",
+        "ar": "مستلزمات المنزل",
+        "hi": "घरेलू सामान",
+        "te": "గృహ వస్తువులు",
+        "ur": "گھریلو سامان",
+        "fil": "Gamit sa Bahay",
+        "ne": "घरायसी सामान",
+        "id": "Keperluan Rumah",
+        "si": "ගෘහ භාණ්ඩ"
+      }
+    },
+    {
+      "key": "baby_care",
+      "icon": "🍼",
+      "sort_order": 14,
+      "names": {
+        "en": "Baby Care",
+        "ar": "العناية بالطفل",
+        "hi": "शिशु देखभाल",
+        "te": "శిశు సంరక్షణ",
+        "ur": "بچوں کی نگہداشت",
+        "fil": "Pangangalaga sa Sanggol",
+        "ne": "शिशु हेरचाह",
+        "id": "Perawatan Bayi",
+        "si": "ළදරු සත්කාරය"
+      }
+    },
+    {
+      "key": "other",
+      "icon": "📦",
+      "sort_order": 15,
+      "names": {
+        "en": "Other",
+        "ar": "أخرى",
+        "hi": "अन्य",
+        "te": "ఇతరాలు",
+        "ur": "دیگر",
+        "fil": "Iba pa",
+        "ne": "अन्य",
+        "id": "Lainnya",
+        "si": "වෙනත්"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "homelist-catalog-import",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline catalogue import pipeline. Deliberately separate from apps/web: refreshing the catalogue must never require a UI change or a redeploy, and this is the only code that touches the Supabase service role key.",
+  "scripts": {
+    "validate": "node scripts/build-catalog.mjs --validate",
+    "build": "node scripts/build-catalog.mjs --out build/catalog.json",
+    "import": "node scripts/import.mjs",
+    "import:dry": "node scripts/import.mjs --dry-run"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.2"
+  }
+}

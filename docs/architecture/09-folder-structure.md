@@ -96,7 +96,15 @@ acceptable before Phase 1.
   see `supabase/tests/README.md`. It is the primary verification for
   anything authorization-shaped, because that logic lives in Postgres
   rather than in `apps/web`.
-- `catalog-import/` does not exist yet (Phase 5).
+- `catalog-import/` (Phase 5) holds the offline catalogue pipeline:
+  `data/` (categories, product types, products — the curated source of
+  truth), and `scripts/` (`build-catalog.mjs` validates and assembles,
+  `import.mjs` upserts into Supabase). It is deliberately **not** part of
+  `apps/web`: refreshing the catalogue must never require a UI change or a
+  redeploy, and this is the only code that touches the service role key.
+  `build-catalog.mjs` has no dependencies at all, so validation and
+  `--dry-run` work in a clean checkout — see
+  `11-product-catalog-architecture.md` §7.
 
 `apps/web` is used (rather than a bare repo-root Next.js app) even in V1
 so that `/apps/worker-app` and `/apps/household-app` can be added
