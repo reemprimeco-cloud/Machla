@@ -6,6 +6,25 @@
     "loading": "लोड हो रहा है…",
     "welcome": "स्वागत है",
     "comingSoon": "जल्द आ रहा है",
-    "changeLanguage": "भाषा बदलें"
+    "changeLanguage": "भाषा बदलें",
+    "logout": "लॉग आउट करें"
+  },
+  "auth": {
+    "phoneTitle": "आपका फ़ोन नंबर क्या है?",
+    "phoneHint": "साइन इन करने के लिए हम आपको एक कोड भेजेंगे।",
+    "phoneLabel": "फ़ोन नंबर",
+    "sendCode": "कोड भेजें",
+    "sending": "भेजा जा रहा है…",
+    "codeTitle": "कोड दर्ज करें",
+    "codeSentTo": "हमने {phone} पर एक कोड भेजा है",
+    "codeLabel": "6 अंकों का कोड",
+    "verify": "सत्यापित करें",
+    "verifying": "सत्यापित हो रहा है…",
+    "resendCode": "कोड फिर से भेजें",
+    "changeNumber": "नंबर बदलें",
+    "invalidPhone": "एक मान्य फ़ोन नंबर दर्ज करें।",
+    "invalidCode": "यह कोड सही नहीं है। फिर कोशिश करें।",
+    "genericError": "कुछ गलत हो गया। कृपया फिर कोशिश करें।",
+    "codeResent": "कोड फिर से भेजा गया।"
   }
 }

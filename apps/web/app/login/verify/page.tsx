@@ -1,0 +1,176 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+
+import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { createClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
+
+/**
+ * OTP entry (docs/architecture/06-auth-otp-flow.md §3). Supabase Auth
+ * owns OTP generation/expiry/verification entirely — this page never
+ * stores or re-derives the code itself (master plan rule 29.13).
+ */
+function VerifyForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { t } = useLocale();
+  const phone = searchParams.get("phone") ?? "";
+
+  const [code, setCode] = useState("");
+  const [status, setStatus] = useState<"idle" | "verifying" | "resending" | "error">("idle");
+  const [error, setError] = useState<string | null>(null);
+  const [resent, setResent] = useState(false);
+
+  useEffect(() => {
+    if (!phone) router.replace("/login");
+  }, [phone, router]);
+
+  if (!phone) return null;
+
+  async function handleVerify(event: React.FormEvent) {
+    event.preventDefault();
+    setStatus("verifying");
+    setError(null);
+    setResent(false);
+
+    if (!isSupabaseConfigured()) {
+      setStatus("error");
+      setError(t("auth.genericError"));
+      return;
+    }
+
+    const supabase = createClient();
+    const { error: verifyError } = await supabase.auth.verifyOtp({
+      phone,
+      token: code,
+      type: "sms",
+    });
+
+    if (verifyError) {
+      setStatus("error");
+      setError(t("auth.invalidCode"));
+      return;
+    }
+
+    router.push("/");
+    // Forces the server-rendered tree (root layout + "/") to re-run
+    // against the now-authenticated session immediately, instead of
+    // potentially reusing a pre-login render — see app/layout.tsx's
+    // preferred_language reconciliation, which depends on this.
+    router.refresh();
+  }
+
+  async function handleResend() {
+    setStatus("resending");
+    setError(null);
+    setResent(false);
+
+    if (!isSupabaseConfigured()) {
+      setStatus("error");
+      setError(t("auth.genericError"));
+      return;
+    }
+
+    const supabase = createClient();
+    const { error: resendError } = await supabase.auth.signInWithOtp({ phone });
+
+    if (resendError) {
+      setStatus("error");
+      setError(t("auth.genericError"));
+      return;
+    }
+
+    setStatus("idle");
+    setResent(true);
+  }
+
+  return (
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-6 py-16">
+      <HomeListIcon size={56} variant="flat" title="HomeList" />
+
+      <div className="space-y-1 text-center">
+        <h1 className="hl-title text-ink">{t("auth.codeTitle")}</h1>
+        {/* The phone number is wrapped in <bdi dir="ltr"> so its digits
+            stay left-to-right inside RTL sentences (Arabic/Urdu) instead
+            of visually reordering — see docs/design/UI_KIT_NOTES.md
+            "Numbers stay LTR inside RTL". Split the raw (un-interpolated)
+            template on the {phone} placeholder so each language's own
+            word order around the number is preserved. */}
+        <p className="hl-caption">
+          {t("auth.codeSentTo")
+            .split("{phone}")
+            .map((part, index) => (
+              <span key={index}>
+                {index > 0 && <bdi dir="ltr">{phone}</bdi>}
+                {part}
+              </span>
+            ))}
+        </p>
+      </div>
+
+      <form onSubmit={handleVerify} className="flex w-full flex-col gap-4">
+        <label className="flex flex-col gap-2">
+          <span className="hl-label text-ink">{t("auth.codeLabel")}</span>
+          <input
+            type="text"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            dir="ltr"
+            value={code}
+            // No HTML maxLength: it would truncate the raw (pre-strip)
+            // value first, so e.g. pasting "12ab3456" could drop digits
+            // that were "pushed out" by the letters within the raw
+            // 6-char window. Strip non-digits first, then cap at 6.
+            onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
+            className="hl-title min-h-12 rounded-lg border border-sand bg-surface px-4 text-center tracking-[0.3em] text-ink outline-none focus-visible:border-green-700"
+            aria-invalid={status === "error"}
+          />
+        </label>
+
+        {error ? (
+          <p role="alert" className="hl-caption text-danger">
+            {error}
+          </p>
+        ) : null}
+        {resent ? <p className="hl-caption text-success">{t("auth.codeResent")}</p> : null}
+
+        <button
+          type="submit"
+          disabled={status === "verifying" || code.length !== 6}
+          className="hl-label min-h-12 rounded-lg bg-green-700 px-4 text-on-green shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
+        >
+          {status === "verifying" ? t("auth.verifying") : t("auth.verify")}
+        </button>
+
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => router.push("/login")}
+            className="hl-caption text-green-700 underline underline-offset-4"
+          >
+            {t("auth.changeNumber")}
+          </button>
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={status === "resending"}
+            className="hl-caption text-green-700 underline underline-offset-4 disabled:opacity-60"
+          >
+            {t("auth.resendCode")}
+          </button>
+        </div>
+      </form>
+    </main>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyForm />
+    </Suspense>
+  );
+}

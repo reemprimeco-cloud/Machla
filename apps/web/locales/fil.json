@@ -6,6 +6,25 @@
     "loading": "Naglo-load…",
     "welcome": "Maligayang pagdating",
     "comingSoon": "Malapit na",
-    "changeLanguage": "Palitan ang wika"
+    "changeLanguage": "Palitan ang wika",
+    "logout": "Mag-log out"
+  },
+  "auth": {
+    "phoneTitle": "Ano ang iyong numero ng telepono?",
+    "phoneHint": "Magpapadala kami sa iyo ng code para makapag-sign in.",
+    "phoneLabel": "Numero ng telepono",
+    "sendCode": "Ipadala ang code",
+    "sending": "Ipinapadala…",
+    "codeTitle": "Ilagay ang code",
+    "codeSentTo": "Nagpadala kami ng code sa {phone}",
+    "codeLabel": "6-digit na code",
+    "verify": "I-verify",
+    "verifying": "Vine-verify…",
+    "resendCode": "Ipadala ulit ang code",
+    "changeNumber": "Palitan ang numero",
+    "invalidPhone": "Maglagay ng wastong numero ng telepono.",
+    "invalidCode": "Hindi gumana ang code na iyon. Subukan ulit.",
+    "genericError": "May nagkamali. Pakisubukan ulit.",
+    "codeResent": "Naipadala ulit ang code."
   }
 }

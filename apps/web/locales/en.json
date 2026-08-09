@@ -6,6 +6,25 @@
     "loading": "Loading…",
     "welcome": "Welcome",
     "comingSoon": "Coming soon",
-    "changeLanguage": "Change language"
+    "changeLanguage": "Change language",
+    "logout": "Log out"
+  },
+  "auth": {
+    "phoneTitle": "What's your phone number?",
+    "phoneHint": "We'll text you a code to sign in.",
+    "phoneLabel": "Phone number",
+    "sendCode": "Send code",
+    "sending": "Sending…",
+    "codeTitle": "Enter the code",
+    "codeSentTo": "We sent a code to {phone}",
+    "codeLabel": "6-digit code",
+    "verify": "Verify",
+    "verifying": "Verifying…",
+    "resendCode": "Resend code",
+    "changeNumber": "Change number",
+    "invalidPhone": "Enter a valid phone number.",
+    "invalidCode": "That code didn't work. Try again.",
+    "genericError": "Something went wrong. Please try again.",
+    "codeResent": "Code resent."
   }
 }

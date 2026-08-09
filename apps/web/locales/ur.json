@@ -6,6 +6,25 @@
     "loading": "لوڈ ہو رہا ہے…",
     "welcome": "خوش آمدید",
     "comingSoon": "جلد آ رہا ہے",
-    "changeLanguage": "زبان تبدیل کریں"
+    "changeLanguage": "زبان تبدیل کریں",
+    "logout": "لاگ آؤٹ"
+  },
+  "auth": {
+    "phoneTitle": "آپ کا فون نمبر کیا ہے؟",
+    "phoneHint": "سائن ان کرنے کے لیے ہم آپ کو ایک کوڈ بھیجیں گے۔",
+    "phoneLabel": "فون نمبر",
+    "sendCode": "کوڈ بھیجیں",
+    "sending": "بھیجا جا رہا ہے…",
+    "codeTitle": "کوڈ درج کریں",
+    "codeSentTo": "ہم نے {phone} پر ایک کوڈ بھیجا ہے",
+    "codeLabel": "6 ہندسوں کا کوڈ",
+    "verify": "تصدیق کریں",
+    "verifying": "تصدیق ہو رہی ہے…",
+    "resendCode": "کوڈ دوبارہ بھیجیں",
+    "changeNumber": "نمبر تبدیل کریں",
+    "invalidPhone": "ایک درست فون نمبر درج کریں۔",
+    "invalidCode": "یہ کوڈ درست نہیں تھا۔ دوبارہ کوشش کریں۔",
+    "genericError": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
+    "codeResent": "کوڈ دوبارہ بھیج دیا گیا۔"
   }
 }

@@ -35,6 +35,7 @@ export interface Database {
           phone_number: string;
         };
         Update: Partial<Database["public"]["Tables"]["users"]["Row"]>;
+        Relationships: [];
       };
       households: {
         Row: {
@@ -49,6 +50,7 @@ export interface Database {
           owner_user_id: string;
         };
         Update: Partial<Database["public"]["Tables"]["households"]["Row"]>;
+        Relationships: [];
       };
       household_members: {
         Row: {
@@ -68,6 +70,7 @@ export interface Database {
           role: HouseholdRole;
         };
         Update: Partial<Database["public"]["Tables"]["household_members"]["Row"]>;
+        Relationships: [];
       };
       household_invitations: {
         Row: {
@@ -90,6 +93,7 @@ export interface Database {
           created_by_user_id: string;
         };
         Update: Partial<Database["public"]["Tables"]["household_invitations"]["Row"]>;
+        Relationships: [];
       };
       categories: {
         Row: {
@@ -122,6 +126,7 @@ export interface Database {
           name_si: string;
         };
         Update: Partial<Database["public"]["Tables"]["categories"]["Row"]>;
+        Relationships: [];
       };
       products: {
         Row: {
@@ -165,6 +170,7 @@ export interface Database {
           unit: string;
         };
         Update: Partial<Database["public"]["Tables"]["products"]["Row"]>;
+        Relationships: [];
       };
       product_usage_stats: {
         Row: {
@@ -179,6 +185,7 @@ export interface Database {
           product_id: string;
         };
         Update: Partial<Database["public"]["Tables"]["product_usage_stats"]["Row"]>;
+        Relationships: [];
       };
       shopping_lists: {
         Row: {
@@ -199,6 +206,7 @@ export interface Database {
           language: string;
         };
         Update: Partial<Database["public"]["Tables"]["shopping_lists"]["Row"]>;
+        Relationships: [];
       };
       shopping_list_items: {
         Row: {
@@ -224,6 +232,7 @@ export interface Database {
           sort_order: number;
         };
         Update: Partial<Database["public"]["Tables"]["shopping_list_items"]["Row"]>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

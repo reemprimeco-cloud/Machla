@@ -1,14 +1,15 @@
 # HomeList — Phase 0 Architecture Documentation
 
-Status: **Phase 0 (architecture) approved. Phase 1 (project setup) and
-Phase 2 (localization system) implemented.** Scope and rules are defined
-by `/HomeList_Claude_Code_Master_Plan.md` at the repo root — read that
-first. Documents 1–14 are the original Phase 0 deliverables (product
-architecture, DB ERD, schema proposal, permission matrix,
-household/member/worker relationship model, auth/OTP flow,
+Status: **Phase 0 (architecture) approved. Phase 1 (project setup),
+Phase 2 (localization system), and Phase 3 (authentication) implemented.**
+Scope and rules are defined by `/HomeList_Claude_Code_Master_Plan.md` at
+the repo root — read that first. Documents 1–14 are the original Phase 0
+deliverables (product architecture, DB ERD, schema proposal, permission
+matrix, household/member/worker relationship model, auth/OTP flow,
 invitation/linking flow, route map, folder structure, security model,
 product catalog/import architecture, future two-app architecture, and
-technical risks/decisions). Document 15 was added in Phase 2.
+technical risks/decisions). Document 15 was added in Phase 2; document 6
+(`06-auth-otp-flow.md`) gained a Phase 3 implementation-status section.
 
 The application code lives in `apps/web` (Next.js/TypeScript/Tailwind) and
 `supabase/migrations` — see those directories for what's actually been

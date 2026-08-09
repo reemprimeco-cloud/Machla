@@ -54,7 +54,7 @@ acceptable before Phase 1.
         └── package.json
 ```
 
-### As-built, Phase 1 & 2 (deviations from the proposal above)
+### As-built, Phase 1-3 (deviations from the proposal above)
 
 - No `tailwind.config.ts` — Tailwind v4 (what `create-next-app` scaffolded)
   is configured via `@theme` blocks directly in `app/globals.css`, not a
@@ -62,17 +62,27 @@ acceptable before Phase 1.
   tool version's convention.
 - `apps/web/lib/i18n/` (config, messages, cookie, `LocaleProvider.tsx`)
   and `apps/web/scripts/check-locales.mjs` were added in Phase 2 — see
-  `15-localization-architecture.md`. `lib/auth`, `lib/household`,
-  `lib/catalog`, `lib/lists` remain unbuilt, added in the phases that
-  implement each (3/4/5/6-8 respectively).
-- `app/welcome/page.tsx` (language picker) and `components/HomeShell.tsx`
-  + `components/ServiceWorkerRegistration.tsx` exist; the full
-  `(public)/(onboarding)/(worker)/(household)` route-group structure is
-  still Phase 3+.
+  `15-localization-architecture.md`.
+- `apps/web/lib/auth/` (`session.ts`, `phone.ts`,
+  `syncPreferredLanguage.ts`) and `apps/web/lib/supabase/{updateSession,
+  isConfigured}.ts` were added in Phase 3 — see `06-auth-otp-flow.md` §7.
+  `proxy.ts` lives at `apps/web/` root (Next.js 16's file-convention
+  location, not inside `lib/`). `lib/household`, `lib/catalog`,
+  `lib/lists` remain unbuilt, added in the phases that implement each
+  (4/5/6-8 respectively).
+- `app/welcome/page.tsx` (language picker, Phase 2) and
+  `app/login/page.tsx` + `app/login/verify/page.tsx` (Phase 3) exist;
+  `components/HomeShell.tsx` + `components/ServiceWorkerRegistration.tsx`
+  + `components/brand/HomeListIcon.tsx` support them. The full
+  `(onboarding)/(worker)/(household)` route-group structure is still
+  Phase 4+.
 - `lib/supabase/database.types.ts` is hand-authored against the Phase 1
   migration (no live Supabase project to codegen from yet) —
   `10-security-model.md` §6 and `03-database-schema.md` cover why no
-  service-role key exists anywhere in `apps/web`.
+  service-role key exists anywhere in `apps/web`. Every Supabase-calling
+  code path also checks `lib/supabase/isConfigured.ts` first, so the app
+  degrades gracefully (treats the visitor as signed-out) rather than
+  crashing while no project is provisioned — see `06-auth-otp-flow.md` §7.
 - `catalog-import/` does not exist yet (Phase 5).
 
 `apps/web` is used (rather than a bare repo-root Next.js app) even in V1

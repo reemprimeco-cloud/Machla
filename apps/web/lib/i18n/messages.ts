@@ -65,12 +65,20 @@ type DotPath<T> = T extends string
 
 export type MessageKey = DotPath<Messages>;
 
-export function getMessage(messages: Messages, key: MessageKey): string {
+export function getMessage(
+  messages: Messages,
+  key: MessageKey,
+  params?: Record<string, string | number>,
+): string {
   const value = (key as string)
     .split(".")
     .reduce<unknown>((acc, part) => {
       if (isPlainObject(acc)) return acc[part];
       return undefined;
     }, messages);
-  return typeof value === "string" ? value : key;
+  const template = typeof value === "string" ? value : key;
+  if (!params) return template;
+  return template.replace(/\{(\w+)\}/g, (match, name) =>
+    name in params ? String(params[name]) : match,
+  );
 }

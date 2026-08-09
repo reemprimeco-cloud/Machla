@@ -66,24 +66,23 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Phase 2 implementation status
+## 4. Implementation status (Phase 2 + 3)
 
-`/welcome` and the root `/` redirect are implemented as of Phase 2
-(`15-localization-architecture.md`). Current behavior, ahead of Phase 3
-auth:
-
-- `/` is a server component that checks only for the locale cookie: no
-  cookie → `redirect("/welcome")`; cookie present → renders a placeholder
-  `HomeShell` (not yet the real dashboard). Once Phase 3/4 land, this
-  redirect gains the real auth + household-membership checks described
-  in §1 above, and `/` starts routing into `(worker)`/`(household)`
-  instead of `HomeShell`.
-- `/login`, `/login/verify`, `/onboarding`, `/join/[code]`,
-  `/household/new`, and everything under `(worker)`/`(household)` are
-  still unbuilt — Phase 3 onward.
-- `HomeShell` carries a "Change language" link back to `/welcome`, so a
-  language already chosen can always be revisited — `/welcome` does not
-  become unreachable once a locale cookie exists.
+- `/` is a server component with two sequential gates: no locale cookie
+  → `redirect("/welcome")` (Phase 2); locale set but no session →
+  `redirect("/login")` (Phase 3); both pass → renders a placeholder
+  `HomeShell` (still not the real dashboard — that's Phase 4's household-
+  membership check, per §1 above).
+- `/login` and `/login/verify` are built (`06-auth-otp-flow.md` §7).
+  `/onboarding`, `/join/[code]`, `/household/new`, and everything under
+  `(worker)`/`(household)` are still unbuilt — Phase 4 onward.
+- `HomeShell` carries a "Change language" link back to `/welcome` and a
+  working "Log out" button — a language already chosen, or a session
+  already established, can always be revisited/exited; neither `/welcome`
+  nor `/login` become unreachable once their respective state exists.
+- Session refresh is handled by `proxy.ts` (Next.js 16 renamed
+  `middleware.ts` — see `06-auth-otp-flow.md` §7), not by any individual
+  route.
 
 ## 5. Mapping to the two future native apps
 

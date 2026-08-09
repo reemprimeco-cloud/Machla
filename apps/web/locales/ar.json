@@ -6,6 +6,25 @@
     "loading": "جارٍ التحميل…",
     "welcome": "أهلاً بك",
     "comingSoon": "قريباً",
-    "changeLanguage": "تغيير اللغة"
+    "changeLanguage": "تغيير اللغة",
+    "logout": "تسجيل الخروج"
+  },
+  "auth": {
+    "phoneTitle": "ما هو رقم هاتفك؟",
+    "phoneHint": "سنرسل لك رمزًا عبر الرسائل النصية لتسجيل الدخول.",
+    "phoneLabel": "رقم الهاتف",
+    "sendCode": "إرسال الرمز",
+    "sending": "جارٍ الإرسال…",
+    "codeTitle": "أدخل الرمز",
+    "codeSentTo": "أرسلنا رمزًا إلى {phone}",
+    "codeLabel": "الرمز المكوّن من 6 أرقام",
+    "verify": "تحقّق",
+    "verifying": "جارٍ التحقق…",
+    "resendCode": "إعادة إرسال الرمز",
+    "changeNumber": "تغيير الرقم",
+    "invalidPhone": "أدخل رقم هاتف صحيح.",
+    "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
+    "genericError": "حدث خطأ ما. حاول مرة أخرى.",
+    "codeResent": "تم إعادة إرسال الرمز."
   }
 }

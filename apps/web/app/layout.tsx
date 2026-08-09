@@ -10,6 +10,7 @@ import {
 import { cookies } from "next/headers";
 
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
+import { getServerUserProfile } from "@/lib/auth/session";
 import { branding } from "@/lib/branding";
 import { DEFAULT_LOCALE, directionFor, isSupportedLocale, scriptFor } from "@/lib/i18n/config";
 import { LOCALE_COOKIE_NAME } from "@/lib/i18n/cookie";
@@ -110,10 +111,23 @@ export const viewport: Viewport = {
 // <html lang dir data-script> — no LTR-then-RTL flash, no wrong-font
 // flash, and no hydration mismatch, since LocaleProvider hydrates from
 // this same value on the client.
+//
+// Phase 3: if the visitor is signed in and has a stored
+// `users.preferred_language`, it wins over the device cookie — this is
+// the reconciliation for a fresh login on a device whose cookie doesn't
+// match the account's saved preference yet. Doing this here (server-
+// side, before the first render) rather than as a client-side effect
+// keeps LocaleProvider a plain "sync state to the DOM" component, and
+// means there's no flash while a client effect catches up.
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const cookieStore = await cookies();
   const rawLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
-  const initialLocale = rawLocale && isSupportedLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+  const cookieLocale = rawLocale && isSupportedLocale(rawLocale) ? rawLocale : DEFAULT_LOCALE;
+
+  const profile = await getServerUserProfile();
+  const preferredLocale = profile?.preferred_language;
+  const initialLocale =
+    preferredLocale && isSupportedLocale(preferredLocale) ? preferredLocale : cookieLocale;
 
   return (
     <html

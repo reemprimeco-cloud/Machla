@@ -6,6 +6,25 @@
     "loading": "Memuat…",
     "welcome": "Selamat datang",
     "comingSoon": "Segera hadir",
-    "changeLanguage": "Ganti bahasa"
+    "changeLanguage": "Ganti bahasa",
+    "logout": "Keluar"
+  },
+  "auth": {
+    "phoneTitle": "Berapa nomor telepon Anda?",
+    "phoneHint": "Kami akan mengirimkan kode lewat SMS untuk masuk.",
+    "phoneLabel": "Nomor telepon",
+    "sendCode": "Kirim kode",
+    "sending": "Mengirim…",
+    "codeTitle": "Masukkan kode",
+    "codeSentTo": "Kami mengirim kode ke {phone}",
+    "codeLabel": "Kode 6 digit",
+    "verify": "Verifikasi",
+    "verifying": "Memverifikasi…",
+    "resendCode": "Kirim ulang kode",
+    "changeNumber": "Ganti nomor",
+    "invalidPhone": "Masukkan nomor telepon yang valid.",
+    "invalidCode": "Kode itu tidak berhasil. Coba lagi.",
+    "genericError": "Terjadi kesalahan. Silakan coba lagi.",
+    "codeResent": "Kode telah dikirim ulang."
   }
 }
