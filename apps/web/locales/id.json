@@ -1,0 +1,10 @@
+{
+  "app": {
+    "tagline": "Rumah Anda. Daftar Anda."
+  },
+  "common": {
+    "loading": "Memuat…",
+    "welcome": "Selamat datang",
+    "comingSoon": "Segera hadir"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "app": {
+    "tagline": "Ang Iyong Tahanan. Ang Iyong Listahan."
+  },
+  "common": {
+    "loading": "Naglo-load…",
+    "welcome": "Maligayang pagdating",
+    "comingSoon": "Malapit na"
+  }
+}

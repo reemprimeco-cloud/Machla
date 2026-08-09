@@ -1,0 +1,10 @@
+{
+  "app": {
+    "tagline": "Your Home. Your List."
+  },
+  "common": {
+    "loading": "Loading…",
+    "welcome": "Welcome",
+    "comingSoon": "Coming soon"
+  }
+}
