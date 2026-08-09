@@ -1,28 +1,91 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import {
+  IBM_Plex_Sans_Arabic,
+  Noto_Nastaliq_Urdu,
+  Noto_Sans_Devanagari,
+  Noto_Sans_Sinhala,
+  Noto_Sans_Telugu,
+  Poppins,
+} from "next/font/google";
 import { cookies } from "next/headers";
 
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { branding } from "@/lib/branding";
-import { DEFAULT_LOCALE, directionFor, isSupportedLocale } from "@/lib/i18n/config";
+import { DEFAULT_LOCALE, directionFor, isSupportedLocale, scriptFor } from "@/lib/i18n/config";
 import { LOCALE_COOKIE_NAME } from "@/lib/i18n/cookie";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
 
 import "./globals.css";
 
-// Modern webfont for Latin-script text (English, Filipino, Indonesian).
-// Self-hosted at build time via next/font — no runtime request, no
-// layout shift. Arabic, Urdu, Hindi/Nepali (Devanagari), Telugu, and
-// Sinhala glyphs aren't in Geist's Latin subset, so those scripts
-// transparently fall through to the platform-native font stack in
-// globals.css, which already renders them well on every target OS —
-// deliberately not self-hosting a Noto Sans variant per script for that,
-// see docs/architecture/15-localization-architecture.md §5.
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Multi-script type system (docs/design/BRAND.md, docs/architecture/15-localization-architecture.md §9).
+// Self-hosted at build time via next/font — no runtime CDN request for
+// any of the 9 languages. Poppins + IBM Plex Sans Arabic are "tier 1":
+// the UI chrome, always needed, so they preload. The other four are
+// "tier 2": preload disabled, so the browser only fetches that font's
+// bytes once text actually needs it (e.g. the language picker showing a
+// Devanagari row, or the user switching to Urdu) — not on every load.
+// Each `variable` name below is deliberately suffixed "-nf" (next/font) —
+// distinct from the --font-latin/--font-arabic/... names globals.css
+// defines for actual use. A CSS custom property that references itself
+// (even via cascade with an identically-named variable from another
+// stylesheet) resolves as invalid, so the two layers must not share a
+// name — globals.css's :root block reads these -nf variables with a
+// literal-family fallback, and everything else in the app reads the
+// public --font-* names, never these directly.
+const poppins = Poppins({
+  variable: "--font-latin-nf",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-arabic-nf",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const notoNastaliqUrdu = Noto_Nastaliq_Urdu({
+  variable: "--font-nastaliq-nf",
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-devanagari-nf",
+  subsets: ["devanagari"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const notoSansTelugu = Noto_Sans_Telugu({
+  variable: "--font-telugu-nf",
+  subsets: ["telugu"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const notoSansSinhala = Noto_Sans_Sinhala({
+  variable: "--font-sinhala-nf",
+  subsets: ["sinhala"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const FONT_VARIABLES = [
+  poppins.variable,
+  ibmPlexSansArabic.variable,
+  notoNastaliqUrdu.variable,
+  notoSansDevanagari.variable,
+  notoSansTelugu.variable,
+  notoSansSinhala.variable,
+].join(" ");
 
 export const metadata: Metadata = {
   title: branding.name,
@@ -44,8 +107,9 @@ export const viewport: Viewport = {
 
 // Reads the Phase 2 locale cookie (docs/architecture/15-localization-architecture.md)
 // server-side so the very first response already has the correct
-// <html lang dir> — no LTR-then-RTL flash, and no hydration mismatch,
-// since LocaleProvider hydrates from this same value on the client.
+// <html lang dir data-script> — no LTR-then-RTL flash, no wrong-font
+// flash, and no hydration mismatch, since LocaleProvider hydrates from
+// this same value on the client.
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const cookieStore = await cookies();
   const rawLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
@@ -55,9 +119,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={initialLocale}
       dir={directionFor(initialLocale)}
-      className={`${geistSans.variable} h-full`}
+      data-script={scriptFor(initialLocale)}
+      className={`${FONT_VARIABLES} h-full`}
     >
-      <body className="flex h-full min-h-screen flex-col bg-white font-sans text-neutral-900 antialiased">
+      <body className="flex h-full min-h-screen flex-col antialiased">
         <LocaleProvider initialLocale={initialLocale}>
           {children}
           <ServiceWorkerRegistration />

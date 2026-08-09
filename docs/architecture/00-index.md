@@ -13,7 +13,8 @@ technical risks/decisions). Document 15 was added in Phase 2.
 The application code lives in `apps/web` (Next.js/TypeScript/Tailwind) and
 `supabase/migrations` — see those directories for what's actually been
 built. This folder stays the architectural reference those phases
-implement against.
+implement against. `docs/design/` holds the HomeList UI Kit's brand sheet
+and integration notes (see `15-localization-architecture.md` §9).
 
 ## Documents
 

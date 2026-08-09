@@ -131,25 +131,38 @@ intended to be run before every build (and wired into CI once CI exists).
 This is what keeps the runtime fallback in §4 a safety net rather than the
 normal path.
 
-## 7. Language-selection screen design
+## 7. Language-selection screen design (revised — see §9)
 
-`/welcome` deliberately carries **no instruction text** ("choose your
-language" or similar) — before a locale is picked there is no single
-correct language to render that instruction in, and for a low-literacy
-audience the native-script grid is meant to be self-explanatory without
-one (master plan: "extremely simple and visual... do not rely only on
-English labels"). Each card:
+Original Phase 2 version of this section said `/welcome` should carry
+**no instruction text**, reasoning that before a locale is picked there's
+no single correct language to render it in. The HomeList UI Kit
+(§9) revised this: the screen now keeps a short English heading
+("Choose your language") and caption ("You can change this any time in
+Settings."), because in practice a supervisor or household owner is often
+the one handing the phone to a worker during initial setup and benefits
+from recognizing the screen — while the language rows themselves remain
+what a non-English-reading worker actually relies on. Documenting the
+reversal here rather than silently editing history, per the "document
+every major architectural decision" rule.
 
-- shows the language's own **native name as the primary, largest label**;
-- shows the **English name only as a small secondary hint** (omitted
-  entirely when it's identical to the native name, e.g. Filipino);
-- shows an **optional flag emoji** as an additional visual cue, present
-  only where one language maps unambiguously to one flag (`ar`, `en`,
-  `hi`, `fil`, `id`); intentionally omitted for Telugu, Nepali, Sinhala,
-  and Urdu rather than guessing a national flag that doesn't cleanly
-  correspond to the language;
-- is a large tap target (`min-h-28`, ~112px) in a 2-column mobile grid,
-  matching the "large, obvious language buttons/cards" requirement.
+Current design (`app/welcome/page.tsx`), each row:
+
+- shows the language's own **native name as the primary, 20px label**;
+- **always** shows the English name too, as a small (13px) LTR subtitle
+  below it — the kit's picker doesn't conditionally hide it even when the
+  strings are identical (e.g. Filipino/Filipino), for a consistent
+  two-line row height across all nine;
+- shows a **real flag SVG** (`public/flags/<iso>.svg`, 32x22) where one
+  language maps unambiguously to one flag, or a script-glyph badge
+  otherwise — see the `flagIso` doc comment in `lib/i18n/config.ts` for
+  the per-language reasoning (notably Arabic uses Kuwait's flag, not
+  Saudi Arabia's, and Telugu/Sinhala show a script glyph rather than
+  India's/Sri Lanka's flag);
+- is a single full-width row (not a 2-column grid — "Bahasa Indonesia"
+  wrapped awkwardly in a half-width card while "Urdu" left a hole), each
+  a large tap target (`min-h-12`, 48px), with a selected/active state
+  (green fill + checkmark) so revisiting `/welcome` to change language
+  shows the current choice.
 
 ## 8. Compatibility with future Worker/Household native apps
 
@@ -164,3 +177,53 @@ move essentially unchanged; a native client would replace
 (e.g. `expo-localization` + `AsyncStorage` and `I18nManager.forceRTL()`)
 while reusing the exact same message files and lookup logic. Nothing in
 `config.ts`/`messages.ts` references the DOM, cookies, or Next.js APIs.
+
+## 9. HomeList UI Kit integration
+
+A standalone design package (brand mark, colour/type tokens, real flag
+SVGs, a full icon ladder, and reference components) was supplied and
+integrated on top of the architecture in §1-8. Full mapping of what
+moved where, and exactly what was adapted vs. kept as-is, is in
+`docs/design/UI_KIT_NOTES.md`; `docs/design/BRAND.md` is the source brand
+sheet. Summary of what changed in this document's terms:
+
+- **Persistence (§2) is unchanged** — still the cookie, not the kit's
+  `localStorage`-only approach, specifically to keep the no-flash SSR
+  property described in §2 and §5.
+- **Fonts**: Poppins (Latin) + IBM Plex Sans Arabic (Arabic) are now the
+  UI chrome typefaces (replacing the interim Geist choice from Phase 2's
+  first pass), both self-hosted via `next/font` and always loaded. Urdu
+  (Nastaliq), Hindi/Nepali (Devanagari), Telugu, and Sinhala are also
+  self-hosted via `next/font` but with `preload: false`, so the browser
+  only fetches that font's bytes once matching text actually renders —
+  in practice on first visiting `/welcome` (which shows all nine native
+  names at once) or on switching to that locale. All six are wired in
+  `app/layout.tsx`; `app/globals.css` maps each to a `--font-<script>`
+  custom property with a system-font fallback chain, and a `data-script`
+  attribute on `<html>` (server-rendered from the locale cookie, updated
+  by `LocaleProvider` on change, same mechanism as `dir`/`lang`) selects
+  which one is the active `--font-ui` for page chrome. A separate
+  `data-native-script` attribute, set per-row in the language picker, is
+  what makes each language's own name always render in its own script's
+  font regardless of the page's currently active one.
+- **Design tokens** (`--hl-*` custom properties: green/cream/sand/walnut
+  palette, radii, shadows, spacing, a dark-mode block, a
+  reduced-motion block) live in `app/globals.css` `:root`, mapped into
+  Tailwind v4 utilities (`bg-green-700`, `text-ink-muted`, `rounded-lg`,
+  `shadow-md`, etc.) via `@theme inline`. Font-family tokens are
+  deliberately **not** re-exposed as `@theme` entries — see the comment
+  in `globals.css`: giving a `@theme` token the same name as the `:root`
+  custom property it reads would risk an invalid self-referential
+  declaration if that block ever won the CSS cascade, and no component
+  actually needs a `font-*` Tailwind utility class (fonts are applied via
+  the `data-script`/`data-native-script` attribute selectors, or inline
+  style in `HomeListLockup`).
+- **Brand mark**: `components/brand/HomeListIcon.tsx` (flat/tile variants
+  + a bilingual `HomeListLockup`) replaces the ad hoc "H" square used in
+  Phase 2's first pass, in `HomeShell` and `/welcome`.
+- **Icons**: the full `public/icons/icon-{16…1024}.png` ladder and
+  `app/icon.svg`/`app/apple-icon.png` (Next's automatic favicon
+  convention) replace the single placeholder SVG from Phase 1;
+  `app/manifest.ts` now points at `icon-192.png`/`icon-512.png`.
+- **§7 above** records the language-picker redesign and the reversed
+  "no instruction text" decision.
