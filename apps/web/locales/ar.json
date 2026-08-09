@@ -5,6 +5,7 @@
   "common": {
     "loading": "جارٍ التحميل…",
     "welcome": "أهلاً بك",
-    "comingSoon": "قريباً"
+    "comingSoon": "قريباً",
+    "changeLanguage": "تغيير اللغة"
   }
 }

@@ -5,6 +5,7 @@
   "common": {
     "loading": "लोड हुँदैछ…",
     "welcome": "स्वागत छ",
-    "comingSoon": "चाँडै आउँदैछ"
+    "comingSoon": "चाँडै आउँदैछ",
+    "changeLanguage": "भाषा परिवर्तन गर्नुहोस्"
   }
 }

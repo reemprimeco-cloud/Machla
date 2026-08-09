@@ -5,6 +5,7 @@
   "common": {
     "loading": "Memuat…",
     "welcome": "Selamat datang",
-    "comingSoon": "Segera hadir"
+    "comingSoon": "Segera hadir",
+    "changeLanguage": "Ganti bahasa"
   }
 }

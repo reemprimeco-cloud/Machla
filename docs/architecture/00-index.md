@@ -1,18 +1,19 @@
 # HomeList — Phase 0 Architecture Documentation
 
-Status: **Phase 0 — Product Foundation** (architecture only, no application
-code). Scope and rules are defined by `/HomeList_Claude_Code_Master_Plan.md`
-at the repo root — read that first. This folder is the set of Phase 0
-deliverables required by the master plan (Section 31) and by the Phase 0
-task brief: product architecture, DB ERD, schema proposal, permission
-matrix, household/member/worker relationship model, auth/OTP flow,
+Status: **Phase 0 (architecture) approved. Phase 1 (project setup) and
+Phase 2 (localization system) implemented.** Scope and rules are defined
+by `/HomeList_Claude_Code_Master_Plan.md` at the repo root — read that
+first. Documents 1–14 are the original Phase 0 deliverables (product
+architecture, DB ERD, schema proposal, permission matrix,
+household/member/worker relationship model, auth/OTP flow,
 invitation/linking flow, route map, folder structure, security model,
 product catalog/import architecture, future two-app architecture, and
-technical risks/decisions.
+technical risks/decisions). Document 15 was added in Phase 2.
 
-No Phase 1 code (Next.js app, Supabase project, dependencies) is created in
-this phase. Nothing here is executable; it is the basis for approval before
-Phase 1 begins.
+The application code lives in `apps/web` (Next.js/TypeScript/Tailwind) and
+`supabase/migrations` — see those directories for what's actually been
+built. This folder stays the architectural reference those phases
+implement against.
 
 ## Documents
 
@@ -32,6 +33,7 @@ Phase 1 begins.
 | 12 | [12-future-apps-architecture.md](./12-future-apps-architecture.md) | Future HomeList Worker / HomeList Home native apps sharing one backend |
 | 13 | [13-shopping-list-grouping-checklist.md](./13-shopping-list-grouping-checklist.md) | Category grouping + purchase checklist architecture (core V1 requirement) |
 | 14 | [14-technical-risks-decisions.md](./14-technical-risks-decisions.md) | Open decisions requiring approval, risks, and rationale for each |
+| 15 | [15-localization-architecture.md](./15-localization-architecture.md) | Phase 2: language-selection UI, cookie persistence, RTL/LTR implementation, fallback behavior |
 
 ## How to read this set
 
@@ -39,6 +41,7 @@ Start with `01-product-architecture.md` for the big picture, then
 `02`/`03` for data, `04`/`05` for roles and household structure, `06`/`07`
 for identity and linking, `08`/`09` for how the codebase will be laid out,
 `10` for how it's kept secure, `11` for the catalog, `12` for the future
-native apps, `13` for the shopping-list grouping/checklist requirement, and
-finish with `14`, which lists every decision made on your behalf and flags
-the ones that need explicit approval before Phase 1 starts.
+native apps, `13` for the shopping-list grouping/checklist requirement,
+`14` for every decision made on your behalf that needed explicit approval,
+and `15` for how Phase 2 implemented localization on top of the Phase 1
+foundation.

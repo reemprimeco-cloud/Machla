@@ -66,7 +66,26 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Mapping to the two future native apps
+## 4. Phase 2 implementation status
+
+`/welcome` and the root `/` redirect are implemented as of Phase 2
+(`15-localization-architecture.md`). Current behavior, ahead of Phase 3
+auth:
+
+- `/` is a server component that checks only for the locale cookie: no
+  cookie → `redirect("/welcome")`; cookie present → renders a placeholder
+  `HomeShell` (not yet the real dashboard). Once Phase 3/4 land, this
+  redirect gains the real auth + household-membership checks described
+  in §1 above, and `/` starts routing into `(worker)`/`(household)`
+  instead of `HomeShell`.
+- `/login`, `/login/verify`, `/onboarding`, `/join/[code]`,
+  `/household/new`, and everything under `(worker)`/`(household)` are
+  still unbuilt — Phase 3 onward.
+- `HomeShell` carries a "Change language" link back to `/welcome`, so a
+  language already chosen can always be revisited — `/welcome` does not
+  become unreachable once a locale cookie exists.
+
+## 5. Mapping to the two future native apps
 
 `(worker)` and `(household)` are already isolated route groups sharing no
 screens — this maps directly onto the future `HomeList Worker` and

@@ -5,6 +5,7 @@
   "common": {
     "loading": "Loading…",
     "welcome": "Welcome",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "changeLanguage": "Change language"
   }
 }

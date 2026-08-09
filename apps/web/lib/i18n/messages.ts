@@ -17,16 +17,60 @@ import ur from "@/locales/ur.json";
  * file is app-chrome strings only, per master plan Section 4: "UI
  * translations should be stored in structured locale files."
  *
- * Phase 1 seeds only the handful of keys needed for the placeholder shell.
- * Phase 2 expands coverage to the full worker/household UI.
+ * `en` is the canonical key set. Every other locale file is expected to
+ * have identical keys (enforced by scripts/check-locales.mjs, run in CI
+ * and before every build). getMessages() still deep-merges each locale
+ * over the English base as a runtime safety net — a locale missing a key
+ * (e.g. a key added but not yet translated) falls back to English for
+ * that key alone, rather than rendering blank or crashing.
  */
-const MESSAGES: Record<LocaleCode, Messages> = { ar, en, hi, te, ur, fil, ne, id, si };
+const RAW_MESSAGES: Record<LocaleCode, Messages> = { ar, en, hi, te, ur, fil, ne, id, si };
 
 export type Messages = typeof en;
 
-/** Falls back to the default locale (English) if a locale's messages are
- * missing entirely — the per-key fallback chain is a Phase 2 concern once
- * there are enough keys for partial coverage to be a real scenario. */
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function deepMergeOverBase<T>(base: T, overrides: unknown): T {
+  if (!isPlainObject(base) || !isPlainObject(overrides)) {
+    return (overrides as T) ?? base;
+  }
+  const result: Record<string, unknown> = { ...base };
+  for (const key of Object.keys(base)) {
+    result[key] = deepMergeOverBase((base as Record<string, unknown>)[key], overrides[key]);
+  }
+  return result as T;
+}
+
+const MESSAGES: Record<LocaleCode, Messages> = Object.fromEntries(
+  Object.entries(RAW_MESSAGES).map(([code, messages]) => [
+    code,
+    code === DEFAULT_LOCALE ? messages : deepMergeOverBase(en, messages),
+  ]),
+) as Record<LocaleCode, Messages>;
+
+/** Falls back to the default locale (English) for an entirely unsupported
+ * locale code, and to the English value of any individual key that a
+ * locale file doesn't (yet) define. */
 export function getMessages(locale: string): Messages {
   return isSupportedLocale(locale) ? MESSAGES[locale] : MESSAGES[DEFAULT_LOCALE];
+}
+
+// ---- typed dot-path key lookup, e.g. t("common.changeLanguage") ----
+
+type DotPath<T> = T extends string
+  ? never
+  : { [K in keyof T & string]: T[K] extends string ? K : `${K}.${DotPath<T[K]>}` }[keyof T & string];
+
+export type MessageKey = DotPath<Messages>;
+
+export function getMessage(messages: Messages, key: MessageKey): string {
+  const value = (key as string)
+    .split(".")
+    .reduce<unknown>((acc, part) => {
+      if (isPlainObject(acc)) return acc[part];
+      return undefined;
+    }, messages);
+  return typeof value === "string" ? value : key;
 }

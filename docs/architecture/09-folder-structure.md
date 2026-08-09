@@ -54,6 +54,27 @@ acceptable before Phase 1.
         └── package.json
 ```
 
+### As-built, Phase 1 & 2 (deviations from the proposal above)
+
+- No `tailwind.config.ts` — Tailwind v4 (what `create-next-app` scaffolded)
+  is configured via `@theme` blocks directly in `app/globals.css`, not a
+  JS/TS config file. Not an architectural change, just the current
+  tool version's convention.
+- `apps/web/lib/i18n/` (config, messages, cookie, `LocaleProvider.tsx`)
+  and `apps/web/scripts/check-locales.mjs` were added in Phase 2 — see
+  `15-localization-architecture.md`. `lib/auth`, `lib/household`,
+  `lib/catalog`, `lib/lists` remain unbuilt, added in the phases that
+  implement each (3/4/5/6-8 respectively).
+- `app/welcome/page.tsx` (language picker) and `components/HomeShell.tsx`
+  + `components/ServiceWorkerRegistration.tsx` exist; the full
+  `(public)/(onboarding)/(worker)/(household)` route-group structure is
+  still Phase 3+.
+- `lib/supabase/database.types.ts` is hand-authored against the Phase 1
+  migration (no live Supabase project to codegen from yet) —
+  `10-security-model.md` §6 and `03-database-schema.md` cover why no
+  service-role key exists anywhere in `apps/web`.
+- `catalog-import/` does not exist yet (Phase 5).
+
 `apps/web` is used (rather than a bare repo-root Next.js app) even in V1
 so that `/apps/worker-app` and `/apps/household-app` can be added
 side-by-side later without moving the existing app — this one nesting

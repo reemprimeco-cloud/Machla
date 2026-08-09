@@ -5,6 +5,7 @@
   "common": {
     "loading": "लोड हो रहा है…",
     "welcome": "स्वागत है",
-    "comingSoon": "जल्द आ रहा है"
+    "comingSoon": "जल्द आ रहा है",
+    "changeLanguage": "भाषा बदलें"
   }
 }
