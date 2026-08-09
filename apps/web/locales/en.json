@@ -93,7 +93,26 @@
   },
   "worker": {
     "yourHome": "Your home",
-    "waiting": "Shopping lists are coming soon."
+    "browse": "What do you need?",
+    "searchPlaceholder": "Search for anything",
+    "searchNoResults": "Nothing found for \"{query}\"",
+    "frequent": "You often buy",
+    "categories": "Categories",
+    "myList": "My list",
+    "myListWithCount": "My list ({count})",
+    "add": "Add",
+    "inList": "In list",
+    "emptyList": "Your list is empty",
+    "emptyListHint": "Tap a category to start adding.",
+    "review": "Review your list",
+    "send": "Send list",
+    "sending": "Sending…",
+    "sentTitle": "List sent",
+    "sentHint": "Your home can see the list now.",
+    "addMore": "Add more",
+    "newList": "Start a new list",
+    "remove": "Remove",
+    "noProducts": "No products here yet."
   },
   "errors": {
     "notOwner": "Only the home owner can do this.",
@@ -101,6 +120,11 @@
     "codeUsed": "That code was already used. Ask for a new one.",
     "codeExpired": "That code has expired. Ask for a new one.",
     "cannotRemoveOwner": "The home owner cannot be removed.",
-    "generic": "Something went wrong. Please try again."
+    "generic": "Something went wrong. Please try again.",
+    "listNotFound": "That list is no longer available.",
+    "listNotDraft": "This list was already sent.",
+    "listEmpty": "Add at least one product first.",
+    "invalidQuantity": "Choose a quantity between 1 and 999.",
+    "productNotFound": "That product is not available."
   }
 }

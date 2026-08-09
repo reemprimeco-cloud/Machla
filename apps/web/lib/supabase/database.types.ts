@@ -287,6 +287,44 @@ export interface Database {
         Args: { p_household_id: string; p_roles?: string[] };
         Returns: boolean;
       };
+
+      // Phase 5 — supabase/migrations/*_phase5_catalog.sql.
+      search_products: {
+        Args: { p_query: string; p_limit?: number };
+        Returns: Database["public"]["Tables"]["products"]["Row"][];
+      };
+
+      // Phase 6 RPCs — supabase/migrations/*_phase6_worker_lists.sql.
+      // The only write paths into shopping_lists / shopping_list_items /
+      // product_usage_stats. None of them accepts or writes
+      // purchase_status, purchased_at or purchased_by_user_id — that is a
+      // worker-side guarantee enforced in Postgres, not in this file
+      // (approved Phase 0 decision 6).
+      get_or_create_draft_list: {
+        Args: { p_household_id: string; p_language?: string };
+        Returns: string;
+      };
+      set_list_item: {
+        Args: {
+          p_list_id: string;
+          p_product_id: string;
+          p_quantity?: number;
+          p_note?: string | null;
+        };
+        Returns: string;
+      };
+      remove_list_item: {
+        Args: { p_list_id: string; p_product_id: string };
+        Returns: boolean;
+      };
+      send_list: {
+        Args: { p_list_id: string };
+        Returns: string;
+      };
+      get_frequent_products: {
+        Args: { p_limit?: number };
+        Returns: Database["public"]["Tables"]["products"]["Row"][];
+      };
     };
     Enums: Record<string, never>;
   };

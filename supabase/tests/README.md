@@ -34,6 +34,7 @@ meaningful.
 | `01_phase4_households_test.sql` | Phase 4: household creation, invitations, membership, removal, and cross-household isolation. |
 | `02_function_grants_test.sql` | Who may `EXECUTE` each function, and that every function pins its `search_path`. |
 | `03_phase5_catalog_test.sql` | Phase 5: the catalogue carries no price column, is world-readable but client-unwritable, imports idempotently via `natural_key`, groups deterministically, and searches across all nine languages plus brand and transliteration. |
+| `04_phase6_worker_lists_test.sql` | Phase 6: the worker's draft lifecycle — one draft per person, a draft is editable only by its author (not by a fellow worker, not by the owner), a sent list is immutable, grouping survives re-categorization, and no worker-reachable path writes purchase state. |
 
 ## Conventions
 

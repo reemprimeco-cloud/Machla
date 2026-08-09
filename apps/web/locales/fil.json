@@ -93,7 +93,26 @@
   },
   "worker": {
     "yourHome": "Ang iyong tahanan",
-    "waiting": "Malapit na ang mga listahan ng pamimili."
+    "browse": "Ano ang kailangan mo?",
+    "searchPlaceholder": "Maghanap ng kahit ano",
+    "searchNoResults": "Walang nakita para sa \"{query}\"",
+    "frequent": "Madalas mong binibili",
+    "categories": "Mga kategorya",
+    "myList": "Listahan ko",
+    "myListWithCount": "Listahan ko ({count})",
+    "add": "Idagdag",
+    "inList": "Nasa listahan",
+    "emptyList": "Walang laman ang listahan mo",
+    "emptyListHint": "Pumili ng kategorya para magsimula.",
+    "review": "Tingnan ang listahan mo",
+    "send": "Ipadala ang listahan",
+    "sending": "Ipinapadala…",
+    "sentTitle": "Naipadala ang listahan",
+    "sentHint": "Makikita na ng bahay ang listahan.",
+    "addMore": "Magdagdag pa",
+    "newList": "Magsimula ng bagong listahan",
+    "remove": "Alisin",
+    "noProducts": "Wala pang produkto dito."
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",
@@ -101,6 +120,11 @@
     "codeUsed": "Nagamit na ang code na iyon. Humingi ng bago.",
     "codeExpired": "Nag-expire na ang code na iyon. Humingi ng bago.",
     "cannotRemoveOwner": "Hindi maaaring alisin ang may-ari ng tahanan.",
-    "generic": "May nagkamali. Pakisubukan ulit."
+    "generic": "May nagkamali. Pakisubukan ulit.",
+    "listNotFound": "Hindi na available ang listahang iyon.",
+    "listNotDraft": "Naipadala na ang listahang ito.",
+    "listEmpty": "Magdagdag muna ng kahit isang produkto.",
+    "invalidQuantity": "Pumili ng dami sa pagitan ng 1 at 999.",
+    "productNotFound": "Hindi available ang produktong iyon."
   }
 }

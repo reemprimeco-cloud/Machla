@@ -93,7 +93,26 @@
   },
   "worker": {
     "yourHome": "Rumah Anda",
-    "waiting": "Daftar belanja segera hadir."
+    "browse": "Apa yang Anda butuhkan?",
+    "searchPlaceholder": "Cari apa saja",
+    "searchNoResults": "Tidak ada hasil untuk \"{query}\"",
+    "frequent": "Sering Anda beli",
+    "categories": "Kategori",
+    "myList": "Daftar saya",
+    "myListWithCount": "Daftar saya ({count})",
+    "add": "Tambah",
+    "inList": "Di daftar",
+    "emptyList": "Daftar Anda kosong",
+    "emptyListHint": "Pilih kategori untuk mulai menambah.",
+    "review": "Periksa daftar Anda",
+    "send": "Kirim daftar",
+    "sending": "Mengirim…",
+    "sentTitle": "Daftar terkirim",
+    "sentHint": "Rumah sekarang bisa melihat daftarnya.",
+    "addMore": "Tambah lagi",
+    "newList": "Mulai daftar baru",
+    "remove": "Hapus",
+    "noProducts": "Belum ada produk di sini."
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",
@@ -101,6 +120,11 @@
     "codeUsed": "Kode itu sudah dipakai. Minta yang baru.",
     "codeExpired": "Kode itu sudah kedaluwarsa. Minta yang baru.",
     "cannotRemoveOwner": "Pemilik rumah tidak dapat dihapus.",
-    "generic": "Terjadi kesalahan. Silakan coba lagi."
+    "generic": "Terjadi kesalahan. Silakan coba lagi.",
+    "listNotFound": "Daftar itu tidak tersedia lagi.",
+    "listNotDraft": "Daftar ini sudah dikirim.",
+    "listEmpty": "Tambahkan minimal satu produk dulu.",
+    "invalidQuantity": "Pilih jumlah antara 1 dan 999.",
+    "productNotFound": "Produk itu tidak tersedia."
   }
 }

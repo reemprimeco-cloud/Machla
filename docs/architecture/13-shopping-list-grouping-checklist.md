@@ -162,3 +162,101 @@ list, amended).
 - No quantity-weighted progress, no partial-purchase ("bought 1 of 2")
   state — `purchase_status` is a 3-value enum, not a partial-quantity
   tracker, matching the master plan's model exactly.
+
+---
+
+## 10. Phase 6 — as built (worker side)
+
+The worker half of this feature is implemented. The household half
+(§5, §6 — checking off, marking unavailable, progress) remains Phase 7.
+
+### 10.1 The draft lifecycle
+
+Four RPCs, in `supabase/migrations/*_phase6_worker_lists.sql`:
+
+| Function | What it does |
+|---|---|
+| `get_or_create_draft_list` | Returns the caller's open draft, creating one only if there is none |
+| `set_list_item` | Adds a product, or changes an existing one's quantity/note |
+| `remove_list_item` | Takes a product off the draft |
+| `send_list` | Draft → `sent`, stamping `sent_at` |
+
+Plus `assert_own_draft`, the shared precondition the three mutations all
+call — factored out precisely so they cannot drift apart on who is
+allowed to do what. It is **not** granted to `authenticated`: it returns a
+whole list row and exists only for the functions above, which are
+themselves authorized.
+
+Two properties worth stating plainly, because both are load-bearing:
+
+- **One draft per (household, person).** Reopening resumes the same list
+  rather than starting a second. A worker on a low-end phone loses the app
+  mid-shop routinely; the list has to still be there.
+- **A draft belongs to exactly one person.** Not to the household. A
+  fellow worker in the same household can *read* the list (RLS scopes by
+  household) but cannot add to, remove from, or send it — and neither can
+  the owner. `04_phase6_worker_lists_test.sql` asserts all four refusals.
+
+### 10.2 Grouping, end to end
+
+§3 and §4 of this document describe the intent; here is where each piece
+actually lives:
+
+1. `set_list_item` snapshots `category_id`, `unit` and `sort_order` from
+   the product **at add-time**.
+2. `lib/list/queries.ts:groupEntries()` groups on the item's stored
+   `category_id` — never a live join to `products.category_id`. Joining
+   live here would quietly undo the guarantee the database is keeping.
+3. Category order follows `categories.sort_order`; items within a category
+   follow their own snapshotted `sort_order`. Both are asserted unique
+   (`03_phase5_catalog_test.sql`), so the ordering is deterministic — the
+   same list renders identically on every device.
+4. The review screen, the send confirmation, and (in Phase 7) the owner's
+   view all read the same grouped structure. The list is never flattened
+   or re-sorted between worker and owner (§16A.1).
+
+Verified end-to-end against the live project: three products added in the
+order cleaning → dairy → produce came back grouped as produce (aisle 1),
+dairy (2), cleaning (11).
+
+### 10.3 Purchase state is unreachable from the worker side
+
+Approved Phase 0 decision 6 in its strong form. Not "the worker UI does
+not offer it" but:
+
+- no worker-reachable RPC takes a `purchase_status` / `purchased_*`
+  argument — asserted generically against `pg_proc`, so a future function
+  that adds one fails the suite;
+- `set_list_item`'s UPDATE branch names the columns it writes, and those
+  three are not among them;
+- `shopping_list_items` has no UPDATE policy at all, so a direct write
+  from a client is a silent no-op — the test asserts the data is
+  *unchanged* rather than expecting an error, which is the stronger check.
+
+### 10.4 What the worker sees
+
+- **Home** — 15 icon-led category tiles, two columns, plus search and a
+  "you often buy" row that appears only once there is history.
+- **Category / search** — a product grid; each card is picture, name,
+  brand · size, and one stepper.
+- **The stepper** is the whole interaction: "Add" at zero, then − N +.
+  Updates are optimistic, and because the server sets an *absolute*
+  quantity rather than incrementing, an impatient double-tap on a slow
+  connection is idempotent rather than a double-add.
+- **My list** — grouped review, quantity editable in place, then send.
+- **Sent** — the list shown back, grouped as sent, rather than only a
+  tick: the worker's own record of what they asked for is what settles a
+  later disagreement.
+
+Product images are the category icon throughout, since every
+`image_url` is null (`11-product-catalog-architecture.md` §7.5). For a
+low-literacy shopper a large familiar glyph beats a broken image frame;
+this is the designed fallback, not a stub.
+
+### 10.5 Frequently-used counters
+
+`product_usage_stats` increments **only on a first add**, not on every
+quantity change — otherwise nudging the stepper four times would outrank a
+product genuinely bought every week. Counters are per-user and scoped by
+RLS to `user_id = auth.uid()`, so one worker's habits never surface in
+another's suggestions.

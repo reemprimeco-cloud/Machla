@@ -1,12 +1,33 @@
-import { WorkerHome } from "@/components/household/WorkerHome";
+import { WorkerHome } from "@/components/worker/WorkerHome";
+import { getCategories, getFrequentProducts } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
+import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 
 /**
- * Worker experience. Phase 6 replaces this with the visual category and
- * product browser; Phase 4 only needs to confirm the worker is connected
- * to the right household.
+ * The worker's home screen: category tiles, search, and whatever they buy
+ * most often.
+ *
+ * Reads the draft but never creates one — the list row is minted on the
+ * first add, so merely opening the app leaves no trace
+ * (lib/list/queries.ts).
  */
 export default async function WorkerPage() {
   const membership = await requireWorkerAccess();
-  return <WorkerHome householdName={membership.householdName} />;
+
+  const [categories, frequent, draft] = await Promise.all([
+    getCategories(),
+    getFrequentProducts(6),
+    getDraftList(membership.householdId),
+  ]);
+
+  return (
+    <WorkerHome
+      householdId={membership.householdId}
+      householdName={membership.householdName}
+      categories={categories}
+      frequent={frequent}
+      quantities={quantitiesByProduct(draft)}
+      itemCount={draft?.itemCount ?? 0}
+    />
+  );
 }

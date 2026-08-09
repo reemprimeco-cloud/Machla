@@ -161,6 +161,26 @@ Phase 5 adds two more, on the same footing:
 | `search_products` | ✗ | ✓ (`SECURITY INVOKER` — the catalogue's RLS is `using (true)`, so definer rights would unlock nothing) |
 | `products_refresh_search_text` | ✗ | ✗ (trigger context only) |
 
+And Phase 6:
+
+| Function | anon | authenticated |
+|---|:---:|:---:|
+| `get_or_create_draft_list`, `set_list_item`, `remove_list_item`, `send_list` | ✗ | ✓ (each checks `auth.uid()` against `household_members` *and* against the list's own `created_by_user_id`) |
+| `get_frequent_products` | ✗ | ✓ (`SECURITY INVOKER` — `product_usage_stats` RLS already scopes to `user_id = auth.uid()`) |
+| `assert_own_draft` | ✗ | ✗ (internal helper; returns a whole list row, and every caller is itself authorized) |
+
+Two things the Phase 6 functions establish, both asserted in
+`04_phase6_worker_lists_test.sql`:
+
+- **A draft belongs to one person, not to the household.** A fellow
+  worker — and the owner — can read a list under RLS but cannot modify or
+  send it. Authorization here is finer-grained than membership.
+- **Nothing reachable by a worker writes purchase state.**
+  `purchase_status`, `purchased_at` and `purchased_by_user_id` appear in no
+  RPC signature (asserted generically against `pg_proc`, so a future
+  function that adds one fails the suite) and have no UPDATE policy, so a
+  direct client write is a silent no-op.
+
 ## 5C. Extensions belong outside `public`
 
 A Postgres extension installed into `public` puts every function it ships
