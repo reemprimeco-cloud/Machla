@@ -115,6 +115,45 @@ The suite was validated by negative control: removing the owner check
 from `create_invitation` makes it fail on the corresponding assertion,
 confirming it detects a genuinely broken authorization boundary.
 
+## 5B. Function EXECUTE privileges (the RPC surface itself)
+
+RLS governs table access; a separate, easily-missed layer governs who may
+*call* a function at all. On Supabase these come apart in a way worth
+stating explicitly, because getting it wrong shipped a real vulnerability
+in Phase 4:
+
+- Supabase grants `EXECUTE` on functions in `public` **directly to the
+  `anon` and `authenticated` roles**, in addition to PostgreSQL's own
+  implicit grant to `PUBLIC`. `has_function_privilege()` is true if the
+  privilege arrives by *either* path, so `revoke ... from public` alone
+  leaves a function callable. Every revoke must name `public`, `anon`,
+  and (where applicable) `authenticated`.
+- The consequence: `expire_stale_invitations()` — the one function with
+  no internal `auth.uid()` check, because it is a maintenance sweep —
+  was reachable at `/rest/v1/rpc/expire_stale_invitations` by anyone
+  holding the anon key, which ships in the browser bundle. Calling it
+  would mark every pending invitation in every household as expired.
+  Fixed in `*_phase4_function_grants.sql`; asserted in
+  `supabase/tests/02_function_grants_test.sql`.
+
+The intended end state, which that test enforces:
+
+| Function | anon | authenticated |
+|---|:---:|:---:|
+| `create_household`, `create_invitation`, `revoke_invitation`, `preview_invitation`, `accept_invitation`, `remove_household_member`, `get_household_members` | ✗ | ✓ (each checks `auth.uid()` and role internally — that is what makes exposing them safe) |
+| `is_active_member` | ✗ | ✓ (required, or every RLS policy that calls it fails) |
+| `normalize_invitation_code` | ✗ | ✓ |
+| `expire_stale_invitations`, `handle_new_user`, `generate_invitation_code` | ✗ | ✗ (owner/`service_role`/trigger context only) |
+
+Supabase's database linter will still report
+`authenticated_security_definer_function_executable` for the seven
+user-facing RPCs. That is expected and correct to leave: exposing a
+`SECURITY DEFINER` function that authorizes internally is precisely the
+design in §1. The linter cannot see the internal check.
+
+Every function also pins `search_path` at definition time, so a caller
+cannot influence name resolution inside a `SECURITY DEFINER` body.
+
 ## 6. Secrets
 
 - The Supabase **service role** key is used only by the offline catalog

@@ -30,8 +30,9 @@ meaningful.
 
 | File | Purpose |
 |---|---|
-| `00_test_harness.sql` | Stubs what Supabase provides: `auth.users`, `auth.uid()` (read from the `request.jwt.claim.sub` GUC, so tests can switch identity), the `anon`/`authenticated` roles, and default table grants. Plus the assertion helpers. |
+| `00_test_harness.sql` | Stubs what Supabase provides: `auth.users`, `auth.uid()` (read from the `request.jwt.claim.sub` GUC, so tests can switch identity), the `anon`/`authenticated` roles, and Supabase's default **table and function** grants. Plus the assertion helpers. |
 | `01_phase4_households_test.sql` | Phase 4: household creation, invitations, membership, removal, and cross-household isolation. |
+| `02_function_grants_test.sql` | Who may `EXECUTE` each function, and that every function pins its `search_path`. |
 
 ## Conventions
 
@@ -49,3 +50,27 @@ zero rows and returns quietly. So "this write must not be possible" is
 asserted with `test_raises` for inserts, and by re-reading the row and
 asserting it is unchanged for updates and deletes. Using `test_raises`
 for an update would pass vacuously and prove nothing.
+
+## Why `02_function_grants_test.sql` exists
+
+Behavioural tests cannot catch a missing `EXECUTE` revoke. Every RPC in
+`01_*.sql` also checks `auth.uid()` internally, so the suite passes
+whether or not `anon` can call it — the function refuses anonymous
+callers either way. The one function that *has* no internal check,
+`expire_stale_invitations()`, is exactly the one that shipped to a live
+project callable by anyone holding the (public) anon key.
+
+The root cause was that `revoke ... from public` looks sufficient but
+isn't: Supabase grants `EXECUTE` on `public` functions **directly** to
+`anon` and `authenticated` as well, and `has_function_privilege()` is
+true if the privilege arrives by either route. The harness now models
+those default function grants, and `02_*.sql` asserts on privileges
+rather than behaviour, so the gap fails locally instead of in
+production.
+
+When adding assertions there, scope them to *application* functions —
+the view at the top of the file excludes extension members (pgcrypto,
+which Supabase keeps in the `extensions` schema but a plain Postgres
+puts in `public`) and the `test_*` helpers. An unscoped
+"anon can execute nothing" assertion fires on those and tells you
+nothing about HomeList.

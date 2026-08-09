@@ -50,6 +50,17 @@ grant usage on schema auth to anon, authenticated;
 alter default privileges in schema public
   grant select, insert, update, delete on tables to anon, authenticated;
 
+-- Mirror Supabase's default *function* privileges too. This one matters:
+-- Supabase grants EXECUTE on new functions in `public` directly to
+-- `anon` and `authenticated`, on top of PostgreSQL's own implicit grant
+-- to PUBLIC. A migration that revokes from only one of those paths
+-- leaves the function callable — which is exactly how
+-- `expire_stale_invitations()` shipped to a live project reachable by
+-- anyone holding the (public) anon key. Modelling it here means the
+-- privilege assertions in the test suite catch that locally instead.
+alter default privileges in schema public
+  grant execute on functions to anon, authenticated;
+
 -- ---- assertion helpers -------------------------------------------
 
 create or replace function test_ok(p_label text)
