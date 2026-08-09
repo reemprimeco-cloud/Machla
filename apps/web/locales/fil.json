@@ -7,7 +7,9 @@
     "welcome": "Maligayang pagdating",
     "comingSoon": "Malapit na",
     "changeLanguage": "Palitan ang wika",
-    "logout": "Mag-log out"
+    "logout": "Mag-log out",
+    "back": "Bumalik",
+    "cancel": "Kanselahin"
   },
   "auth": {
     "phoneTitle": "Ano ang iyong numero ng telepono?",
@@ -26,5 +28,79 @@
     "invalidCode": "Hindi gumana ang code na iyon. Subukan ulit.",
     "genericError": "May nagkamali. Pakisubukan ulit.",
     "codeResent": "Naipadala ulit ang code."
+  },
+  "roles": {
+    "owner": "May-ari ng tahanan",
+    "member": "Miyembro ng pamilya",
+    "worker": "Katulong"
+  },
+  "onboarding": {
+    "title": "Magsimula",
+    "joinHome": "Sumali sa tahanan",
+    "joinHomeHint": "May code ka ng imbitasyon",
+    "createHome": "Gumawa ng tahanan",
+    "createHomeHint": "Ikaw ang namamahala sa tahanan"
+  },
+  "household": {
+    "createTitle": "Gawin ang iyong tahanan",
+    "nameLabel": "Pangalan ng tahanan",
+    "yourNameLabel": "Ang iyong pangalan",
+    "create": "Gumawa ng tahanan",
+    "creating": "Ginagawa…",
+    "nameRequired": "Maglagay ng pangalan para sa iyong tahanan."
+  },
+  "join": {
+    "title": "Sumali sa tahanan",
+    "codeLabel": "Code ng imbitasyon",
+    "codeHint": "Humingi ng code sa may-ari ng tahanan.",
+    "continue": "Magpatuloy",
+    "checking": "Sinusuri…",
+    "confirmTitle": "Sumasali ka sa",
+    "roleLabel": "Ang iyong tungkulin",
+    "yourNameLabel": "Ang iyong pangalan",
+    "confirm": "Kumpirmahin",
+    "joining": "Sumasali…"
+  },
+  "home": {
+    "title": "Tahanan",
+    "people": "Mga tao",
+    "invitations": "Mga imbitasyon",
+    "peopleCount": "{count} tao"
+  },
+  "members": {
+    "title": "Mga tao",
+    "you": "Ikaw",
+    "unnamed": "Wala pang pangalan",
+    "remove": "Alisin",
+    "removing": "Inaalis…",
+    "removeConfirm": "Alisin ang taong ito sa iyong tahanan?",
+    "empty": "Wala pang ibang sumali."
+  },
+  "invitations": {
+    "title": "Mga imbitasyon",
+    "inviteWorker": "Mag-imbita ng katulong",
+    "inviteMember": "Mag-imbita ng miyembro ng pamilya",
+    "creating": "Ginagawa…",
+    "active": "Aktibong imbitasyon",
+    "empty": "Walang aktibong imbitasyon.",
+    "share": "Ibahagi",
+    "copyLink": "Kopyahin ang link",
+    "copied": "Nakopya",
+    "revoke": "Kanselahin",
+    "revoking": "Kinakansela…",
+    "expires": "Mag-e-expire sa {date}",
+    "shareMessage": "Sumali sa aking tahanan sa HomeList: {link}"
+  },
+  "worker": {
+    "yourHome": "Ang iyong tahanan",
+    "waiting": "Malapit na ang mga listahan ng pamimili."
+  },
+  "errors": {
+    "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",
+    "invalidCode": "Hindi wasto ang code na iyon. Humingi ng bago.",
+    "codeUsed": "Nagamit na ang code na iyon. Humingi ng bago.",
+    "codeExpired": "Nag-expire na ang code na iyon. Humingi ng bago.",
+    "cannotRemoveOwner": "Hindi maaaring alisin ang may-ari ng tahanan.",
+    "generic": "May nagkamali. Pakisubukan ulit."
   }
 }

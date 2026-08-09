@@ -7,7 +7,9 @@
     "welcome": "خوش آمدید",
     "comingSoon": "جلد آ رہا ہے",
     "changeLanguage": "زبان تبدیل کریں",
-    "logout": "لاگ آؤٹ"
+    "logout": "لاگ آؤٹ",
+    "back": "واپس",
+    "cancel": "منسوخ کریں"
   },
   "auth": {
     "phoneTitle": "آپ کا فون نمبر کیا ہے؟",
@@ -26,5 +28,79 @@
     "invalidCode": "یہ کوڈ درست نہیں تھا۔ دوبارہ کوشش کریں۔",
     "genericError": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔",
     "codeResent": "کوڈ دوبارہ بھیج دیا گیا۔"
+  },
+  "roles": {
+    "owner": "گھر کے مالک",
+    "member": "خاندان کا فرد",
+    "worker": "مددگار"
+  },
+  "onboarding": {
+    "title": "آغاز کریں",
+    "joinHome": "گھر میں شامل ہوں",
+    "joinHomeHint": "آپ کے پاس دعوتی کوڈ ہے",
+    "createHome": "گھر بنائیں",
+    "createHomeHint": "آپ گھر سنبھالتے ہیں"
+  },
+  "household": {
+    "createTitle": "اپنا گھر بنائیں",
+    "nameLabel": "گھر کا نام",
+    "yourNameLabel": "آپ کا نام",
+    "create": "گھر بنائیں",
+    "creating": "بنایا جا رہا ہے…",
+    "nameRequired": "اپنے گھر کا نام درج کریں۔"
+  },
+  "join": {
+    "title": "گھر میں شامل ہوں",
+    "codeLabel": "دعوتی کوڈ",
+    "codeHint": "گھر کے مالک سے کوڈ مانگیں۔",
+    "continue": "جاری رکھیں",
+    "checking": "جانچا جا رہا ہے…",
+    "confirmTitle": "آپ شامل ہو رہے ہیں",
+    "roleLabel": "آپ کا کردار",
+    "yourNameLabel": "آپ کا نام",
+    "confirm": "تصدیق کریں",
+    "joining": "شامل ہو رہے ہیں…"
+  },
+  "home": {
+    "title": "گھر",
+    "people": "لوگ",
+    "invitations": "دعوتیں",
+    "peopleCount": "{count} لوگ"
+  },
+  "members": {
+    "title": "لوگ",
+    "you": "آپ",
+    "unnamed": "ابھی کوئی نام نہیں",
+    "remove": "ہٹائیں",
+    "removing": "ہٹایا جا رہا ہے…",
+    "removeConfirm": "اس شخص کو اپنے گھر سے ہٹائیں؟",
+    "empty": "ابھی تک کوئی اور شامل نہیں ہوا۔"
+  },
+  "invitations": {
+    "title": "دعوتیں",
+    "inviteWorker": "مددگار کو بلائیں",
+    "inviteMember": "خاندان کے فرد کو بلائیں",
+    "creating": "بنایا جا رہا ہے…",
+    "active": "فعال دعوتیں",
+    "empty": "کوئی فعال دعوت نہیں۔",
+    "share": "شیئر کریں",
+    "copyLink": "لنک کاپی کریں",
+    "copied": "کاپی ہو گیا",
+    "revoke": "منسوخ کریں",
+    "revoking": "منسوخ ہو رہا ہے…",
+    "expires": "{date} کو ختم",
+    "shareMessage": "HomeList پر میرے گھر میں شامل ہوں: {link}"
+  },
+  "worker": {
+    "yourHome": "آپ کا گھر",
+    "waiting": "خریداری کی فہرستیں جلد آ رہی ہیں۔"
+  },
+  "errors": {
+    "notOwner": "یہ صرف گھر کے مالک کر سکتے ہیں۔",
+    "invalidCode": "یہ کوڈ درست نہیں۔ نیا کوڈ مانگیں۔",
+    "codeUsed": "یہ کوڈ پہلے استعمال ہو چکا ہے۔ نیا کوڈ مانگیں۔",
+    "codeExpired": "اس کوڈ کی میعاد ختم ہو گئی۔ نیا کوڈ مانگیں۔",
+    "cannotRemoveOwner": "گھر کے مالک کو نہیں ہٹایا جا سکتا۔",
+    "generic": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
   }
 }

@@ -37,7 +37,7 @@ membership/role check is written once and audited once.
 |---|---|---|
 | `users` | own row only (`id = auth.uid()`); also readable by fellow active members of a shared household **only via a restricted view/RPC** that exposes `id, display_name, role` — never phone number, to other members | own row only |
 | `households` | `is_active_member(id)` | none directly — only via `create_household`/settings-update RPCs, `role='owner'` enforced inside |
-| `household_members` | `is_active_member(household_id)` (so members can see each other and identify who's who on a list) | **no direct client writes** — only via `create_household`, `accept_invitation`, `remove_member` RPCs |
+| `household_members` | **split as of Phase 4** — `user_id = auth.uid()` (everyone can read their own membership rows; the root route needs this to pick an experience) plus `is_active_member(household_id, array['owner','member'])` for the full roster. The original single `is_active_member(household_id)` policy contradicted the permission matrix, which denies Workers the member list | **no direct client writes** — only via `create_household`, `accept_invitation`, `remove_household_member` RPCs |
 | `household_invitations` | **owner only** (`is_active_member(household_id, array['owner'])`) — an invitee never reads this table directly, only via `preview_invitation`/`accept_invitation` RPCs which return the minimal `{household_name, role}` | insert/update only via `create_invitation`/`revoke_invitation` RPCs, owner-checked inside |
 | `categories`, `products` | public (`true`) — not sensitive, needed pre-auth-context in some flows | **no client writes at all** — service role only (import pipeline) |
 | `product_usage_stats` | own rows only | only via `record_product_selection` RPC |
@@ -90,6 +90,30 @@ master plan Section 16A.12 requires. See
 | Single-use invitation reused / raced | `accept_invitation` takes a row lock (`SELECT ... FOR UPDATE`) on the invitation before checking/consuming it |
 | Owner over-writes a worker's requested quantity while "marking purchased" | Not possible via `set_purchase_status` — it has no `quantity` parameter at all |
 | Worker edits their list after sending it, to make it look like they asked for something else | `update_requested_item` checks `shopping_lists.status = 'draft'`; once `sent`, no requested-field write path remains for anyone |
+
+## 5A. Verification (Phase 4)
+
+Every scenario in §5 that Phase 4 can reach — cross-household discovery,
+joining without an invitation, invitation reuse, revocation, removed-member
+access, and direct-write bypass — is asserted in
+`supabase/tests/01_phase4_households_test.sql`, run against a real
+PostgreSQL instance via `supabase/tests/run-tests.sh` (72 assertions).
+The remaining scenarios concern shopping lists and land with Phases 6-8.
+
+Two things make those tests meaningful rather than decorative:
+
+- They run **as the `authenticated` role**, not as the superuser the
+  migrations execute as. A superuser bypasses RLS entirely, so a suite
+  that skipped `set role` would pass no matter how wrong the policies
+  were.
+- **`UPDATE`/`DELETE` blocked by RLS raise nothing** — they simply match
+  zero rows. So "this write must be impossible" is asserted by re-reading
+  the row and proving it unchanged, not by expecting an error. Expecting
+  an error there would pass vacuously.
+
+The suite was validated by negative control: removing the owner check
+from `create_invitation` makes it fail on the corresponding assertion,
+confirming it detects a genuinely broken authorization boundary.
 
 ## 6. Secrets
 

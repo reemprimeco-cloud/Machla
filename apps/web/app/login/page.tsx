@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { safeNextPath } from "@/lib/auth/nextPath";
 import { DEFAULT_PHONE_PREFIX, isValidPhone, normalizePhone } from "@/lib/auth/phone";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -13,10 +14,16 @@ import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
  * Phone number entry (docs/architecture/06-auth-otp-flow.md §3, master
  * plan Phase 3). Phone + OTP via Supabase Auth is the only sign-in
  * method — no email/password, no social login (06-auth-otp-flow.md §6).
+ *
+ * Carries an optional ?next= through to the verify step so an invitation
+ * deep link (/join/<code>) returns the visitor to the invitation after
+ * signing in.
  */
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useLocale();
+  const nextPath = safeNextPath(searchParams.get("next"));
   const [phone, setPhone] = useState(DEFAULT_PHONE_PREFIX);
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +56,9 @@ export default function LoginPage() {
       return;
     }
 
-    router.push(`/login/verify?phone=${encodeURIComponent(normalized)}`);
+    const params = new URLSearchParams({ phone: normalized });
+    if (nextPath !== "/") params.set("next", nextPath);
+    router.push(`/login/verify?${params.toString()}`);
   }
 
   return (
@@ -91,5 +100,14 @@ export default function LoginPage() {
         </button>
       </form>
     </main>
+  );
+}
+
+// useSearchParams requires a Suspense boundary in the App Router.
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

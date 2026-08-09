@@ -7,7 +7,9 @@
     "welcome": "स्वागत है",
     "comingSoon": "जल्द आ रहा है",
     "changeLanguage": "भाषा बदलें",
-    "logout": "लॉग आउट करें"
+    "logout": "लॉग आउट करें",
+    "back": "वापस",
+    "cancel": "रद्द करें"
   },
   "auth": {
     "phoneTitle": "आपका फ़ोन नंबर क्या है?",
@@ -26,5 +28,79 @@
     "invalidCode": "यह कोड सही नहीं है। फिर कोशिश करें।",
     "genericError": "कुछ गलत हो गया। कृपया फिर कोशिश करें।",
     "codeResent": "कोड फिर से भेजा गया।"
+  },
+  "roles": {
+    "owner": "घर के मालिक",
+    "member": "परिवार का सदस्य",
+    "worker": "सहायक"
+  },
+  "onboarding": {
+    "title": "शुरू करें",
+    "joinHome": "घर से जुड़ें",
+    "joinHomeHint": "आपके पास निमंत्रण कोड है",
+    "createHome": "घर बनाएं",
+    "createHomeHint": "आप घर संभालते हैं"
+  },
+  "household": {
+    "createTitle": "अपना घर बनाएं",
+    "nameLabel": "घर का नाम",
+    "yourNameLabel": "आपका नाम",
+    "create": "घर बनाएं",
+    "creating": "बनाया जा रहा है…",
+    "nameRequired": "अपने घर का नाम दर्ज करें।"
+  },
+  "join": {
+    "title": "घर से जुड़ें",
+    "codeLabel": "निमंत्रण कोड",
+    "codeHint": "घर के मालिक से कोड मांगें।",
+    "continue": "आगे बढ़ें",
+    "checking": "जाँच हो रही है…",
+    "confirmTitle": "आप जुड़ रहे हैं",
+    "roleLabel": "आपकी भूमिका",
+    "yourNameLabel": "आपका नाम",
+    "confirm": "पुष्टि करें",
+    "joining": "जुड़ा जा रहा है…"
+  },
+  "home": {
+    "title": "घर",
+    "people": "लोग",
+    "invitations": "निमंत्रण",
+    "peopleCount": "{count} लोग"
+  },
+  "members": {
+    "title": "लोग",
+    "you": "आप",
+    "unnamed": "अभी कोई नाम नहीं",
+    "remove": "हटाएं",
+    "removing": "हटाया जा रहा है…",
+    "removeConfirm": "इस व्यक्ति को अपने घर से हटाएं?",
+    "empty": "अभी तक कोई और नहीं जुड़ा।"
+  },
+  "invitations": {
+    "title": "निमंत्रण",
+    "inviteWorker": "सहायक को बुलाएं",
+    "inviteMember": "परिवार के सदस्य को बुलाएं",
+    "creating": "बनाया जा रहा है…",
+    "active": "सक्रिय निमंत्रण",
+    "empty": "कोई सक्रिय निमंत्रण नहीं।",
+    "share": "साझा करें",
+    "copyLink": "लिंक कॉपी करें",
+    "copied": "कॉपी हो गया",
+    "revoke": "रद्द करें",
+    "revoking": "रद्द हो रहा है…",
+    "expires": "{date} को समाप्त",
+    "shareMessage": "HomeList पर मेरे घर से जुड़ें: {link}"
+  },
+  "worker": {
+    "yourHome": "आपका घर",
+    "waiting": "खरीदारी सूची जल्द आ रही है।"
+  },
+  "errors": {
+    "notOwner": "यह केवल घर के मालिक कर सकते हैं।",
+    "invalidCode": "यह कोड मान्य नहीं है। नया कोड मांगें।",
+    "codeUsed": "यह कोड पहले ही इस्तेमाल हो चुका है। नया कोड मांगें।",
+    "codeExpired": "इस कोड की अवधि समाप्त हो गई। नया कोड मांगें।",
+    "cannotRemoveOwner": "घर के मालिक को हटाया नहीं जा सकता।",
+    "generic": "कुछ गलत हो गया। कृपया फिर कोशिश करें।"
   }
 }

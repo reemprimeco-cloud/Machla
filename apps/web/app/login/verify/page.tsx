@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
@@ -18,6 +19,7 @@ function VerifyForm() {
   const searchParams = useSearchParams();
   const { t } = useLocale();
   const phone = searchParams.get("phone") ?? "";
+  const nextPath = safeNextPath(searchParams.get("next"));
 
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<"idle" | "verifying" | "resending" | "error">("idle");
@@ -55,10 +57,13 @@ function VerifyForm() {
       return;
     }
 
-    router.push("/");
-    // Forces the server-rendered tree (root layout + "/") to re-run
-    // against the now-authenticated session immediately, instead of
-    // potentially reusing a pre-login render — see app/layout.tsx's
+    // Back to wherever sign-in was triggered from — an invitation deep
+    // link, or the root route by default (lib/auth/nextPath.ts rejects
+    // anything that isn't a same-site path).
+    router.push(nextPath);
+    // Forces the server-rendered tree (root layout + destination) to
+    // re-run against the now-authenticated session immediately, instead
+    // of potentially reusing a pre-login render — see app/layout.tsx's
     // preferred_language reconciliation, which depends on this.
     router.refresh();
   }

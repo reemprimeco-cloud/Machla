@@ -54,7 +54,7 @@ acceptable before Phase 1.
         └── package.json
 ```
 
-### As-built, Phase 1-3 (deviations from the proposal above)
+### As-built, Phases 1-4 (deviations from the proposal above)
 
 - No `tailwind.config.ts` — Tailwind v4 (what `create-next-app` scaffolded)
   is configured via `@theme` blocks directly in `app/globals.css`, not a
@@ -83,6 +83,19 @@ acceptable before Phase 1.
   code path also checks `lib/supabase/isConfigured.ts` first, so the app
   degrades gracefully (treats the visitor as signed-out) rather than
   crashing while no project is provisioned — see `06-auth-otp-flow.md` §7.
+- Phase 4 added `apps/web/lib/household/` (`queries.ts`, `actions.ts`,
+  `guard.ts`, `errors.ts`), `apps/web/components/household/`,
+  `apps/web/components/ui/Primitives.tsx`, and the `app/onboarding`,
+  `app/household/new`, `app/join`, `app/join/[code]`, `app/home*`, and
+  `app/worker` routes. Mutations are Next.js Server Actions
+  (`lib/household/actions.ts`) that call the Postgres RPCs — the actions
+  perform no authorization of their own, deliberately, since a Server
+  Action is reachable as a plain POST and the database check is the one
+  that holds either way.
+- `supabase/tests/` (Phase 4) holds the SQL test suite and its harness —
+  see `supabase/tests/README.md`. It is the primary verification for
+  anything authorization-shaped, because that logic lives in Postgres
+  rather than in `apps/web`.
 - `catalog-import/` does not exist yet (Phase 5).
 
 `apps/web` is used (rather than a bare repo-root Next.js app) even in V1

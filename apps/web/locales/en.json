@@ -7,7 +7,9 @@
     "welcome": "Welcome",
     "comingSoon": "Coming soon",
     "changeLanguage": "Change language",
-    "logout": "Log out"
+    "logout": "Log out",
+    "back": "Back",
+    "cancel": "Cancel"
   },
   "auth": {
     "phoneTitle": "What's your phone number?",
@@ -26,5 +28,79 @@
     "invalidCode": "That code didn't work. Try again.",
     "genericError": "Something went wrong. Please try again.",
     "codeResent": "Code resent."
+  },
+  "roles": {
+    "owner": "Home owner",
+    "member": "Family member",
+    "worker": "Helper"
+  },
+  "onboarding": {
+    "title": "Get started",
+    "joinHome": "Join a home",
+    "joinHomeHint": "You have an invitation code",
+    "createHome": "Create a home",
+    "createHomeHint": "You manage the home"
+  },
+  "household": {
+    "createTitle": "Create your home",
+    "nameLabel": "Home name",
+    "yourNameLabel": "Your name",
+    "create": "Create home",
+    "creating": "Creating…",
+    "nameRequired": "Enter a name for your home."
+  },
+  "join": {
+    "title": "Join a home",
+    "codeLabel": "Invitation code",
+    "codeHint": "Ask the home owner for a code.",
+    "continue": "Continue",
+    "checking": "Checking…",
+    "confirmTitle": "You are joining",
+    "roleLabel": "Your role",
+    "yourNameLabel": "Your name",
+    "confirm": "Confirm",
+    "joining": "Joining…"
+  },
+  "home": {
+    "title": "Home",
+    "people": "People",
+    "invitations": "Invitations",
+    "peopleCount": "{count} people"
+  },
+  "members": {
+    "title": "People",
+    "you": "You",
+    "unnamed": "No name yet",
+    "remove": "Remove",
+    "removing": "Removing…",
+    "removeConfirm": "Remove this person from your home?",
+    "empty": "No one else has joined yet."
+  },
+  "invitations": {
+    "title": "Invitations",
+    "inviteWorker": "Invite a helper",
+    "inviteMember": "Invite a family member",
+    "creating": "Creating…",
+    "active": "Active invitations",
+    "empty": "No active invitations.",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "revoke": "Cancel",
+    "revoking": "Cancelling…",
+    "expires": "Expires {date}",
+    "shareMessage": "Join my home on HomeList: {link}"
+  },
+  "worker": {
+    "yourHome": "Your home",
+    "waiting": "Shopping lists are coming soon."
+  },
+  "errors": {
+    "notOwner": "Only the home owner can do this.",
+    "invalidCode": "That code is not valid. Ask for a new one.",
+    "codeUsed": "That code was already used. Ask for a new one.",
+    "codeExpired": "That code has expired. Ask for a new one.",
+    "cannotRemoveOwner": "The home owner cannot be removed.",
+    "generic": "Something went wrong. Please try again."
   }
 }

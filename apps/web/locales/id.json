@@ -7,7 +7,9 @@
     "welcome": "Selamat datang",
     "comingSoon": "Segera hadir",
     "changeLanguage": "Ganti bahasa",
-    "logout": "Keluar"
+    "logout": "Keluar",
+    "back": "Kembali",
+    "cancel": "Batal"
   },
   "auth": {
     "phoneTitle": "Berapa nomor telepon Anda?",
@@ -26,5 +28,79 @@
     "invalidCode": "Kode itu tidak berhasil. Coba lagi.",
     "genericError": "Terjadi kesalahan. Silakan coba lagi.",
     "codeResent": "Kode telah dikirim ulang."
+  },
+  "roles": {
+    "owner": "Pemilik rumah",
+    "member": "Anggota keluarga",
+    "worker": "Asisten"
+  },
+  "onboarding": {
+    "title": "Mulai",
+    "joinHome": "Gabung ke rumah",
+    "joinHomeHint": "Anda punya kode undangan",
+    "createHome": "Buat rumah",
+    "createHomeHint": "Anda yang mengelola rumah"
+  },
+  "household": {
+    "createTitle": "Buat rumah Anda",
+    "nameLabel": "Nama rumah",
+    "yourNameLabel": "Nama Anda",
+    "create": "Buat rumah",
+    "creating": "Membuat…",
+    "nameRequired": "Masukkan nama untuk rumah Anda."
+  },
+  "join": {
+    "title": "Gabung ke rumah",
+    "codeLabel": "Kode undangan",
+    "codeHint": "Minta kode kepada pemilik rumah.",
+    "continue": "Lanjutkan",
+    "checking": "Memeriksa…",
+    "confirmTitle": "Anda bergabung ke",
+    "roleLabel": "Peran Anda",
+    "yourNameLabel": "Nama Anda",
+    "confirm": "Konfirmasi",
+    "joining": "Bergabung…"
+  },
+  "home": {
+    "title": "Rumah",
+    "people": "Orang",
+    "invitations": "Undangan",
+    "peopleCount": "{count} orang"
+  },
+  "members": {
+    "title": "Orang",
+    "you": "Anda",
+    "unnamed": "Belum ada nama",
+    "remove": "Hapus",
+    "removing": "Menghapus…",
+    "removeConfirm": "Hapus orang ini dari rumah Anda?",
+    "empty": "Belum ada orang lain yang bergabung."
+  },
+  "invitations": {
+    "title": "Undangan",
+    "inviteWorker": "Undang asisten",
+    "inviteMember": "Undang anggota keluarga",
+    "creating": "Membuat…",
+    "active": "Undangan aktif",
+    "empty": "Tidak ada undangan aktif.",
+    "share": "Bagikan",
+    "copyLink": "Salin tautan",
+    "copied": "Tersalin",
+    "revoke": "Batalkan",
+    "revoking": "Membatalkan…",
+    "expires": "Berakhir {date}",
+    "shareMessage": "Gabung ke rumah saya di HomeList: {link}"
+  },
+  "worker": {
+    "yourHome": "Rumah Anda",
+    "waiting": "Daftar belanja segera hadir."
+  },
+  "errors": {
+    "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",
+    "invalidCode": "Kode itu tidak valid. Minta yang baru.",
+    "codeUsed": "Kode itu sudah dipakai. Minta yang baru.",
+    "codeExpired": "Kode itu sudah kedaluwarsa. Minta yang baru.",
+    "cannotRemoveOwner": "Pemilik rumah tidak dapat dihapus.",
+    "generic": "Terjadi kesalahan. Silakan coba lagi."
   }
 }

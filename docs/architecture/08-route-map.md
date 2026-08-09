@@ -66,20 +66,45 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Implementation status (Phase 2 + 3)
+## 4. Implementation status (Phases 2-4)
 
-- `/` is a server component with two sequential gates: no locale cookie
-  → `redirect("/welcome")` (Phase 2); locale set but no session →
-  `redirect("/login")` (Phase 3); both pass → renders a placeholder
-  `HomeShell` (still not the real dashboard — that's Phase 4's household-
-  membership check, per §1 above).
-- `/login` and `/login/verify` are built (`06-auth-otp-flow.md` §7).
-  `/onboarding`, `/join/[code]`, `/household/new`, and everything under
-  `(worker)`/`(household)` are still unbuilt — Phase 4 onward.
-- `HomeShell` carries a "Change language" link back to `/welcome` and a
-  working "Log out" button — a language already chosen, or a session
-  already established, can always be revisited/exited; neither `/welcome`
-  nor `/login` become unreachable once their respective state exists.
+`/` is now pure routing with no UI of its own, gating in order: no locale
+cookie → `/welcome`; no session → `/login`; no household → `/onboarding`;
+otherwise → `/worker` for a Worker, `/home` for an Owner/Member.
+
+Built as of Phase 4:
+
+```text
+/welcome                 language picker                    [Phase 2]
+/login, /login/verify    phone + OTP                        [Phase 3]
+/onboarding              join-vs-create fork                [Phase 4]
+/household/new           create a household (become Owner)  [Phase 4]
+/join                    manual invitation-code entry       [Phase 4]
+/join/[code]             invitation deep link               [Phase 4]
+/home                    household dashboard                [Phase 4]
+/home/members            roster + remove (Owner acts)       [Phase 4]
+/home/invitations        create / share / revoke (Owner)    [Phase 4]
+/worker                  worker home placeholder            [Phase 4]
+```
+
+Still unbuilt: everything under `/worker/*` beyond the placeholder
+(Phase 6), `/home/lists*` (Phase 7), `/home/settings`, `/home/profile`,
+`/worker/profile`, and `/switch-household`.
+
+Notes on the guards themselves:
+
+- `lib/household/guard.ts` centralizes them: `requireHouseholdAccess()`,
+  `requireOwner()`, `requireWorkerAccess()`. Each redirects rather than
+  erroring, so a Worker who opens `/home/invitations` lands somewhere
+  useful instead of on a 403.
+- These are **defense in depth, not the boundary**. Every route they
+  guard is also protected by RLS and by the RPCs' own `auth.uid()`
+  checks, so bypassing the route layer changes nothing —
+  `10-security-model.md` §5A.
+- The `/join/[code]` deep link forwards an unauthenticated visitor to
+  `/login?next=/join/<code>` and returns them afterwards.
+  `lib/auth/nextPath.ts` restricts that parameter to same-site absolute
+  paths, so it can't be used as an open redirect.
 - Session refresh is handled by `proxy.ts` (Next.js 16 renamed
   `middleware.ts` — see `06-auth-otp-flow.md` §7), not by any individual
   route.

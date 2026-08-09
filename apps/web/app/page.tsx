@@ -1,20 +1,25 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-import { HomeShell } from "@/components/HomeShell";
 import { getServerUserProfile } from "@/lib/auth/session";
+import { getPrimaryMembership } from "@/lib/household/queries";
 import { isSupportedLocale } from "@/lib/i18n/config";
 import { LOCALE_COOKIE_NAME } from "@/lib/i18n/cookie";
 
-// Root route. Once Phase 4 (households) exists this becomes a full
-// household-membership redirect (docs/architecture/08-route-map.md).
-// For now it gates on two things in order:
-//   1. Locale chosen yet? No cookie -> /welcome (Phase 2 behavior,
-//      unchanged — this also doubles as "locale survives reload":
-//      reloading "/" after choosing a language never bounces back).
-//   2. Signed in? No session -> /login (Phase 3). Signed in -> render
-//      the (still placeholder) authenticated shell.
-export default async function HomePage() {
+/**
+ * Root route — pure routing, no UI of its own. Gates in order
+ * (docs/architecture/08-route-map.md §1):
+ *
+ *   1. locale chosen?   no -> /welcome           (Phase 2)
+ *   2. signed in?       no -> /login             (Phase 3)
+ *   3. in a household?  no -> /onboarding        (Phase 4)
+ *   4. which role?      worker -> /worker, owner|member -> /home
+ *
+ * Each destination re-checks its own preconditions, so landing on one
+ * directly is equally safe — this is a convenience layer, not the
+ * security boundary (that is RLS plus the RPCs' own checks).
+ */
+export default async function RootPage() {
   const cookieStore = await cookies();
   const rawLocale = cookieStore.get(LOCALE_COOKIE_NAME)?.value;
 
@@ -27,5 +32,10 @@ export default async function HomePage() {
     redirect("/login");
   }
 
-  return <HomeShell phoneNumber={profile.phone_number} />;
+  const membership = await getPrimaryMembership();
+  if (!membership) {
+    redirect("/onboarding");
+  }
+
+  redirect(membership.role === "worker" ? "/worker" : "/home");
 }

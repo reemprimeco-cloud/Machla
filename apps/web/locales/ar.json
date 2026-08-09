@@ -7,7 +7,9 @@
     "welcome": "أهلاً بك",
     "comingSoon": "قريباً",
     "changeLanguage": "تغيير اللغة",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "back": "رجوع",
+    "cancel": "إلغاء"
   },
   "auth": {
     "phoneTitle": "ما هو رقم هاتفك؟",
@@ -26,5 +28,79 @@
     "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
     "genericError": "حدث خطأ ما. حاول مرة أخرى.",
     "codeResent": "تم إعادة إرسال الرمز."
+  },
+  "roles": {
+    "owner": "صاحب البيت",
+    "member": "فرد من العائلة",
+    "worker": "مساعدة"
+  },
+  "onboarding": {
+    "title": "لنبدأ",
+    "joinHome": "الانضمام إلى بيت",
+    "joinHomeHint": "لديك رمز دعوة",
+    "createHome": "إنشاء بيت",
+    "createHomeHint": "أنت تدير البيت"
+  },
+  "household": {
+    "createTitle": "أنشئ بيتك",
+    "nameLabel": "اسم البيت",
+    "yourNameLabel": "اسمك",
+    "create": "إنشاء البيت",
+    "creating": "جارٍ الإنشاء…",
+    "nameRequired": "أدخل اسمًا لبيتك."
+  },
+  "join": {
+    "title": "الانضمام إلى بيت",
+    "codeLabel": "رمز الدعوة",
+    "codeHint": "اطلب الرمز من صاحب البيت.",
+    "continue": "متابعة",
+    "checking": "جارٍ التحقق…",
+    "confirmTitle": "أنت تنضم إلى",
+    "roleLabel": "دورك",
+    "yourNameLabel": "اسمك",
+    "confirm": "تأكيد",
+    "joining": "جارٍ الانضمام…"
+  },
+  "home": {
+    "title": "البيت",
+    "people": "الأشخاص",
+    "invitations": "الدعوات",
+    "peopleCount": "{count} أشخاص"
+  },
+  "members": {
+    "title": "الأشخاص",
+    "you": "أنت",
+    "unnamed": "بدون اسم بعد",
+    "remove": "إزالة",
+    "removing": "جارٍ الإزالة…",
+    "removeConfirm": "هل تريد إزالة هذا الشخص من بيتك؟",
+    "empty": "لم ينضم أحد آخر بعد."
+  },
+  "invitations": {
+    "title": "الدعوات",
+    "inviteWorker": "دعوة مساعدة",
+    "inviteMember": "دعوة فرد من العائلة",
+    "creating": "جارٍ الإنشاء…",
+    "active": "الدعوات النشطة",
+    "empty": "لا توجد دعوات نشطة.",
+    "share": "مشاركة",
+    "copyLink": "نسخ الرابط",
+    "copied": "تم النسخ",
+    "revoke": "إلغاء",
+    "revoking": "جارٍ الإلغاء…",
+    "expires": "تنتهي في {date}",
+    "shareMessage": "انضم إلى بيتي على هوم ليست: {link}"
+  },
+  "worker": {
+    "yourHome": "بيتك",
+    "waiting": "قوائم التسوق قريباً."
+  },
+  "errors": {
+    "notOwner": "صاحب البيت فقط يمكنه القيام بذلك.",
+    "invalidCode": "الرمز غير صالح. اطلب رمزًا جديدًا.",
+    "codeUsed": "تم استخدام هذا الرمز من قبل. اطلب رمزًا جديدًا.",
+    "codeExpired": "انتهت صلاحية هذا الرمز. اطلب رمزًا جديدًا.",
+    "cannotRemoveOwner": "لا يمكن إزالة صاحب البيت.",
+    "generic": "حدث خطأ ما. حاول مرة أخرى."
   }
 }

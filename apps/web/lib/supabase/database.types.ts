@@ -236,7 +236,58 @@ export interface Database {
       };
     };
     Views: Record<string, never>;
-    Functions: Record<string, never>;
+    Functions: {
+      // Phase 4 RPCs — supabase/migrations/*_phase4_households.sql.
+      // These are the only write paths into households /
+      // household_members / household_invitations
+      // (docs/architecture/10-security-model.md §1).
+      create_household: {
+        Args: { p_name: string };
+        Returns: string;
+      };
+      create_invitation: {
+        Args: { p_household_id: string; p_role: "member" | "worker"; p_expires_in_days?: number };
+        Returns: {
+          id: string;
+          code: string;
+          role: "member" | "worker";
+          expires_at: string;
+        }[];
+      };
+      revoke_invitation: {
+        Args: { p_invitation_id: string };
+        Returns: undefined;
+      };
+      preview_invitation: {
+        Args: { p_code: string };
+        Returns: { household_name: string; role: "member" | "worker" }[];
+      };
+      accept_invitation: {
+        Args: { p_code: string };
+        Returns: string;
+      };
+      remove_household_member: {
+        Args: { p_household_id: string; p_user_id: string };
+        Returns: undefined;
+      };
+      get_household_members: {
+        Args: { p_household_id: string };
+        Returns: {
+          user_id: string;
+          display_name: string | null;
+          role: HouseholdRole;
+          joined_at: string;
+        }[];
+      };
+      expire_stale_invitations: {
+        Args: Record<string, never>;
+        Returns: number;
+      };
+      is_active_member: {
+        Args: { p_household_id: string; p_roles?: string[] };
+        Returns: boolean;
+      };
+    };
     Enums: Record<string, never>;
   };
 }

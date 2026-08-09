@@ -111,3 +111,44 @@ Routed into the Worker experience for that household
 4. Nothing about a household (name, member list, existing lists) is
    exposed to a non-member beyond the minimal `{household_name, role}`
    preview, and only for someone holding a valid code for it.
+
+## 7. Phase 4 implementation status
+
+Implemented in `supabase/migrations/*_phase4_households.sql` as the RPCs
+described above, plus `remove_household_member`, `get_household_members`,
+and `expire_stale_invitations`. Every one of the security properties in
+§6 has a corresponding assertion in
+`supabase/tests/01_phase4_households_test.sql` (72 assertions total, run
+via `supabase/tests/run-tests.sh`).
+
+Details worth recording, where implementation had to decide something §1-6
+left open:
+
+- **Code alphabet.** Crockford base32 (`0123456789ABCDEFGHJKMNPQRSTVWXYZ`
+  — no I, L, O, or U), 8 characters, 40 bits. Generated codes therefore
+  never contain the ambiguous letters at all, and
+  `normalize_invitation_code()` maps a typed `O`→`0` and `I`/`L`→`1` on
+  the way in. Because the generator can't emit those letters, that
+  normalization can only ever repair a typo — it can never collide two
+  distinct real codes. Input is also uppercased and stripped of the
+  display hyphen, so `k7p4-m2qx` and `K7P4M2QX` are the same code.
+- **Preview failure is indistinguishable.** `preview_invitation` returns
+  zero rows for invalid, expired, revoked, *and* already-accepted codes
+  alike, so a caller can't use it to probe which codes exist.
+- **Re-inviting a removed person reactivates** their existing
+  `household_members` row rather than inserting a second one, which the
+  `(household_id, user_id)` unique constraint would reject. Their role is
+  taken from the new invitation, so a returning worker can come back as a
+  member (or vice versa).
+- **Accepting while already an active member is a friendly no-op** that
+  deliberately leaves the invitation `pending` — a double-tap on the
+  confirm button shouldn't silently burn a single-use code.
+- **Expiry window** is 7 days by default, and `create_invitation` accepts
+  1–30; anything outside that range is rejected server-side.
+
+Scheduling `expire_stale_invitations()` (pg_cron or a Supabase scheduled
+function) is a dashboard step deferred until a live project exists.
+Correctness does not depend on it: `preview_invitation` and
+`accept_invitation` both re-check `expires_at` at call time, so an
+un-swept row is still unusable. The sweep only keeps the owner's
+invitation list tidy.
