@@ -45,19 +45,28 @@ present, and separately if the anon key turns out to carry a role other
 than `anon` — the specific accident of pasting the wrong key into a
 `NEXT_PUBLIC_` variable, which would ship it to every browser.
 
-### 2.3 Supabase — the launch blocker
+### 2.3 Supabase — authentication
 
-**Phone auth is not enabled, so nobody can sign in.** Everything else in
-this document is ready; this is not.
+**Phone auth and an SMS provider (Twilio) are now enabled.** This was the
+launch blocker since Phase 0 (item 10); it is done. What remains here:
 
-1. Authentication → Providers → **Phone**: enable.
-2. Choose and configure an SMS provider (Twilio, MessageBird or Vonage).
-   This has been the open decision since Phase 0 (item 10) and it costs
-   money per message, which is why it is a decision rather than a default.
-3. Consider an OTP rate limit per number — the invitation flow is
-   protected, but the login flow's cost is per SMS sent.
-4. Authentication → URL Configuration → add the production domain to the
+1. **Disable the Email provider**, which Supabase enables by default and
+   which was found on. It is an account-creation surface with no cost
+   barrier, and §6 of `06-auth-otp-flow.md` rules out email sign-in.
+   `20260810120000_phone_only_identity.sql` now refuses phone-less
+   signups in the database regardless — see §5A there for why both.
+2. **Confirm SMS OTP Length is 6.** `app/login/verify/page.tsx` will not
+   let a user submit any other length, silently.
+3. **Raise SMS OTP Expiry** from the 60-second default; 300 suits shared
+   phones and app-switching.
+4. **Set a rate limit** (Authentication → Rate Limits). The invitation
+   flow is protected in the database, but the login flow's cost is per
+   SMS sent and nothing outside Supabase caps it.
+5. Authentication → URL Configuration → add the production domain to the
    redirect allow-list.
+6. Confirm with Twilio that +965 delivery works on the account before
+   launch — sender-ID rules vary by destination, and a message that is
+   accepted by the API can still fail to arrive.
 
 ### 2.4 Database backups
 
@@ -130,16 +139,18 @@ silent in every other kind of test.
 ```bash
 cd apps/web
 npm run preflight        # locales, env, types, lint, build
-./../../supabase/tests/run-tests.sh   # 260 assertions
+./../../supabase/tests/run-tests.sh   # 267 assertions
 ```
 
 Then, in order:
 
-1. Supabase: phone auth + SMS provider enabled (§2.3).
+1. Supabase: phone auth done; finish the rest of §2.3 (disable Email,
+   OTP length/expiry, rate limit, redirect allow-list).
 2. Vercel: project imported with root directory `apps/web`, env vars set.
 3. Deploy. Confirm the response carries `Content-Security-Policy` with a
    `nonce-` value that differs between two requests.
-4. Sign in with a real phone number end to end — this is the one path that
-   has never been exercised, because it cannot be until §2.3 is done.
+4. Sign in with a real phone number end to end. This is still the one
+   path never exercised: the provider is configured, but no account has
+   ever been created through it, and the database has zero users.
 5. Install the PWA on an Android phone and confirm the home-screen icon is
    the maskable one, not a letterboxed square.

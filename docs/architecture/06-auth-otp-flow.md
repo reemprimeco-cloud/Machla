@@ -122,6 +122,32 @@ Rate limits themselves live in Authentication → Rate Limits, not in the
 provider panel, and are worth setting before launch for the same reason:
 the cost of the login path is per message sent.
 
+**Every other provider should be disabled, Email included.** Supabase
+enables Email by default, and it was found enabled on this project when
+phone auth was switched on. It is not merely unused — §6 rules it out —
+it is an account-creation surface with *no cost barrier*, unlike SMS.
+
+It also had a concrete consequence, measured rather than assumed:
+
+```text
+1st email signup  -> succeeded, users.phone_number = ''
+2nd email signup  -> FAILED, unique_violation on users.phone_number
+```
+
+`handle_new_user` wrote `coalesce(new.phone, '')`, and `phone_number` is
+`NOT NULL UNIQUE` — so the empty string is a sentinel exactly one account
+can hold, and the second phone-less signup died inside the trigger as an
+unexplained 500. `20260810120000_phone_only_identity.sql` now rejects any
+phone-less signup outright with `PHONE_REQUIRED`, with the reasoning for
+that choice over two alternatives written in the migration itself.
+
+That fix does not make disabling Email optional. It moves the guarantee
+into the database, where the rest of this project's guarantees live,
+instead of resting on a dashboard toggle someone can flip without seeing
+the consequence. Covered by `supabase/tests/08_phone_identity_test.sql`,
+whose assertions were confirmed to fail against the old trigger before
+being trusted.
+
 ## 6. Explicit non-goals for V1 auth
 
 - No email/password option.

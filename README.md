@@ -8,8 +8,9 @@ nine languages, with pictures instead of prose.
 experiences; one Supabase project holds the data and every authorization
 rule.
 
-> **Not launchable yet.** Phone authentication is not enabled on the
-> Supabase project, so nobody can sign in — see
+> **Phone authentication is live** (Supabase + Twilio), but no account
+> has ever been created through it and the database has zero users —
+> signing in end to end is the next thing to prove. See
 > [Before it can launch](#before-it-can-launch).
 
 ## What it does
@@ -31,7 +32,7 @@ properties throughout rather than mirrored stylesheets.
 ```text
 apps/web/            the Next.js application (both experiences)
 supabase/migrations/ the schema, RLS policies and every write RPC
-supabase/tests/      260 SQL assertions, run as `authenticated`
+supabase/tests/      267 SQL assertions, run as `authenticated`
 catalog-import/      catalogue source data + importer (run from a laptop)
 docs/architecture/   19 documents; start at 00-index.md
 ```
@@ -58,9 +59,9 @@ before writing any second client.
 ```bash
 cd apps/web
 npm install
-npm run preflight              # locales (147 keys × 9), env, tsc, lint, build
+npm run preflight              # locales (148 keys × 9), env, tsc, lint, build
 
-./../../supabase/tests/run-tests.sh   # 260 assertions against a local Postgres
+./../../supabase/tests/run-tests.sh   # 267 assertions against a local Postgres
 ```
 
 `npm run dev` needs `NEXT_PUBLIC_SUPABASE_URL` and
@@ -74,10 +75,12 @@ These need dashboard access and cannot be done from this repository.
 [`docs/architecture/17-deployment.md`](docs/architecture/17-deployment.md)
 has the detail.
 
-1. **Supabase → Authentication → Providers → Phone**, plus an SMS provider
-   (Twilio / MessageBird / Vonage). Open since Phase 0; it costs money per
-   message, which is why it is a decision and not a default. Until it is
-   done, sign-in is the one path that has never been exercised end to end.
+1. **Finish the auth configuration.** Phone + Twilio are enabled; still
+   to do: disable the Email provider (on by default, and ruled out by
+   design), confirm SMS OTP length is 6, raise the OTP expiry from 60s,
+   and set a send rate limit. `docs/architecture/06-auth-otp-flow.md` §5A
+   explains each. Then sign in with a real phone, which is the one path
+   never exercised.
 2. **A backup plan for the database.** The free tier has none, and this
    project holds the only copy of every household's data. The catalogue is
    reproducible from `catalog-import/`; households, lists and memberships

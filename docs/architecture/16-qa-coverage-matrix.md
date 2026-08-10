@@ -4,7 +4,7 @@ Where each thing the master plan's Phase 10 asks for is actually verified.
 The point of the table is traceability: if a row has no location, it is not
 tested, and saying so is more useful than implying otherwise.
 
-The SQL suite runs with `./supabase/tests/run-tests.sh` (260 assertions).
+The SQL suite runs with `./supabase/tests/run-tests.sh` (267 assertions).
 Browser checks are ephemeral Playwright runs, re-creatable from the
 commands in §3.
 
@@ -12,13 +12,13 @@ commands in §3.
 
 | Requirement | Where | Notes |
 |---|---|---|
-| Authentication tests | `01`, `04`-`07` (`AUTH_REQUIRED` paths) | Signed-out callers refused by every RPC |
+| Authentication tests | `01`, `04`-`08` (`AUTH_REQUIRED` paths) | Signed-out callers refused by every RPC; `08` covers phone-only identity at signup |
 | Authorization tests | `01`, `04`, `05`, `07` | Role matrix enforced in Postgres |
 | RLS tests | `04`-`07`, run as `authenticated` | Superuser bypasses RLS, so the role switch is what makes them real |
 | Invitation security tests | `01` | Expiry, reuse, revocation, row-locking |
 | Cross-household access tests | `04` §4, `05` §6, `06` §7 | Both RPC and direct-read paths |
 | RTL tests | Playwright, 9 locales × 3 viewports | `dir`/`lang` asserted per locale |
-| All 9 language tests | Playwright + `check-locales.mjs` | Key parity 147 keys × 9 |
+| All 9 language tests | Playwright + `check-locales.mjs` | Key parity 148 keys × 9 |
 | Mobile browser tests | Playwright at 320/375/412 | No viewport overflow on either edge |
 | PWA install tests | §3 below | Manifest, icons, maskable, service worker |
 | Performance tests | §2 below + `07` §2 | Advisors, indexes, transfer weight |
@@ -52,9 +52,11 @@ Chromium at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`:
   resolve, and a **maskable** icon; the service worker registers and takes
   scope.
 
-Routes behind authentication cannot be reached here (phone auth is not
-configured), so the worker/household screens are audited through a
-temporary preview route with hostile fixtures, removed afterwards.
+Routes behind authentication were audited through a temporary preview
+route with hostile fixtures, removed afterwards: at the time these ran,
+phone auth was not yet enabled, so no session could be established. Phone
+auth is enabled now, and a signed-in re-run of these checks is worth
+doing once a real account exists.
 
 ## 4. Measured, and deliberately not fixed
 

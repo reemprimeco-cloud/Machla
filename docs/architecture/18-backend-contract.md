@@ -103,6 +103,12 @@ mirror the same list.
 `LIST_EMPTY`, `INVALID_QUANTITY`, `INVALID_STATUS`, `PRODUCT_NOT_FOUND`,
 `ITEM_NOT_FOUND`, `NOT_HOUSEHOLD_SIDE`, `INVALID_TYPE`.
 
+`PHONE_REQUIRED` is the one code a client never calls an RPC to receive:
+it comes from the `auth.users` insert trigger, so it surfaces at signup
+through Supabase Auth rather than through PostgREST. A native client that
+offers any non-phone sign-in method will meet it
+(`06-auth-otp-flow.md` §5A).
+
 `LIST_NOT_FOUND` deliberately covers both "does not exist" and "belongs to
 someone else" — probing ids must reveal nothing. A native client must not
 try to be more specific than the database was.
