@@ -1,0 +1,6 @@
+# Licensed image files are never committed: the repository is not the
+# right home for stock assets, and a stock licence is granted to you, not
+# to everyone who clones this.
+*
+!.gitignore
+!README.md

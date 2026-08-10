@@ -21,523 +21,3860 @@
     "unit: the default unit for this type; a product may override it."
   ],
   "types": [
-    { "key": "tomato", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Tomatoes", "ar": "طماطم", "hi": "टमाटर", "te": "టమాటాలు", "ur": "ٹماٹر", "fil": "Kamatis", "ne": "गोलभेँडा", "id": "Tomat", "si": "තක්කාලි" },
-      "keywords": ["tomato", "tamatar", "kamatis", "tamatim", "thakkali"] },
-    { "key": "potato", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Potatoes", "ar": "بطاطس", "hi": "आलू", "te": "బంగాళాదుంపలు", "ur": "آلو", "fil": "Patatas", "ne": "आलु", "id": "Kentang", "si": "අර්තාපල්" },
-      "keywords": ["potato", "aloo", "patatas", "batata", "kentang", "ala"] },
-    { "key": "onion", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Onions", "ar": "بصل", "hi": "प्याज़", "te": "ఉల్లిపాయలు", "ur": "پیاز", "fil": "Sibuyas", "ne": "प्याज", "id": "Bawang Merah", "si": "ලූනු" },
-      "keywords": ["onion", "pyaz", "sibuyas", "basal", "bawang", "loonu"] },
-    { "key": "cucumber", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Cucumber", "ar": "خيار", "hi": "खीरा", "te": "దోసకాయ", "ur": "کھیرا", "fil": "Pipino", "ne": "काँक्रो", "id": "Timun", "si": "පිපිඤ්ඤා" },
-      "keywords": ["cucumber", "khiyar", "kheera", "pipino", "timun"] },
-    { "key": "carrot", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Carrots", "ar": "جزر", "hi": "गाजर", "te": "క్యారెట్లు", "ur": "گاجر", "fil": "Karot", "ne": "गाजर", "id": "Wortel", "si": "කැරට්" },
-      "keywords": ["carrot", "gajar", "jazar", "karot", "wortel"] },
-    { "key": "lettuce", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Lettuce", "ar": "خس", "hi": "सलाद पत्ता", "te": "లెట్యూస్", "ur": "سلاد پتہ", "fil": "Litsugas", "ne": "सलाद पात", "id": "Selada", "si": "සලාද කොළ" },
-      "keywords": ["lettuce", "khas", "litsugas", "selada"] },
-    { "key": "capsicum", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Bell Pepper", "ar": "فلفل رومي", "hi": "शिमला मिर्च", "te": "క్యాప్సికం", "ur": "شملہ مرچ", "fil": "Bell Pepper", "ne": "भेडे खुर्सानी", "id": "Paprika", "si": "මාළු මිරිස්" },
-      "keywords": ["capsicum", "bell pepper", "shimla mirch", "paprika"] },
-    { "key": "garlic", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Garlic", "ar": "ثوم", "hi": "लहसुन", "te": "వెల్లుల్లి", "ur": "لہسن", "fil": "Bawang", "ne": "लसुन", "id": "Bawang Putih", "si": "සුදුළූනු" },
-      "keywords": ["garlic", "thoum", "lahsun", "bawang", "lasun"] },
-    { "key": "ginger", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Ginger", "ar": "زنجبيل", "hi": "अदरक", "te": "అల్లం", "ur": "ادرک", "fil": "Luya", "ne": "अदुवा", "id": "Jahe", "si": "ඉඟුරු" },
-      "keywords": ["ginger", "adrak", "luya", "jahe", "zanjabeel"] },
-    { "key": "lemon", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Lemon", "ar": "ليمون", "hi": "नींबू", "te": "నిమ్మకాయ", "ur": "لیموں", "fil": "Limon", "ne": "कागती", "id": "Lemon", "si": "දෙහි" },
-      "keywords": ["lemon", "laimun", "nimbu", "limon", "kagati"] },
-    { "key": "banana", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Bananas", "ar": "موز", "hi": "केला", "te": "అరటిపండ్లు", "ur": "کیلا", "fil": "Saging", "ne": "केरा", "id": "Pisang", "si": "කෙසෙල්" },
-      "keywords": ["banana", "mouz", "kela", "saging", "pisang", "kesel"] },
-    { "key": "apple", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Apples", "ar": "تفاح", "hi": "सेब", "te": "యాపిల్స్", "ur": "سیب", "fil": "Mansanas", "ne": "स्याउ", "id": "Apel", "si": "ඇපල්" },
-      "keywords": ["apple", "tuffah", "seb", "mansanas", "apel", "syau"] },
-    { "key": "orange", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Oranges", "ar": "برتقال", "hi": "संतरा", "te": "నారింజ", "ur": "سنترہ", "fil": "Dalandan", "ne": "सुन्तला", "id": "Jeruk", "si": "දොඩම්" },
-      "keywords": ["orange", "burtuqal", "santra", "dalandan", "jeruk"] },
-    { "key": "grapes", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Grapes", "ar": "عنب", "hi": "अंगूर", "te": "ద్రాక్ష", "ur": "انگور", "fil": "Ubas", "ne": "अंगुर", "id": "Anggur", "si": "මිදි" },
-      "keywords": ["grapes", "inab", "angoor", "ubas", "anggur"] },
-    { "key": "watermelon", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Watermelon", "ar": "بطيخ", "hi": "तरबूज़", "te": "పుచ్చకాయ", "ur": "تربوز", "fil": "Pakwan", "ne": "हर्बुजा", "id": "Semangka", "si": "පැණි කොමඩු" },
-      "keywords": ["watermelon", "battikh", "tarbooz", "pakwan", "semangka"] },
-    { "key": "mango", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Mangoes", "ar": "مانجو", "hi": "आम", "te": "మామిడి పండ్లు", "ur": "آم", "fil": "Mangga", "ne": "आँप", "id": "Mangga", "si": "අඹ" },
-      "keywords": ["mango", "aam", "mangga", "amba"] },
-    { "key": "dates", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Dates", "ar": "تمر", "hi": "खजूर", "te": "ఖర్జూరం", "ur": "کھجور", "fil": "Datiles", "ne": "छोहडा", "id": "Kurma", "si": "රටඉඳි" },
-      "keywords": ["dates", "tamr", "khajoor", "kurma", "datiles"] },
-    { "key": "cabbage", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Cabbage", "ar": "ملفوف", "hi": "पत्ता गोभी", "te": "క్యాబేజీ", "ur": "بند گوبھی", "fil": "Repolyo", "ne": "बन्दा", "id": "Kubis", "si": "ගෝවා" },
-      "keywords": ["cabbage", "malfouf", "gobhi", "repolyo", "kubis"] },
-    { "key": "eggplant", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Eggplant", "ar": "باذنجان", "hi": "बैंगन", "te": "వంకాయ", "ur": "بینگن", "fil": "Talong", "ne": "भन्टा", "id": "Terong", "si": "වම්බටු" },
-      "keywords": ["eggplant", "brinjal", "badhinjan", "baingan", "talong", "terong"] },
-    { "key": "zucchini", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Zucchini", "ar": "كوسا", "hi": "तोरी", "te": "గుమ్మడికాయ", "ur": "گھیا", "fil": "Kalabasa", "ne": "फर्सी", "id": "Zukini", "si": "සුදු පුහුල්" },
-      "keywords": ["zucchini", "kousa", "tori", "ghiya"] },
-    { "key": "green_chili", "category": "fruits_vegetables", "unit": "kg",
-      "names": { "en": "Green Chili", "ar": "فلفل أخضر حار", "hi": "हरी मिर्च", "te": "పచ్చిమిర్చి", "ur": "ہری مرچ", "fil": "Siling Berde", "ne": "हरियो खुर्सानी", "id": "Cabai Hijau", "si": "අමු මිරිස්" },
-      "keywords": ["chili", "mirch", "sili", "filfil", "cabai"] },
-    { "key": "coriander_fresh", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Fresh Coriander", "ar": "كزبرة خضراء", "hi": "हरा धनिया", "te": "కొత్తిమీర", "ur": "ہرا دھنیا", "fil": "Wansoy", "ne": "धनियाँ", "id": "Daun Ketumbar", "si": "කොත්තමල්ලි කොළ" },
-      "keywords": ["coriander", "cilantro", "kuzbara", "dhania", "wansoy"] },
-    { "key": "mint", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Mint", "ar": "نعناع", "hi": "पुदीना", "te": "పుదీనా", "ur": "پودینہ", "fil": "Mint", "ne": "पुदिना", "id": "Daun Mint", "si": "මින්ට්" },
-      "keywords": ["mint", "naanaa", "pudina"] },
-    { "key": "spinach", "category": "fruits_vegetables", "unit": "pcs",
-      "names": { "en": "Spinach", "ar": "سبانخ", "hi": "पालक", "te": "పాలకూర", "ur": "پالک", "fil": "Spinach", "ne": "पालुङ्गो", "id": "Bayam", "si": "නිවිති" },
-      "keywords": ["spinach", "sabanekh", "palak", "bayam"] },
-
-    { "key": "milk_fresh", "category": "dairy_eggs", "unit": "l",
-      "names": { "en": "Fresh Milk", "ar": "حليب طازج", "hi": "ताज़ा दूध", "te": "తాజా పాలు", "ur": "تازہ دودھ", "fil": "Sariwang Gatas", "ne": "ताजा दूध", "id": "Susu Segar", "si": "නැවුම් කිරි" },
-      "keywords": ["milk", "gatas", "doodh", "dudh", "haleeb", "susu", "kiri", "palu"] },
-    { "key": "milk_long_life", "category": "dairy_eggs", "unit": "l",
-      "names": { "en": "Long Life Milk", "ar": "حليب طويل الأجل", "hi": "लॉन्ग लाइफ दूध", "te": "లాంగ్ లైఫ్ పాలు", "ur": "لمبی مدت والا دودھ", "fil": "Long Life na Gatas", "ne": "लामो समय टिक्ने दूध", "id": "Susu UHT", "si": "දිගු කල් පවතින කිරි" },
-      "keywords": ["uht milk", "long life milk", "haleeb", "doodh"] },
-    { "key": "laban", "category": "dairy_eggs", "unit": "l",
-      "names": { "en": "Laban", "ar": "لبن", "hi": "छाछ", "te": "మజ్జిగ", "ur": "لسی", "fil": "Laban", "ne": "मोही", "id": "Susu Asam", "si": "මෝරු" },
-      "keywords": ["laban", "buttermilk", "chaas", "lassi", "majjiga"] },
-    { "key": "yogurt", "category": "dairy_eggs", "unit": "pcs",
-      "names": { "en": "Yogurt", "ar": "زبادي", "hi": "दही", "te": "పెరుగు", "ur": "دہی", "fil": "Yogurt", "ne": "दही", "id": "Yogurt", "si": "යෝගට්" },
-      "keywords": ["yogurt", "zabadi", "dahi", "curd", "perugu"] },
-    { "key": "labneh", "category": "dairy_eggs", "unit": "pcs",
-      "names": { "en": "Labneh", "ar": "لبنة", "hi": "लब्नेह", "te": "లబ్నే", "ur": "لبنہ", "fil": "Labneh", "ne": "लब्नेह", "id": "Labneh", "si": "ලබ්නේ" },
-      "keywords": ["labneh", "labna"] },
-    { "key": "cheese_slices", "category": "dairy_eggs", "unit": "pack",
-      "names": { "en": "Cheese Slices", "ar": "شرائح جبن", "hi": "चीज़ स्लाइस", "te": "చీజ్ స్లైసెస్", "ur": "چیز سلائس", "fil": "Cheese Slices", "ne": "चिज स्लाइस", "id": "Keju Lembaran", "si": "චීස් පෙති" },
-      "keywords": ["cheese", "jibn", "paneer", "keso", "keju"] },
-    { "key": "cheese_white", "category": "dairy_eggs", "unit": "pack",
-      "names": { "en": "White Cheese", "ar": "جبن أبيض", "hi": "सफ़ेद पनीर", "te": "తెల్ల చీజ్", "ur": "سفید پنیر", "fil": "Puting Keso", "ne": "सेतो चिज", "id": "Keju Putih", "si": "සුදු චීස්" },
-      "keywords": ["white cheese", "jibn abyad", "feta", "paneer"] },
-    { "key": "cheese_triangles", "category": "dairy_eggs", "unit": "box",
-      "names": { "en": "Cheese Triangles", "ar": "جبن مثلثات", "hi": "चीज़ ट्रायंगल", "te": "చీజ్ ట్రయాంగిల్స్", "ur": "مثلث پنیر", "fil": "Cheese Triangles", "ne": "त्रिकोण चिज", "id": "Keju Segitiga", "si": "ත්‍රිකෝණ චීස්" },
-      "keywords": ["cheese triangle", "jibn muthalathat"] },
-    { "key": "cream", "category": "dairy_eggs", "unit": "pcs",
-      "names": { "en": "Cream", "ar": "قشطة", "hi": "क्रीम", "te": "క్రీమ్", "ur": "کریم", "fil": "Cream", "ne": "क्रिम", "id": "Krim", "si": "ක්‍රීම්" },
-      "keywords": ["cream", "qishta", "malai"] },
-    { "key": "butter", "category": "dairy_eggs", "unit": "pack",
-      "names": { "en": "Butter", "ar": "زبدة", "hi": "मक्खन", "te": "వెన్న", "ur": "مکھن", "fil": "Mantikilya", "ne": "मक्खन", "id": "Mentega", "si": "බටර්" },
-      "keywords": ["butter", "zubda", "makhan", "mantikilya", "mentega"] },
-    { "key": "eggs", "category": "dairy_eggs", "unit": "box",
-      "names": { "en": "Eggs", "ar": "بيض", "hi": "अंडे", "te": "గుడ్లు", "ur": "انڈے", "fil": "Itlog", "ne": "अण्डा", "id": "Telur", "si": "බිත්තර" },
-      "keywords": ["egg", "eggs", "baid", "anda", "itlog", "telur", "bittara", "gudlu"] },
-    { "key": "milk_powder", "category": "dairy_eggs", "unit": "pack",
-      "names": { "en": "Milk Powder", "ar": "حليب بودرة", "hi": "दूध पाउडर", "te": "పాల పొడి", "ur": "دودھ پاؤڈر", "fil": "Gatas na Pulbos", "ne": "दूध धूलो", "id": "Susu Bubuk", "si": "කිරි පිටි" },
-      "keywords": ["milk powder", "haleeb bodra", "doodh powder"] },
-
-    { "key": "chicken_whole", "category": "meat_chicken_fish", "unit": "pcs",
-      "names": { "en": "Whole Chicken", "ar": "دجاج كامل", "hi": "साबुत चिकन", "te": "మొత్తం చికెన్", "ur": "ثابت مرغی", "fil": "Buong Manok", "ne": "सिंगो कुखुरा", "id": "Ayam Utuh", "si": "මුළු කුකුල් මස්" },
-      "keywords": ["chicken", "dajaj", "murgi", "manok", "ayam", "kukhura", "kukul"] },
-    { "key": "chicken_breast", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Chicken Breast", "ar": "صدور دجاج", "hi": "चिकन ब्रेस्ट", "te": "చికెన్ బ్రెస్ట్", "ur": "مرغی کا سینہ", "fil": "Dibdib ng Manok", "ne": "कुखुराको छाती", "id": "Dada Ayam", "si": "කුකුල් මස් පපුව" },
-      "keywords": ["chicken breast", "sudur dajaj", "dibdib"] },
-    { "key": "chicken_legs", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Chicken Legs", "ar": "أفخاذ دجاج", "hi": "चिकन लेग", "te": "చికెన్ లెగ్స్", "ur": "مرغی کی ران", "fil": "Hita ng Manok", "ne": "कुखुराको खुट्टा", "id": "Paha Ayam", "si": "කුකුල් කකුල්" },
-      "keywords": ["chicken legs", "drumstick", "afkhad dajaj"] },
-    { "key": "minced_beef", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Minced Beef", "ar": "لحم مفروم", "hi": "कीमा", "te": "ముక్కల మాంసం", "ur": "قیمہ", "fil": "Giniling na Baka", "ne": "किमा", "id": "Daging Cincang", "si": "මිරිකූ හරක් මස්" },
-      "keywords": ["minced meat", "keema", "lahm mafroum", "giniling"] },
-    { "key": "beef_cubes", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Beef Cubes", "ar": "مكعبات لحم بقر", "hi": "बीफ़ क्यूब्स", "te": "బీఫ్ ముక్కలు", "ur": "بیف کیوبز", "fil": "Hiniwang Baka", "ne": "गाईको मासु टुक्रा", "id": "Daging Potong", "si": "හරක් මස් කැට" },
-      "keywords": ["beef", "lahm baqar", "gosht", "baka"] },
-    { "key": "mutton", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Mutton", "ar": "لحم غنم", "hi": "मटन", "te": "మటన్", "ur": "مٹن", "fil": "Kambing", "ne": "खसीको मासु", "id": "Daging Kambing", "si": "එළු මස්" },
-      "keywords": ["mutton", "lamb", "lahm ghanam", "gosht", "kambing"] },
-    { "key": "fish_hamour", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Hamour Fish", "ar": "سمك هامور", "hi": "हामूर मछली", "te": "హామూర్ చేప", "ur": "ہامور مچھلی", "fil": "Isdang Hamour", "ne": "हामुर माछा", "id": "Ikan Hamour", "si": "හමූර් මාළු" },
-      "keywords": ["fish", "samak", "machli", "isda", "ikan", "maalu", "hamour"] },
-    { "key": "fish_zubaidi", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Zubaidi Fish", "ar": "سمك زبيدي", "hi": "ज़ुबैदी मछली", "te": "జుబైదీ చేప", "ur": "زبیدی مچھلی", "fil": "Isdang Zubaidi", "ne": "जुबैदी माछा", "id": "Ikan Zubaidi", "si": "සුබයිදි මාළු" },
-      "keywords": ["fish", "samak", "zubaidi", "pomfret"] },
-    { "key": "shrimp", "category": "meat_chicken_fish", "unit": "kg",
-      "names": { "en": "Shrimp", "ar": "روبيان", "hi": "झींगा", "te": "రొయ్యలు", "ur": "جھینگا", "fil": "Hipon", "ne": "झिंगे", "id": "Udang", "si": "ඉස්සන්" },
-      "keywords": ["shrimp", "prawn", "rubian", "jhinga", "hipon", "udang"] },
-    { "key": "turkey_slices", "category": "meat_chicken_fish", "unit": "pack",
-      "names": { "en": "Turkey Slices", "ar": "شرائح ديك رومي", "hi": "टर्की स्लाइस", "te": "టర్కీ స్లైసెస్", "ur": "ٹرکی سلائس", "fil": "Turkey Slices", "ne": "टर्की स्लाइस", "id": "Irisan Kalkun", "si": "තුර්කිය පෙති" },
-      "keywords": ["turkey", "cold cuts", "deek roumi"] },
-
-    { "key": "arabic_bread", "category": "bakery", "unit": "pack",
-      "names": { "en": "Arabic Bread", "ar": "خبز عربي", "hi": "अरबी रोटी", "te": "అరబిక్ బ్రెడ్", "ur": "عربی روٹی", "fil": "Arabic Bread", "ne": "अरबी रोटी", "id": "Roti Arab", "si": "අරාබි පාන්" },
-      "keywords": ["bread", "khubz", "roti", "tinapay", "pita", "paan"] },
-    { "key": "sliced_bread", "category": "bakery", "unit": "pack",
-      "names": { "en": "Sliced Bread", "ar": "خبز توست", "hi": "ब्रेड", "te": "బ్రెడ్", "ur": "ڈبل روٹی", "fil": "Tinapay", "ne": "पाउरोटी", "id": "Roti Tawar", "si": "පාන් පෙති" },
-      "keywords": ["bread", "toast", "khubz toast", "tinapay", "roti"] },
-    { "key": "brown_bread", "category": "bakery", "unit": "pack",
-      "names": { "en": "Brown Bread", "ar": "خبز أسمر", "hi": "ब्राउन ब्रेड", "te": "బ్రౌన్ బ్రెడ్", "ur": "براؤن بریڈ", "fil": "Brown Bread", "ne": "ब्राउन ब्रेड", "id": "Roti Gandum", "si": "දුඹුරු පාන්" },
-      "keywords": ["brown bread", "wheat bread", "khubz asmar"] },
-    { "key": "burger_buns", "category": "bakery", "unit": "pack",
-      "names": { "en": "Burger Buns", "ar": "خبز برجر", "hi": "बर्गर बन", "te": "బర్గర్ బన్స్", "ur": "برگر بن", "fil": "Burger Buns", "ne": "बर्गर बन", "id": "Roti Burger", "si": "බර්ගර් බන්" },
-      "keywords": ["buns", "burger bread"] },
-    { "key": "croissant", "category": "bakery", "unit": "pack",
-      "names": { "en": "Croissant", "ar": "كرواسون", "hi": "क्रोइसैन", "te": "క్రోసెంట్", "ur": "کروساں", "fil": "Croissant", "ne": "क्रोइसान्ट", "id": "Croissant", "si": "ක්‍රොසෝන්" },
-      "keywords": ["croissant"] },
-    { "key": "paratha_bread", "category": "bakery", "unit": "pack",
-      "names": { "en": "Paratha", "ar": "خبز باراتا", "hi": "पराठा", "te": "పరాటా", "ur": "پراٹھا", "fil": "Paratha", "ne": "पराठा", "id": "Paratha", "si": "පරාටා" },
-      "keywords": ["paratha", "roti"] },
-    { "key": "cake", "category": "bakery", "unit": "pcs",
-      "names": { "en": "Cake", "ar": "كيك", "hi": "केक", "te": "కేక్", "ur": "کیک", "fil": "Cake", "ne": "केक", "id": "Kue", "si": "කේක්" },
-      "keywords": ["cake", "kek"] },
-    { "key": "rusk", "category": "bakery", "unit": "pack",
-      "names": { "en": "Rusk", "ar": "قرشلة", "hi": "रस्क", "te": "రస్క్", "ur": "رسک", "fil": "Rusk", "ne": "रस्क", "id": "Roti Kering", "si": "රස්ක්" },
-      "keywords": ["rusk", "toast biscuit"] },
-
-    { "key": "basmati_rice", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Basmati Rice", "ar": "أرز بسمتي", "hi": "बासमती चावल", "te": "బాస్మతి బియ్యం", "ur": "باسمتی چاول", "fil": "Basmati Rice", "ne": "बासमती चामल", "id": "Beras Basmati", "si": "බාස්මතී සහල්" },
-      "keywords": ["rice", "aruz", "ruz", "chawal", "bigas", "beras", "sahal", "biyyam", "chamal", "basmati"] },
-    { "key": "egyptian_rice", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Egyptian Rice", "ar": "أرز مصري", "hi": "मिस्री चावल", "te": "ఈజిప్షియన్ బియ్యం", "ur": "مصری چاول", "fil": "Egyptian Rice", "ne": "मिश्री चामल", "id": "Beras Mesir", "si": "ඊජිප්තු සහල්" },
-      "keywords": ["rice", "aruz masri", "short grain rice", "chawal"] },
-    { "key": "spaghetti", "category": "rice_pasta_grains", "unit": "pack",
-      "names": { "en": "Spaghetti", "ar": "سباغيتي", "hi": "स्पेगेटी", "te": "స్పఘెట్టి", "ur": "اسپگیٹی", "fil": "Spaghetti", "ne": "स्पेगेटी", "id": "Spageti", "si": "ස්පැගටි" },
-      "keywords": ["spaghetti", "pasta", "makaronah"] },
-    { "key": "macaroni", "category": "rice_pasta_grains", "unit": "pack",
-      "names": { "en": "Macaroni", "ar": "معكرونة", "hi": "मैकरोनी", "te": "మకరోని", "ur": "میکرونی", "fil": "Macaroni", "ne": "म्याकारोनी", "id": "Makaroni", "si": "මැකරෝනි" },
-      "keywords": ["macaroni", "pasta", "maakarona"] },
-    { "key": "noodles", "category": "rice_pasta_grains", "unit": "pack",
-      "names": { "en": "Noodles", "ar": "نودلز", "hi": "नूडल्स", "te": "నూడుల్స్", "ur": "نوڈلز", "fil": "Pansit", "ne": "चाउचाउ", "id": "Mie", "si": "නූඩ්ල්ස්" },
-      "keywords": ["noodles", "indomie", "pansit", "chow", "mie", "chaumin"] },
-    { "key": "vermicelli", "category": "rice_pasta_grains", "unit": "pack",
-      "names": { "en": "Vermicelli", "ar": "شعيرية", "hi": "सेवई", "te": "సేమియా", "ur": "سویاں", "fil": "Vermicelli", "ne": "सेवइ", "id": "Bihun", "si": "සේමියා" },
-      "keywords": ["vermicelli", "shaeriya", "sewai", "semiya", "bihun"] },
-    { "key": "lentils_red", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Red Lentils", "ar": "عدس أحمر", "hi": "लाल मसूर दाल", "te": "ఎర్ర పప్పు", "ur": "لال مسور دال", "fil": "Red Lentils", "ne": "रातो मसुरो", "id": "Lentil Merah", "si": "රතු පරිප්පු" },
-      "keywords": ["lentils", "dal", "daal", "masoor", "adas", "parippu", "pappu"] },
-    { "key": "chickpeas_dry", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Chickpeas", "ar": "حمص حب", "hi": "छोले", "te": "శనగలు", "ur": "چنے", "fil": "Garbanzos", "ne": "चना", "id": "Buncis Arab", "si": "කඩල" },
-      "keywords": ["chickpeas", "hummus", "chana", "chole", "garbanzos", "kadala"] },
-    { "key": "white_beans", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "White Beans", "ar": "فاصوليا بيضاء", "hi": "सफ़ेद राजमा", "te": "తెల్ల చిక్కుళ్ళు", "ur": "سفید لوبیا", "fil": "White Beans", "ne": "सेतो सिमी", "id": "Kacang Putih", "si": "සුදු බෝංචි" },
-      "keywords": ["beans", "fasolia", "rajma", "lobia", "kacang"] },
-    { "key": "bulgur", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Bulgur", "ar": "برغل", "hi": "दलिया", "te": "బుల్గుర్", "ur": "دلیہ", "fil": "Bulgur", "ne": "बुलगुर", "id": "Bulgur", "si": "බුල්ගර්" },
-      "keywords": ["bulgur", "burghul", "dalia", "cracked wheat"] },
-    { "key": "oats", "category": "rice_pasta_grains", "unit": "pack",
-      "names": { "en": "Oats", "ar": "شوفان", "hi": "ओट्स", "te": "ఓట్స్", "ur": "جئی", "fil": "Oats", "ne": "ओट्स", "id": "Oat", "si": "ඕට්ස්" },
-      "keywords": ["oats", "shofan", "oatmeal"] },
-    { "key": "flour", "category": "rice_pasta_grains", "unit": "kg",
-      "names": { "en": "Flour", "ar": "طحين", "hi": "आटा", "te": "గోధుమ పిండి", "ur": "آٹا", "fil": "Harina", "ne": "पिठो", "id": "Tepung", "si": "පිටි" },
-      "keywords": ["flour", "atta", "maida", "taheen", "harina", "tepung", "pitho"] },
-
-    { "key": "sunflower_oil", "category": "cooking_pantry", "unit": "l",
-      "names": { "en": "Sunflower Oil", "ar": "زيت دوار الشمس", "hi": "सूरजमुखी तेल", "te": "పొద్దుతిరుగుడు నూనె", "ur": "سورج مکھی کا تیل", "fil": "Mantika", "ne": "सूर्यमुखी तेल", "id": "Minyak Bunga Matahari", "si": "සූරියකාන්ත තෙල්" },
-      "keywords": ["oil", "zeit", "tel", "mantika", "minyak", "thel", "nune"] },
-    { "key": "corn_oil", "category": "cooking_pantry", "unit": "l",
-      "names": { "en": "Corn Oil", "ar": "زيت ذرة", "hi": "मक्का तेल", "te": "మొక్కజొన్న నూనె", "ur": "مکئی کا تیل", "fil": "Corn Oil", "ne": "मकै तेल", "id": "Minyak Jagung", "si": "බඩඉරිඟු තෙල්" },
-      "keywords": ["oil", "corn oil", "zeit thura"] },
-    { "key": "olive_oil", "category": "cooking_pantry", "unit": "l",
-      "names": { "en": "Olive Oil", "ar": "زيت زيتون", "hi": "जैतून का तेल", "te": "ఆలివ్ నూనె", "ur": "زیتون کا تیل", "fil": "Olive Oil", "ne": "जैतुनको तेल", "id": "Minyak Zaitun", "si": "ඔලිව් තෙල්" },
-      "keywords": ["olive oil", "zeit zaytoun", "zaitoon"] },
-    { "key": "ghee", "category": "cooking_pantry", "unit": "kg",
-      "names": { "en": "Ghee", "ar": "سمن", "hi": "घी", "te": "నెయ్యి", "ur": "گھی", "fil": "Ghee", "ne": "घ्यू", "id": "Minyak Samin", "si": "ගිතෙල්" },
-      "keywords": ["ghee", "samn", "ghyu", "neyyi"] },
-    { "key": "sugar", "category": "cooking_pantry", "unit": "kg",
-      "names": { "en": "Sugar", "ar": "سكر", "hi": "चीनी", "te": "చక్కెర", "ur": "چینی", "fil": "Asukal", "ne": "चिनी", "id": "Gula", "si": "සීනි" },
-      "keywords": ["sugar", "sukkar", "cheeni", "asukal", "gula", "seeni", "chakkera"] },
-    { "key": "salt", "category": "cooking_pantry", "unit": "kg",
-      "names": { "en": "Salt", "ar": "ملح", "hi": "नमक", "te": "ఉప్పు", "ur": "نمک", "fil": "Asin", "ne": "नुन", "id": "Garam", "si": "ලුණු" },
-      "keywords": ["salt", "milh", "namak", "asin", "garam", "lunu", "uppu"] },
-    { "key": "black_pepper", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Black Pepper", "ar": "فلفل أسود", "hi": "काली मिर्च", "te": "నల్ల మిరియాలు", "ur": "کالی مرچ", "fil": "Paminta", "ne": "मरिच", "id": "Merica Hitam", "si": "ගම්මිරිස්" },
-      "keywords": ["pepper", "filfil aswad", "kali mirch", "paminta"] },
-    { "key": "turmeric", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Turmeric", "ar": "كركم", "hi": "हल्दी", "te": "పసుపు", "ur": "ہلدی", "fil": "Luyang Dilaw", "ne": "बेसार", "id": "Kunyit", "si": "කහ" },
-      "keywords": ["turmeric", "kurkum", "haldi", "kunyit", "pasupu"] },
-    { "key": "cumin", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Cumin", "ar": "كمون", "hi": "जीरा", "te": "జీలకర్ర", "ur": "زیرہ", "fil": "Cumin", "ne": "जीरा", "id": "Jintan", "si": "සූදුරු" },
-      "keywords": ["cumin", "kamoun", "jeera", "zeera", "jintan"] },
-    { "key": "coriander_powder", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Coriander Powder", "ar": "كزبرة مطحونة", "hi": "धनिया पाउडर", "te": "ధనియాల పొడి", "ur": "دھنیا پاؤڈر", "fil": "Coriander Powder", "ne": "धनियाँ धूलो", "id": "Bubuk Ketumbar", "si": "කොත්තමල්ලි කුඩු" },
-      "keywords": ["coriander powder", "dhania", "kuzbara"] },
-    { "key": "chili_powder", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Chili Powder", "ar": "فلفل أحمر مطحون", "hi": "लाल मिर्च पाउडर", "te": "కారం పొడి", "ur": "لال مرچ پاؤڈر", "fil": "Chili Powder", "ne": "खुर्सानी धूलो", "id": "Bubuk Cabai", "si": "මිරිස් කුඩු" },
-      "keywords": ["chili powder", "mirch powder", "filfil ahmar"] },
-    { "key": "mixed_spices", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Mixed Spices", "ar": "بهارات مشكلة", "hi": "गरम मसाला", "te": "గరం మసాలా", "ur": "گرم مصالحہ", "fil": "Mixed Spices", "ne": "गरम मसला", "id": "Bumbu Campur", "si": "මිශ්‍ර කුළුබඩු" },
-      "keywords": ["masala", "spices", "baharat", "garam masala", "bumbu"] },
-    { "key": "cardamom", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Cardamom", "ar": "هيل", "hi": "इलायची", "te": "యాలకులు", "ur": "الائچی", "fil": "Cardamom", "ne": "अलैंची", "id": "Kapulaga", "si": "එනසාල්" },
-      "keywords": ["cardamom", "hail", "elaichi", "kapulaga"] },
-    { "key": "cinnamon", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Cinnamon", "ar": "قرفة", "hi": "दालचीनी", "te": "దాల్చిన చెక్క", "ur": "دار چینی", "fil": "Kanela", "ne": "दालचिनी", "id": "Kayu Manis", "si": "කුරුඳු" },
-      "keywords": ["cinnamon", "qirfa", "dalchini", "kanela"] },
-    { "key": "yeast", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Yeast", "ar": "خميرة", "hi": "खमीर", "te": "ఈస్ట్", "ur": "خمیر", "fil": "Lebadura", "ne": "खमिर", "id": "Ragi", "si": "යීස්ට්" },
-      "keywords": ["yeast", "khameera", "ragi"] },
-    { "key": "baking_powder", "category": "cooking_pantry", "unit": "g",
-      "names": { "en": "Baking Powder", "ar": "بيكنج بودر", "hi": "बेकिंग पाउडर", "te": "బేకింగ్ పౌడర్", "ur": "بیکنگ پاؤڈر", "fil": "Baking Powder", "ne": "बेकिङ पाउडर", "id": "Baking Powder", "si": "බේකින් පවුඩර්" },
-      "keywords": ["baking powder"] },
-    { "key": "vinegar", "category": "cooking_pantry", "unit": "l",
-      "names": { "en": "Vinegar", "ar": "خل", "hi": "सिरका", "te": "వెనిగర్", "ur": "سرکہ", "fil": "Suka", "ne": "सिर्का", "id": "Cuka", "si": "විනාකිරි" },
-      "keywords": ["vinegar", "khal", "sirka", "suka", "cuka"] },
-
-    { "key": "tomato_paste", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Tomato Paste", "ar": "معجون طماطم", "hi": "टमाटर पेस्ट", "te": "టమాటా పేస్ట్", "ur": "ٹماٹر پیسٹ", "fil": "Tomato Paste", "ne": "गोलभेँडा पेस्ट", "id": "Pasta Tomat", "si": "තක්කාලි පේස්ට්" },
-      "keywords": ["tomato paste", "maajoun tamatim", "tamatar"] },
-    { "key": "canned_tomato", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Canned Tomatoes", "ar": "طماطم معلبة", "hi": "डिब्बाबंद टमाटर", "te": "డబ్బా టమాటాలు", "ur": "ڈبہ بند ٹماٹر", "fil": "De-latang Kamatis", "ne": "क्यानबन्द गोलभेँडा", "id": "Tomat Kaleng", "si": "ටින් තක්කාලි" },
-      "keywords": ["canned tomato", "tamatim muallaba"] },
-    { "key": "tuna_can", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Canned Tuna", "ar": "تونة معلبة", "hi": "डिब्बाबंद टूना", "te": "డబ్బా ట్యూనా", "ur": "ڈبہ بند ٹونا", "fil": "De-latang Tuna", "ne": "क्यानबन्द टुना", "id": "Tuna Kaleng", "si": "ටින් ටූනා" },
-      "keywords": ["tuna", "tuna muallaba", "fish can"] },
-    { "key": "canned_beans", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Canned Beans", "ar": "فاصوليا معلبة", "hi": "डिब्बाबंद बीन्स", "te": "డబ్బా బీన్స్", "ur": "ڈبہ بند لوبیا", "fil": "De-latang Beans", "ne": "क्यानबन्द सिमी", "id": "Kacang Kaleng", "si": "ටින් බෝංචි" },
-      "keywords": ["beans", "fasolia muallaba", "foul"] },
-    { "key": "canned_corn", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Canned Corn", "ar": "ذرة معلبة", "hi": "डिब्बाबंद मक्का", "te": "డబ్బా మొక్కజొన్న", "ur": "ڈبہ بند مکئی", "fil": "De-latang Mais", "ne": "क्यानबन्द मकै", "id": "Jagung Kaleng", "si": "ටින් බඩඉරිඟු" },
-      "keywords": ["corn", "thura", "makai", "mais", "jagung"] },
-    { "key": "chickpeas_can", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Canned Chickpeas", "ar": "حمص معلب", "hi": "डिब्बाबंद छोले", "te": "డబ్బా శనగలు", "ur": "ڈبہ بند چنے", "fil": "De-latang Garbanzos", "ne": "क्यानबन्द चना", "id": "Buncis Kaleng", "si": "ටින් කඩල" },
-      "keywords": ["chickpeas", "hummus", "chana"] },
-    { "key": "ketchup", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Ketchup", "ar": "كاتشب", "hi": "केचप", "te": "కెచప్", "ur": "کیچپ", "fil": "Ketsup", "ne": "केचअप", "id": "Saus Tomat", "si": "කෙචප්" },
-      "keywords": ["ketchup", "catsup", "tomato sauce"] },
-    { "key": "mayonnaise", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Mayonnaise", "ar": "مايونيز", "hi": "मेयोनीज़", "te": "మయోనైస్", "ur": "میونیز", "fil": "Mayonesa", "ne": "मेयोनिज", "id": "Mayones", "si": "මෙයොනීස්" },
-      "keywords": ["mayonnaise", "mayo", "mayonez"] },
-    { "key": "mustard", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Mustard", "ar": "مسطردة", "hi": "सरसों सॉस", "te": "ఆవాల సాస్", "ur": "سرسوں کی چٹنی", "fil": "Mustasa", "ne": "तोरीको सस", "id": "Mustard", "si": "අබ සෝස්" },
-      "keywords": ["mustard", "mustarda"] },
-    { "key": "hot_sauce", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Hot Sauce", "ar": "صلصة حارة", "hi": "तीखी चटनी", "te": "కారం సాస్", "ur": "تیز چٹنی", "fil": "Maanghang na Sarsa", "ne": "पिरो सस", "id": "Saus Pedas", "si": "සැර සෝස්" },
-      "keywords": ["hot sauce", "chili sauce", "salsa harra"] },
-    { "key": "soy_sauce", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Soy Sauce", "ar": "صلصة الصويا", "hi": "सोया सॉस", "te": "సోయా సాస్", "ur": "سویا ساس", "fil": "Toyo", "ne": "सोया सस", "id": "Kecap Asin", "si": "සෝයා සෝස්" },
-      "keywords": ["soy sauce", "toyo", "kecap"] },
-    { "key": "tahini", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Tahini", "ar": "طحينة", "hi": "तिल पेस्ट", "te": "నువ్వుల పేస్ట్", "ur": "تل کا پیسٹ", "fil": "Tahini", "ne": "तिलको पेस्ट", "id": "Tahini", "si": "තල පේස්ට්" },
-      "keywords": ["tahini", "tahina", "sesame paste"] },
-    { "key": "jam", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Jam", "ar": "مربى", "hi": "जैम", "te": "జామ్", "ur": "جیم", "fil": "Jam", "ne": "जाम", "id": "Selai", "si": "ජෑම්" },
-      "keywords": ["jam", "murabba", "selai"] },
-    { "key": "honey", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Honey", "ar": "عسل", "hi": "शहद", "te": "తేనె", "ur": "شہد", "fil": "Pulot", "ne": "मह", "id": "Madu", "si": "මී පැණි" },
-      "keywords": ["honey", "asal", "shahad", "madu", "pulot"] },
-    { "key": "peanut_butter", "category": "canned_sauces", "unit": "pcs",
-      "names": { "en": "Peanut Butter", "ar": "زبدة الفول السوداني", "hi": "मूंगफली मक्खन", "te": "వేరుశెనగ వెన్న", "ur": "مونگ پھلی کا مکھن", "fil": "Peanut Butter", "ne": "बदाम मक्खन", "id": "Selai Kacang", "si": "රටකජු බටර්" },
-      "keywords": ["peanut butter", "zubdat foul"] },
-
-    { "key": "frozen_vegetables", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Vegetables", "ar": "خضار مجمدة", "hi": "फ्रोज़न सब्ज़ियाँ", "te": "ఫ్రోజెన్ కూరగాయలు", "ur": "منجمد سبزیاں", "fil": "Frozen na Gulay", "ne": "फ्रोजन तरकारी", "id": "Sayur Beku", "si": "ශීතකළ එළවළු" },
-      "keywords": ["frozen vegetables", "khudar mujammada", "sabzi"] },
-    { "key": "frozen_peas", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Peas", "ar": "بازلاء مجمدة", "hi": "फ्रोज़न मटर", "te": "ఫ్రోజెన్ బఠానీలు", "ur": "منجمد مٹر", "fil": "Frozen na Gisantes", "ne": "फ्रोजन केराउ", "id": "Kacang Polong Beku", "si": "ශීතකළ පොඩි කඩල" },
-      "keywords": ["peas", "bazella", "matar", "gisantes"] },
-    { "key": "frozen_fries", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Fries", "ar": "بطاطس مقلية مجمدة", "hi": "फ्रोज़न फ्राइज़", "te": "ఫ్రోజెన్ ఫ్రైస్", "ur": "منجمد فرائز", "fil": "Frozen na Fries", "ne": "फ्रोजन फ्राइज", "id": "Kentang Goreng Beku", "si": "ශීතකළ චිප්ස්" },
-      "keywords": ["fries", "chips", "batata maqliya", "french fries"] },
-    { "key": "frozen_nuggets", "category": "frozen", "unit": "pack",
-      "names": { "en": "Chicken Nuggets", "ar": "ناجتس دجاج", "hi": "चिकन नगेट्स", "te": "చికెన్ నగ్గెట్స్", "ur": "چکن نگٹس", "fil": "Chicken Nuggets", "ne": "चिकन नगेट्स", "id": "Nugget Ayam", "si": "චිකන් නගට්ස්" },
-      "keywords": ["nuggets", "chicken nuggets"] },
-    { "key": "frozen_samosa", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Samosa", "ar": "سمبوسة مجمدة", "hi": "फ्रोज़न समोसा", "te": "ఫ్రోజెన్ సమోసా", "ur": "منجمد سموسہ", "fil": "Frozen na Samosa", "ne": "फ्रोजन समोसा", "id": "Samosa Beku", "si": "ශීතකළ සමෝසා" },
-      "keywords": ["samosa", "sambousek", "sambusa"] },
-    { "key": "frozen_paratha", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Paratha", "ar": "خبز باراتا مجمد", "hi": "फ्रोज़न पराठा", "te": "ఫ్రోజెన్ పరాటా", "ur": "منجمد پراٹھا", "fil": "Frozen na Paratha", "ne": "फ्रोजन पराठा", "id": "Paratha Beku", "si": "ශීතකළ පරාටා" },
-      "keywords": ["paratha", "frozen bread"] },
-    { "key": "ice_cream", "category": "frozen", "unit": "pcs",
-      "names": { "en": "Ice Cream", "ar": "آيس كريم", "hi": "आइसक्रीम", "te": "ఐస్ క్రీమ్", "ur": "آئس کریم", "fil": "Sorbetes", "ne": "आइसक्रिम", "id": "Es Krim", "si": "අයිස්ක්‍රීම්" },
-      "keywords": ["ice cream", "sorbetes", "es krim"] },
-    { "key": "frozen_fish", "category": "frozen", "unit": "pack",
-      "names": { "en": "Frozen Fish", "ar": "سمك مجمد", "hi": "फ्रोज़न मछली", "te": "ఫ్రోజెన్ చేపలు", "ur": "منجمد مچھلی", "fil": "Frozen na Isda", "ne": "फ्रोजन माछा", "id": "Ikan Beku", "si": "ශීතකළ මාළු" },
-      "keywords": ["frozen fish", "samak mujammad"] },
-
-    { "key": "water_bottle", "category": "drinks", "unit": "l",
-      "names": { "en": "Drinking Water", "ar": "ماء شرب", "hi": "पीने का पानी", "te": "తాగునీరు", "ur": "پینے کا پانی", "fil": "Tubig", "ne": "पिउने पानी", "id": "Air Minum", "si": "පානීය ජලය" },
-      "keywords": ["water", "maa", "moya", "pani", "tubig", "air", "jalaya", "neeru"] },
-    { "key": "orange_juice", "category": "drinks", "unit": "l",
-      "names": { "en": "Orange Juice", "ar": "عصير برتقال", "hi": "संतरे का जूस", "te": "నారింజ రసం", "ur": "سنترے کا جوس", "fil": "Orange Juice", "ne": "सुन्तला जुस", "id": "Jus Jeruk", "si": "දොඩම් යුෂ" },
-      "keywords": ["juice", "aseer", "jus", "burtuqal"] },
-    { "key": "apple_juice", "category": "drinks", "unit": "l",
-      "names": { "en": "Apple Juice", "ar": "عصير تفاح", "hi": "सेब का जूस", "te": "యాపిల్ రసం", "ur": "سیب کا جوس", "fil": "Apple Juice", "ne": "स्याउ जुस", "id": "Jus Apel", "si": "ඇපල් යුෂ" },
-      "keywords": ["juice", "aseer tuffah"] },
-    { "key": "mango_juice", "category": "drinks", "unit": "l",
-      "names": { "en": "Mango Juice", "ar": "عصير مانجو", "hi": "आम का जूस", "te": "మామిడి రసం", "ur": "آم کا جوس", "fil": "Mango Juice", "ne": "आँप जुस", "id": "Jus Mangga", "si": "අඹ යුෂ" },
-      "keywords": ["juice", "mango juice", "aseer mango"] },
-    { "key": "soft_drink", "category": "drinks", "unit": "l",
-      "names": { "en": "Soft Drink", "ar": "مشروب غازي", "hi": "सॉफ्ट ड्रिंक", "te": "సాఫ్ట్ డ్రింక్", "ur": "سافٹ ڈرنک", "fil": "Softdrinks", "ne": "सफ्ट ड्रिंक", "id": "Minuman Bersoda", "si": "සිසිල් බීම" },
-      "keywords": ["soft drink", "soda", "pepsi", "cola", "mashroub ghazi"] },
-    { "key": "tea_bags", "category": "drinks", "unit": "box",
-      "names": { "en": "Tea Bags", "ar": "أكياس شاي", "hi": "टी बैग", "te": "టీ బ్యాగ్స్", "ur": "ٹی بیگ", "fil": "Tea Bags", "ne": "चिया ब्याग", "id": "Teh Celup", "si": "තේ බෑග්" },
-      "keywords": ["tea", "chai", "shay", "chay", "teh", "the", "chiya"] },
-    { "key": "black_tea", "category": "drinks", "unit": "pack",
-      "names": { "en": "Black Tea", "ar": "شاي أسود", "hi": "काली चाय", "te": "బ్లాక్ టీ", "ur": "کالی چائے", "fil": "Black Tea", "ne": "कालो चिया", "id": "Teh Hitam", "si": "කළු තේ" },
-      "keywords": ["tea", "chai", "shay", "loose tea"] },
-    { "key": "green_tea", "category": "drinks", "unit": "box",
-      "names": { "en": "Green Tea", "ar": "شاي أخضر", "hi": "ग्रीन टी", "te": "గ్రీన్ టీ", "ur": "سبز چائے", "fil": "Green Tea", "ne": "हरियो चिया", "id": "Teh Hijau", "si": "කොළ තේ" },
-      "keywords": ["green tea", "shay akhdar"] },
-    { "key": "instant_coffee", "category": "drinks", "unit": "pcs",
-      "names": { "en": "Instant Coffee", "ar": "قهوة سريعة التحضير", "hi": "इंस्टेंट कॉफ़ी", "te": "ఇన్‌స్టంట్ కాఫీ", "ur": "انسٹنٹ کافی", "fil": "Instant Coffee", "ne": "इन्स्ट्यान्ट कफी", "id": "Kopi Instan", "si": "ක්ෂණික කෝපි" },
-      "keywords": ["coffee", "nescafe", "qahwa", "kopi", "kape", "kaapi"] },
-    { "key": "arabic_coffee", "category": "drinks", "unit": "pack",
-      "names": { "en": "Arabic Coffee", "ar": "قهوة عربية", "hi": "अरबी कॉफ़ी", "te": "అరబిక్ కాఫీ", "ur": "عربی کافی", "fil": "Arabic Coffee", "ne": "अरबी कफी", "id": "Kopi Arab", "si": "අරාබි කෝපි" },
-      "keywords": ["arabic coffee", "qahwa arabiya"] },
-
-    { "key": "potato_chips", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Potato Chips", "ar": "رقائق بطاطس", "hi": "आलू चिप्स", "te": "బంగాళాదుంప చిప్స్", "ur": "آلو چپس", "fil": "Potato Chips", "ne": "आलु चिप्स", "id": "Keripik Kentang", "si": "අර්තාපල් චිප්ස්" },
-      "keywords": ["chips", "crisps", "batata", "keripik"] },
-    { "key": "biscuits", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Biscuits", "ar": "بسكويت", "hi": "बिस्किट", "te": "బిస్కెట్లు", "ur": "بسکٹ", "fil": "Biskwit", "ne": "बिस्कुट", "id": "Biskuit", "si": "බිස්කට්" },
-      "keywords": ["biscuit", "cookies", "baskoot", "biskwit"] },
-    { "key": "chocolate", "category": "snacks_sweets", "unit": "pcs",
-      "names": { "en": "Chocolate", "ar": "شوكولاتة", "hi": "चॉकलेट", "te": "చాక్లెట్", "ur": "چاکلیٹ", "fil": "Tsokolate", "ne": "चकलेट", "id": "Cokelat", "si": "චොකලට්" },
-      "keywords": ["chocolate", "shokolata", "tsokolate", "cokelat"] },
-    { "key": "wafer", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Wafer", "ar": "ويفر", "hi": "वेफर", "te": "వేఫర్", "ur": "ویفر", "fil": "Wafer", "ne": "वेफर", "id": "Wafer", "si": "වේෆර්" },
-      "keywords": ["wafer"] },
-    { "key": "mixed_nuts", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Mixed Nuts", "ar": "مكسرات مشكلة", "hi": "मिक्स नट्स", "te": "మిక్స్‌డ్ నట్స్", "ur": "مکس نٹس", "fil": "Mixed Nuts", "ne": "मिश्रित नट्स", "id": "Kacang Campur", "si": "මිශ්‍ර ඇට වර්ග" },
-      "keywords": ["nuts", "mukassarat", "dry fruits"] },
-    { "key": "peanuts", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Peanuts", "ar": "فول سوداني", "hi": "मूंगफली", "te": "వేరుశెనగ", "ur": "مونگ پھلی", "fil": "Mani", "ne": "बदाम", "id": "Kacang Tanah", "si": "රටකජු" },
-      "keywords": ["peanuts", "foul sudani", "moongphali", "mani"] },
-    { "key": "popcorn", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Popcorn", "ar": "فشار", "hi": "पॉपकॉर्न", "te": "పాప్‌కార్న్", "ur": "پاپ کارن", "fil": "Popcorn", "ne": "पपकर्न", "id": "Popcorn", "si": "පොප්කෝන්" },
-      "keywords": ["popcorn", "fishar"] },
-    { "key": "candy", "category": "snacks_sweets", "unit": "pack",
-      "names": { "en": "Candy", "ar": "حلوى", "hi": "कैंडी", "te": "క్యాండీ", "ur": "کینڈی", "fil": "Kendi", "ne": "क्यान्डी", "id": "Permen", "si": "රසකැවිලි" },
-      "keywords": ["candy", "sweets", "halwa", "permen"] },
-
-    { "key": "dish_soap", "category": "cleaning", "unit": "l",
-      "names": { "en": "Dishwashing Liquid", "ar": "سائل غسيل الصحون", "hi": "बर्तन धोने का साबुन", "te": "గిన్నెలు కడిగే ద్రవం", "ur": "برتن دھونے کا مائع", "fil": "Panghugas ng Pinggan", "ne": "भाँडा माझ्ने साबुन", "id": "Sabun Cuci Piring", "si": "පිඟන් සෝදන දියර" },
-      "keywords": ["dish soap", "dishwash", "fairy", "sabun", "sabon", "vim", "pril", "bartan"] },
-    { "key": "dishwasher_tablets", "category": "cleaning", "unit": "pack",
-      "names": { "en": "Dishwasher Tablets", "ar": "أقراص غسالة الصحون", "hi": "डिशवॉशर टैबलेट", "te": "డిష్‌వాషర్ టాబ్లెట్లు", "ur": "ڈش واشر ٹیبلٹ", "fil": "Dishwasher Tablets", "ne": "डिशवासर ट्याब्लेट", "id": "Tablet Pencuci Piring", "si": "පිඟන් සෝදන ටැබ්ලට්" },
-      "keywords": ["dishwasher", "finish", "tablets"] },
-    { "key": "laundry_powder", "category": "cleaning", "unit": "kg",
-      "names": { "en": "Laundry Powder", "ar": "مسحوق غسيل الملابس", "hi": "कपड़े धोने का पाउडर", "te": "బట్టల సబ్బు పొడి", "ur": "کپڑے دھونے کا پاؤڈر", "fil": "Panlabang Pulbos", "ne": "लुगा धुने पाउडर", "id": "Deterjen Bubuk", "si": "රෙදි සෝදන කුඩු" },
-      "keywords": ["detergent", "washing powder", "tide", "ariel", "persil", "kapde", "sabun"] },
-    { "key": "laundry_liquid", "category": "cleaning", "unit": "l",
-      "names": { "en": "Laundry Liquid", "ar": "سائل غسيل الملابس", "hi": "लिक्विड डिटर्जेंट", "te": "లిక్విడ్ డిటర్జెంట్", "ur": "مائع ڈٹرجنٹ", "fil": "Liquid Detergent", "ne": "लुगा धुने झोल", "id": "Deterjen Cair", "si": "රෙදි සෝදන දියර" },
-      "keywords": ["liquid detergent", "laundry liquid", "ariel", "persil"] },
-    { "key": "fabric_softener", "category": "cleaning", "unit": "l",
-      "names": { "en": "Fabric Softener", "ar": "منعم الأقمشة", "hi": "फैब्रिक सॉफ्टनर", "te": "ఫ్యాబ్రిక్ సాఫ్ట్‌నర్", "ur": "کپڑے نرم کرنے والا", "fil": "Fabric Conditioner", "ne": "कपडा नरम पार्ने", "id": "Pelembut Pakaian", "si": "රෙදි මෘදුකාරකය" },
-      "keywords": ["fabric softener", "comfort", "downy", "munaim"] },
-    { "key": "bleach", "category": "cleaning", "unit": "l",
-      "names": { "en": "Bleach", "ar": "مبيض", "hi": "ब्लीच", "te": "బ్లీచ్", "ur": "بلیچ", "fil": "Bleach", "ne": "ब्लिच", "id": "Pemutih", "si": "බ්ලීච්" },
-      "keywords": ["bleach", "clorox", "mubayyid"] },
-    { "key": "floor_cleaner", "category": "cleaning", "unit": "l",
-      "names": { "en": "Floor Cleaner", "ar": "منظف الأرضيات", "hi": "फर्श क्लीनर", "te": "నేల క్లీనర్", "ur": "فرش صاف کرنے والا", "fil": "Panlinis ng Sahig", "ne": "भुइँ सफा गर्ने", "id": "Pembersih Lantai", "si": "බිම් පිරිසිදු කාරකය" },
-      "keywords": ["floor cleaner", "dettol", "lysol", "flash", "munazzif"] },
-    { "key": "glass_cleaner", "category": "cleaning", "unit": "l",
-      "names": { "en": "Glass Cleaner", "ar": "منظف الزجاج", "hi": "ग्लास क्लीनर", "te": "గ్లాస్ క్లీనర్", "ur": "شیشہ صاف کرنے والا", "fil": "Panlinis ng Salamin", "ne": "सिसा सफा गर्ने", "id": "Pembersih Kaca", "si": "වීදුරු පිරිසිදු කාරකය" },
-      "keywords": ["glass cleaner", "windex"] },
-    { "key": "bathroom_cleaner", "category": "cleaning", "unit": "l",
-      "names": { "en": "Bathroom Cleaner", "ar": "منظف الحمام", "hi": "बाथरूम क्लीनर", "te": "బాత్రూమ్ క్లీనర్", "ur": "باتھ روم کلینر", "fil": "Panlinis ng Banyo", "ne": "बाथरुम सफा गर्ने", "id": "Pembersih Kamar Mandi", "si": "නාන කාමර පිරිසිදු කාරකය" },
-      "keywords": ["bathroom cleaner", "toilet cleaner", "harpic"] },
-    { "key": "sponge", "category": "cleaning", "unit": "pack",
-      "names": { "en": "Sponge", "ar": "إسفنجة", "hi": "स्पंज", "te": "స్పాంజ్", "ur": "اسفنج", "fil": "Espongha", "ne": "स्पन्ज", "id": "Spons", "si": "ස්පොන්ජ්" },
-      "keywords": ["sponge", "scourer", "isfanja"] },
-    { "key": "cleaning_gloves", "category": "cleaning", "unit": "pack",
-      "names": { "en": "Cleaning Gloves", "ar": "قفازات تنظيف", "hi": "सफ़ाई दस्ताने", "te": "క్లీనింగ్ గ్లోవ్స్", "ur": "صفائی کے دستانے", "fil": "Guwantes", "ne": "पन्जा", "id": "Sarung Tangan", "si": "අත්වැසුම්" },
-      "keywords": ["gloves", "quffazat", "dastane", "guwantes"] },
-    { "key": "garbage_bags", "category": "cleaning", "unit": "pack",
-      "names": { "en": "Garbage Bags", "ar": "أكياس قمامة", "hi": "कचरा बैग", "te": "చెత్త సంచులు", "ur": "کچرے کے تھیلے", "fil": "Garbage Bags", "ne": "फोहोर झोला", "id": "Kantong Sampah", "si": "කසළ බෑග්" },
-      "keywords": ["garbage bags", "trash bags", "akyas qumama"] },
-    { "key": "air_freshener", "category": "cleaning", "unit": "pcs",
-      "names": { "en": "Air Freshener", "ar": "معطر جو", "hi": "एयर फ्रेशनर", "te": "ఎయిర్ ఫ్రెషనర్", "ur": "ایئر فریشنر", "fil": "Air Freshener", "ne": "एयर फ्रेसनर", "id": "Pengharum Ruangan", "si": "වායු සුවඳකාරකය" },
-      "keywords": ["air freshener", "muattir", "febreze"] },
-
-    { "key": "shampoo", "category": "personal_care", "unit": "l",
-      "names": { "en": "Shampoo", "ar": "شامبو", "hi": "शैम्पू", "te": "షాంపూ", "ur": "شیمپو", "fil": "Shampoo", "ne": "स्याम्पु", "id": "Sampo", "si": "ෂැම්පු" },
-      "keywords": ["shampoo", "shamboo", "sampo"] },
-    { "key": "conditioner", "category": "personal_care", "unit": "l",
-      "names": { "en": "Hair Conditioner", "ar": "بلسم شعر", "hi": "कंडीशनर", "te": "కండిషనర్", "ur": "کنڈیشنر", "fil": "Conditioner", "ne": "कन्डिसनर", "id": "Kondisioner", "si": "කන්ඩිෂනර්" },
-      "keywords": ["conditioner", "balsam"] },
-    { "key": "soap_bar", "category": "personal_care", "unit": "pack",
-      "names": { "en": "Bar Soap", "ar": "صابون", "hi": "साबुन", "te": "సబ్బు", "ur": "صابن", "fil": "Sabon", "ne": "साबुन", "id": "Sabun Batang", "si": "සබන් කැට" },
-      "keywords": ["soap", "sabun", "sabon", "lifebuoy", "dettol"] },
-    { "key": "body_wash", "category": "personal_care", "unit": "l",
-      "names": { "en": "Body Wash", "ar": "غسول الجسم", "hi": "बॉडी वॉश", "te": "బాడీ వాష్", "ur": "باڈی واش", "fil": "Body Wash", "ne": "बडी वास", "id": "Sabun Mandi Cair", "si": "ශරීර සබන්" },
-      "keywords": ["body wash", "shower gel"] },
-    { "key": "toothpaste", "category": "personal_care", "unit": "pcs",
-      "names": { "en": "Toothpaste", "ar": "معجون أسنان", "hi": "टूथपेस्ट", "te": "టూత్‌పేస్ట్", "ur": "ٹوتھ پیسٹ", "fil": "Toothpaste", "ne": "दाँत माझ्ने", "id": "Pasta Gigi", "si": "දත් බෙහෙත්" },
-      "keywords": ["toothpaste", "colgate", "signal", "maajoun asnan"] },
-    { "key": "toothbrush", "category": "personal_care", "unit": "pcs",
-      "names": { "en": "Toothbrush", "ar": "فرشاة أسنان", "hi": "टूथब्रश", "te": "టూత్ బ్రష్", "ur": "ٹوتھ برش", "fil": "Toothbrush", "ne": "दाँत ब्रस", "id": "Sikat Gigi", "si": "දත් බුරුසුව" },
-      "keywords": ["toothbrush", "furshat asnan"] },
-    { "key": "deodorant", "category": "personal_care", "unit": "pcs",
-      "names": { "en": "Deodorant", "ar": "مزيل عرق", "hi": "डिओडरेंट", "te": "డియోడరెంట్", "ur": "ڈیوڈرنٹ", "fil": "Deodorant", "ne": "डिओडोरेन्ट", "id": "Deodoran", "si": "ඩියෝඩ්‍රන්ට්" },
-      "keywords": ["deodorant", "muzil araq", "rexona"] },
-    { "key": "razor", "category": "personal_care", "unit": "pack",
-      "names": { "en": "Razor", "ar": "شفرة حلاقة", "hi": "रेज़र", "te": "రేజర్", "ur": "ریزر", "fil": "Pang-ahit", "ne": "रेजर", "id": "Pisau Cukur", "si": "රේසර්" },
-      "keywords": ["razor", "shaving", "gillette"] },
-    { "key": "hand_wash", "category": "personal_care", "unit": "l",
-      "names": { "en": "Hand Wash", "ar": "غسول اليدين", "hi": "हैंड वॉश", "te": "హ్యాండ్ వాష్", "ur": "ہینڈ واش", "fil": "Hand Wash", "ne": "हात धुने", "id": "Sabun Cuci Tangan", "si": "අත් සබන්" },
-      "keywords": ["hand wash", "hand soap", "dettol"] },
-    { "key": "body_lotion", "category": "personal_care", "unit": "pcs",
-      "names": { "en": "Body Lotion", "ar": "لوشن الجسم", "hi": "बॉडी लोशन", "te": "బాడీ లోషన్", "ur": "باڈی لوشن", "fil": "Lotion", "ne": "लोसन", "id": "Losion", "si": "ලෝෂන්" },
-      "keywords": ["lotion", "nivea", "vaseline"] },
-    { "key": "hair_oil", "category": "personal_care", "unit": "pcs",
-      "names": { "en": "Hair Oil", "ar": "زيت شعر", "hi": "हेयर ऑयल", "te": "జుట్టు నూనె", "ur": "بالوں کا تیل", "fil": "Hair Oil", "ne": "कपाल तेल", "id": "Minyak Rambut", "si": "හිසකෙස් තෙල්" },
-      "keywords": ["hair oil", "coconut oil", "zeit shaar"] },
-    { "key": "sanitary_pads", "category": "personal_care", "unit": "pack",
-      "names": { "en": "Sanitary Pads", "ar": "فوط صحية", "hi": "सैनिटरी पैड", "te": "శానిటరీ ప్యాడ్స్", "ur": "سینیٹری پیڈ", "fil": "Sanitary Napkin", "ne": "स्यानिटरी प्याड", "id": "Pembalut", "si": "සනීපාරක්ෂක තුවා" },
-      "keywords": ["sanitary pads", "napkin", "always", "fuwat"] },
-    { "key": "facial_tissue", "category": "personal_care", "unit": "box",
-      "names": { "en": "Facial Tissue", "ar": "مناديل ورقية", "hi": "टिशू पेपर", "te": "టిష్యూ పేపర్", "ur": "ٹشو پیپر", "fil": "Tissue", "ne": "टिस्यु", "id": "Tisu", "si": "මුහුණු ටිෂු" },
-      "keywords": ["tissue", "manadeel", "fine", "kleenex"] },
-
-    { "key": "toilet_paper", "category": "household", "unit": "pack",
-      "names": { "en": "Toilet Paper", "ar": "ورق تواليت", "hi": "टॉयलेट पेपर", "te": "టాయిలెట్ పేపర్", "ur": "ٹوائلٹ پیپر", "fil": "Toilet Paper", "ne": "ट्वाइलेट पेपर", "id": "Tisu Toilet", "si": "වැසිකිළි කඩදාසි" },
-      "keywords": ["toilet paper", "waraq tualet", "tissue roll"] },
-    { "key": "kitchen_towel", "category": "household", "unit": "pack",
-      "names": { "en": "Kitchen Towel", "ar": "مناديل مطبخ", "hi": "किचन टॉवल", "te": "కిచెన్ టవల్", "ur": "کچن ٹاول", "fil": "Kitchen Towel", "ne": "भान्सा तौलिया", "id": "Tisu Dapur", "si": "මුළුතැන්ගෙයි තුවා" },
-      "keywords": ["kitchen towel", "paper towel", "manadeel matbakh"] },
-    { "key": "aluminum_foil", "category": "household", "unit": "pcs",
-      "names": { "en": "Aluminium Foil", "ar": "ورق ألمنيوم", "hi": "एल्युमिनियम फॉयल", "te": "అల్యూమినియం ఫాయిల్", "ur": "ایلومینیم فوائل", "fil": "Aluminum Foil", "ne": "एल्मुनियम फोइल", "id": "Aluminium Foil", "si": "ඇලුමිනියම් තීරු" },
-      "keywords": ["foil", "aluminium", "waraq alamniyum"] },
-    { "key": "cling_film", "category": "household", "unit": "pcs",
-      "names": { "en": "Cling Film", "ar": "نايلون لحفظ الطعام", "hi": "क्लिंग फिल्म", "te": "క్లింగ్ ఫిల్మ్", "ur": "کلنگ فلم", "fil": "Cling Wrap", "ne": "क्लिङ फिल्म", "id": "Plastik Wrap", "si": "ක්ලින් ෆිල්ම්" },
-      "keywords": ["cling film", "plastic wrap", "nylon"] },
-    { "key": "baking_paper", "category": "household", "unit": "pcs",
-      "names": { "en": "Baking Paper", "ar": "ورق زبدة", "hi": "बेकिंग पेपर", "te": "బేకింగ్ పేపర్", "ur": "بیکنگ پیپر", "fil": "Baking Paper", "ne": "बेकिङ पेपर", "id": "Kertas Panggang", "si": "බේකින් කඩදාසි" },
-      "keywords": ["baking paper", "parchment"] },
-    { "key": "matches", "category": "household", "unit": "pack",
-      "names": { "en": "Matches", "ar": "كبريت", "hi": "माचिस", "te": "అగ్గిపెట్టె", "ur": "ماچس", "fil": "Posporo", "ne": "सलाई", "id": "Korek Api", "si": "ගිනිකූරු" },
-      "keywords": ["matches", "kibreet", "machis", "posporo"] },
-    { "key": "batteries", "category": "household", "unit": "pack",
-      "names": { "en": "Batteries", "ar": "بطاريات", "hi": "बैटरी", "te": "బ్యాటరీలు", "ur": "بیٹریاں", "fil": "Baterya", "ne": "ब्याट्री", "id": "Baterai", "si": "බැටරි" },
-      "keywords": ["batteries", "battariyat", "baterya"] },
-    { "key": "light_bulb", "category": "household", "unit": "pcs",
-      "names": { "en": "Light Bulb", "ar": "لمبة إضاءة", "hi": "बल्ब", "te": "బల్బ్", "ur": "بلب", "fil": "Bombilya", "ne": "बल्ब", "id": "Bohlam", "si": "විදුලි බුබුළු" },
-      "keywords": ["bulb", "lamba", "bombilya", "lampu"] },
-    { "key": "insect_spray", "category": "household", "unit": "pcs",
-      "names": { "en": "Insect Spray", "ar": "مبيد حشرات", "hi": "कीटनाशक स्प्रे", "te": "కీటక స్ప్రే", "ur": "کیڑے مار سپرے", "fil": "Pampatay ng Insekto", "ne": "किरा मार्ने स्प्रे", "id": "Semprotan Serangga", "si": "කෘමි නාශක ස්ප්‍රේ" },
-      "keywords": ["insect spray", "pif paf", "mubeed hasharat"] },
-    { "key": "paper_napkins", "category": "household", "unit": "pack",
-      "names": { "en": "Paper Napkins", "ar": "مناديل سفرة", "hi": "पेपर नैपकिन", "te": "పేపర్ న్యాప్‌కిన్లు", "ur": "پیپر نیپکن", "fil": "Napkin", "ne": "पेपर न्यापकिन", "id": "Serbet Kertas", "si": "කඩදාසි නැප්කින්" },
-      "keywords": ["napkins", "serviette", "manadeel sufra"] },
-
-    { "key": "diapers", "category": "baby_care", "unit": "pack",
-      "names": { "en": "Diapers", "ar": "حفاضات", "hi": "डायपर", "te": "డైపర్లు", "ur": "ڈائپر", "fil": "Diaper", "ne": "ड्यापर", "id": "Popok", "si": "ඩයපර්" },
-      "keywords": ["diapers", "nappy", "pampers", "hafadat", "popok"] },
-    { "key": "baby_wipes", "category": "baby_care", "unit": "pack",
-      "names": { "en": "Baby Wipes", "ar": "مناديل مبللة للأطفال", "hi": "बेबी वाइप्स", "te": "బేబీ వైప్స్", "ur": "بے بی وائپس", "fil": "Baby Wipes", "ne": "बेबी वाइप्स", "id": "Tisu Basah Bayi", "si": "ළදරු තෙත් තුවා" },
-      "keywords": ["baby wipes", "wet wipes"] },
-    { "key": "baby_shampoo", "category": "baby_care", "unit": "pcs",
-      "names": { "en": "Baby Shampoo", "ar": "شامبو أطفال", "hi": "बेबी शैम्पू", "te": "బేబీ షాంపూ", "ur": "بے بی شیمپو", "fil": "Baby Shampoo", "ne": "बेबी स्याम्पु", "id": "Sampo Bayi", "si": "ළදරු ෂැම්පු" },
-      "keywords": ["baby shampoo", "johnson"] },
-    { "key": "baby_soap", "category": "baby_care", "unit": "pcs",
-      "names": { "en": "Baby Soap", "ar": "صابون أطفال", "hi": "बेबी साबुन", "te": "బేబీ సబ్బు", "ur": "بے بی صابن", "fil": "Baby Soap", "ne": "बेबी साबुन", "id": "Sabun Bayi", "si": "ළදරු සබන්" },
-      "keywords": ["baby soap"] },
-    { "key": "baby_lotion", "category": "baby_care", "unit": "pcs",
-      "names": { "en": "Baby Lotion", "ar": "لوشن أطفال", "hi": "बेबी लोशन", "te": "బేబీ లోషన్", "ur": "بے بی لوشن", "fil": "Baby Lotion", "ne": "बेबी लोसन", "id": "Losion Bayi", "si": "ළදරු ලෝෂන්" },
-      "keywords": ["baby lotion"] },
-    { "key": "infant_formula", "category": "baby_care", "unit": "pack",
-      "names": { "en": "Infant Formula", "ar": "حليب أطفال", "hi": "शिशु फार्मूला", "te": "శిశు ఫార్ములా", "ur": "بچوں کا دودھ", "fil": "Gatas ng Sanggol", "ne": "शिशु दूध", "id": "Susu Formula", "si": "ළදරු කිරිපිටි" },
-      "keywords": ["formula", "baby milk", "haleeb atfal", "nido", "aptamil"] },
-    { "key": "baby_food", "category": "baby_care", "unit": "pcs",
-      "names": { "en": "Baby Food", "ar": "طعام أطفال", "hi": "बेबी फ़ूड", "te": "బేబీ ఫుడ్", "ur": "بچوں کا کھانا", "fil": "Pagkain ng Sanggol", "ne": "शिशु आहार", "id": "Makanan Bayi", "si": "ළදරු ආහාර" },
-      "keywords": ["baby food", "cerelac", "taam atfal"] },
-
-    { "key": "pet_food", "category": "other", "unit": "pack",
-      "names": { "en": "Pet Food", "ar": "طعام حيوانات أليفة", "hi": "पालतू भोजन", "te": "పెంపుడు జంతువుల ఆహారం", "ur": "پالتو جانوروں کا کھانا", "fil": "Pagkain ng Alaga", "ne": "पाल्तु जनावरको खाना", "id": "Makanan Hewan", "si": "සුරතල් සතුන්ගේ ආහාර" },
-      "keywords": ["pet food", "cat food", "dog food", "whiskas", "pedigree"] }
+    {
+      "key": "tomato",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍅",
+      "names": {
+        "en": "Tomatoes",
+        "ar": "طماطم",
+        "hi": "टमाटर",
+        "te": "టమాటాలు",
+        "ur": "ٹماٹر",
+        "fil": "Kamatis",
+        "ne": "गोलभेँडा",
+        "id": "Tomat",
+        "si": "තක්කාලි"
+      },
+      "keywords": [
+        "tomato",
+        "tamatar",
+        "kamatis",
+        "tamatim",
+        "thakkali"
+      ]
+    },
+    {
+      "key": "potato",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥔",
+      "names": {
+        "en": "Potatoes",
+        "ar": "بطاطس",
+        "hi": "आलू",
+        "te": "బంగాళాదుంపలు",
+        "ur": "آلو",
+        "fil": "Patatas",
+        "ne": "आलु",
+        "id": "Kentang",
+        "si": "අර්තාපල්"
+      },
+      "keywords": [
+        "potato",
+        "aloo",
+        "patatas",
+        "batata",
+        "kentang",
+        "ala"
+      ]
+    },
+    {
+      "key": "onion",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🧅",
+      "names": {
+        "en": "Onions",
+        "ar": "بصل",
+        "hi": "प्याज़",
+        "te": "ఉల్లిపాయలు",
+        "ur": "پیاز",
+        "fil": "Sibuyas",
+        "ne": "प्याज",
+        "id": "Bawang Merah",
+        "si": "ලූනු"
+      },
+      "keywords": [
+        "onion",
+        "pyaz",
+        "sibuyas",
+        "basal",
+        "bawang",
+        "loonu"
+      ]
+    },
+    {
+      "key": "cucumber",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥒",
+      "names": {
+        "en": "Cucumber",
+        "ar": "خيار",
+        "hi": "खीरा",
+        "te": "దోసకాయ",
+        "ur": "کھیرا",
+        "fil": "Pipino",
+        "ne": "काँक्रो",
+        "id": "Timun",
+        "si": "පිපිඤ්ඤා"
+      },
+      "keywords": [
+        "cucumber",
+        "khiyar",
+        "kheera",
+        "pipino",
+        "timun"
+      ]
+    },
+    {
+      "key": "carrot",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥕",
+      "names": {
+        "en": "Carrots",
+        "ar": "جزر",
+        "hi": "गाजर",
+        "te": "క్యారెట్లు",
+        "ur": "گاجر",
+        "fil": "Karot",
+        "ne": "गाजर",
+        "id": "Wortel",
+        "si": "කැරට්"
+      },
+      "keywords": [
+        "carrot",
+        "gajar",
+        "jazar",
+        "karot",
+        "wortel"
+      ]
+    },
+    {
+      "key": "lettuce",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🥬",
+      "names": {
+        "en": "Lettuce",
+        "ar": "خس",
+        "hi": "सलाद पत्ता",
+        "te": "లెట్యూస్",
+        "ur": "سلاد پتہ",
+        "fil": "Litsugas",
+        "ne": "सलाद पात",
+        "id": "Selada",
+        "si": "සලාද කොළ"
+      },
+      "keywords": [
+        "lettuce",
+        "khas",
+        "litsugas",
+        "selada"
+      ]
+    },
+    {
+      "key": "capsicum",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🫑",
+      "names": {
+        "en": "Bell Pepper",
+        "ar": "فلفل رومي",
+        "hi": "शिमला मिर्च",
+        "te": "క్యాప్సికం",
+        "ur": "شملہ مرچ",
+        "fil": "Bell Pepper",
+        "ne": "भेडे खुर्सानी",
+        "id": "Paprika",
+        "si": "මාළු මිරිස්"
+      },
+      "keywords": [
+        "capsicum",
+        "bell pepper",
+        "shimla mirch",
+        "paprika"
+      ]
+    },
+    {
+      "key": "garlic",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🧄",
+      "names": {
+        "en": "Garlic",
+        "ar": "ثوم",
+        "hi": "लहसुन",
+        "te": "వెల్లుల్లి",
+        "ur": "لہسن",
+        "fil": "Bawang",
+        "ne": "लसुन",
+        "id": "Bawang Putih",
+        "si": "සුදුළූනු"
+      },
+      "keywords": [
+        "garlic",
+        "thoum",
+        "lahsun",
+        "bawang",
+        "lasun"
+      ]
+    },
+    {
+      "key": "ginger",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🌱",
+      "names": {
+        "en": "Ginger",
+        "ar": "زنجبيل",
+        "hi": "अदरक",
+        "te": "అల్లం",
+        "ur": "ادرک",
+        "fil": "Luya",
+        "ne": "अदुवा",
+        "id": "Jahe",
+        "si": "ඉඟුරු"
+      },
+      "keywords": [
+        "ginger",
+        "adrak",
+        "luya",
+        "jahe",
+        "zanjabeel"
+      ]
+    },
+    {
+      "key": "lemon",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍋",
+      "names": {
+        "en": "Lemon",
+        "ar": "ليمون",
+        "hi": "नींबू",
+        "te": "నిమ్మకాయ",
+        "ur": "لیموں",
+        "fil": "Limon",
+        "ne": "कागती",
+        "id": "Lemon",
+        "si": "දෙහි"
+      },
+      "keywords": [
+        "lemon",
+        "laimun",
+        "nimbu",
+        "limon",
+        "kagati"
+      ]
+    },
+    {
+      "key": "banana",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍌",
+      "names": {
+        "en": "Bananas",
+        "ar": "موز",
+        "hi": "केला",
+        "te": "అరటిపండ్లు",
+        "ur": "کیلا",
+        "fil": "Saging",
+        "ne": "केरा",
+        "id": "Pisang",
+        "si": "කෙසෙල්"
+      },
+      "keywords": [
+        "banana",
+        "mouz",
+        "kela",
+        "saging",
+        "pisang",
+        "kesel"
+      ]
+    },
+    {
+      "key": "apple",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍎",
+      "names": {
+        "en": "Apples",
+        "ar": "تفاح",
+        "hi": "सेब",
+        "te": "యాపిల్స్",
+        "ur": "سیب",
+        "fil": "Mansanas",
+        "ne": "स्याउ",
+        "id": "Apel",
+        "si": "ඇපල්"
+      },
+      "keywords": [
+        "apple",
+        "tuffah",
+        "seb",
+        "mansanas",
+        "apel",
+        "syau"
+      ]
+    },
+    {
+      "key": "orange",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍊",
+      "names": {
+        "en": "Oranges",
+        "ar": "برتقال",
+        "hi": "संतरा",
+        "te": "నారింజ",
+        "ur": "سنترہ",
+        "fil": "Dalandan",
+        "ne": "सुन्तला",
+        "id": "Jeruk",
+        "si": "දොඩම්"
+      },
+      "keywords": [
+        "orange",
+        "burtuqal",
+        "santra",
+        "dalandan",
+        "jeruk"
+      ]
+    },
+    {
+      "key": "grapes",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍇",
+      "names": {
+        "en": "Grapes",
+        "ar": "عنب",
+        "hi": "अंगूर",
+        "te": "ద్రాక్ష",
+        "ur": "انگور",
+        "fil": "Ubas",
+        "ne": "अंगुर",
+        "id": "Anggur",
+        "si": "මිදි"
+      },
+      "keywords": [
+        "grapes",
+        "inab",
+        "angoor",
+        "ubas",
+        "anggur"
+      ]
+    },
+    {
+      "key": "watermelon",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🍉",
+      "names": {
+        "en": "Watermelon",
+        "ar": "بطيخ",
+        "hi": "तरबूज़",
+        "te": "పుచ్చకాయ",
+        "ur": "تربوز",
+        "fil": "Pakwan",
+        "ne": "हर्बुजा",
+        "id": "Semangka",
+        "si": "පැණි කොමඩු"
+      },
+      "keywords": [
+        "watermelon",
+        "battikh",
+        "tarbooz",
+        "pakwan",
+        "semangka"
+      ]
+    },
+    {
+      "key": "mango",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥭",
+      "names": {
+        "en": "Mangoes",
+        "ar": "مانجو",
+        "hi": "आम",
+        "te": "మామిడి పండ్లు",
+        "ur": "آم",
+        "fil": "Mangga",
+        "ne": "आँप",
+        "id": "Mangga",
+        "si": "අඹ"
+      },
+      "keywords": [
+        "mango",
+        "aam",
+        "mangga",
+        "amba"
+      ]
+    },
+    {
+      "key": "dates",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🌴",
+      "names": {
+        "en": "Dates",
+        "ar": "تمر",
+        "hi": "खजूर",
+        "te": "ఖర్జూరం",
+        "ur": "کھجور",
+        "fil": "Datiles",
+        "ne": "छोहडा",
+        "id": "Kurma",
+        "si": "රටඉඳි"
+      },
+      "keywords": [
+        "dates",
+        "tamr",
+        "khajoor",
+        "kurma",
+        "datiles"
+      ]
+    },
+    {
+      "key": "cabbage",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🥬",
+      "names": {
+        "en": "Cabbage",
+        "ar": "ملفوف",
+        "hi": "पत्ता गोभी",
+        "te": "క్యాబేజీ",
+        "ur": "بند گوبھی",
+        "fil": "Repolyo",
+        "ne": "बन्दा",
+        "id": "Kubis",
+        "si": "ගෝවා"
+      },
+      "keywords": [
+        "cabbage",
+        "malfouf",
+        "gobhi",
+        "repolyo",
+        "kubis"
+      ]
+    },
+    {
+      "key": "eggplant",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍆",
+      "names": {
+        "en": "Eggplant",
+        "ar": "باذنجان",
+        "hi": "बैंगन",
+        "te": "వంకాయ",
+        "ur": "بینگن",
+        "fil": "Talong",
+        "ne": "भन्टा",
+        "id": "Terong",
+        "si": "වම්බටු"
+      },
+      "keywords": [
+        "eggplant",
+        "brinjal",
+        "badhinjan",
+        "baingan",
+        "talong",
+        "terong"
+      ]
+    },
+    {
+      "key": "zucchini",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥒",
+      "names": {
+        "en": "Zucchini",
+        "ar": "كوسا",
+        "hi": "तोरी",
+        "te": "గుమ్మడికాయ",
+        "ur": "گھیا",
+        "fil": "Kalabasa",
+        "ne": "फर्सी",
+        "id": "Zukini",
+        "si": "සුදු පුහුල්"
+      },
+      "keywords": [
+        "zucchini",
+        "kousa",
+        "tori",
+        "ghiya"
+      ]
+    },
+    {
+      "key": "green_chili",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🌶️",
+      "names": {
+        "en": "Green Chili",
+        "ar": "فلفل أخضر حار",
+        "hi": "हरी मिर्च",
+        "te": "పచ్చిమిర్చి",
+        "ur": "ہری مرچ",
+        "fil": "Siling Berde",
+        "ne": "हरियो खुर्सानी",
+        "id": "Cabai Hijau",
+        "si": "අමු මිරිස්"
+      },
+      "keywords": [
+        "chili",
+        "mirch",
+        "sili",
+        "filfil",
+        "cabai"
+      ]
+    },
+    {
+      "key": "coriander_fresh",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🌿",
+      "names": {
+        "en": "Fresh Coriander",
+        "ar": "كزبرة خضراء",
+        "hi": "हरा धनिया",
+        "te": "కొత్తిమీర",
+        "ur": "ہرا دھنیا",
+        "fil": "Wansoy",
+        "ne": "धनियाँ",
+        "id": "Daun Ketumbar",
+        "si": "කොත්තමල්ලි කොළ"
+      },
+      "keywords": [
+        "coriander",
+        "cilantro",
+        "kuzbara",
+        "dhania",
+        "wansoy"
+      ]
+    },
+    {
+      "key": "mint",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🌿",
+      "names": {
+        "en": "Mint",
+        "ar": "نعناع",
+        "hi": "पुदीना",
+        "te": "పుదీనా",
+        "ur": "پودینہ",
+        "fil": "Mint",
+        "ne": "पुदिना",
+        "id": "Daun Mint",
+        "si": "මින්ට්"
+      },
+      "keywords": [
+        "mint",
+        "naanaa",
+        "pudina"
+      ]
+    },
+    {
+      "key": "spinach",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🥬",
+      "names": {
+        "en": "Spinach",
+        "ar": "سبانخ",
+        "hi": "पालक",
+        "te": "పాలకూర",
+        "ur": "پالک",
+        "fil": "Spinach",
+        "ne": "पालुङ्गो",
+        "id": "Bayam",
+        "si": "නිවිති"
+      },
+      "keywords": [
+        "spinach",
+        "sabanekh",
+        "palak",
+        "bayam"
+      ]
+    },
+    {
+      "key": "milk_fresh",
+      "category": "dairy_eggs",
+      "unit": "l",
+      "icon": "🥛",
+      "names": {
+        "en": "Fresh Milk",
+        "ar": "حليب طازج",
+        "hi": "ताज़ा दूध",
+        "te": "తాజా పాలు",
+        "ur": "تازہ دودھ",
+        "fil": "Sariwang Gatas",
+        "ne": "ताजा दूध",
+        "id": "Susu Segar",
+        "si": "නැවුම් කිරි"
+      },
+      "keywords": [
+        "milk",
+        "gatas",
+        "doodh",
+        "dudh",
+        "haleeb",
+        "susu",
+        "kiri",
+        "palu"
+      ]
+    },
+    {
+      "key": "milk_long_life",
+      "category": "dairy_eggs",
+      "unit": "l",
+      "icon": "🥛",
+      "names": {
+        "en": "Long Life Milk",
+        "ar": "حليب طويل الأجل",
+        "hi": "लॉन्ग लाइफ दूध",
+        "te": "లాంగ్ లైఫ్ పాలు",
+        "ur": "لمبی مدت والا دودھ",
+        "fil": "Long Life na Gatas",
+        "ne": "लामो समय टिक्ने दूध",
+        "id": "Susu UHT",
+        "si": "දිගු කල් පවතින කිරි"
+      },
+      "keywords": [
+        "uht milk",
+        "long life milk",
+        "haleeb",
+        "doodh"
+      ]
+    },
+    {
+      "key": "laban",
+      "category": "dairy_eggs",
+      "unit": "l",
+      "icon": "🥛",
+      "names": {
+        "en": "Laban",
+        "ar": "لبن",
+        "hi": "छाछ",
+        "te": "మజ్జిగ",
+        "ur": "لسی",
+        "fil": "Laban",
+        "ne": "मोही",
+        "id": "Susu Asam",
+        "si": "මෝරු"
+      },
+      "keywords": [
+        "laban",
+        "buttermilk",
+        "chaas",
+        "lassi",
+        "majjiga"
+      ]
+    },
+    {
+      "key": "yogurt",
+      "category": "dairy_eggs",
+      "unit": "pcs",
+      "icon": "🍶",
+      "names": {
+        "en": "Yogurt",
+        "ar": "زبادي",
+        "hi": "दही",
+        "te": "పెరుగు",
+        "ur": "دہی",
+        "fil": "Yogurt",
+        "ne": "दही",
+        "id": "Yogurt",
+        "si": "යෝගට්"
+      },
+      "keywords": [
+        "yogurt",
+        "zabadi",
+        "dahi",
+        "curd",
+        "perugu"
+      ]
+    },
+    {
+      "key": "labneh",
+      "category": "dairy_eggs",
+      "unit": "pcs",
+      "icon": "🍶",
+      "names": {
+        "en": "Labneh",
+        "ar": "لبنة",
+        "hi": "लब्नेह",
+        "te": "లబ్నే",
+        "ur": "لبنہ",
+        "fil": "Labneh",
+        "ne": "लब्नेह",
+        "id": "Labneh",
+        "si": "ලබ්නේ"
+      },
+      "keywords": [
+        "labneh",
+        "labna"
+      ]
+    },
+    {
+      "key": "cheese_slices",
+      "category": "dairy_eggs",
+      "unit": "pack",
+      "icon": "🧀",
+      "names": {
+        "en": "Cheese Slices",
+        "ar": "شرائح جبن",
+        "hi": "चीज़ स्लाइस",
+        "te": "చీజ్ స్లైసెస్",
+        "ur": "چیز سلائس",
+        "fil": "Cheese Slices",
+        "ne": "चिज स्लाइस",
+        "id": "Keju Lembaran",
+        "si": "චීස් පෙති"
+      },
+      "keywords": [
+        "cheese",
+        "jibn",
+        "paneer",
+        "keso",
+        "keju"
+      ]
+    },
+    {
+      "key": "cheese_white",
+      "category": "dairy_eggs",
+      "unit": "pack",
+      "icon": "🧀",
+      "names": {
+        "en": "White Cheese",
+        "ar": "جبن أبيض",
+        "hi": "सफ़ेद पनीर",
+        "te": "తెల్ల చీజ్",
+        "ur": "سفید پنیر",
+        "fil": "Puting Keso",
+        "ne": "सेतो चिज",
+        "id": "Keju Putih",
+        "si": "සුදු චීස්"
+      },
+      "keywords": [
+        "white cheese",
+        "jibn abyad",
+        "feta",
+        "paneer"
+      ]
+    },
+    {
+      "key": "cheese_triangles",
+      "category": "dairy_eggs",
+      "unit": "box",
+      "icon": "🧀",
+      "names": {
+        "en": "Cheese Triangles",
+        "ar": "جبن مثلثات",
+        "hi": "चीज़ ट्रायंगल",
+        "te": "చీజ్ ట్రయాంగిల్స్",
+        "ur": "مثلث پنیر",
+        "fil": "Cheese Triangles",
+        "ne": "त्रिकोण चिज",
+        "id": "Keju Segitiga",
+        "si": "ත්‍රිකෝණ චීස්"
+      },
+      "keywords": [
+        "cheese triangle",
+        "jibn muthalathat"
+      ]
+    },
+    {
+      "key": "cream",
+      "category": "dairy_eggs",
+      "unit": "pcs",
+      "icon": "🍶",
+      "names": {
+        "en": "Cream",
+        "ar": "قشطة",
+        "hi": "क्रीम",
+        "te": "క్రీమ్",
+        "ur": "کریم",
+        "fil": "Cream",
+        "ne": "क्रिम",
+        "id": "Krim",
+        "si": "ක්‍රීම්"
+      },
+      "keywords": [
+        "cream",
+        "qishta",
+        "malai"
+      ]
+    },
+    {
+      "key": "butter",
+      "category": "dairy_eggs",
+      "unit": "pack",
+      "icon": "🧈",
+      "names": {
+        "en": "Butter",
+        "ar": "زبدة",
+        "hi": "मक्खन",
+        "te": "వెన్న",
+        "ur": "مکھن",
+        "fil": "Mantikilya",
+        "ne": "मक्खन",
+        "id": "Mentega",
+        "si": "බටර්"
+      },
+      "keywords": [
+        "butter",
+        "zubda",
+        "makhan",
+        "mantikilya",
+        "mentega"
+      ]
+    },
+    {
+      "key": "eggs",
+      "category": "dairy_eggs",
+      "unit": "box",
+      "icon": "🥚",
+      "names": {
+        "en": "Eggs",
+        "ar": "بيض",
+        "hi": "अंडे",
+        "te": "గుడ్లు",
+        "ur": "انڈے",
+        "fil": "Itlog",
+        "ne": "अण्डा",
+        "id": "Telur",
+        "si": "බිත්තර"
+      },
+      "keywords": [
+        "egg",
+        "eggs",
+        "baid",
+        "anda",
+        "itlog",
+        "telur",
+        "bittara",
+        "gudlu"
+      ]
+    },
+    {
+      "key": "milk_powder",
+      "category": "dairy_eggs",
+      "unit": "pack",
+      "icon": "🥫",
+      "names": {
+        "en": "Milk Powder",
+        "ar": "حليب بودرة",
+        "hi": "दूध पाउडर",
+        "te": "పాల పొడి",
+        "ur": "دودھ پاؤڈر",
+        "fil": "Gatas na Pulbos",
+        "ne": "दूध धूलो",
+        "id": "Susu Bubuk",
+        "si": "කිරි පිටි"
+      },
+      "keywords": [
+        "milk powder",
+        "haleeb bodra",
+        "doodh powder"
+      ]
+    },
+    {
+      "key": "chicken_whole",
+      "category": "meat_chicken_fish",
+      "unit": "pcs",
+      "icon": "🍗",
+      "names": {
+        "en": "Whole Chicken",
+        "ar": "دجاج كامل",
+        "hi": "साबुत चिकन",
+        "te": "మొత్తం చికెన్",
+        "ur": "ثابت مرغی",
+        "fil": "Buong Manok",
+        "ne": "सिंगो कुखुरा",
+        "id": "Ayam Utuh",
+        "si": "මුළු කුකුල් මස්"
+      },
+      "keywords": [
+        "chicken",
+        "dajaj",
+        "murgi",
+        "manok",
+        "ayam",
+        "kukhura",
+        "kukul"
+      ]
+    },
+    {
+      "key": "chicken_breast",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🍗",
+      "names": {
+        "en": "Chicken Breast",
+        "ar": "صدور دجاج",
+        "hi": "चिकन ब्रेस्ट",
+        "te": "చికెన్ బ్రెస్ట్",
+        "ur": "مرغی کا سینہ",
+        "fil": "Dibdib ng Manok",
+        "ne": "कुखुराको छाती",
+        "id": "Dada Ayam",
+        "si": "කුකුල් මස් පපුව"
+      },
+      "keywords": [
+        "chicken breast",
+        "sudur dajaj",
+        "dibdib"
+      ]
+    },
+    {
+      "key": "chicken_legs",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🍗",
+      "names": {
+        "en": "Chicken Legs",
+        "ar": "أفخاذ دجاج",
+        "hi": "चिकन लेग",
+        "te": "చికెన్ లెగ్స్",
+        "ur": "مرغی کی ران",
+        "fil": "Hita ng Manok",
+        "ne": "कुखुराको खुट्टा",
+        "id": "Paha Ayam",
+        "si": "කුකුල් කකුල්"
+      },
+      "keywords": [
+        "chicken legs",
+        "drumstick",
+        "afkhad dajaj"
+      ]
+    },
+    {
+      "key": "minced_beef",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🥩",
+      "names": {
+        "en": "Minced Beef",
+        "ar": "لحم مفروم",
+        "hi": "कीमा",
+        "te": "ముక్కల మాంసం",
+        "ur": "قیمہ",
+        "fil": "Giniling na Baka",
+        "ne": "किमा",
+        "id": "Daging Cincang",
+        "si": "මිරිකූ හරක් මස්"
+      },
+      "keywords": [
+        "minced meat",
+        "keema",
+        "lahm mafroum",
+        "giniling"
+      ]
+    },
+    {
+      "key": "beef_cubes",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🥩",
+      "names": {
+        "en": "Beef Cubes",
+        "ar": "مكعبات لحم بقر",
+        "hi": "बीफ़ क्यूब्स",
+        "te": "బీఫ్ ముక్కలు",
+        "ur": "بیف کیوبز",
+        "fil": "Hiniwang Baka",
+        "ne": "गाईको मासु टुक्रा",
+        "id": "Daging Potong",
+        "si": "හරක් මස් කැට"
+      },
+      "keywords": [
+        "beef",
+        "lahm baqar",
+        "gosht",
+        "baka"
+      ]
+    },
+    {
+      "key": "mutton",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🍖",
+      "names": {
+        "en": "Mutton",
+        "ar": "لحم غنم",
+        "hi": "मटन",
+        "te": "మటన్",
+        "ur": "مٹن",
+        "fil": "Kambing",
+        "ne": "खसीको मासु",
+        "id": "Daging Kambing",
+        "si": "එළු මස්"
+      },
+      "keywords": [
+        "mutton",
+        "lamb",
+        "lahm ghanam",
+        "gosht",
+        "kambing"
+      ]
+    },
+    {
+      "key": "fish_hamour",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🐟",
+      "names": {
+        "en": "Hamour Fish",
+        "ar": "سمك هامور",
+        "hi": "हामूर मछली",
+        "te": "హామూర్ చేప",
+        "ur": "ہامور مچھلی",
+        "fil": "Isdang Hamour",
+        "ne": "हामुर माछा",
+        "id": "Ikan Hamour",
+        "si": "හමූර් මාළු"
+      },
+      "keywords": [
+        "fish",
+        "samak",
+        "machli",
+        "isda",
+        "ikan",
+        "maalu",
+        "hamour"
+      ]
+    },
+    {
+      "key": "fish_zubaidi",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🐟",
+      "names": {
+        "en": "Zubaidi Fish",
+        "ar": "سمك زبيدي",
+        "hi": "ज़ुबैदी मछली",
+        "te": "జుబైదీ చేప",
+        "ur": "زبیدی مچھلی",
+        "fil": "Isdang Zubaidi",
+        "ne": "जुबैदी माछा",
+        "id": "Ikan Zubaidi",
+        "si": "සුබයිදි මාළු"
+      },
+      "keywords": [
+        "fish",
+        "samak",
+        "zubaidi",
+        "pomfret"
+      ]
+    },
+    {
+      "key": "shrimp",
+      "category": "meat_chicken_fish",
+      "unit": "kg",
+      "icon": "🦐",
+      "names": {
+        "en": "Shrimp",
+        "ar": "روبيان",
+        "hi": "झींगा",
+        "te": "రొయ్యలు",
+        "ur": "جھینگا",
+        "fil": "Hipon",
+        "ne": "झिंगे",
+        "id": "Udang",
+        "si": "ඉස්සන්"
+      },
+      "keywords": [
+        "shrimp",
+        "prawn",
+        "rubian",
+        "jhinga",
+        "hipon",
+        "udang"
+      ]
+    },
+    {
+      "key": "turkey_slices",
+      "category": "meat_chicken_fish",
+      "unit": "pack",
+      "icon": "🥓",
+      "names": {
+        "en": "Turkey Slices",
+        "ar": "شرائح ديك رومي",
+        "hi": "टर्की स्लाइस",
+        "te": "టర్కీ స్లైసెస్",
+        "ur": "ٹرکی سلائس",
+        "fil": "Turkey Slices",
+        "ne": "टर्की स्लाइस",
+        "id": "Irisan Kalkun",
+        "si": "තුර්කිය පෙති"
+      },
+      "keywords": [
+        "turkey",
+        "cold cuts",
+        "deek roumi"
+      ]
+    },
+    {
+      "key": "arabic_bread",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🫓",
+      "names": {
+        "en": "Arabic Bread",
+        "ar": "خبز عربي",
+        "hi": "अरबी रोटी",
+        "te": "అరబిక్ బ్రెడ్",
+        "ur": "عربی روٹی",
+        "fil": "Arabic Bread",
+        "ne": "अरबी रोटी",
+        "id": "Roti Arab",
+        "si": "අරාබි පාන්"
+      },
+      "keywords": [
+        "bread",
+        "khubz",
+        "roti",
+        "tinapay",
+        "pita",
+        "paan"
+      ]
+    },
+    {
+      "key": "sliced_bread",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🍞",
+      "names": {
+        "en": "Sliced Bread",
+        "ar": "خبز توست",
+        "hi": "ब्रेड",
+        "te": "బ్రెడ్",
+        "ur": "ڈبل روٹی",
+        "fil": "Tinapay",
+        "ne": "पाउरोटी",
+        "id": "Roti Tawar",
+        "si": "පාන් පෙති"
+      },
+      "keywords": [
+        "bread",
+        "toast",
+        "khubz toast",
+        "tinapay",
+        "roti"
+      ]
+    },
+    {
+      "key": "brown_bread",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🍞",
+      "names": {
+        "en": "Brown Bread",
+        "ar": "خبز أسمر",
+        "hi": "ब्राउन ब्रेड",
+        "te": "బ్రౌన్ బ్రెడ్",
+        "ur": "براؤن بریڈ",
+        "fil": "Brown Bread",
+        "ne": "ब्राउन ब्रेड",
+        "id": "Roti Gandum",
+        "si": "දුඹුරු පාන්"
+      },
+      "keywords": [
+        "brown bread",
+        "wheat bread",
+        "khubz asmar"
+      ]
+    },
+    {
+      "key": "burger_buns",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🍔",
+      "names": {
+        "en": "Burger Buns",
+        "ar": "خبز برجر",
+        "hi": "बर्गर बन",
+        "te": "బర్గర్ బన్స్",
+        "ur": "برگر بن",
+        "fil": "Burger Buns",
+        "ne": "बर्गर बन",
+        "id": "Roti Burger",
+        "si": "බර්ගර් බන්"
+      },
+      "keywords": [
+        "buns",
+        "burger bread"
+      ]
+    },
+    {
+      "key": "croissant",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🥐",
+      "names": {
+        "en": "Croissant",
+        "ar": "كرواسون",
+        "hi": "क्रोइसैन",
+        "te": "క్రోసెంట్",
+        "ur": "کروساں",
+        "fil": "Croissant",
+        "ne": "क्रोइसान्ट",
+        "id": "Croissant",
+        "si": "ක්‍රොසෝන්"
+      },
+      "keywords": [
+        "croissant"
+      ]
+    },
+    {
+      "key": "paratha_bread",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🫓",
+      "names": {
+        "en": "Paratha",
+        "ar": "خبز باراتا",
+        "hi": "पराठा",
+        "te": "పరాటా",
+        "ur": "پراٹھا",
+        "fil": "Paratha",
+        "ne": "पराठा",
+        "id": "Paratha",
+        "si": "පරාටා"
+      },
+      "keywords": [
+        "paratha",
+        "roti"
+      ]
+    },
+    {
+      "key": "cake",
+      "category": "bakery",
+      "unit": "pcs",
+      "icon": "🍰",
+      "names": {
+        "en": "Cake",
+        "ar": "كيك",
+        "hi": "केक",
+        "te": "కేక్",
+        "ur": "کیک",
+        "fil": "Cake",
+        "ne": "केक",
+        "id": "Kue",
+        "si": "කේක්"
+      },
+      "keywords": [
+        "cake",
+        "kek"
+      ]
+    },
+    {
+      "key": "rusk",
+      "category": "bakery",
+      "unit": "pack",
+      "icon": "🍘",
+      "names": {
+        "en": "Rusk",
+        "ar": "قرشلة",
+        "hi": "रस्क",
+        "te": "రస్క్",
+        "ur": "رسک",
+        "fil": "Rusk",
+        "ne": "रस्क",
+        "id": "Roti Kering",
+        "si": "රස්ක්"
+      },
+      "keywords": [
+        "rusk",
+        "toast biscuit"
+      ]
+    },
+    {
+      "key": "basmati_rice",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🍚",
+      "names": {
+        "en": "Basmati Rice",
+        "ar": "أرز بسمتي",
+        "hi": "बासमती चावल",
+        "te": "బాస్మతి బియ్యం",
+        "ur": "باسمتی چاول",
+        "fil": "Basmati Rice",
+        "ne": "बासमती चामल",
+        "id": "Beras Basmati",
+        "si": "බාස්මතී සහල්"
+      },
+      "keywords": [
+        "rice",
+        "aruz",
+        "ruz",
+        "chawal",
+        "bigas",
+        "beras",
+        "sahal",
+        "biyyam",
+        "chamal",
+        "basmati"
+      ]
+    },
+    {
+      "key": "egyptian_rice",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🍙",
+      "names": {
+        "en": "Egyptian Rice",
+        "ar": "أرز مصري",
+        "hi": "मिस्री चावल",
+        "te": "ఈజిప్షియన్ బియ్యం",
+        "ur": "مصری چاول",
+        "fil": "Egyptian Rice",
+        "ne": "मिश्री चामल",
+        "id": "Beras Mesir",
+        "si": "ඊජිප්තු සහල්"
+      },
+      "keywords": [
+        "rice",
+        "aruz masri",
+        "short grain rice",
+        "chawal"
+      ]
+    },
+    {
+      "key": "spaghetti",
+      "category": "rice_pasta_grains",
+      "unit": "pack",
+      "icon": "🍝",
+      "names": {
+        "en": "Spaghetti",
+        "ar": "سباغيتي",
+        "hi": "स्पेगेटी",
+        "te": "స్పఘెట్టి",
+        "ur": "اسپگیٹی",
+        "fil": "Spaghetti",
+        "ne": "स्पेगेटी",
+        "id": "Spageti",
+        "si": "ස්පැගටි"
+      },
+      "keywords": [
+        "spaghetti",
+        "pasta",
+        "makaronah"
+      ]
+    },
+    {
+      "key": "macaroni",
+      "category": "rice_pasta_grains",
+      "unit": "pack",
+      "icon": "🥘",
+      "names": {
+        "en": "Macaroni",
+        "ar": "معكرونة",
+        "hi": "मैकरोनी",
+        "te": "మకరోని",
+        "ur": "میکرونی",
+        "fil": "Macaroni",
+        "ne": "म्याकारोनी",
+        "id": "Makaroni",
+        "si": "මැකරෝනි"
+      },
+      "keywords": [
+        "macaroni",
+        "pasta",
+        "maakarona"
+      ]
+    },
+    {
+      "key": "noodles",
+      "category": "rice_pasta_grains",
+      "unit": "pack",
+      "icon": "🍜",
+      "names": {
+        "en": "Noodles",
+        "ar": "نودلز",
+        "hi": "नूडल्स",
+        "te": "నూడుల్స్",
+        "ur": "نوڈلز",
+        "fil": "Pansit",
+        "ne": "चाउचाउ",
+        "id": "Mie",
+        "si": "නූඩ්ල්ස්"
+      },
+      "keywords": [
+        "noodles",
+        "indomie",
+        "pansit",
+        "chow",
+        "mie",
+        "chaumin"
+      ]
+    },
+    {
+      "key": "vermicelli",
+      "category": "rice_pasta_grains",
+      "unit": "pack",
+      "icon": "🍲",
+      "names": {
+        "en": "Vermicelli",
+        "ar": "شعيرية",
+        "hi": "सेवई",
+        "te": "సేమియా",
+        "ur": "سویاں",
+        "fil": "Vermicelli",
+        "ne": "सेवइ",
+        "id": "Bihun",
+        "si": "සේමියා"
+      },
+      "keywords": [
+        "vermicelli",
+        "shaeriya",
+        "sewai",
+        "semiya",
+        "bihun"
+      ]
+    },
+    {
+      "key": "lentils_red",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🥣",
+      "names": {
+        "en": "Red Lentils",
+        "ar": "عدس أحمر",
+        "hi": "लाल मसूर दाल",
+        "te": "ఎర్ర పప్పు",
+        "ur": "لال مسور دال",
+        "fil": "Red Lentils",
+        "ne": "रातो मसुरो",
+        "id": "Lentil Merah",
+        "si": "රතු පරිප්පු"
+      },
+      "keywords": [
+        "lentils",
+        "dal",
+        "daal",
+        "masoor",
+        "adas",
+        "parippu",
+        "pappu"
+      ]
+    },
+    {
+      "key": "chickpeas_dry",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🧆",
+      "names": {
+        "en": "Chickpeas",
+        "ar": "حمص حب",
+        "hi": "छोले",
+        "te": "శనగలు",
+        "ur": "چنے",
+        "fil": "Garbanzos",
+        "ne": "चना",
+        "id": "Buncis Arab",
+        "si": "කඩල"
+      },
+      "keywords": [
+        "chickpeas",
+        "hummus",
+        "chana",
+        "chole",
+        "garbanzos",
+        "kadala"
+      ]
+    },
+    {
+      "key": "white_beans",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🌰",
+      "names": {
+        "en": "White Beans",
+        "ar": "فاصوليا بيضاء",
+        "hi": "सफ़ेद राजमा",
+        "te": "తెల్ల చిక్కుళ్ళు",
+        "ur": "سفید لوبیا",
+        "fil": "White Beans",
+        "ne": "सेतो सिमी",
+        "id": "Kacang Putih",
+        "si": "සුදු බෝංචි"
+      },
+      "keywords": [
+        "beans",
+        "fasolia",
+        "rajma",
+        "lobia",
+        "kacang"
+      ]
+    },
+    {
+      "key": "bulgur",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🌾",
+      "names": {
+        "en": "Bulgur",
+        "ar": "برغل",
+        "hi": "दलिया",
+        "te": "బుల్గుర్",
+        "ur": "دلیہ",
+        "fil": "Bulgur",
+        "ne": "बुलगुर",
+        "id": "Bulgur",
+        "si": "බුල්ගර්"
+      },
+      "keywords": [
+        "bulgur",
+        "burghul",
+        "dalia",
+        "cracked wheat"
+      ]
+    },
+    {
+      "key": "oats",
+      "category": "rice_pasta_grains",
+      "unit": "pack",
+      "icon": "🥯",
+      "names": {
+        "en": "Oats",
+        "ar": "شوفان",
+        "hi": "ओट्स",
+        "te": "ఓట్స్",
+        "ur": "جئی",
+        "fil": "Oats",
+        "ne": "ओट्स",
+        "id": "Oat",
+        "si": "ඕට්ස්"
+      },
+      "keywords": [
+        "oats",
+        "shofan",
+        "oatmeal"
+      ]
+    },
+    {
+      "key": "flour",
+      "category": "rice_pasta_grains",
+      "unit": "kg",
+      "icon": "🥖",
+      "names": {
+        "en": "Flour",
+        "ar": "طحين",
+        "hi": "आटा",
+        "te": "గోధుమ పిండి",
+        "ur": "آٹا",
+        "fil": "Harina",
+        "ne": "पिठो",
+        "id": "Tepung",
+        "si": "පිටි"
+      },
+      "keywords": [
+        "flour",
+        "atta",
+        "maida",
+        "taheen",
+        "harina",
+        "tepung",
+        "pitho"
+      ]
+    },
+    {
+      "key": "sunflower_oil",
+      "category": "cooking_pantry",
+      "unit": "l",
+      "icon": "🌻",
+      "names": {
+        "en": "Sunflower Oil",
+        "ar": "زيت دوار الشمس",
+        "hi": "सूरजमुखी तेल",
+        "te": "పొద్దుతిరుగుడు నూనె",
+        "ur": "سورج مکھی کا تیل",
+        "fil": "Mantika",
+        "ne": "सूर्यमुखी तेल",
+        "id": "Minyak Bunga Matahari",
+        "si": "සූරියකාන්ත තෙල්"
+      },
+      "keywords": [
+        "oil",
+        "zeit",
+        "tel",
+        "mantika",
+        "minyak",
+        "thel",
+        "nune"
+      ]
+    },
+    {
+      "key": "corn_oil",
+      "category": "cooking_pantry",
+      "unit": "l",
+      "icon": "🌽",
+      "names": {
+        "en": "Corn Oil",
+        "ar": "زيت ذرة",
+        "hi": "मक्का तेल",
+        "te": "మొక్కజొన్న నూనె",
+        "ur": "مکئی کا تیل",
+        "fil": "Corn Oil",
+        "ne": "मकै तेल",
+        "id": "Minyak Jagung",
+        "si": "බඩඉරිඟු තෙල්"
+      },
+      "keywords": [
+        "oil",
+        "corn oil",
+        "zeit thura"
+      ]
+    },
+    {
+      "key": "olive_oil",
+      "category": "cooking_pantry",
+      "unit": "l",
+      "icon": "🫒",
+      "names": {
+        "en": "Olive Oil",
+        "ar": "زيت زيتون",
+        "hi": "जैतून का तेल",
+        "te": "ఆలివ్ నూనె",
+        "ur": "زیتون کا تیل",
+        "fil": "Olive Oil",
+        "ne": "जैतुनको तेल",
+        "id": "Minyak Zaitun",
+        "si": "ඔලිව් තෙල්"
+      },
+      "keywords": [
+        "olive oil",
+        "zeit zaytoun",
+        "zaitoon"
+      ]
+    },
+    {
+      "key": "ghee",
+      "category": "cooking_pantry",
+      "unit": "kg",
+      "icon": "🧈",
+      "names": {
+        "en": "Ghee",
+        "ar": "سمن",
+        "hi": "घी",
+        "te": "నెయ్యి",
+        "ur": "گھی",
+        "fil": "Ghee",
+        "ne": "घ्यू",
+        "id": "Minyak Samin",
+        "si": "ගිතෙල්"
+      },
+      "keywords": [
+        "ghee",
+        "samn",
+        "ghyu",
+        "neyyi"
+      ]
+    },
+    {
+      "key": "sugar",
+      "category": "cooking_pantry",
+      "unit": "kg",
+      "icon": "🍬",
+      "names": {
+        "en": "Sugar",
+        "ar": "سكر",
+        "hi": "चीनी",
+        "te": "చక్కెర",
+        "ur": "چینی",
+        "fil": "Asukal",
+        "ne": "चिनी",
+        "id": "Gula",
+        "si": "සීනි"
+      },
+      "keywords": [
+        "sugar",
+        "sukkar",
+        "cheeni",
+        "asukal",
+        "gula",
+        "seeni",
+        "chakkera"
+      ]
+    },
+    {
+      "key": "salt",
+      "category": "cooking_pantry",
+      "unit": "kg",
+      "icon": "🧂",
+      "names": {
+        "en": "Salt",
+        "ar": "ملح",
+        "hi": "नमक",
+        "te": "ఉప్పు",
+        "ur": "نمک",
+        "fil": "Asin",
+        "ne": "नुन",
+        "id": "Garam",
+        "si": "ලුණු"
+      },
+      "keywords": [
+        "salt",
+        "milh",
+        "namak",
+        "asin",
+        "garam",
+        "lunu",
+        "uppu"
+      ]
+    },
+    {
+      "key": "black_pepper",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🧂",
+      "names": {
+        "en": "Black Pepper",
+        "ar": "فلفل أسود",
+        "hi": "काली मिर्च",
+        "te": "నల్ల మిరియాలు",
+        "ur": "کالی مرچ",
+        "fil": "Paminta",
+        "ne": "मरिच",
+        "id": "Merica Hitam",
+        "si": "ගම්මිරිස්"
+      },
+      "keywords": [
+        "pepper",
+        "filfil aswad",
+        "kali mirch",
+        "paminta"
+      ]
+    },
+    {
+      "key": "turmeric",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Turmeric",
+        "ar": "كركم",
+        "hi": "हल्दी",
+        "te": "పసుపు",
+        "ur": "ہلدی",
+        "fil": "Luyang Dilaw",
+        "ne": "बेसार",
+        "id": "Kunyit",
+        "si": "කහ"
+      },
+      "keywords": [
+        "turmeric",
+        "kurkum",
+        "haldi",
+        "kunyit",
+        "pasupu"
+      ]
+    },
+    {
+      "key": "cumin",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Cumin",
+        "ar": "كمون",
+        "hi": "जीरा",
+        "te": "జీలకర్ర",
+        "ur": "زیرہ",
+        "fil": "Cumin",
+        "ne": "जीरा",
+        "id": "Jintan",
+        "si": "සූදුරු"
+      },
+      "keywords": [
+        "cumin",
+        "kamoun",
+        "jeera",
+        "zeera",
+        "jintan"
+      ]
+    },
+    {
+      "key": "coriander_powder",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Coriander Powder",
+        "ar": "كزبرة مطحونة",
+        "hi": "धनिया पाउडर",
+        "te": "ధనియాల పొడి",
+        "ur": "دھنیا پاؤڈر",
+        "fil": "Coriander Powder",
+        "ne": "धनियाँ धूलो",
+        "id": "Bubuk Ketumbar",
+        "si": "කොත්තමල්ලි කුඩු"
+      },
+      "keywords": [
+        "coriander powder",
+        "dhania",
+        "kuzbara"
+      ]
+    },
+    {
+      "key": "chili_powder",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌶️",
+      "names": {
+        "en": "Chili Powder",
+        "ar": "فلفل أحمر مطحون",
+        "hi": "लाल मिर्च पाउडर",
+        "te": "కారం పొడి",
+        "ur": "لال مرچ پاؤڈر",
+        "fil": "Chili Powder",
+        "ne": "खुर्सानी धूलो",
+        "id": "Bubuk Cabai",
+        "si": "මිරිස් කුඩු"
+      },
+      "keywords": [
+        "chili powder",
+        "mirch powder",
+        "filfil ahmar"
+      ]
+    },
+    {
+      "key": "mixed_spices",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Mixed Spices",
+        "ar": "بهارات مشكلة",
+        "hi": "गरम मसाला",
+        "te": "గరం మసాలా",
+        "ur": "گرم مصالحہ",
+        "fil": "Mixed Spices",
+        "ne": "गरम मसला",
+        "id": "Bumbu Campur",
+        "si": "මිශ්‍ර කුළුබඩු"
+      },
+      "keywords": [
+        "masala",
+        "spices",
+        "baharat",
+        "garam masala",
+        "bumbu"
+      ]
+    },
+    {
+      "key": "cardamom",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Cardamom",
+        "ar": "هيل",
+        "hi": "इलायची",
+        "te": "యాలకులు",
+        "ur": "الائچی",
+        "fil": "Cardamom",
+        "ne": "अलैंची",
+        "id": "Kapulaga",
+        "si": "එනසාල්"
+      },
+      "keywords": [
+        "cardamom",
+        "hail",
+        "elaichi",
+        "kapulaga"
+      ]
+    },
+    {
+      "key": "cinnamon",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🌿",
+      "names": {
+        "en": "Cinnamon",
+        "ar": "قرفة",
+        "hi": "दालचीनी",
+        "te": "దాల్చిన చెక్క",
+        "ur": "دار چینی",
+        "fil": "Kanela",
+        "ne": "दालचिनी",
+        "id": "Kayu Manis",
+        "si": "කුරුඳු"
+      },
+      "keywords": [
+        "cinnamon",
+        "qirfa",
+        "dalchini",
+        "kanela"
+      ]
+    },
+    {
+      "key": "yeast",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🍞",
+      "names": {
+        "en": "Yeast",
+        "ar": "خميرة",
+        "hi": "खमीर",
+        "te": "ఈస్ట్",
+        "ur": "خمیر",
+        "fil": "Lebadura",
+        "ne": "खमिर",
+        "id": "Ragi",
+        "si": "යීස්ට්"
+      },
+      "keywords": [
+        "yeast",
+        "khameera",
+        "ragi"
+      ]
+    },
+    {
+      "key": "baking_powder",
+      "category": "cooking_pantry",
+      "unit": "g",
+      "icon": "🥄",
+      "names": {
+        "en": "Baking Powder",
+        "ar": "بيكنج بودر",
+        "hi": "बेकिंग पाउडर",
+        "te": "బేకింగ్ పౌడర్",
+        "ur": "بیکنگ پاؤڈر",
+        "fil": "Baking Powder",
+        "ne": "बेकिङ पाउडर",
+        "id": "Baking Powder",
+        "si": "බේකින් පවුඩර්"
+      },
+      "keywords": [
+        "baking powder"
+      ]
+    },
+    {
+      "key": "vinegar",
+      "category": "cooking_pantry",
+      "unit": "l",
+      "icon": "🍶",
+      "names": {
+        "en": "Vinegar",
+        "ar": "خل",
+        "hi": "सिरका",
+        "te": "వెనిగర్",
+        "ur": "سرکہ",
+        "fil": "Suka",
+        "ne": "सिर्का",
+        "id": "Cuka",
+        "si": "විනාකිරි"
+      },
+      "keywords": [
+        "vinegar",
+        "khal",
+        "sirka",
+        "suka",
+        "cuka"
+      ]
+    },
+    {
+      "key": "tomato_paste",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥫",
+      "names": {
+        "en": "Tomato Paste",
+        "ar": "معجون طماطم",
+        "hi": "टमाटर पेस्ट",
+        "te": "టమాటా పేస్ట్",
+        "ur": "ٹماٹر پیسٹ",
+        "fil": "Tomato Paste",
+        "ne": "गोलभेँडा पेस्ट",
+        "id": "Pasta Tomat",
+        "si": "තක්කාලි පේස්ට්"
+      },
+      "keywords": [
+        "tomato paste",
+        "maajoun tamatim",
+        "tamatar"
+      ]
+    },
+    {
+      "key": "canned_tomato",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥫",
+      "names": {
+        "en": "Canned Tomatoes",
+        "ar": "طماطم معلبة",
+        "hi": "डिब्बाबंद टमाटर",
+        "te": "డబ్బా టమాటాలు",
+        "ur": "ڈبہ بند ٹماٹر",
+        "fil": "De-latang Kamatis",
+        "ne": "क्यानबन्द गोलभेँडा",
+        "id": "Tomat Kaleng",
+        "si": "ටින් තක්කාලි"
+      },
+      "keywords": [
+        "canned tomato",
+        "tamatim muallaba"
+      ]
+    },
+    {
+      "key": "tuna_can",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥫",
+      "names": {
+        "en": "Canned Tuna",
+        "ar": "تونة معلبة",
+        "hi": "डिब्बाबंद टूना",
+        "te": "డబ్బా ట్యూనా",
+        "ur": "ڈبہ بند ٹونا",
+        "fil": "De-latang Tuna",
+        "ne": "क्यानबन्द टुना",
+        "id": "Tuna Kaleng",
+        "si": "ටින් ටූනා"
+      },
+      "keywords": [
+        "tuna",
+        "tuna muallaba",
+        "fish can"
+      ]
+    },
+    {
+      "key": "canned_beans",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥫",
+      "names": {
+        "en": "Canned Beans",
+        "ar": "فاصوليا معلبة",
+        "hi": "डिब्बाबंद बीन्स",
+        "te": "డబ్బా బీన్స్",
+        "ur": "ڈبہ بند لوبیا",
+        "fil": "De-latang Beans",
+        "ne": "क्यानबन्द सिमी",
+        "id": "Kacang Kaleng",
+        "si": "ටින් බෝංචි"
+      },
+      "keywords": [
+        "beans",
+        "fasolia muallaba",
+        "foul"
+      ]
+    },
+    {
+      "key": "canned_corn",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🌽",
+      "names": {
+        "en": "Canned Corn",
+        "ar": "ذرة معلبة",
+        "hi": "डिब्बाबंद मक्का",
+        "te": "డబ్బా మొక్కజొన్న",
+        "ur": "ڈبہ بند مکئی",
+        "fil": "De-latang Mais",
+        "ne": "क्यानबन्द मकै",
+        "id": "Jagung Kaleng",
+        "si": "ටින් බඩඉරිඟු"
+      },
+      "keywords": [
+        "corn",
+        "thura",
+        "makai",
+        "mais",
+        "jagung"
+      ]
+    },
+    {
+      "key": "chickpeas_can",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥫",
+      "names": {
+        "en": "Canned Chickpeas",
+        "ar": "حمص معلب",
+        "hi": "डिब्बाबंद छोले",
+        "te": "డబ్బా శనగలు",
+        "ur": "ڈبہ بند چنے",
+        "fil": "De-latang Garbanzos",
+        "ne": "क्यानबन्द चना",
+        "id": "Buncis Kaleng",
+        "si": "ටින් කඩල"
+      },
+      "keywords": [
+        "chickpeas",
+        "hummus",
+        "chana"
+      ]
+    },
+    {
+      "key": "ketchup",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🍅",
+      "names": {
+        "en": "Ketchup",
+        "ar": "كاتشب",
+        "hi": "केचप",
+        "te": "కెచప్",
+        "ur": "کیچپ",
+        "fil": "Ketsup",
+        "ne": "केचअप",
+        "id": "Saus Tomat",
+        "si": "කෙචප්"
+      },
+      "keywords": [
+        "ketchup",
+        "catsup",
+        "tomato sauce"
+      ]
+    },
+    {
+      "key": "mayonnaise",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥚",
+      "names": {
+        "en": "Mayonnaise",
+        "ar": "مايونيز",
+        "hi": "मेयोनीज़",
+        "te": "మయోనైస్",
+        "ur": "میونیز",
+        "fil": "Mayonesa",
+        "ne": "मेयोनिज",
+        "id": "Mayones",
+        "si": "මෙයොනීස්"
+      },
+      "keywords": [
+        "mayonnaise",
+        "mayo",
+        "mayonez"
+      ]
+    },
+    {
+      "key": "mustard",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🌭",
+      "names": {
+        "en": "Mustard",
+        "ar": "مسطردة",
+        "hi": "सरसों सॉस",
+        "te": "ఆవాల సాస్",
+        "ur": "سرسوں کی چٹنی",
+        "fil": "Mustasa",
+        "ne": "तोरीको सस",
+        "id": "Mustard",
+        "si": "අබ සෝස්"
+      },
+      "keywords": [
+        "mustard",
+        "mustarda"
+      ]
+    },
+    {
+      "key": "hot_sauce",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🌶️",
+      "names": {
+        "en": "Hot Sauce",
+        "ar": "صلصة حارة",
+        "hi": "तीखी चटनी",
+        "te": "కారం సాస్",
+        "ur": "تیز چٹنی",
+        "fil": "Maanghang na Sarsa",
+        "ne": "पिरो सस",
+        "id": "Saus Pedas",
+        "si": "සැර සෝස්"
+      },
+      "keywords": [
+        "hot sauce",
+        "chili sauce",
+        "salsa harra"
+      ]
+    },
+    {
+      "key": "soy_sauce",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🍶",
+      "names": {
+        "en": "Soy Sauce",
+        "ar": "صلصة الصويا",
+        "hi": "सोया सॉस",
+        "te": "సోయా సాస్",
+        "ur": "سویا ساس",
+        "fil": "Toyo",
+        "ne": "सोया सस",
+        "id": "Kecap Asin",
+        "si": "සෝයා සෝස්"
+      },
+      "keywords": [
+        "soy sauce",
+        "toyo",
+        "kecap"
+      ]
+    },
+    {
+      "key": "tahini",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥜",
+      "names": {
+        "en": "Tahini",
+        "ar": "طحينة",
+        "hi": "तिल पेस्ट",
+        "te": "నువ్వుల పేస్ట్",
+        "ur": "تل کا پیسٹ",
+        "fil": "Tahini",
+        "ne": "तिलको पेस्ट",
+        "id": "Tahini",
+        "si": "තල පේස්ට්"
+      },
+      "keywords": [
+        "tahini",
+        "tahina",
+        "sesame paste"
+      ]
+    },
+    {
+      "key": "jam",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🍓",
+      "names": {
+        "en": "Jam",
+        "ar": "مربى",
+        "hi": "जैम",
+        "te": "జామ్",
+        "ur": "جیم",
+        "fil": "Jam",
+        "ne": "जाम",
+        "id": "Selai",
+        "si": "ජෑම්"
+      },
+      "keywords": [
+        "jam",
+        "murabba",
+        "selai"
+      ]
+    },
+    {
+      "key": "honey",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🍯",
+      "names": {
+        "en": "Honey",
+        "ar": "عسل",
+        "hi": "शहद",
+        "te": "తేనె",
+        "ur": "شہد",
+        "fil": "Pulot",
+        "ne": "मह",
+        "id": "Madu",
+        "si": "මී පැණි"
+      },
+      "keywords": [
+        "honey",
+        "asal",
+        "shahad",
+        "madu",
+        "pulot"
+      ]
+    },
+    {
+      "key": "peanut_butter",
+      "category": "canned_sauces",
+      "unit": "pcs",
+      "icon": "🥜",
+      "names": {
+        "en": "Peanut Butter",
+        "ar": "زبدة الفول السوداني",
+        "hi": "मूंगफली मक्खन",
+        "te": "వేరుశెనగ వెన్న",
+        "ur": "مونگ پھلی کا مکھن",
+        "fil": "Peanut Butter",
+        "ne": "बदाम मक्खन",
+        "id": "Selai Kacang",
+        "si": "රටකජු බටර්"
+      },
+      "keywords": [
+        "peanut butter",
+        "zubdat foul"
+      ]
+    },
+    {
+      "key": "frozen_vegetables",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🥦",
+      "names": {
+        "en": "Frozen Vegetables",
+        "ar": "خضار مجمدة",
+        "hi": "फ्रोज़न सब्ज़ियाँ",
+        "te": "ఫ్రోజెన్ కూరగాయలు",
+        "ur": "منجمد سبزیاں",
+        "fil": "Frozen na Gulay",
+        "ne": "फ्रोजन तरकारी",
+        "id": "Sayur Beku",
+        "si": "ශීතකළ එළවළු"
+      },
+      "keywords": [
+        "frozen vegetables",
+        "khudar mujammada",
+        "sabzi"
+      ]
+    },
+    {
+      "key": "frozen_peas",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🟢",
+      "names": {
+        "en": "Frozen Peas",
+        "ar": "بازلاء مجمدة",
+        "hi": "फ्रोज़न मटर",
+        "te": "ఫ్రోజెన్ బఠానీలు",
+        "ur": "منجمد مٹر",
+        "fil": "Frozen na Gisantes",
+        "ne": "फ्रोजन केराउ",
+        "id": "Kacang Polong Beku",
+        "si": "ශීතකළ පොඩි කඩල"
+      },
+      "keywords": [
+        "peas",
+        "bazella",
+        "matar",
+        "gisantes"
+      ]
+    },
+    {
+      "key": "frozen_fries",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🍟",
+      "names": {
+        "en": "Frozen Fries",
+        "ar": "بطاطس مقلية مجمدة",
+        "hi": "फ्रोज़न फ्राइज़",
+        "te": "ఫ్రోజెన్ ఫ్రైస్",
+        "ur": "منجمد فرائز",
+        "fil": "Frozen na Fries",
+        "ne": "फ्रोजन फ्राइज",
+        "id": "Kentang Goreng Beku",
+        "si": "ශීතකළ චිප්ස්"
+      },
+      "keywords": [
+        "fries",
+        "chips",
+        "batata maqliya",
+        "french fries"
+      ]
+    },
+    {
+      "key": "frozen_nuggets",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🍗",
+      "names": {
+        "en": "Chicken Nuggets",
+        "ar": "ناجتس دجاج",
+        "hi": "चिकन नगेट्स",
+        "te": "చికెన్ నగ్గెట్స్",
+        "ur": "چکن نگٹس",
+        "fil": "Chicken Nuggets",
+        "ne": "चिकन नगेट्स",
+        "id": "Nugget Ayam",
+        "si": "චිකන් නගට්ස්"
+      },
+      "keywords": [
+        "nuggets",
+        "chicken nuggets"
+      ]
+    },
+    {
+      "key": "frozen_samosa",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🥟",
+      "names": {
+        "en": "Frozen Samosa",
+        "ar": "سمبوسة مجمدة",
+        "hi": "फ्रोज़न समोसा",
+        "te": "ఫ్రోజెన్ సమోసా",
+        "ur": "منجمد سموسہ",
+        "fil": "Frozen na Samosa",
+        "ne": "फ्रोजन समोसा",
+        "id": "Samosa Beku",
+        "si": "ශීතකළ සමෝසා"
+      },
+      "keywords": [
+        "samosa",
+        "sambousek",
+        "sambusa"
+      ]
+    },
+    {
+      "key": "frozen_paratha",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🫓",
+      "names": {
+        "en": "Frozen Paratha",
+        "ar": "خبز باراتا مجمد",
+        "hi": "फ्रोज़न पराठा",
+        "te": "ఫ్రోజెన్ పరాటా",
+        "ur": "منجمد پراٹھا",
+        "fil": "Frozen na Paratha",
+        "ne": "फ्रोजन पराठा",
+        "id": "Paratha Beku",
+        "si": "ශීතකළ පරාටා"
+      },
+      "keywords": [
+        "paratha",
+        "frozen bread"
+      ]
+    },
+    {
+      "key": "ice_cream",
+      "category": "frozen",
+      "unit": "pcs",
+      "icon": "🍦",
+      "names": {
+        "en": "Ice Cream",
+        "ar": "آيس كريم",
+        "hi": "आइसक्रीम",
+        "te": "ఐస్ క్రీమ్",
+        "ur": "آئس کریم",
+        "fil": "Sorbetes",
+        "ne": "आइसक्रिम",
+        "id": "Es Krim",
+        "si": "අයිස්ක්‍රීම්"
+      },
+      "keywords": [
+        "ice cream",
+        "sorbetes",
+        "es krim"
+      ]
+    },
+    {
+      "key": "frozen_fish",
+      "category": "frozen",
+      "unit": "pack",
+      "icon": "🐟",
+      "names": {
+        "en": "Frozen Fish",
+        "ar": "سمك مجمد",
+        "hi": "फ्रोज़न मछली",
+        "te": "ఫ్రోజెన్ చేపలు",
+        "ur": "منجمد مچھلی",
+        "fil": "Frozen na Isda",
+        "ne": "फ्रोजन माछा",
+        "id": "Ikan Beku",
+        "si": "ශීතකළ මාළු"
+      },
+      "keywords": [
+        "frozen fish",
+        "samak mujammad"
+      ]
+    },
+    {
+      "key": "water_bottle",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "💧",
+      "names": {
+        "en": "Drinking Water",
+        "ar": "ماء شرب",
+        "hi": "पीने का पानी",
+        "te": "తాగునీరు",
+        "ur": "پینے کا پانی",
+        "fil": "Tubig",
+        "ne": "पिउने पानी",
+        "id": "Air Minum",
+        "si": "පානීය ජලය"
+      },
+      "keywords": [
+        "water",
+        "maa",
+        "moya",
+        "pani",
+        "tubig",
+        "air",
+        "jalaya",
+        "neeru"
+      ]
+    },
+    {
+      "key": "orange_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🍊",
+      "names": {
+        "en": "Orange Juice",
+        "ar": "عصير برتقال",
+        "hi": "संतरे का जूस",
+        "te": "నారింజ రసం",
+        "ur": "سنترے کا جوس",
+        "fil": "Orange Juice",
+        "ne": "सुन्तला जुस",
+        "id": "Jus Jeruk",
+        "si": "දොඩම් යුෂ"
+      },
+      "keywords": [
+        "juice",
+        "aseer",
+        "jus",
+        "burtuqal"
+      ]
+    },
+    {
+      "key": "apple_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🍏",
+      "names": {
+        "en": "Apple Juice",
+        "ar": "عصير تفاح",
+        "hi": "सेब का जूस",
+        "te": "యాపిల్ రసం",
+        "ur": "سیب کا جوس",
+        "fil": "Apple Juice",
+        "ne": "स्याउ जुस",
+        "id": "Jus Apel",
+        "si": "ඇපල් යුෂ"
+      },
+      "keywords": [
+        "juice",
+        "aseer tuffah"
+      ]
+    },
+    {
+      "key": "mango_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🥭",
+      "names": {
+        "en": "Mango Juice",
+        "ar": "عصير مانجو",
+        "hi": "आम का जूस",
+        "te": "మామిడి రసం",
+        "ur": "آم کا جوس",
+        "fil": "Mango Juice",
+        "ne": "आँप जुस",
+        "id": "Jus Mangga",
+        "si": "අඹ යුෂ"
+      },
+      "keywords": [
+        "juice",
+        "mango juice",
+        "aseer mango"
+      ]
+    },
+    {
+      "key": "soft_drink",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🥤",
+      "names": {
+        "en": "Soft Drink",
+        "ar": "مشروب غازي",
+        "hi": "सॉफ्ट ड्रिंक",
+        "te": "సాఫ్ట్ డ్రింక్",
+        "ur": "سافٹ ڈرنک",
+        "fil": "Softdrinks",
+        "ne": "सफ्ट ड्रिंक",
+        "id": "Minuman Bersoda",
+        "si": "සිසිල් බීම"
+      },
+      "keywords": [
+        "soft drink",
+        "soda",
+        "pepsi",
+        "cola",
+        "mashroub ghazi"
+      ]
+    },
+    {
+      "key": "tea_bags",
+      "category": "drinks",
+      "unit": "box",
+      "icon": "🍵",
+      "names": {
+        "en": "Tea Bags",
+        "ar": "أكياس شاي",
+        "hi": "टी बैग",
+        "te": "టీ బ్యాగ్స్",
+        "ur": "ٹی بیگ",
+        "fil": "Tea Bags",
+        "ne": "चिया ब्याग",
+        "id": "Teh Celup",
+        "si": "තේ බෑග්"
+      },
+      "keywords": [
+        "tea",
+        "chai",
+        "shay",
+        "chay",
+        "teh",
+        "the",
+        "chiya"
+      ]
+    },
+    {
+      "key": "black_tea",
+      "category": "drinks",
+      "unit": "pack",
+      "icon": "🍵",
+      "names": {
+        "en": "Black Tea",
+        "ar": "شاي أسود",
+        "hi": "काली चाय",
+        "te": "బ్లాక్ టీ",
+        "ur": "کالی چائے",
+        "fil": "Black Tea",
+        "ne": "कालो चिया",
+        "id": "Teh Hitam",
+        "si": "කළු තේ"
+      },
+      "keywords": [
+        "tea",
+        "chai",
+        "shay",
+        "loose tea"
+      ]
+    },
+    {
+      "key": "green_tea",
+      "category": "drinks",
+      "unit": "box",
+      "icon": "🍵",
+      "names": {
+        "en": "Green Tea",
+        "ar": "شاي أخضر",
+        "hi": "ग्रीन टी",
+        "te": "గ్రీన్ టీ",
+        "ur": "سبز چائے",
+        "fil": "Green Tea",
+        "ne": "हरियो चिया",
+        "id": "Teh Hijau",
+        "si": "කොළ තේ"
+      },
+      "keywords": [
+        "green tea",
+        "shay akhdar"
+      ]
+    },
+    {
+      "key": "instant_coffee",
+      "category": "drinks",
+      "unit": "pcs",
+      "icon": "☕",
+      "names": {
+        "en": "Instant Coffee",
+        "ar": "قهوة سريعة التحضير",
+        "hi": "इंस्टेंट कॉफ़ी",
+        "te": "ఇన్‌స్టంట్ కాఫీ",
+        "ur": "انسٹنٹ کافی",
+        "fil": "Instant Coffee",
+        "ne": "इन्स्ट्यान्ट कफी",
+        "id": "Kopi Instan",
+        "si": "ක්ෂණික කෝපි"
+      },
+      "keywords": [
+        "coffee",
+        "nescafe",
+        "qahwa",
+        "kopi",
+        "kape",
+        "kaapi"
+      ]
+    },
+    {
+      "key": "arabic_coffee",
+      "category": "drinks",
+      "unit": "pack",
+      "icon": "☕",
+      "names": {
+        "en": "Arabic Coffee",
+        "ar": "قهوة عربية",
+        "hi": "अरबी कॉफ़ी",
+        "te": "అరబిక్ కాఫీ",
+        "ur": "عربی کافی",
+        "fil": "Arabic Coffee",
+        "ne": "अरबी कफी",
+        "id": "Kopi Arab",
+        "si": "අරාබි කෝපි"
+      },
+      "keywords": [
+        "arabic coffee",
+        "qahwa arabiya"
+      ]
+    },
+    {
+      "key": "potato_chips",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🍟",
+      "names": {
+        "en": "Potato Chips",
+        "ar": "رقائق بطاطس",
+        "hi": "आलू चिप्स",
+        "te": "బంగాళాదుంప చిప్స్",
+        "ur": "آلو چپس",
+        "fil": "Potato Chips",
+        "ne": "आलु चिप्स",
+        "id": "Keripik Kentang",
+        "si": "අර්තාපල් චිප්ස්"
+      },
+      "keywords": [
+        "chips",
+        "crisps",
+        "batata",
+        "keripik"
+      ]
+    },
+    {
+      "key": "biscuits",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🍪",
+      "names": {
+        "en": "Biscuits",
+        "ar": "بسكويت",
+        "hi": "बिस्किट",
+        "te": "బిస్కెట్లు",
+        "ur": "بسکٹ",
+        "fil": "Biskwit",
+        "ne": "बिस्कुट",
+        "id": "Biskuit",
+        "si": "බිස්කට්"
+      },
+      "keywords": [
+        "biscuit",
+        "cookies",
+        "baskoot",
+        "biskwit"
+      ]
+    },
+    {
+      "key": "chocolate",
+      "category": "snacks_sweets",
+      "unit": "pcs",
+      "icon": "🍫",
+      "names": {
+        "en": "Chocolate",
+        "ar": "شوكولاتة",
+        "hi": "चॉकलेट",
+        "te": "చాక్లెట్",
+        "ur": "چاکلیٹ",
+        "fil": "Tsokolate",
+        "ne": "चकलेट",
+        "id": "Cokelat",
+        "si": "චොකලට්"
+      },
+      "keywords": [
+        "chocolate",
+        "shokolata",
+        "tsokolate",
+        "cokelat"
+      ]
+    },
+    {
+      "key": "wafer",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🍫",
+      "names": {
+        "en": "Wafer",
+        "ar": "ويفر",
+        "hi": "वेफर",
+        "te": "వేఫర్",
+        "ur": "ویفر",
+        "fil": "Wafer",
+        "ne": "वेफर",
+        "id": "Wafer",
+        "si": "වේෆර්"
+      },
+      "keywords": [
+        "wafer"
+      ]
+    },
+    {
+      "key": "mixed_nuts",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🥜",
+      "names": {
+        "en": "Mixed Nuts",
+        "ar": "مكسرات مشكلة",
+        "hi": "मिक्स नट्स",
+        "te": "మిక్స్‌డ్ నట్స్",
+        "ur": "مکس نٹس",
+        "fil": "Mixed Nuts",
+        "ne": "मिश्रित नट्स",
+        "id": "Kacang Campur",
+        "si": "මිශ්‍ර ඇට වර්ග"
+      },
+      "keywords": [
+        "nuts",
+        "mukassarat",
+        "dry fruits"
+      ]
+    },
+    {
+      "key": "peanuts",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🥜",
+      "names": {
+        "en": "Peanuts",
+        "ar": "فول سوداني",
+        "hi": "मूंगफली",
+        "te": "వేరుశెనగ",
+        "ur": "مونگ پھلی",
+        "fil": "Mani",
+        "ne": "बदाम",
+        "id": "Kacang Tanah",
+        "si": "රටකජු"
+      },
+      "keywords": [
+        "peanuts",
+        "foul sudani",
+        "moongphali",
+        "mani"
+      ]
+    },
+    {
+      "key": "popcorn",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🍿",
+      "names": {
+        "en": "Popcorn",
+        "ar": "فشار",
+        "hi": "पॉपकॉर्न",
+        "te": "పాప్‌కార్న్",
+        "ur": "پاپ کارن",
+        "fil": "Popcorn",
+        "ne": "पपकर्न",
+        "id": "Popcorn",
+        "si": "පොප්කෝන්"
+      },
+      "keywords": [
+        "popcorn",
+        "fishar"
+      ]
+    },
+    {
+      "key": "candy",
+      "category": "snacks_sweets",
+      "unit": "pack",
+      "icon": "🍬",
+      "names": {
+        "en": "Candy",
+        "ar": "حلوى",
+        "hi": "कैंडी",
+        "te": "క్యాండీ",
+        "ur": "کینڈی",
+        "fil": "Kendi",
+        "ne": "क्यान्डी",
+        "id": "Permen",
+        "si": "රසකැවිලි"
+      },
+      "keywords": [
+        "candy",
+        "sweets",
+        "halwa",
+        "permen"
+      ]
+    },
+    {
+      "key": "dish_soap",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🧴",
+      "names": {
+        "en": "Dishwashing Liquid",
+        "ar": "سائل غسيل الصحون",
+        "hi": "बर्तन धोने का साबुन",
+        "te": "గిన్నెలు కడిగే ద్రవం",
+        "ur": "برتن دھونے کا مائع",
+        "fil": "Panghugas ng Pinggan",
+        "ne": "भाँडा माझ्ने साबुन",
+        "id": "Sabun Cuci Piring",
+        "si": "පිඟන් සෝදන දියර"
+      },
+      "keywords": [
+        "dish soap",
+        "dishwash",
+        "fairy",
+        "sabun",
+        "sabon",
+        "vim",
+        "pril",
+        "bartan"
+      ]
+    },
+    {
+      "key": "dishwasher_tablets",
+      "category": "cleaning",
+      "unit": "pack",
+      "icon": "🧼",
+      "names": {
+        "en": "Dishwasher Tablets",
+        "ar": "أقراص غسالة الصحون",
+        "hi": "डिशवॉशर टैबलेट",
+        "te": "డిష్‌వాషర్ టాబ్లెట్లు",
+        "ur": "ڈش واشر ٹیبلٹ",
+        "fil": "Dishwasher Tablets",
+        "ne": "डिशवासर ट्याब्लेट",
+        "id": "Tablet Pencuci Piring",
+        "si": "පිඟන් සෝදන ටැබ්ලට්"
+      },
+      "keywords": [
+        "dishwasher",
+        "finish",
+        "tablets"
+      ]
+    },
+    {
+      "key": "laundry_powder",
+      "category": "cleaning",
+      "unit": "kg",
+      "icon": "🧺",
+      "names": {
+        "en": "Laundry Powder",
+        "ar": "مسحوق غسيل الملابس",
+        "hi": "कपड़े धोने का पाउडर",
+        "te": "బట్టల సబ్బు పొడి",
+        "ur": "کپڑے دھونے کا پاؤڈر",
+        "fil": "Panlabang Pulbos",
+        "ne": "लुगा धुने पाउडर",
+        "id": "Deterjen Bubuk",
+        "si": "රෙදි සෝදන කුඩු"
+      },
+      "keywords": [
+        "detergent",
+        "washing powder",
+        "tide",
+        "ariel",
+        "persil",
+        "kapde",
+        "sabun"
+      ]
+    },
+    {
+      "key": "laundry_liquid",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🧴",
+      "names": {
+        "en": "Laundry Liquid",
+        "ar": "سائل غسيل الملابس",
+        "hi": "लिक्विड डिटर्जेंट",
+        "te": "లిక్విడ్ డిటర్జెంట్",
+        "ur": "مائع ڈٹرجنٹ",
+        "fil": "Liquid Detergent",
+        "ne": "लुगा धुने झोल",
+        "id": "Deterjen Cair",
+        "si": "රෙදි සෝදන දියර"
+      },
+      "keywords": [
+        "liquid detergent",
+        "laundry liquid",
+        "ariel",
+        "persil"
+      ]
+    },
+    {
+      "key": "fabric_softener",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🧺",
+      "names": {
+        "en": "Fabric Softener",
+        "ar": "منعم الأقمشة",
+        "hi": "फैब्रिक सॉफ्टनर",
+        "te": "ఫ్యాబ్రిక్ సాఫ్ట్‌నర్",
+        "ur": "کپڑے نرم کرنے والا",
+        "fil": "Fabric Conditioner",
+        "ne": "कपडा नरम पार्ने",
+        "id": "Pelembut Pakaian",
+        "si": "රෙදි මෘදුකාරකය"
+      },
+      "keywords": [
+        "fabric softener",
+        "comfort",
+        "downy",
+        "munaim"
+      ]
+    },
+    {
+      "key": "bleach",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🧴",
+      "names": {
+        "en": "Bleach",
+        "ar": "مبيض",
+        "hi": "ब्लीच",
+        "te": "బ్లీచ్",
+        "ur": "بلیچ",
+        "fil": "Bleach",
+        "ne": "ब्लिच",
+        "id": "Pemutih",
+        "si": "බ්ලීච්"
+      },
+      "keywords": [
+        "bleach",
+        "clorox",
+        "mubayyid"
+      ]
+    },
+    {
+      "key": "floor_cleaner",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🧹",
+      "names": {
+        "en": "Floor Cleaner",
+        "ar": "منظف الأرضيات",
+        "hi": "फर्श क्लीनर",
+        "te": "నేల క్లీనర్",
+        "ur": "فرش صاف کرنے والا",
+        "fil": "Panlinis ng Sahig",
+        "ne": "भुइँ सफा गर्ने",
+        "id": "Pembersih Lantai",
+        "si": "බිම් පිරිසිදු කාරකය"
+      },
+      "keywords": [
+        "floor cleaner",
+        "dettol",
+        "lysol",
+        "flash",
+        "munazzif"
+      ]
+    },
+    {
+      "key": "glass_cleaner",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🪟",
+      "names": {
+        "en": "Glass Cleaner",
+        "ar": "منظف الزجاج",
+        "hi": "ग्लास क्लीनर",
+        "te": "గ్లాస్ క్లీనర్",
+        "ur": "شیشہ صاف کرنے والا",
+        "fil": "Panlinis ng Salamin",
+        "ne": "सिसा सफा गर्ने",
+        "id": "Pembersih Kaca",
+        "si": "වීදුරු පිරිසිදු කාරකය"
+      },
+      "keywords": [
+        "glass cleaner",
+        "windex"
+      ]
+    },
+    {
+      "key": "bathroom_cleaner",
+      "category": "cleaning",
+      "unit": "l",
+      "icon": "🚽",
+      "names": {
+        "en": "Bathroom Cleaner",
+        "ar": "منظف الحمام",
+        "hi": "बाथरूम क्लीनर",
+        "te": "బాత్రూమ్ క్లీనర్",
+        "ur": "باتھ روم کلینر",
+        "fil": "Panlinis ng Banyo",
+        "ne": "बाथरुम सफा गर्ने",
+        "id": "Pembersih Kamar Mandi",
+        "si": "නාන කාමර පිරිසිදු කාරකය"
+      },
+      "keywords": [
+        "bathroom cleaner",
+        "toilet cleaner",
+        "harpic"
+      ]
+    },
+    {
+      "key": "sponge",
+      "category": "cleaning",
+      "unit": "pack",
+      "icon": "🧽",
+      "names": {
+        "en": "Sponge",
+        "ar": "إسفنجة",
+        "hi": "स्पंज",
+        "te": "స్పాంజ్",
+        "ur": "اسفنج",
+        "fil": "Espongha",
+        "ne": "स्पन्ज",
+        "id": "Spons",
+        "si": "ස්පොන්ජ්"
+      },
+      "keywords": [
+        "sponge",
+        "scourer",
+        "isfanja"
+      ]
+    },
+    {
+      "key": "cleaning_gloves",
+      "category": "cleaning",
+      "unit": "pack",
+      "icon": "🧤",
+      "names": {
+        "en": "Cleaning Gloves",
+        "ar": "قفازات تنظيف",
+        "hi": "सफ़ाई दस्ताने",
+        "te": "క్లీనింగ్ గ్లోవ్స్",
+        "ur": "صفائی کے دستانے",
+        "fil": "Guwantes",
+        "ne": "पन्जा",
+        "id": "Sarung Tangan",
+        "si": "අත්වැසුම්"
+      },
+      "keywords": [
+        "gloves",
+        "quffazat",
+        "dastane",
+        "guwantes"
+      ]
+    },
+    {
+      "key": "garbage_bags",
+      "category": "cleaning",
+      "unit": "pack",
+      "icon": "🗑️",
+      "names": {
+        "en": "Garbage Bags",
+        "ar": "أكياس قمامة",
+        "hi": "कचरा बैग",
+        "te": "చెత్త సంచులు",
+        "ur": "کچرے کے تھیلے",
+        "fil": "Garbage Bags",
+        "ne": "फोहोर झोला",
+        "id": "Kantong Sampah",
+        "si": "කසළ බෑග්"
+      },
+      "keywords": [
+        "garbage bags",
+        "trash bags",
+        "akyas qumama"
+      ]
+    },
+    {
+      "key": "air_freshener",
+      "category": "cleaning",
+      "unit": "pcs",
+      "icon": "🌸",
+      "names": {
+        "en": "Air Freshener",
+        "ar": "معطر جو",
+        "hi": "एयर फ्रेशनर",
+        "te": "ఎయిర్ ఫ్రెషనర్",
+        "ur": "ایئر فریشنر",
+        "fil": "Air Freshener",
+        "ne": "एयर फ्रेसनर",
+        "id": "Pengharum Ruangan",
+        "si": "වායු සුවඳකාරකය"
+      },
+      "keywords": [
+        "air freshener",
+        "muattir",
+        "febreze"
+      ]
+    },
+    {
+      "key": "shampoo",
+      "category": "personal_care",
+      "unit": "l",
+      "icon": "🧴",
+      "names": {
+        "en": "Shampoo",
+        "ar": "شامبو",
+        "hi": "शैम्पू",
+        "te": "షాంపూ",
+        "ur": "شیمپو",
+        "fil": "Shampoo",
+        "ne": "स्याम्पु",
+        "id": "Sampo",
+        "si": "ෂැම්පු"
+      },
+      "keywords": [
+        "shampoo",
+        "shamboo",
+        "sampo"
+      ]
+    },
+    {
+      "key": "conditioner",
+      "category": "personal_care",
+      "unit": "l",
+      "icon": "🧴",
+      "names": {
+        "en": "Hair Conditioner",
+        "ar": "بلسم شعر",
+        "hi": "कंडीशनर",
+        "te": "కండిషనర్",
+        "ur": "کنڈیشنر",
+        "fil": "Conditioner",
+        "ne": "कन्डिसनर",
+        "id": "Kondisioner",
+        "si": "කන්ඩිෂනර්"
+      },
+      "keywords": [
+        "conditioner",
+        "balsam"
+      ]
+    },
+    {
+      "key": "soap_bar",
+      "category": "personal_care",
+      "unit": "pack",
+      "icon": "🧼",
+      "names": {
+        "en": "Bar Soap",
+        "ar": "صابون",
+        "hi": "साबुन",
+        "te": "సబ్బు",
+        "ur": "صابن",
+        "fil": "Sabon",
+        "ne": "साबुन",
+        "id": "Sabun Batang",
+        "si": "සබන් කැට"
+      },
+      "keywords": [
+        "soap",
+        "sabun",
+        "sabon",
+        "lifebuoy",
+        "dettol"
+      ]
+    },
+    {
+      "key": "body_wash",
+      "category": "personal_care",
+      "unit": "l",
+      "icon": "🚿",
+      "names": {
+        "en": "Body Wash",
+        "ar": "غسول الجسم",
+        "hi": "बॉडी वॉश",
+        "te": "బాడీ వాష్",
+        "ur": "باڈی واش",
+        "fil": "Body Wash",
+        "ne": "बडी वास",
+        "id": "Sabun Mandi Cair",
+        "si": "ශරීර සබන්"
+      },
+      "keywords": [
+        "body wash",
+        "shower gel"
+      ]
+    },
+    {
+      "key": "toothpaste",
+      "category": "personal_care",
+      "unit": "pcs",
+      "icon": "🪥",
+      "names": {
+        "en": "Toothpaste",
+        "ar": "معجون أسنان",
+        "hi": "टूथपेस्ट",
+        "te": "టూత్‌పేస్ట్",
+        "ur": "ٹوتھ پیسٹ",
+        "fil": "Toothpaste",
+        "ne": "दाँत माझ्ने",
+        "id": "Pasta Gigi",
+        "si": "දත් බෙහෙත්"
+      },
+      "keywords": [
+        "toothpaste",
+        "colgate",
+        "signal",
+        "maajoun asnan"
+      ]
+    },
+    {
+      "key": "toothbrush",
+      "category": "personal_care",
+      "unit": "pcs",
+      "icon": "🪥",
+      "names": {
+        "en": "Toothbrush",
+        "ar": "فرشاة أسنان",
+        "hi": "टूथब्रश",
+        "te": "టూత్ బ్రష్",
+        "ur": "ٹوتھ برش",
+        "fil": "Toothbrush",
+        "ne": "दाँत ब्रस",
+        "id": "Sikat Gigi",
+        "si": "දත් බුරුසුව"
+      },
+      "keywords": [
+        "toothbrush",
+        "furshat asnan"
+      ]
+    },
+    {
+      "key": "deodorant",
+      "category": "personal_care",
+      "unit": "pcs",
+      "icon": "🧴",
+      "names": {
+        "en": "Deodorant",
+        "ar": "مزيل عرق",
+        "hi": "डिओडरेंट",
+        "te": "డియోడరెంట్",
+        "ur": "ڈیوڈرنٹ",
+        "fil": "Deodorant",
+        "ne": "डिओडोरेन्ट",
+        "id": "Deodoran",
+        "si": "ඩියෝඩ්‍රන්ට්"
+      },
+      "keywords": [
+        "deodorant",
+        "muzil araq",
+        "rexona"
+      ]
+    },
+    {
+      "key": "razor",
+      "category": "personal_care",
+      "unit": "pack",
+      "icon": "🪒",
+      "names": {
+        "en": "Razor",
+        "ar": "شفرة حلاقة",
+        "hi": "रेज़र",
+        "te": "రేజర్",
+        "ur": "ریزر",
+        "fil": "Pang-ahit",
+        "ne": "रेजर",
+        "id": "Pisau Cukur",
+        "si": "රේසර්"
+      },
+      "keywords": [
+        "razor",
+        "shaving",
+        "gillette"
+      ]
+    },
+    {
+      "key": "hand_wash",
+      "category": "personal_care",
+      "unit": "l",
+      "icon": "🧼",
+      "names": {
+        "en": "Hand Wash",
+        "ar": "غسول اليدين",
+        "hi": "हैंड वॉश",
+        "te": "హ్యాండ్ వాష్",
+        "ur": "ہینڈ واش",
+        "fil": "Hand Wash",
+        "ne": "हात धुने",
+        "id": "Sabun Cuci Tangan",
+        "si": "අත් සබන්"
+      },
+      "keywords": [
+        "hand wash",
+        "hand soap",
+        "dettol"
+      ]
+    },
+    {
+      "key": "body_lotion",
+      "category": "personal_care",
+      "unit": "pcs",
+      "icon": "🧴",
+      "names": {
+        "en": "Body Lotion",
+        "ar": "لوشن الجسم",
+        "hi": "बॉडी लोशन",
+        "te": "బాడీ లోషన్",
+        "ur": "باڈی لوشن",
+        "fil": "Lotion",
+        "ne": "लोसन",
+        "id": "Losion",
+        "si": "ලෝෂන්"
+      },
+      "keywords": [
+        "lotion",
+        "nivea",
+        "vaseline"
+      ]
+    },
+    {
+      "key": "hair_oil",
+      "category": "personal_care",
+      "unit": "pcs",
+      "icon": "💆",
+      "names": {
+        "en": "Hair Oil",
+        "ar": "زيت شعر",
+        "hi": "हेयर ऑयल",
+        "te": "జుట్టు నూనె",
+        "ur": "بالوں کا تیل",
+        "fil": "Hair Oil",
+        "ne": "कपाल तेल",
+        "id": "Minyak Rambut",
+        "si": "හිසකෙස් තෙල්"
+      },
+      "keywords": [
+        "hair oil",
+        "coconut oil",
+        "zeit shaar"
+      ]
+    },
+    {
+      "key": "sanitary_pads",
+      "category": "personal_care",
+      "unit": "pack",
+      "icon": "🩹",
+      "names": {
+        "en": "Sanitary Pads",
+        "ar": "فوط صحية",
+        "hi": "सैनिटरी पैड",
+        "te": "శానిటరీ ప్యాడ్స్",
+        "ur": "سینیٹری پیڈ",
+        "fil": "Sanitary Napkin",
+        "ne": "स्यानिटरी प्याड",
+        "id": "Pembalut",
+        "si": "සනීපාරක්ෂක තුවා"
+      },
+      "keywords": [
+        "sanitary pads",
+        "napkin",
+        "always",
+        "fuwat"
+      ]
+    },
+    {
+      "key": "facial_tissue",
+      "category": "personal_care",
+      "unit": "box",
+      "icon": "🤧",
+      "names": {
+        "en": "Facial Tissue",
+        "ar": "مناديل ورقية",
+        "hi": "टिशू पेपर",
+        "te": "టిష్యూ పేపర్",
+        "ur": "ٹشو پیپر",
+        "fil": "Tissue",
+        "ne": "टिस्यु",
+        "id": "Tisu",
+        "si": "මුහුණු ටිෂු"
+      },
+      "keywords": [
+        "tissue",
+        "manadeel",
+        "fine",
+        "kleenex"
+      ]
+    },
+    {
+      "key": "toilet_paper",
+      "category": "household",
+      "unit": "pack",
+      "icon": "🧻",
+      "names": {
+        "en": "Toilet Paper",
+        "ar": "ورق تواليت",
+        "hi": "टॉयलेट पेपर",
+        "te": "టాయిలెట్ పేపర్",
+        "ur": "ٹوائلٹ پیپر",
+        "fil": "Toilet Paper",
+        "ne": "ट्वाइलेट पेपर",
+        "id": "Tisu Toilet",
+        "si": "වැසිකිළි කඩදාසි"
+      },
+      "keywords": [
+        "toilet paper",
+        "waraq tualet",
+        "tissue roll"
+      ]
+    },
+    {
+      "key": "kitchen_towel",
+      "category": "household",
+      "unit": "pack",
+      "icon": "🧻",
+      "names": {
+        "en": "Kitchen Towel",
+        "ar": "مناديل مطبخ",
+        "hi": "किचन टॉवल",
+        "te": "కిచెన్ టవల్",
+        "ur": "کچن ٹاول",
+        "fil": "Kitchen Towel",
+        "ne": "भान्सा तौलिया",
+        "id": "Tisu Dapur",
+        "si": "මුළුතැන්ගෙයි තුවා"
+      },
+      "keywords": [
+        "kitchen towel",
+        "paper towel",
+        "manadeel matbakh"
+      ]
+    },
+    {
+      "key": "aluminum_foil",
+      "category": "household",
+      "unit": "pcs",
+      "icon": "📃",
+      "names": {
+        "en": "Aluminium Foil",
+        "ar": "ورق ألمنيوم",
+        "hi": "एल्युमिनियम फॉयल",
+        "te": "అల్యూమినియం ఫాయిల్",
+        "ur": "ایلومینیم فوائل",
+        "fil": "Aluminum Foil",
+        "ne": "एल्मुनियम फोइल",
+        "id": "Aluminium Foil",
+        "si": "ඇලුමිනියම් තීරු"
+      },
+      "keywords": [
+        "foil",
+        "aluminium",
+        "waraq alamniyum"
+      ]
+    },
+    {
+      "key": "cling_film",
+      "category": "household",
+      "unit": "pcs",
+      "icon": "📃",
+      "names": {
+        "en": "Cling Film",
+        "ar": "نايلون لحفظ الطعام",
+        "hi": "क्लिंग फिल्म",
+        "te": "క్లింగ్ ఫిల్మ్",
+        "ur": "کلنگ فلم",
+        "fil": "Cling Wrap",
+        "ne": "क्लिङ फिल्म",
+        "id": "Plastik Wrap",
+        "si": "ක්ලින් ෆිල්ම්"
+      },
+      "keywords": [
+        "cling film",
+        "plastic wrap",
+        "nylon"
+      ]
+    },
+    {
+      "key": "baking_paper",
+      "category": "household",
+      "unit": "pcs",
+      "icon": "📃",
+      "names": {
+        "en": "Baking Paper",
+        "ar": "ورق زبدة",
+        "hi": "बेकिंग पेपर",
+        "te": "బేకింగ్ పేపర్",
+        "ur": "بیکنگ پیپر",
+        "fil": "Baking Paper",
+        "ne": "बेकिङ पेपर",
+        "id": "Kertas Panggang",
+        "si": "බේකින් කඩදාසි"
+      },
+      "keywords": [
+        "baking paper",
+        "parchment"
+      ]
+    },
+    {
+      "key": "matches",
+      "category": "household",
+      "unit": "pack",
+      "icon": "🔥",
+      "names": {
+        "en": "Matches",
+        "ar": "كبريت",
+        "hi": "माचिस",
+        "te": "అగ్గిపెట్టె",
+        "ur": "ماچس",
+        "fil": "Posporo",
+        "ne": "सलाई",
+        "id": "Korek Api",
+        "si": "ගිනිකූරු"
+      },
+      "keywords": [
+        "matches",
+        "kibreet",
+        "machis",
+        "posporo"
+      ]
+    },
+    {
+      "key": "batteries",
+      "category": "household",
+      "unit": "pack",
+      "icon": "🔋",
+      "names": {
+        "en": "Batteries",
+        "ar": "بطاريات",
+        "hi": "बैटरी",
+        "te": "బ్యాటరీలు",
+        "ur": "بیٹریاں",
+        "fil": "Baterya",
+        "ne": "ब्याट्री",
+        "id": "Baterai",
+        "si": "බැටරි"
+      },
+      "keywords": [
+        "batteries",
+        "battariyat",
+        "baterya"
+      ]
+    },
+    {
+      "key": "light_bulb",
+      "category": "household",
+      "unit": "pcs",
+      "icon": "💡",
+      "names": {
+        "en": "Light Bulb",
+        "ar": "لمبة إضاءة",
+        "hi": "बल्ब",
+        "te": "బల్బ్",
+        "ur": "بلب",
+        "fil": "Bombilya",
+        "ne": "बल्ब",
+        "id": "Bohlam",
+        "si": "විදුලි බුබුළු"
+      },
+      "keywords": [
+        "bulb",
+        "lamba",
+        "bombilya",
+        "lampu"
+      ]
+    },
+    {
+      "key": "insect_spray",
+      "category": "household",
+      "unit": "pcs",
+      "icon": "🦟",
+      "names": {
+        "en": "Insect Spray",
+        "ar": "مبيد حشرات",
+        "hi": "कीटनाशक स्प्रे",
+        "te": "కీటక స్ప్రే",
+        "ur": "کیڑے مار سپرے",
+        "fil": "Pampatay ng Insekto",
+        "ne": "किरा मार्ने स्प्रे",
+        "id": "Semprotan Serangga",
+        "si": "කෘමි නාශක ස්ප්‍රේ"
+      },
+      "keywords": [
+        "insect spray",
+        "pif paf",
+        "mubeed hasharat"
+      ]
+    },
+    {
+      "key": "paper_napkins",
+      "category": "household",
+      "unit": "pack",
+      "icon": "🧻",
+      "names": {
+        "en": "Paper Napkins",
+        "ar": "مناديل سفرة",
+        "hi": "पेपर नैपकिन",
+        "te": "పేపర్ న్యాప్‌కిన్లు",
+        "ur": "پیپر نیپکن",
+        "fil": "Napkin",
+        "ne": "पेपर न्यापकिन",
+        "id": "Serbet Kertas",
+        "si": "කඩදාසි නැප්කින්"
+      },
+      "keywords": [
+        "napkins",
+        "serviette",
+        "manadeel sufra"
+      ]
+    },
+    {
+      "key": "diapers",
+      "category": "baby_care",
+      "unit": "pack",
+      "icon": "👶",
+      "names": {
+        "en": "Diapers",
+        "ar": "حفاضات",
+        "hi": "डायपर",
+        "te": "డైపర్లు",
+        "ur": "ڈائپر",
+        "fil": "Diaper",
+        "ne": "ड्यापर",
+        "id": "Popok",
+        "si": "ඩයපර්"
+      },
+      "keywords": [
+        "diapers",
+        "nappy",
+        "pampers",
+        "hafadat",
+        "popok"
+      ]
+    },
+    {
+      "key": "baby_wipes",
+      "category": "baby_care",
+      "unit": "pack",
+      "icon": "🧻",
+      "names": {
+        "en": "Baby Wipes",
+        "ar": "مناديل مبللة للأطفال",
+        "hi": "बेबी वाइप्स",
+        "te": "బేబీ వైప్స్",
+        "ur": "بے بی وائپس",
+        "fil": "Baby Wipes",
+        "ne": "बेबी वाइप्स",
+        "id": "Tisu Basah Bayi",
+        "si": "ළදරු තෙත් තුවා"
+      },
+      "keywords": [
+        "baby wipes",
+        "wet wipes"
+      ]
+    },
+    {
+      "key": "baby_shampoo",
+      "category": "baby_care",
+      "unit": "pcs",
+      "icon": "🍼",
+      "names": {
+        "en": "Baby Shampoo",
+        "ar": "شامبو أطفال",
+        "hi": "बेबी शैम्पू",
+        "te": "బేబీ షాంపూ",
+        "ur": "بے بی شیمپو",
+        "fil": "Baby Shampoo",
+        "ne": "बेबी स्याम्पु",
+        "id": "Sampo Bayi",
+        "si": "ළදරු ෂැම්පු"
+      },
+      "keywords": [
+        "baby shampoo",
+        "johnson"
+      ]
+    },
+    {
+      "key": "baby_soap",
+      "category": "baby_care",
+      "unit": "pcs",
+      "icon": "🧼",
+      "names": {
+        "en": "Baby Soap",
+        "ar": "صابون أطفال",
+        "hi": "बेबी साबुन",
+        "te": "బేబీ సబ్బు",
+        "ur": "بے بی صابن",
+        "fil": "Baby Soap",
+        "ne": "बेबी साबुन",
+        "id": "Sabun Bayi",
+        "si": "ළදරු සබන්"
+      },
+      "keywords": [
+        "baby soap"
+      ]
+    },
+    {
+      "key": "baby_lotion",
+      "category": "baby_care",
+      "unit": "pcs",
+      "icon": "🧴",
+      "names": {
+        "en": "Baby Lotion",
+        "ar": "لوشن أطفال",
+        "hi": "बेबी लोशन",
+        "te": "బేబీ లోషన్",
+        "ur": "بے بی لوشن",
+        "fil": "Baby Lotion",
+        "ne": "बेबी लोसन",
+        "id": "Losion Bayi",
+        "si": "ළදරු ලෝෂන්"
+      },
+      "keywords": [
+        "baby lotion"
+      ]
+    },
+    {
+      "key": "infant_formula",
+      "category": "baby_care",
+      "unit": "pack",
+      "icon": "🍼",
+      "names": {
+        "en": "Infant Formula",
+        "ar": "حليب أطفال",
+        "hi": "शिशु फार्मूला",
+        "te": "శిశు ఫార్ములా",
+        "ur": "بچوں کا دودھ",
+        "fil": "Gatas ng Sanggol",
+        "ne": "शिशु दूध",
+        "id": "Susu Formula",
+        "si": "ළදරු කිරිපිටි"
+      },
+      "keywords": [
+        "formula",
+        "baby milk",
+        "haleeb atfal",
+        "nido",
+        "aptamil"
+      ]
+    },
+    {
+      "key": "baby_food",
+      "category": "baby_care",
+      "unit": "pcs",
+      "icon": "🍼",
+      "names": {
+        "en": "Baby Food",
+        "ar": "طعام أطفال",
+        "hi": "बेबी फ़ूड",
+        "te": "బేబీ ఫుడ్",
+        "ur": "بچوں کا کھانا",
+        "fil": "Pagkain ng Sanggol",
+        "ne": "शिशु आहार",
+        "id": "Makanan Bayi",
+        "si": "ළදරු ආහාර"
+      },
+      "keywords": [
+        "baby food",
+        "cerelac",
+        "taam atfal"
+      ]
+    },
+    {
+      "key": "pet_food",
+      "category": "other",
+      "unit": "pack",
+      "icon": "🐾",
+      "names": {
+        "en": "Pet Food",
+        "ar": "طعام حيوانات أليفة",
+        "hi": "पालतू भोजन",
+        "te": "పెంపుడు జంతువుల ఆహారం",
+        "ur": "پالتو جانوروں کا کھانا",
+        "fil": "Pagkain ng Alaga",
+        "ne": "पाल्तु जनावरको खाना",
+        "id": "Makanan Hewan",
+        "si": "සුරතල් සතුන්ගේ ආහාර"
+      },
+      "keywords": [
+        "pet food",
+        "cat food",
+        "dog food",
+        "whiskas",
+        "pedigree"
+      ]
+    }
   ]
 }

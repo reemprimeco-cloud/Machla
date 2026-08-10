@@ -134,8 +134,11 @@ export function ProductCard({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={product.image_url} alt="" className="size-full rounded-md object-cover" />
         ) : (
+          // icon → category icon → box. The per-type icon is what stops a
+          // category page being 24 identical tiles; the category icon is
+          // only reached by a row written outside the import pipeline.
           <span aria-hidden className="text-5xl leading-none">
-            {categoryIcon ?? "📦"}
+            {product.icon ?? categoryIcon ?? "📦"}
           </span>
         )}
       </div>

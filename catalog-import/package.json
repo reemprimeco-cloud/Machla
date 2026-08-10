@@ -8,7 +8,9 @@
     "validate": "node scripts/build-catalog.mjs --validate",
     "build": "node scripts/build-catalog.mjs --out build/catalog.json",
     "import": "node scripts/import.mjs",
-    "import:dry": "node scripts/import.mjs --dry-run"
+    "import:dry": "node scripts/import.mjs --dry-run",
+    "images": "node scripts/upload-images.mjs",
+    "images:dry": "node scripts/upload-images.mjs --dry-run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.2"

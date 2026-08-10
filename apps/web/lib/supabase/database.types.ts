@@ -145,6 +145,7 @@ export interface Database {
           name_si: string;
           size: string | null;
           unit: string;
+          icon: string | null;
           image_url: string | null;
           image_source_url: string | null;
           source_name: string | null;

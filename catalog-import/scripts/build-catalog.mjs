@@ -79,6 +79,11 @@ export function buildCatalog() {
     if (typesByKey.has(type.key)) errors.push(`duplicate type key: ${type.key}`);
     if (!categoryKeys.has(type.category)) errors.push(`type ${type.key}: unknown category ${type.category}`);
     if (!UNITS.includes(type.unit)) errors.push(`type ${type.key}: invalid unit "${type.unit}"`);
+    // Every type carries its own icon. Without one the product grid falls
+    // back to the category icon, which means all 24 items in Fruits &
+    // Vegetables render as the same glyph — unusable for a shopper who is
+    // navigating by picture rather than by text.
+    if (!type.icon?.trim()) errors.push(`type ${type.key}: missing icon`);
     for (const lang of LANGS) {
       if (!type.names?.[lang]?.trim()) errors.push(`type ${type.key}: missing name.${lang}`);
     }
@@ -127,6 +132,11 @@ export function buildCatalog() {
     products.push({
       natural_key: naturalKey,
       category_key: type.category,
+      // The icon lives on the TYPE, so every brand and size of a product
+      // shares one — the same reason the nine names do
+      // (11-product-catalog-architecture.md §7.2). A product-level
+      // override is honoured if the source file sets one.
+      icon: product.icon ?? type.icon,
       brand: product.brand ?? null,
       size: product.size ?? null,
       unit,
@@ -144,6 +154,26 @@ export function buildCatalog() {
 
   for (const key of typesByKey.keys()) {
     if (!usedTypes.has(key)) warnings.push(`type "${key}" is defined but no product uses it`);
+  }
+
+  // Icons are allowed to repeat — there is one sensible glyph for cheese
+  // and three cheese types. But if a whole category collapses to a couple
+  // of glyphs, the picture stops carrying information and the shopper is
+  // back to reading, which is the thing this app exists to avoid.
+  const iconsPerCategory = new Map();
+  for (const type of typesByKey.values()) {
+    const entry = iconsPerCategory.get(type.category) ?? { icons: new Set(), count: 0 };
+    entry.icons.add(type.icon);
+    entry.count += 1;
+    iconsPerCategory.set(type.category, entry);
+  }
+  for (const [category, { icons, count }] of iconsPerCategory) {
+    if (count >= 4 && icons.size < count / 2) {
+      warnings.push(
+        `category "${category}" has ${count} types sharing only ${icons.size} distinct icons — ` +
+          `the grid will look repetitive`,
+      );
+    }
   }
 
   const emptyCategories = [...categoryKeys].filter(

@@ -193,11 +193,51 @@ resolving (`13-shopping-list-grouping-checklist.md` §4).
 
 ### 7.5 Images
 
-Every `image_url` is `null` in this phase, which is case (c) of §3: the UI
-falls back to the category icon. No third-party image was re-hosted, and
-`image_url` remains swappable independently of the metadata, so sourcing
-owned or licensed photography later is a data change with no schema or
-code impact.
+Two separate things, deliberately kept apart:
+
+**`products.icon` — always present.** A glyph per product *type* (168 of
+them, 98 distinct), carried in `product-types.json` and written by the
+importer. This exists because the first cut fell back to the *category*
+icon, which meant all 24 items in Fruits & Vegetables rendered as the same
+🥬 — a picture that carries no information is worse than no picture, and
+this app's whole premise is navigating without reading. That category now
+shows 20 distinct glyphs.
+
+The validator warns when a category of four or more types collapses to
+fewer than half as many distinct icons; it caught `rice_pasta_grains`
+sharing five glyphs across twelve types on the first run.
+
+Icons repeat where repeating is honest — there is one sensible glyph for
+cheese and three cheese types — and glyphs are chosen from long-
+established Unicode (mostly ≤ 12.0, 2019) so they render on the low-end
+Android phones this app targets rather than as tofu boxes.
+
+**`image_url` — a real photograph, when one has been licensed.** Still
+null for every row. The UI falls back `image_url → icon → category icon`,
+so a row without a photograph is a complete row, not a broken one. That
+matters because sourcing 168 photographs is a content project measured in
+weeks and the app has to be usable throughout.
+
+The pipeline for it is built: `catalog-import/scripts/upload-images.mjs`
+uploads to a `product-images` Supabase Storage bucket and points the
+matching rows at the public URL. Files are named after the **type**
+(`milk_fresh.webp`), so 168 files cover 295 products and a new brand needs
+no new photograph; a single product can be overridden by natural key.
+Adding a photograph is a data operation — no UI change, no redeploy, no
+migration, which is the property §7 exists to protect.
+
+**Where images may come from.** Licensed stock (the project has a
+Shutterstock account), own photography, or images whose rights holder has
+given written permission. Not from an image search, and **not** from
+Sharq Coop or Deliveroo Kuwait — §2 designates those reference-only, and
+their product photography belongs to them or their suppliers. Two
+licence details worth checking before bulk-uploading: cheaper stock tiers
+cap total impressions, and most forbid redistributing an image as a
+standalone downloadable file, which is a live consideration because the
+bucket is public-read (it backs a world-readable catalogue, and signing
+every URL would cost a round trip per tile for no privacy gain). Upload
+web-sized derivatives, not originals; the bucket caps objects at 2 MB and
+the grid renders them at about 200px.
 
 ### 7.6 Deterministic grouping
 

@@ -98,8 +98,10 @@ acceptable before Phase 1.
   rather than in `apps/web`.
 - `catalog-import/` (Phase 5) holds the offline catalogue pipeline:
   `data/` (categories, product types, products — the curated source of
-  truth), and `scripts/` (`build-catalog.mjs` validates and assembles,
-  `import.mjs` upserts into Supabase). It is deliberately **not** part of
+  truth), `images/` (licensed photography, gitignored — the repository
+  holds the pipeline, not the assets), and `scripts/`
+  (`build-catalog.mjs` validates and assembles, `import.mjs` upserts into
+  Supabase, `upload-images.mjs` pushes photographs to Storage). It is deliberately **not** part of
   `apps/web`: refreshing the catalogue must never require a UI change or a
   redeploy, and this is the only code that touches the service role key.
   `build-catalog.mjs` has no dependencies at all, so validation and
