@@ -66,13 +66,13 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Implementation status (Phases 2-6)
+## 4. Implementation status (Phases 2-7)
 
 `/` is now pure routing with no UI of its own, gating in order: no locale
 cookie → `/welcome`; no session → `/login`; no household → `/onboarding`;
 otherwise → `/worker` for a Worker, `/home` for an Owner/Member.
 
-Built as of Phase 6:
+Built as of Phase 7:
 
 ```text
 /welcome                 language picker                    [Phase 2]
@@ -89,6 +89,8 @@ Built as of Phase 6:
 /worker/search           cross-language product search      [Phase 6]
 /worker/list             review + send the draft            [Phase 6]
 /worker/sent/[id]        send confirmation                  [Phase 6]
+/home/lists              received lists, newest first       [Phase 7]
+/home/lists/[id]         the checklist the household shops  [Phase 7]
 ```
 
 `/worker/c/[key]` is keyed on `categories.key`, not the uuid, so the URL
@@ -96,8 +98,12 @@ survives a catalogue re-import. `/worker/sent/[id]` reads the list by id
 but filters on `created_by_user_id` on top of RLS, so it cannot be used to
 view someone else's list.
 
-Still unbuilt: `/home/lists*` (Phase 7), `/home/settings`, `/home/profile`,
-`/worker/profile`, and `/switch-household`.
+Opening `/home/lists/[id]` marks the list viewed as a side effect —
+best-effort, and the RPC only ever moves `sent → viewed`, so re-opening a
+completed list cannot walk its status backwards.
+
+Still unbuilt: `/home/settings`, `/home/profile`, `/worker/profile`, and
+`/switch-household`.
 
 Notes on the guards themselves:
 

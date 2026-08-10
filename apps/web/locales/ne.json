@@ -126,5 +126,26 @@
     "listEmpty": "पहिले कम्तीमा एउटा सामान थप्नुहोस्।",
     "invalidQuantity": "1 र 999 बीचको मात्रा छान्नुहोस्।",
     "productNotFound": "त्यो सामान उपलब्ध छैन।"
+  },
+  "hlists": {
+    "lists": "सूचीहरू",
+    "newLists": "नयाँ सूचीहरू",
+    "noLists": "अहिलेसम्म कुनै सूची छैन",
+    "noListsHint": "तपाईंका सहयोगीले पठाएका सूचीहरू यहाँ देखिनेछन्।",
+    "from": "{name} बाट",
+    "someone": "कोही",
+    "openList": "खोल्नुहोस्",
+    "progress": "{total} मध्ये {done} किनियो",
+    "statusSent": "नयाँ",
+    "statusViewed": "खोलिएको",
+    "statusCompleted": "सम्पन्न",
+    "markDone": "सम्पन्न चिन्ह लगाउनुहोस्",
+    "reopen": "पुनः खोल्नुहोस्",
+    "purchased": "किनियो",
+    "unavailable": "उपलब्ध छैन",
+    "notFound": "उपलब्ध छैन",
+    "sentAt": "{when} पठाइयो",
+    "emptyItems": "यो सूचीमा केही छैन।",
+    "openLists": "{count} खुला"
   }
 }

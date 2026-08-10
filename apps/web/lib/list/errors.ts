@@ -17,6 +17,11 @@ export type ListErrorCode =
   | "LIST_EMPTY"
   | "INVALID_QUANTITY"
   | "PRODUCT_NOT_FOUND"
+  | "NOT_HOUSEHOLD_SIDE"
+  | "LIST_NOT_SENT"
+  | "LIST_ARCHIVED"
+  | "INVALID_STATUS"
+  | "ITEM_NOT_FOUND"
   | "NOT_CONFIGURED"
   | "UNKNOWN";
 
@@ -28,6 +33,11 @@ const KNOWN_CODES: ListErrorCode[] = [
   "LIST_EMPTY",
   "INVALID_QUANTITY",
   "PRODUCT_NOT_FOUND",
+  "NOT_HOUSEHOLD_SIDE",
+  "LIST_NOT_SENT",
+  "LIST_ARCHIVED",
+  "INVALID_STATUS",
+  "ITEM_NOT_FOUND",
 ];
 
 export function toListErrorCode(message: string | undefined): ListErrorCode {

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { toListErrorCode, type ListActionResult } from "./errors";
+import type { PurchaseStatus } from "@/lib/supabase/database.types";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 import { createClient } from "@/lib/supabase/server";
 
@@ -97,4 +98,65 @@ export async function sendListAction(listId: string): Promise<ListActionResult<s
 
   revalidatePath("/worker", "layout");
   return { ok: true, value: data };
+}
+
+// ---- household side (Phase 7) --------------------------------------
+
+/**
+ * Marks a received list as seen. Called when the owner opens it.
+ *
+ * Best-effort by design: failing to record "viewed" must never stop the
+ * list rendering. The RPC is idempotent and only ever moves sent →
+ * viewed, so re-opening a completed list cannot walk its status back.
+ */
+export async function markListViewedAction(listId: string): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+  const supabase = await createClient();
+  await supabase.rpc("mark_list_viewed", { p_list_id: listId });
+}
+
+/**
+ * Checks an item off, marks it unavailable, or clears it again.
+ *
+ * The only write path into purchase state in the whole system. It refuses
+ * a Worker caller in Postgres, so the fact that this action is only
+ * rendered on household screens is presentation, not protection.
+ */
+export async function setPurchaseStatusAction(
+  itemId: string,
+  status: PurchaseStatus,
+): Promise<ListActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_purchase_status", {
+    p_item_id: itemId,
+    p_status: status,
+  });
+
+  if (error) return { ok: false, code: toListErrorCode(error.message) };
+
+  revalidatePath("/home", "layout");
+  return { ok: true, value: undefined };
+}
+
+/** Closes a shop, or reopens one closed by mistake. Deliberately allowed
+ * with items still outstanding — a shop can finish with something
+ * unavailable, and refusing would only teach people to fake the boxes. */
+export async function setListCompletedAction(
+  listId: string,
+  completed: boolean,
+): Promise<ListActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_list_completed", {
+    p_list_id: listId,
+    p_completed: completed,
+  });
+
+  if (error) return { ok: false, code: toListErrorCode(error.message) };
+
+  revalidatePath("/home", "layout");
+  return { ok: true, value: undefined };
 }

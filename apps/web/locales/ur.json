@@ -126,5 +126,26 @@
     "listEmpty": "پہلے کم از کم ایک چیز شامل کریں۔",
     "invalidQuantity": "1 اور 999 کے درمیان مقدار منتخب کریں۔",
     "productNotFound": "یہ چیز دستیاب نہیں ہے۔"
+  },
+  "hlists": {
+    "lists": "فہرستیں",
+    "newLists": "نئی فہرستیں",
+    "noLists": "ابھی کوئی فہرست نہیں",
+    "noListsHint": "آپ کے مددگار جو فہرستیں بھیجیں گے وہ یہاں نظر آئیں گی۔",
+    "from": "{name} کی طرف سے",
+    "someone": "کوئی",
+    "openList": "کھولیں",
+    "progress": "{total} میں سے {done} خریدے",
+    "statusSent": "نئی",
+    "statusViewed": "کھولی گئی",
+    "statusCompleted": "مکمل",
+    "markDone": "مکمل نشان زد کریں",
+    "reopen": "دوبارہ کھولیں",
+    "purchased": "خریدا",
+    "unavailable": "دستیاب نہیں",
+    "notFound": "دستیاب نہیں",
+    "sentAt": "{when} بھیجی گئی",
+    "emptyItems": "اس فہرست میں کچھ نہیں ہے۔",
+    "openLists": "{count} کھلی"
   }
 }

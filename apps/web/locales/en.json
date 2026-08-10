@@ -126,5 +126,26 @@
     "listEmpty": "Add at least one product first.",
     "invalidQuantity": "Choose a quantity between 1 and 999.",
     "productNotFound": "That product is not available."
+  },
+  "hlists": {
+    "lists": "Lists",
+    "newLists": "New lists",
+    "noLists": "No lists yet",
+    "noListsHint": "Lists your helpers send will appear here.",
+    "from": "From {name}",
+    "someone": "Someone",
+    "openList": "Open",
+    "progress": "{done} of {total} bought",
+    "statusSent": "New",
+    "statusViewed": "Opened",
+    "statusCompleted": "Done",
+    "markDone": "Mark as done",
+    "reopen": "Reopen",
+    "purchased": "Bought",
+    "unavailable": "Not available",
+    "notFound": "Not available",
+    "sentAt": "Sent {when}",
+    "emptyItems": "This list has no items.",
+    "openLists": "{count} open"
   }
 }

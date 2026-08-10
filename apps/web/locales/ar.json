@@ -126,5 +126,26 @@
     "listEmpty": "أضف منتجاً واحداً على الأقل.",
     "invalidQuantity": "اختر كمية بين ١ و ٩٩٩.",
     "productNotFound": "هذا المنتج غير متاح."
+  },
+  "hlists": {
+    "lists": "القوائم",
+    "newLists": "قوائم جديدة",
+    "noLists": "لا توجد قوائم بعد",
+    "noListsHint": "ستظهر هنا القوائم التي يرسلها العاملون.",
+    "from": "من {name}",
+    "someone": "شخص ما",
+    "openList": "افتح",
+    "progress": "تم شراء {done} من {total}",
+    "statusSent": "جديدة",
+    "statusViewed": "مفتوحة",
+    "statusCompleted": "مكتملة",
+    "markDone": "وضع علامة مكتملة",
+    "reopen": "إعادة فتح",
+    "purchased": "تم الشراء",
+    "unavailable": "غير متوفر",
+    "notFound": "غير متوفر",
+    "sentAt": "أُرسلت {when}",
+    "emptyItems": "هذه القائمة فارغة.",
+    "openLists": "{count} مفتوحة"
   }
 }

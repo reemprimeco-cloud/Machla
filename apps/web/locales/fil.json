@@ -126,5 +126,26 @@
     "listEmpty": "Magdagdag muna ng kahit isang produkto.",
     "invalidQuantity": "Pumili ng dami sa pagitan ng 1 at 999.",
     "productNotFound": "Hindi available ang produktong iyon."
+  },
+  "hlists": {
+    "lists": "Mga listahan",
+    "newLists": "Bagong listahan",
+    "noLists": "Wala pang listahan",
+    "noListsHint": "Lilitaw dito ang mga listahang ipapadala ng katulong mo.",
+    "from": "Mula kay {name}",
+    "someone": "May nagpadala",
+    "openList": "Buksan",
+    "progress": "{done} sa {total} nabili",
+    "statusSent": "Bago",
+    "statusViewed": "Binuksan",
+    "statusCompleted": "Tapos",
+    "markDone": "Markahang tapos",
+    "reopen": "Buksang muli",
+    "purchased": "Nabili",
+    "unavailable": "Walang stock",
+    "notFound": "Walang stock",
+    "sentAt": "Ipinadala {when}",
+    "emptyItems": "Walang laman ang listahang ito.",
+    "openLists": "{count} bukas"
   }
 }

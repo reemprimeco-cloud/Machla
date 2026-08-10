@@ -126,5 +126,26 @@
     "listEmpty": "පළමුව අවම වශයෙන් එක් නිෂ්පාදනයක් එකතු කරන්න.",
     "invalidQuantity": "1 සහ 999 අතර ප්‍රමාණයක් තෝරන්න.",
     "productNotFound": "එම නිෂ්පාදනය නොමැත."
+  },
+  "hlists": {
+    "lists": "ලැයිස්තු",
+    "newLists": "නව ලැයිස්තු",
+    "noLists": "තවම ලැයිස්තු නැත",
+    "noListsHint": "ඔබේ සහායකයින් එවන ලැයිස්තු මෙහි දිස්වේ.",
+    "from": "{name} වෙතින්",
+    "someone": "කවුරුන් හෝ",
+    "openList": "විවෘත කරන්න",
+    "progress": "{total}න් {done}ක් ගෙන ඇත",
+    "statusSent": "අලුත්",
+    "statusViewed": "විවෘත කළා",
+    "statusCompleted": "අවසන්",
+    "markDone": "අවසන් ලෙස සලකුණු කරන්න",
+    "reopen": "නැවත විවෘත කරන්න",
+    "purchased": "ගත්තා",
+    "unavailable": "නොමැත",
+    "notFound": "නොමැත",
+    "sentAt": "{when} එවා ඇත",
+    "emptyItems": "මෙම ලැයිස්තුව හිස්.",
+    "openLists": "{count} විවෘතයි"
   }
 }

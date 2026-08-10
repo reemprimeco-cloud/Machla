@@ -260,3 +260,91 @@ quantity change — otherwise nudging the stepper four times would outrank a
 product genuinely bought every week. Counters are per-user and scoped by
 RLS to `user_id = auth.uid()`, so one worker's habits never surface in
 another's suggestions.
+
+---
+
+## 11. Phase 7 — as built (household side)
+
+The household half is implemented. §5 (requested vs. purchased) and §6
+(progress) are now enforced code, not intent.
+
+### 11.1 The RPCs
+
+| Function | Who | What |
+|---|---|---|
+| `get_household_lists` | any active member | Received lists + **sender name** + progress counts |
+| `mark_list_viewed` | Owner/Member | `sent → viewed`, idempotent, never backwards |
+| `set_purchase_status` | Owner/Member | The *only* write path into purchase state |
+| `set_list_completed` | Owner/Member | `completed`, and reversible back to `viewed` |
+
+Plus `assert_can_work_list`, the shared precondition — not granted to
+`authenticated`, same reasoning as `assert_own_draft`.
+
+### 11.2 Why `get_household_lists` is SECURITY DEFINER
+
+The Phase 7 acceptance criterion is *"the owner can identify exactly which
+worker sent each list."* `users` is scoped by RLS to the caller's own row,
+so a plain query cannot resolve a sender's name at all. This RPC is the
+narrow, membership-checked place that can — and it returns
+`display_name` only. Phone numbers stay out, exactly as in
+`get_household_members` (`10-security-model.md` §3).
+
+It also excludes drafts unconditionally: another person's unsent list is
+not the household's business, whoever is asking.
+
+### 11.3 The split, now enforced in both directions
+
+§5 described this; here is what actually holds:
+
+- `set_purchase_status` names only `purchase_status`, `purchased_at` and
+  `purchased_by_user_id`. Checking an item off structurally cannot alter
+  the quantity, product, category or note (§16A.3).
+- It refuses a Worker caller — including on a list they wrote themselves.
+  The author of a request does not get to mark it fulfilled.
+- `set_list_item` (Phase 6) refuses any list that is not a draft, so the
+  request freezes on send.
+- Un-checking clears `purchased_at` and `purchased_by_user_id` rather than
+  leaving a stale attribution on an item that is no longer purchased.
+
+`05_phase7_household_lists_test.sql` asserts each of these, and two of them
+structurally rather than behaviourally: exactly one signed-in-callable
+function *assigns* `purchase_status` (the regex anchors on the
+`UPDATE … SET` form, so a function that merely counts by the column does
+not match — `get_household_lists` tripped an earlier, looser version), and
+`set_list_item`'s definition does not mention the purchase columns in any
+executable line (`--` comments are stripped first, since its body carries
+a note explaining exactly which columns it omits).
+
+### 11.4 Completion is not gated on the checklist
+
+`set_list_completed` closes a list with items still outstanding. A shop
+legitimately finishes with something unavailable, and refusing to close
+would only teach people to tick boxes they did not fill. Reopening drops
+to `viewed`, not `sent` — it has certainly been seen — and items stay
+editable afterwards so a miscount can be corrected.
+
+### 11.5 Progress
+
+`purchased / total`, by item count, computed in SQL by
+`count(*) filter (where purchase_status = ...)`. Never quantity-weighted:
+ten units of one product is one checklist item (§16A.6). `unavailable` is
+counted separately and does not count as purchased.
+
+The UI mirrors this optimistically — the header count moves on the same
+tap that moves the row — so a slow connection does not make the bar look
+stuck.
+
+### 11.6 What the household sees
+
+- **Dashboard** — the three newest lists with sender and progress, then
+  People and Invitations. Lists come first: receiving them is what this
+  side of the app is for.
+- **Lists** — everything received, newest first; unopened ones outlined.
+- **Checklist** — grouped by category in aisle order, from the same
+  `groupEntries()` the worker's review screen uses, so the two sides
+  cannot drift. The whole row is the check target (48px, one-handed, in an
+  aisle); a separate ✕ marks an item unavailable.
+
+Quantities and notes are displayed but have no editing affordance — which
+is presentation matching a guarantee the database is already keeping,
+not the guarantee itself.

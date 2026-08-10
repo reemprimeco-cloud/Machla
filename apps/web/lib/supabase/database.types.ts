@@ -326,6 +326,41 @@ export interface Database {
         Args: { p_limit?: number };
         Returns: Database["public"]["Tables"]["products"]["Row"][];
       };
+
+      // Phase 7 RPCs — supabase/migrations/*_phase7_household_lists.sql.
+      // The household side of the checklist. set_purchase_status is the
+      // only write path into purchase_status / purchased_at /
+      // purchased_by_user_id anywhere in the system, and it refuses a
+      // Worker caller (docs/architecture/10-security-model.md §4).
+      mark_list_viewed: {
+        Args: { p_list_id: string };
+        Returns: string | null;
+      };
+      set_purchase_status: {
+        Args: { p_item_id: string; p_status: PurchaseStatus };
+        Returns: Database["public"]["Tables"]["shopping_list_items"]["Row"];
+      };
+      set_list_completed: {
+        Args: { p_list_id: string; p_completed?: boolean };
+        Returns: Database["public"]["Tables"]["shopping_lists"]["Row"];
+      };
+      get_household_lists: {
+        Args: { p_household_id: string; p_list_id?: string | null; p_limit?: number };
+        Returns: {
+          id: string;
+          status: ShoppingListStatus;
+          language: string;
+          created_at: string;
+          sent_at: string | null;
+          viewed_at: string | null;
+          completed_at: string | null;
+          created_by_user_id: string;
+          created_by_name: string | null;
+          total_items: number;
+          purchased_items: number;
+          unavailable_items: number;
+        }[];
+      };
     };
     Enums: Record<string, never>;
   };

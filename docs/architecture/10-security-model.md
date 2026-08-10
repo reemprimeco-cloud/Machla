@@ -169,6 +169,20 @@ And Phase 6:
 | `get_frequent_products` | ✗ | ✓ (`SECURITY INVOKER` — `product_usage_stats` RLS already scopes to `user_id = auth.uid()`) |
 | `assert_own_draft` | ✗ | ✗ (internal helper; returns a whole list row, and every caller is itself authorized) |
 
+And Phase 7 — the household side of the checklist:
+
+| Function | anon | authenticated |
+|---|:---:|:---:|
+| `mark_list_viewed`, `set_purchase_status`, `set_list_completed` | ✗ | ✓ (Owner/Member only — each refuses a Worker caller) |
+| `get_household_lists` | ✗ | ✓ (any active member; returns `display_name` only, never a phone number) |
+| `assert_can_work_list` | ✗ | ✗ (internal helper) |
+
+`get_household_lists` is the one place a member can learn another user's
+display name. It exists because the Phase 7 acceptance criterion is "the
+owner can identify exactly which worker sent each list", and `users` is
+scoped by RLS to the caller's own row. Same posture as
+`get_household_members`: name yes, phone no.
+
 Two things the Phase 6 functions establish, both asserted in
 `04_phase6_worker_lists_test.sql`:
 
@@ -180,6 +194,12 @@ Two things the Phase 6 functions establish, both asserted in
   RPC signature (asserted generically against `pg_proc`, so a future
   function that adds one fails the suite) and have no UPDATE policy, so a
   direct client write is a silent no-op.
+
+Phase 7 closes the loop from the other side: `set_purchase_status` is the
+only function in the system that assigns those three columns, it names no
+others, and it refuses a Worker caller — including the author of the list.
+So neither role can reach the other's columns, and that is an absent
+capability rather than a rule to remember.
 
 ## 5C. Extensions belong outside `public`
 

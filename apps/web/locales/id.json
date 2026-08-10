@@ -126,5 +126,26 @@
     "listEmpty": "Tambahkan minimal satu produk dulu.",
     "invalidQuantity": "Pilih jumlah antara 1 dan 999.",
     "productNotFound": "Produk itu tidak tersedia."
+  },
+  "hlists": {
+    "lists": "Daftar",
+    "newLists": "Daftar baru",
+    "noLists": "Belum ada daftar",
+    "noListsHint": "Daftar yang dikirim pembantu Anda akan muncul di sini.",
+    "from": "Dari {name}",
+    "someone": "Seseorang",
+    "openList": "Buka",
+    "progress": "{done} dari {total} dibeli",
+    "statusSent": "Baru",
+    "statusViewed": "Dibuka",
+    "statusCompleted": "Selesai",
+    "markDone": "Tandai selesai",
+    "reopen": "Buka lagi",
+    "purchased": "Dibeli",
+    "unavailable": "Tidak tersedia",
+    "notFound": "Tidak tersedia",
+    "sentAt": "Dikirim {when}",
+    "emptyItems": "Daftar ini kosong.",
+    "openLists": "{count} terbuka"
   }
 }
