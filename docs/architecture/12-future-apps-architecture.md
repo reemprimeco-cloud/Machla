@@ -114,3 +114,49 @@ than the signal being gone.
 
 A native client should reach the same conclusion, or implement a real
 queue with real conflict handling — not a cache that pretends.
+
+---
+
+## Phase 12 — as built, and what was deliberately not built
+
+**No native app exists.** The master plan is explicit — do not build them,
+validate the web application first — and that instruction is followed.
+
+What Phase 12 produced is `18-backend-contract.md`: the complete read and
+RPC surface a native client will consume, the error-code list it should
+mirror, and the product behaviours it must preserve (absolute quantities,
+snapshotted categories, item-count progress, deterministic ordering, frozen
+sent lists). It exists so that a second client consumes the same API rather
+than inventing a parallel one, and so anyone changing an RPC can see who
+depends on it.
+
+### The portability claim, measured rather than asserted
+
+This document has claimed since Phase 0 that business logic pushed into
+Postgres is a stronger form of "share, don't duplicate" than a shared
+JavaScript package. Phase 12 checked it by auditing every module's imports:
+
+- **13 modules have no framework coupling at all** — the i18n layer, the
+  localized-name helpers, the error-code contracts, the Supabase client and
+  types, phone/locale helpers, branding. These are the first `packages/`
+  extraction and would work unchanged in React Native.
+- **12 modules are Next.js server-only** — every `queries.ts`,
+  `actions.ts`, the route guards, the SSR session refresh.
+
+The second number is the interesting one, and it is not a problem: those
+files are thin wrappers around the RPCs. They hold no business rules. A
+native client rewrites that layer in whatever its platform prefers and gets
+identical behaviour — including identical *refusals* — because the rules
+live in the database, not in the wrapper.
+
+`lib/i18n/cookie.ts` is the one module worth flagging on extraction: its
+logic is portable, its storage (`document.cookie`) is not. A native client
+swaps the storage and keeps the logic.
+
+### Still the honest blocker
+
+The web application has not been validated by real use, because phone auth
+is not enabled and no SMS provider is chosen. "Validate the web app first"
+cannot start until that does. Building a native client before then would be
+building on an unvalidated product — which is precisely what this phase's
+first line forbids.
