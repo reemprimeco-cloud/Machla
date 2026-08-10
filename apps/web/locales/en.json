@@ -23,6 +23,7 @@
     "verify": "Verify",
     "verifying": "Verifying…",
     "resendCode": "Resend code",
+    "resendIn": "Resend in {seconds}s",
     "changeNumber": "Change number",
     "invalidPhone": "Enter a valid phone number.",
     "invalidCode": "That code didn't work. Try again.",

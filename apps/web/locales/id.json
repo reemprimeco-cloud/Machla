@@ -23,6 +23,7 @@
     "verify": "Verifikasi",
     "verifying": "Memverifikasi…",
     "resendCode": "Kirim ulang kode",
+    "resendIn": "Kirim ulang dalam {seconds} detik",
     "changeNumber": "Ganti nomor",
     "invalidPhone": "Masukkan nomor telepon yang valid.",
     "invalidCode": "Kode itu tidak berhasil. Coba lagi.",

@@ -17,6 +17,45 @@
  *   node scripts/check-env.mjs
  */
 
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+/**
+ * Locally the vars live in .env.local, which `next` loads but bare `node`
+ * does not — so without this the preflight fails on a correctly
+ * configured machine, which teaches people to ignore it. On Vercel there
+ * is no such file and the real environment is used, unchanged.
+ *
+ * Deliberately does not overwrite an existing process.env value: an
+ * explicitly exported var should win over a stale file.
+ */
+function loadEnvLocal() {
+  const path = resolve(dirname(fileURLToPath(import.meta.url)), "..", ".env.local");
+  let contents;
+  try {
+    contents = readFileSync(path, "utf8");
+  } catch {
+    return; // No file: the environment is expected to be real (CI, Vercel).
+  }
+
+  for (const line of contents.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const separator = trimmed.indexOf("=");
+    if (separator < 1) continue;
+    const name = trimmed.slice(0, separator).trim();
+    // Strip one layer of matching quotes, the way dotenv does.
+    const value = trimmed
+      .slice(separator + 1)
+      .trim()
+      .replace(/^(['"])(.*)\1$/, "$2");
+    if (!(name in process.env)) process.env[name] = value;
+  }
+}
+
+loadEnvLocal();
+
 const REQUIRED = ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY"];
 
 // Anything matching these must NOT be set for the web app.

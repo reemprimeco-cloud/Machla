@@ -23,6 +23,7 @@
     "verify": "I-verify",
     "verifying": "Vine-verify…",
     "resendCode": "Ipadala ulit ang code",
+    "resendIn": "Ipadala ulit sa loob ng {seconds}s",
     "changeNumber": "Palitan ang numero",
     "invalidPhone": "Maglagay ng wastong numero ng telepono.",
     "invalidCode": "Hindi gumana ang code na iyon. Subukan ulit.",

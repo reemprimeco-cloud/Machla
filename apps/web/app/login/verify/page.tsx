@@ -10,6 +10,13 @@ import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 
 /**
+ * Mirrors Supabase Auth's own minimum interval between OTP requests to
+ * the same number. Enforced server-side regardless; this exists so the
+ * user is told to wait instead of being shown a failure.
+ */
+const RESEND_COOLDOWN_SECONDS = 60;
+
+/**
  * OTP entry (docs/architecture/06-auth-otp-flow.md §3). Supabase Auth
  * owns OTP generation/expiry/verification entirely — this page never
  * stores or re-derives the code itself (master plan rule 29.13).
@@ -25,10 +32,22 @@ function VerifyForm() {
   const [status, setStatus] = useState<"idle" | "verifying" | "resending" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
   const [resent, setResent] = useState(false);
+  // Every resend is a paid SMS, and Supabase Auth refuses a second OTP to
+  // the same number inside 60s anyway ("For security purposes, you can
+  // only request this after N seconds"). Without a visible countdown the
+  // button looks broken and gets tapped repeatedly. Starts on mount
+  // because arriving here means /login has just sent the first code.
+  const [cooldown, setCooldown] = useState(RESEND_COOLDOWN_SECONDS);
 
   useEffect(() => {
     if (!phone) router.replace("/login");
   }, [phone, router]);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown((seconds) => seconds - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   if (!phone) return null;
 
@@ -90,6 +109,7 @@ function VerifyForm() {
 
     setStatus("idle");
     setResent(true);
+    setCooldown(RESEND_COOLDOWN_SECONDS);
   }
 
   return (
@@ -161,10 +181,19 @@ function VerifyForm() {
           <button
             type="button"
             onClick={handleResend}
-            disabled={status === "resending"}
-            className="hl-caption text-green-700 underline underline-offset-4 disabled:opacity-60"
+            disabled={status === "resending" || cooldown > 0}
+            className="hl-caption text-green-700 underline underline-offset-4 disabled:no-underline disabled:opacity-60"
           >
-            {t("auth.resendCode")}
+            {cooldown > 0
+              ? /* The count stays LTR inside Arabic/Urdu, same rule as the
+                   phone number above. */
+                t("auth.resendIn").split("{seconds}").map((part, index) => (
+                  <span key={index}>
+                    {index > 0 && <bdi dir="ltr">{cooldown}</bdi>}
+                    {part}
+                  </span>
+                ))
+              : t("auth.resendCode")}
           </button>
         </div>
       </form>

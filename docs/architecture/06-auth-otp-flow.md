@@ -91,6 +91,37 @@ This value is **never** used to authorize household actions (that's
 subsequent logins and which persona-specific onboarding copy to show if
 the user later joins an additional household with a different role.
 
+## 5A. Dashboard settings this code depends on
+
+Supabase's Phone provider panel carries two settings the application is
+coupled to. Neither coupling is visible from the dashboard, and getting
+either wrong produces a broken login rather than an error message.
+
+- **SMS OTP Length must be 6.** `app/login/verify/page.tsx` strips
+  non-digits and caps input at 6 (`.slice(0, 6)`), and its Verify button
+  stays disabled until `code.length === 6`. Set the provider to 7 or 8
+  and the user can type a code but can never submit it. Changing this
+  setting means changing both of those numbers.
+
+- **SMS OTP Expiry should be raised from the 60-second default.** Sixty
+  seconds is short for this app's users specifically: shared phones,
+  switching out to the SMS app and back, and typing a code in a script
+  that may not be the keyboard's default. Five minutes (300) is the
+  recommendation. Supabase's own security advisor complains above one
+  hour, so there is plenty of room below that.
+
+The resend control enforces a **60-second cooldown** client-side
+(`RESEND_COOLDOWN_SECONDS`), showing a live countdown in the user's
+language. This mirrors the interval Supabase Auth enforces server-side
+anyway; without the countdown the button appears broken during that
+window and gets tapped repeatedly, and **every tap is a paid SMS**. The
+countdown digits are wrapped in `<bdi dir="ltr">` so they do not reorder
+inside Arabic and Urdu.
+
+Rate limits themselves live in Authentication → Rate Limits, not in the
+provider panel, and are worth setting before launch for the same reason:
+the cost of the login path is per message sent.
+
 ## 6. Explicit non-goals for V1 auth
 
 - No email/password option.

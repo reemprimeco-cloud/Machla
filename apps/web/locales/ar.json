@@ -23,6 +23,7 @@
     "verify": "تحقّق",
     "verifying": "جارٍ التحقق…",
     "resendCode": "إعادة إرسال الرمز",
+    "resendIn": "إعادة الإرسال بعد {seconds} ثانية",
     "changeNumber": "تغيير الرقم",
     "invalidPhone": "أدخل رقم هاتف صحيح.",
     "invalidCode": "الرمز غير صحيح. حاول مرة أخرى.",
