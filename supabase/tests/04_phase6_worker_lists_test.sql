@@ -265,11 +265,19 @@ select test_assert(
 -- 4. A draft belongs to exactly one person
 -- ============================================================
 
--- Worker P2 is an active member of the SAME household, so RLS lets them
--- read the list. They still must not be able to change it.
+-- Worker P2 is an active member of the SAME household, but a Worker sees
+-- only their own lists — 04-roles-permission-matrix.md, "View any list
+-- belonging to the household: Worker no (own lists only)". Phase 8
+-- corrected the policy to match; this assertion was written the other way
+-- round in Phase 6 and was encoding the bug.
 select test_assert(
-  (select count(*) = 1 from shopping_lists where id = :'list_p1'),
-  'a fellow member of the household can read the list'
+  (select count(*) = 0 from shopping_lists where id = :'list_p1'),
+  'a fellow worker cannot read another worker''s list'
+);
+
+select test_assert(
+  (select count(*) = 0 from shopping_list_items where list_id = :'list_p1'),
+  'nor its items'
 );
 
 select test_raises(

@@ -147,5 +147,21 @@
     "sentAt": "Ipinadala {when}",
     "emptyItems": "Walang laman ang listahang ito.",
     "openLists": "{count} bukas"
+  },
+  "notif": {
+    "title": "Mga abiso",
+    "none": "Walang bago",
+    "noneHint": "Makikita mo dito kapag may naipadala, nabuksan o natapos na listahan.",
+    "listSent": "Nagpadala ng listahan si {name}",
+    "listViewed": "Binuksan ni {name} ang listahan mo",
+    "listCompleted": "Tapos na ang pamimili ni {name}",
+    "markAllRead": "Markahang lahat nabasa",
+    "settings": "Mga setting ng abiso",
+    "prefListSent": "Kapag may ipinadalang listahan sa akin",
+    "prefListViewed": "Kapag binuksan ang listahan ko",
+    "prefListCompleted": "Kapag tapos na ang pamimili ko",
+    "myLists": "Mga listahan ko",
+    "noMyLists": "Wala ka pang naipadalang listahan",
+    "justNow": "Ngayon lang"
   }
 }

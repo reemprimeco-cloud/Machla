@@ -2,6 +2,7 @@ import { SearchResults } from "@/components/worker/SearchResults";
 import { getCategories, searchProducts } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
+import { getUnreadCount } from "@/lib/notifications/queries";
 
 /**
  * Search results.
@@ -21,10 +22,11 @@ export default async function SearchPage({
   const query = (q ?? "").trim();
   const membership = await requireWorkerAccess();
 
-  const [products, categories, draft] = await Promise.all([
+  const [products, categories, draft, unreadCount] = await Promise.all([
     searchProducts(query),
     getCategories(),
     getDraftList(membership.householdId),
+    getUnreadCount(),
   ]);
 
   return (
@@ -35,6 +37,7 @@ export default async function SearchPage({
       householdId={membership.householdId}
       quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
+      unreadCount={unreadCount}
     />
   );
 }

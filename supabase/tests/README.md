@@ -36,6 +36,7 @@ meaningful.
 | `03_phase5_catalog_test.sql` | Phase 5: the catalogue carries no price column, is world-readable but client-unwritable, imports idempotently via `natural_key`, groups deterministically, and searches across all nine languages plus brand and transliteration. |
 | `04_phase6_worker_lists_test.sql` | Phase 6: the worker's draft lifecycle — one draft per person, a draft is editable only by its author (not by a fellow worker, not by the owner), a sent list is immutable, grouping survives re-categorization, and no worker-reachable path writes purchase state. |
 | `05_phase7_household_lists_test.sql` | Phase 7: the household receives a list, identifies its sender, works the checklist, and completes it — plus the mirror of Phase 6's guarantee, that a Worker cannot set purchase state even on a list they wrote. |
+| `06_phase8_notifications_test.sql` | Phase 8: notification creation/read-state/preferences, notifications are private and unforgeable, a Worker sees only their own lists, list history — and the master plan's own §16A.12 acceptance scenario end to end. |
 
 ## Conventions
 

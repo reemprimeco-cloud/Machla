@@ -147,5 +147,21 @@
     "sentAt": "Sent {when}",
     "emptyItems": "This list has no items.",
     "openLists": "{count} open"
+  },
+  "notif": {
+    "title": "Notifications",
+    "none": "Nothing new",
+    "noneHint": "You'll see here when a list is sent, opened or finished.",
+    "listSent": "{name} sent a list",
+    "listViewed": "{name} opened your list",
+    "listCompleted": "{name} finished the shopping",
+    "markAllRead": "Mark all as read",
+    "settings": "Notification settings",
+    "prefListSent": "When a list is sent to me",
+    "prefListViewed": "When my list is opened",
+    "prefListCompleted": "When my shopping is finished",
+    "myLists": "My lists",
+    "noMyLists": "You haven't sent a list yet",
+    "justNow": "Just now"
   }
 }

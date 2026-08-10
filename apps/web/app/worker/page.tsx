@@ -2,6 +2,7 @@ import { WorkerHome } from "@/components/worker/WorkerHome";
 import { getCategories, getFrequentProducts } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
+import { getUnreadCount } from "@/lib/notifications/queries";
 
 /**
  * The worker's home screen: category tiles, search, and whatever they buy
@@ -14,10 +15,11 @@ import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 export default async function WorkerPage() {
   const membership = await requireWorkerAccess();
 
-  const [categories, frequent, draft] = await Promise.all([
+  const [categories, frequent, draft, unreadCount] = await Promise.all([
     getCategories(),
     getFrequentProducts(6),
     getDraftList(membership.householdId),
+    getUnreadCount(),
   ]);
 
   return (
@@ -28,6 +30,7 @@ export default async function WorkerPage() {
       frequent={frequent}
       quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
+      unreadCount={unreadCount}
     />
   );
 }

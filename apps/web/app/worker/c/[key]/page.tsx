@@ -4,6 +4,7 @@ import { CategoryBrowser } from "@/components/worker/CategoryBrowser";
 import { getCategories, getCategoryByKey, getProductsInCategory } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
+import { getUnreadCount } from "@/lib/notifications/queries";
 
 /** Products in one category. Addressed by the category's stable `key`
  * rather than its uuid, so the URL survives a catalogue re-import. */
@@ -14,10 +15,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ key: 
   const category = await getCategoryByKey(key);
   if (!category) notFound();
 
-  const [products, categories, draft] = await Promise.all([
+  const [products, categories, draft, unreadCount] = await Promise.all([
     getProductsInCategory(category.id),
     getCategories(),
     getDraftList(membership.householdId),
+    getUnreadCount(),
   ]);
 
   return (
@@ -28,6 +30,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ key: 
       householdId={membership.householdId}
       quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
+      unreadCount={unreadCount}
     />
   );
 }

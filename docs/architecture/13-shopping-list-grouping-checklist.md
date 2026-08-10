@@ -348,3 +348,75 @@ stuck.
 Quantities and notes are displayed but have no editing affordance — which
 is presentation matching a guarantee the database is already keeping,
 not the guarantee itself.
+
+---
+
+## 12. Phase 8 — as built (status, notifications, history)
+
+### 12.1 Why notifications are rows, not realtime
+
+Phase 8's stated goal is "make communication reliable". That word decided
+the design: notifications are **rows**, created by a trigger on the status
+transition itself, not ephemeral realtime events. A worker whose phone was
+off when the owner opened their list still finds the notification waiting;
+nothing depends on a socket being connected at the right moment.
+
+It is also the shape a future push or WhatsApp channel needs. Those become
+a *reader* of this table rather than a second, parallel notification path
+that can disagree with it.
+
+Browser push, listed as "optional" in the phase, is deliberately **not**
+built: it needs VAPID keys, a service-worker push handler and a permission
+prompt, none of which earn their place before anyone has used the app.
+
+### 12.2 What gets sent to whom
+
+| Transition | Recipients |
+|---|---|
+| → `sent` | every active Owner/Member of the household |
+| → `viewed` | the list's author |
+| → `completed` | the list's author |
+
+Never the person who performed the action, and never a Worker other than
+the author — they cannot open the list either.
+
+### 12.3 Preferences
+
+`users.notification_preferences` is `jsonb`, not three boolean columns, so
+a future channel adds keys instead of a migration. A **missing key means
+enabled**, which is the important detail: adding a notification type later
+does not silently mute it for every existing user.
+
+The switch is per type, not a blanket mute — the tests prove that muting
+`list_viewed` still lets `list_completed` through.
+
+### 12.4 §16A.12, executable
+
+The master plan states §16A.12 is the definition of done for this whole
+feature. It is now an actual test in
+`06_phase8_notifications_test.sql`: six items sent, grouped into five
+categories in order, four purchased, `4 / 6` shown, and every requested
+quantity unchanged after four purchase-status writes.
+
+**One discrepancy to resolve.** The master plan contradicts itself on
+category order. Its numbered "recommended default order" in §16A.2 puts
+*Meat, Chicken & Fish* at 3 and *Rice, Pasta & Grains* at 5; the
+illustrative example immediately above it — which §16A.12 then restates —
+shows Rice before Meat. The implementation and the test follow the
+**numbered list**, because it is the normative one and it is what the
+approved Phase 5 category seed implements. Flagged for confirmation; if the
+example is the intended order instead, it is a one-line change to two
+`sort_order` values in `catalog-import/data/categories.json` plus a re-run
+of the importer.
+
+### 12.5 List history (§16A.10)
+
+`/worker/lists` gives the worker their own sent lists with status and
+progress, read-only. It reuses `get_household_lists`, which returns only
+the caller's own lists to a Worker.
+
+A completed list preserves the whole record — requested items and
+quantities, categories, purchase status per item, purchased timestamp and
+purchased-by user, the creating worker, and every state timestamp — which
+is the groundwork §16A.11 needs for a future "repeat last week's list"
+without carrying purchase state across.

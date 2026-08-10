@@ -19,10 +19,12 @@ export function WorkerBar({
   title,
   backHref,
   itemCount,
+  unreadCount = 0,
 }: {
   title: string;
   backHref?: string;
   itemCount: number;
+  unreadCount?: number;
 }) {
   const { t } = useLocale();
 
@@ -43,6 +45,8 @@ export function WorkerBar({
       ) : null}
 
       <h1 className="hl-heading min-w-0 flex-1 truncate text-ink">{title}</h1>
+
+      <NotificationBell unreadCount={unreadCount} />
 
       <Link
         href="/worker/list"
@@ -84,5 +88,32 @@ export function SearchBox({ initialQuery = "" }: { initialQuery?: string }) {
         className="hl-body min-h-12 w-full rounded-pill border border-sand bg-surface px-5 text-ink outline-none focus-visible:border-green-700"
       />
     </form>
+  );
+}
+
+/** Unread badge. A dot rather than a count once it passes 9: the exact
+ * number stops mattering and a two-digit badge crowds the bar. */
+export function NotificationBell({ unreadCount }: { unreadCount: number }) {
+  const { t } = useLocale();
+
+  return (
+    <Link
+      href="/notifications"
+      aria-label={t("notif.title")}
+      className="relative flex size-11 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface"
+    >
+      <span aria-hidden className="text-lg leading-none">
+        🔔
+      </span>
+      {unreadCount > 0 ? (
+        <span
+          aria-hidden
+          className="absolute -top-1 -end-1 min-w-5 rounded-pill bg-danger px-1 text-center text-xs leading-5 text-cream"
+        >
+          {unreadCount > 9 ? "9+" : unreadCount}
+        </span>
+      ) : null}
+      <span className="sr-only">{unreadCount}</span>
+    </Link>
   );
 }

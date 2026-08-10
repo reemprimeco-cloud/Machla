@@ -147,5 +147,21 @@
     "sentAt": "{when} بھیجی گئی",
     "emptyItems": "اس فہرست میں کچھ نہیں ہے۔",
     "openLists": "{count} کھلی"
+  },
+  "notif": {
+    "title": "اطلاعات",
+    "none": "کچھ نیا نہیں",
+    "noneHint": "فہرست بھیجنے، کھولنے یا مکمل ہونے پر یہاں نظر آئے گا۔",
+    "listSent": "{name} نے فہرست بھیجی",
+    "listViewed": "{name} نے آپ کی فہرست کھولی",
+    "listCompleted": "{name} نے خریداری مکمل کی",
+    "markAllRead": "سب پڑھا ہوا نشان زد کریں",
+    "settings": "اطلاعات کی ترتیبات",
+    "prefListSent": "جب مجھے فہرست بھیجی جائے",
+    "prefListViewed": "جب میری فہرست کھولی جائے",
+    "prefListCompleted": "جب میری خریداری مکمل ہو",
+    "myLists": "میری فہرستیں",
+    "noMyLists": "آپ نے ابھی تک فہرست نہیں بھیجی",
+    "justNow": "ابھی"
   }
 }

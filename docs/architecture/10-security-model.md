@@ -237,3 +237,40 @@ quantity being a positive number, language code being one of the 9
 supported values, note length) is validated both client-side (fast
 feedback) and inside the relevant RPC function (authoritative) — never
 trusted from the client alone (master plan rule 29.15).
+
+## 5D. Notifications (Phase 8)
+
+| Function | anon | authenticated |
+|---|:---:|:---:|
+| `mark_notifications_read` | ✗ | ✓ (scoped to `auth.uid()` inside — another user's id matches nothing) |
+| `set_notification_preference` | ✗ | ✓ (own row only) |
+| `notify_list_status_change` | ✗ | ✗ (trigger context only) |
+
+`notifications` has a SELECT policy (`user_id = auth.uid()`) and **no write
+policy at all**. Rows are created by an `AFTER UPDATE OF status` trigger on
+`shopping_lists`, so a notification cannot be forged by a client, cannot be
+forgotten by a future code path that changes a list's status, and cannot
+disagree with the change that caused it — it is written in the same
+transaction.
+
+`actor_name` is denormalized onto the row deliberately. `users` is scoped
+by RLS to the caller's own row, so rendering "Ana sent a list" from a live
+join would have required yet another SECURITY DEFINER function just to read
+your own inbox; the snapshot also keeps the notification readable after the
+actor leaves the household.
+
+### The worker list-visibility fix
+
+Phase 8 also corrected a gap between the approved permission matrix and the
+shipped policy. `04-roles-permission-matrix.md` has always said a Worker may
+view **own lists only**, and §5 of this document says worker-to-worker
+visibility is "deliberately not granted in V1" — but the Phase 1 policy
+granted `is_active_member(household_id)` without a role condition, so any
+active member could read every list in the household.
+
+Both the RLS policies and `get_household_lists` now apply
+`is_active_member(household_id, array['owner','member']) or created_by_user_id = auth.uid()`.
+The RPC needs it independently because it is SECURITY DEFINER and therefore
+bypasses the policies — a definer function that forgets a rule the policies
+enforce is a way around them, which is the general lesson worth carrying
+into future phases.

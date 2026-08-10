@@ -16,6 +16,11 @@ export type MembershipStatus = "active" | "removed";
 export type InvitationStatus = "pending" | "accepted" | "revoked" | "expired";
 export type ShoppingListStatus = "draft" | "sent" | "viewed" | "completed" | "archived";
 export type PurchaseStatus = "pending" | "purchased" | "unavailable";
+export type NotificationType = "list_sent" | "list_viewed" | "list_completed";
+
+/** Per-type in-app notification switches. A missing key means enabled, so
+ * adding a new type does not silently mute it for existing users. */
+export type NotificationPreferences = Partial<Record<NotificationType, boolean>>;
 
 export interface Database {
   public: {
@@ -27,6 +32,7 @@ export interface Database {
           role: HouseholdRole;
           preferred_language: string | null;
           display_name: string | null;
+          notification_preferences: NotificationPreferences;
           created_at: string;
           updated_at: string;
         };
@@ -209,6 +215,26 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["shopping_lists"]["Row"]>;
         Relationships: [];
       };
+      notifications: {
+        Row: {
+          id: string;
+          user_id: string;
+          household_id: string;
+          list_id: string | null;
+          type: NotificationType;
+          actor_user_id: string | null;
+          actor_name: string | null;
+          created_at: string;
+          read_at: string | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["notifications"]["Row"]> & {
+          user_id: string;
+          household_id: string;
+          type: NotificationType;
+        };
+        Update: Partial<Database["public"]["Tables"]["notifications"]["Row"]>;
+        Relationships: [];
+      };
       shopping_list_items: {
         Row: {
           id: string;
@@ -321,6 +347,14 @@ export interface Database {
       send_list: {
         Args: { p_list_id: string };
         Returns: string;
+      };
+      mark_notifications_read: {
+        Args: { p_ids?: string[] | null };
+        Returns: number;
+      };
+      set_notification_preference: {
+        Args: { p_type: NotificationType; p_enabled: boolean };
+        Returns: NotificationPreferences;
       };
       get_frequent_products: {
         Args: { p_limit?: number };

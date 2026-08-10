@@ -147,5 +147,21 @@
     "sentAt": "Dikirim {when}",
     "emptyItems": "Daftar ini kosong.",
     "openLists": "{count} terbuka"
+  },
+  "notif": {
+    "title": "Notifikasi",
+    "none": "Tidak ada yang baru",
+    "noneHint": "Anda akan melihat di sini saat daftar dikirim, dibuka atau selesai.",
+    "listSent": "{name} mengirim daftar",
+    "listViewed": "{name} membuka daftar Anda",
+    "listCompleted": "{name} selesai berbelanja",
+    "markAllRead": "Tandai semua dibaca",
+    "settings": "Pengaturan notifikasi",
+    "prefListSent": "Saat daftar dikirim ke saya",
+    "prefListViewed": "Saat daftar saya dibuka",
+    "prefListCompleted": "Saat belanja saya selesai",
+    "myLists": "Daftar saya",
+    "noMyLists": "Anda belum mengirim daftar",
+    "justNow": "Baru saja"
   }
 }

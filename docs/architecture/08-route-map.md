@@ -66,13 +66,13 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Implementation status (Phases 2-7)
+## 4. Implementation status (Phases 2-8)
 
 `/` is now pure routing with no UI of its own, gating in order: no locale
 cookie → `/welcome`; no session → `/login`; no household → `/onboarding`;
 otherwise → `/worker` for a Worker, `/home` for an Owner/Member.
 
-Built as of Phase 7:
+Built as of Phase 8:
 
 ```text
 /welcome                 language picker                    [Phase 2]
@@ -91,7 +91,15 @@ Built as of Phase 7:
 /worker/sent/[id]        send confirmation                  [Phase 6]
 /home/lists              received lists, newest first       [Phase 7]
 /home/lists/[id]         the checklist the household shops  [Phase 7]
+/worker/lists            the worker's own sent-list history [Phase 8]
+/notifications           inbox + per-type switches          [Phase 8]
 ```
+
+`/notifications` is shared by both experiences — RLS scopes the rows to
+the caller, so no role check is needed to keep the two inboxes apart. It
+marks everything read on open: the act of looking is the acknowledgement,
+which is one fewer thing to tap for a user who may not read the label on a
+"mark as read" button.
 
 `/worker/c/[key]` is keyed on `categories.key`, not the uuid, so the URL
 survives a catalogue re-import. `/worker/sent/[id]` reads the list by id

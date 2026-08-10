@@ -147,5 +147,21 @@
     "sentAt": "{when} पठाइयो",
     "emptyItems": "यो सूचीमा केही छैन।",
     "openLists": "{count} खुला"
+  },
+  "notif": {
+    "title": "सूचनाहरू",
+    "none": "नयाँ केही छैन",
+    "noneHint": "सूची पठाउँदा, खोल्दा वा सकिँदा यहाँ देखिनेछ।",
+    "listSent": "{name} ले सूची पठाउनुभयो",
+    "listViewed": "{name} ले तपाईंको सूची खोल्नुभयो",
+    "listCompleted": "{name} ले किनमेल सक्नुभयो",
+    "markAllRead": "सबै पढेको चिन्ह लगाउनुहोस्",
+    "settings": "सूचना सेटिङ",
+    "prefListSent": "मलाई सूची पठाउँदा",
+    "prefListViewed": "मेरो सूची खोल्दा",
+    "prefListCompleted": "मेरो किनमेल सकिँदा",
+    "myLists": "मेरा सूचीहरू",
+    "noMyLists": "तपाईंले अझै सूची पठाउनुभएको छैन",
+    "justNow": "भर्खरै"
   }
 }

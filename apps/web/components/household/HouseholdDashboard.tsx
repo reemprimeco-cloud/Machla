@@ -8,6 +8,8 @@ import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { HouseholdRole } from "@/lib/supabase/database.types";
 
+import { NotificationBell } from "@/components/worker/WorkerChrome";
+
 import { AccountActions } from "./AccountActions";
 import { Progress } from "./ListsInbox";
 
@@ -17,21 +19,24 @@ export function HouseholdDashboard({
   memberCount,
   recentLists,
   openCount,
+  unreadCount,
 }: {
   householdName: string;
   role: HouseholdRole;
   memberCount: number;
   recentLists: HouseholdList[];
   openCount: number;
+  unreadCount: number;
 }) {
   const { t } = useLocale();
 
   return (
     <Screen>
-      <div className="flex flex-col items-center gap-4 py-4">
-        <HomeListLockup size={32} />
-        <h1 className="hl-title text-ink">{householdName}</h1>
+      <div className="flex items-center justify-between gap-3 py-2">
+        <HomeListLockup size={28} />
+        <NotificationBell unreadCount={unreadCount} />
       </div>
+      <h1 className="hl-title text-center text-ink">{householdName}</h1>
 
       {/* Lists come first: receiving them is what this side of the app is
           for, and an owner opening it usually wants the newest one. */}

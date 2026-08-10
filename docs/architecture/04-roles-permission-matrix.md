@@ -55,6 +55,16 @@ forecloses the future multi-household edge case), say so before Phase 3/4.
 | Set own preferred language | ✅ (Arabic/English only) | ✅ (Arabic/English only) | ✅ (any of 9) |
 | Search for households | ❌ (not possible for anyone — no such feature exists) | ❌ | ❌ |
 
+> **Phase 8 correction.** "View any list belonging to the household —
+> Worker ❌ (own lists only)" was in this table from Phase 0, but the
+> Phase 1 RLS policy did not implement it: `is_active_member(household_id)`
+> alone let any active member, Worker included, read every list in the
+> household. Phase 8 corrected the policy (and `get_household_lists`, which
+> is SECURITY DEFINER and so bypasses it) to match this table rather than
+> quietly relaxing the table to match the code. A Phase 6 test had asserted
+> the permissive behaviour as if it were correct; it now asserts the
+> refusal.
+
 Rows marked "creator only" or "own lists only" additionally require
 household membership — a Worker in Household A can never touch a list in
 Household B regardless of any other permission, and this is enforced at

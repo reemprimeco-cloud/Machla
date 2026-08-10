@@ -14,6 +14,7 @@ export function SearchResults({
   householdId,
   quantities,
   itemCount,
+  unreadCount,
 }: {
   query: string;
   products: Product[];
@@ -21,6 +22,7 @@ export function SearchResults({
   householdId: string;
   quantities: Record<string, number>;
   itemCount: number;
+  unreadCount: number;
 }) {
   const { t } = useLocale();
 
@@ -30,7 +32,12 @@ export function SearchResults({
 
   return (
     <Screen>
-      <WorkerBar title={t("worker.searchPlaceholder")} backHref="/worker" itemCount={itemCount} />
+      <WorkerBar
+        title={t("worker.searchPlaceholder")}
+        backHref="/worker"
+        itemCount={itemCount}
+        unreadCount={unreadCount}
+      />
 
       <SearchBox initialQuery={query} />
 

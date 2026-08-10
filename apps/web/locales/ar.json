@@ -147,5 +147,21 @@
     "sentAt": "أُرسلت {when}",
     "emptyItems": "هذه القائمة فارغة.",
     "openLists": "{count} مفتوحة"
+  },
+  "notif": {
+    "title": "الإشعارات",
+    "none": "لا جديد",
+    "noneHint": "سترى هنا عند إرسال قائمة أو فتحها أو إنهائها.",
+    "listSent": "{name} أرسل قائمة",
+    "listViewed": "{name} فتح قائمتك",
+    "listCompleted": "{name} أنهى التسوق",
+    "markAllRead": "تعليم الكل كمقروء",
+    "settings": "إعدادات الإشعارات",
+    "prefListSent": "عند إرسال قائمة إليّ",
+    "prefListViewed": "عند فتح قائمتي",
+    "prefListCompleted": "عند انتهاء تسوقي",
+    "myLists": "قوائمي",
+    "noMyLists": "لم ترسل قائمة بعد",
+    "justNow": "الآن"
   }
 }

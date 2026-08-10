@@ -15,6 +15,7 @@ export function CategoryBrowser({
   householdId,
   quantities,
   itemCount,
+  unreadCount,
 }: {
   category: Category;
   products: Product[];
@@ -22,6 +23,7 @@ export function CategoryBrowser({
   householdId: string;
   quantities: Record<string, number>;
   itemCount: number;
+  unreadCount: number;
 }) {
   const { t, locale } = useLocale();
 
@@ -35,6 +37,7 @@ export function CategoryBrowser({
         title={`${category.icon ?? ""} ${localizedName(category, locale)}`.trim()}
         backHref="/worker"
         itemCount={itemCount}
+        unreadCount={unreadCount}
       />
 
       {products.length === 0 ? (

@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Screen } from "@/components/ui/Primitives";
 import type { Category, Product } from "@/lib/catalog/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -16,6 +18,7 @@ export function WorkerHome({
   frequent,
   quantities,
   itemCount,
+  unreadCount,
 }: {
   householdId: string;
   householdName: string;
@@ -23,6 +26,7 @@ export function WorkerHome({
   frequent: Product[];
   quantities: Record<string, number>;
   itemCount: number;
+  unreadCount: number;
 }) {
   const { t } = useLocale();
 
@@ -32,7 +36,7 @@ export function WorkerHome({
 
   return (
     <Screen>
-      <WorkerBar title={householdName} itemCount={itemCount} />
+      <WorkerBar title={householdName} itemCount={itemCount} unreadCount={unreadCount} />
 
       <p className="hl-title text-ink">{t("worker.browse")}</p>
 
@@ -58,6 +62,13 @@ export function WorkerHome({
         <h2 className="hl-label text-ink-muted">{t("worker.categories")}</h2>
         <CategoryGrid categories={categories} />
       </section>
+
+      <Link
+        href="/worker/lists"
+        className="flex min-h-14 items-center rounded-lg border border-sand bg-surface px-5 shadow-sm active:bg-surface-2"
+      >
+        <span className="hl-heading text-ink">{t("notif.myLists")}</span>
+      </Link>
 
       <AccountActions />
     </Screen>
