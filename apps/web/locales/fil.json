@@ -113,7 +113,19 @@
     "addMore": "Magdagdag pa",
     "newList": "Magsimula ng bagong listahan",
     "remove": "Alisin",
-    "noProducts": "Wala pang produkto dito."
+    "noProducts": "Wala pang produkto dito.",
+    "photoItem": "Bagay na kinunan",
+    "photoTile": "Kumuha ng larawan",
+    "photoTitle": "Kunan ng larawan ang bagay",
+    "photoHint": "Wala sa listahan? Kumuha ng larawan at ipadala.",
+    "photoTake": "Kumuha ng larawan",
+    "photoRetake": "Ulitin",
+    "photoAdd": "Idagdag sa listahan",
+    "photoAdding": "Idinadagdag…",
+    "photoTooLarge": "Masyadong malaki ang larawan. Subukan ulit.",
+    "photoFailed": "Hindi naipadala ang larawan. Subukan ulit.",
+    "photoRemove": "Alisin ang larawan",
+    "photoUnavailable": "Walang larawan"
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",

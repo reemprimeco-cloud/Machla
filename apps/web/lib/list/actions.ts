@@ -88,6 +88,79 @@ export async function removeFromListAction(
   return { ok: true, value: undefined };
 }
 
+/**
+ * Returns the caller's open draft for a household, creating it if there
+ * is none.
+ *
+ * Exists for the photo flow specifically: the object path contains the
+ * list id, so the draft has to exist BEFORE the upload, not after it as
+ * with a product add. The RPC is idempotent — one open draft per person
+ * per household — so calling it on every capture is safe.
+ */
+export async function ensureDraftAction(
+  householdId: string,
+  language = "en",
+): Promise<ListActionResult<string>> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("get_or_create_draft_list", {
+    p_household_id: householdId,
+    p_language: language,
+  });
+
+  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+  return { ok: true, value: data };
+}
+
+/**
+ * Adds a photographed item to the caller's own draft.
+ *
+ * The upload itself happens in the browser, straight into the private
+ * bucket, because the service role key is not — and must not be — in this
+ * app's environment. That is safe because the storage policy authorizes
+ * the write by the household id in the object path.
+ *
+ * This RPC then re-checks the FULL prefix (household AND list), which the
+ * storage policy cannot: it never sees which list the object was meant
+ * for. Both halves are needed.
+ */
+export async function addPhotoItemAction(
+  listId: string,
+  photoPath: string,
+  quantity: number,
+  note: string | null,
+): Promise<ListActionResult<string>> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("add_photo_item", {
+    p_list_id: listId,
+    p_photo_path: photoPath,
+    p_quantity: quantity,
+    p_note: note,
+  });
+
+  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+
+  revalidatePath("/worker", "layout");
+  return { ok: true, value: data };
+}
+
+/** Removes a photographed item. Keyed by item id, because a photographed
+ * item has no product id for removeFromListAction to match on. */
+export async function removePhotoItemAction(itemId: string): Promise<ListActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("remove_photo_item", { p_item_id: itemId });
+
+  if (error) return { ok: false, code: toListErrorCode(error.message) };
+
+  revalidatePath("/worker", "layout");
+  return { ok: true, value: undefined };
+}
+
 export async function sendListAction(listId: string): Promise<ListActionResult<string>> {
   if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
 
@@ -136,8 +209,38 @@ export async function setPurchaseStatusAction(
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
+  // A photograph exists to answer "is this the thing you meant?". Ticking
+  // the item off settles that, so the picture is purged now rather than
+  // lingering. Best-effort: a failed purge must not make the tick fail,
+  // because the checklist is what the person is actually doing. Anything
+  // missed is swept up when the list is completed.
+  if (status === "purchased") await purgePhotoFor(itemId);
+
   revalidatePath("/home", "layout");
   return { ok: true, value: undefined };
+}
+
+/**
+ * Deletes the blob and stamps the row.
+ *
+ * The delete goes through the Storage API rather than SQL because
+ * Supabase forbids `delete from storage.objects` outright; it runs with
+ * the caller's session, so the storage policy authorizes it against the
+ * same household membership as everything else.
+ */
+async function purgePhotoFor(itemId: string): Promise<void> {
+  const supabase = await createClient();
+
+  const { data: item } = await supabase
+    .from("shopping_list_items")
+    .select("photo_path, photo_deleted_at")
+    .eq("id", itemId)
+    .maybeSingle();
+
+  if (!item?.photo_path || item.photo_deleted_at) return;
+
+  await supabase.storage.from("list-photos").remove([item.photo_path]);
+  await supabase.rpc("mark_photo_purged", { p_item_id: itemId });
 }
 
 /** Closes a shop, or reopens one closed by mistake. Deliberately allowed
@@ -157,6 +260,34 @@ export async function setListCompletedAction(
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
+  // The sweep. Purging on purchase covers the normal path, but an item
+  // marked unavailable — or one whose purge failed on a flaky connection
+  // — would otherwise keep its photograph forever. Completing the list is
+  // the point at which no photograph on it has any remaining purpose.
+  if (completed) await purgePhotosForList(listId);
+
   revalidatePath("/home", "layout");
   return { ok: true, value: undefined };
+}
+
+/** Purges every photograph still present on a list. */
+async function purgePhotosForList(listId: string): Promise<void> {
+  const supabase = await createClient();
+
+  const { data: items } = await supabase
+    .from("shopping_list_items")
+    .select("id, photo_path, photo_deleted_at")
+    .eq("list_id", listId)
+    .not("photo_path", "is", null)
+    .is("photo_deleted_at", null);
+
+  const paths = (items ?? [])
+    .map((item) => item.photo_path)
+    .filter((path): path is string => path !== null);
+  if (paths.length === 0) return;
+
+  await supabase.storage.from("list-photos").remove(paths);
+  for (const item of items ?? []) {
+    await supabase.rpc("mark_photo_purged", { p_item_id: item.id });
+  }
 }

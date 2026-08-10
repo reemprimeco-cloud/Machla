@@ -265,3 +265,61 @@ select test_assert(
 reset role;
 
 \echo '=== Photo item assertions passed ==='
+
+-- ============================================================
+-- 8. Retention: the photograph does not outlive its purpose
+-- ============================================================
+-- The blob itself lives in Storage, which this harness does not have, so
+-- what is asserted here is the stamping RPC and its authorization. The
+-- object deletion is a Storage API call from the server action, verified
+-- against the live project (docs/architecture/19-photo-items.md §5).
+
+set role authenticated;
+
+select test_login('99990000-0000-0000-0000-000000000004');   -- outside worker
+
+select test_raises(
+  format($$ select mark_photo_purged(%L::uuid) $$, :'photo_item_1'),
+  'ITEM_NOT_FOUND',
+  'someone outside the household cannot stamp a photograph as purged'
+);
+
+select test_login('99990000-0000-0000-0000-000000000001');   -- owner of household A
+
+select test_assert(
+  (select mark_photo_purged(:'photo_item_1'::uuid)),
+  'the household can record the purge'
+);
+
+select test_assert(
+  (select photo_deleted_at is not null from shopping_list_items where id = :'photo_item_1'),
+  'and the row is stamped'
+);
+
+-- The row must SURVIVE the purge: the list is still a record of what was
+-- asked for and what happened to it. Only the image is gone.
+select test_assert(
+  (select photo_path is not null and quantity = 2 and purchase_status = 'purchased'
+   from shopping_list_items where id = :'photo_item_1'),
+  'the item, its quantity and its purchase status all survive the purge'
+);
+
+select test_assert(
+  (select total_items = 1 and purchased_items = 1
+   from get_household_lists(:'hh_a'::uuid, :'list_a'::uuid)),
+  'and the list still counts it, so history is not rewritten'
+);
+
+-- Idempotent: the completion sweep re-runs over items the purchase path
+-- already handled.
+select mark_photo_purged(:'photo_item_1'::uuid);
+
+select test_assert(
+  (select count(*) = 1 from shopping_list_items
+    where id = :'photo_item_1' and photo_deleted_at is not null),
+  'stamping twice is harmless — the completion sweep re-runs over purchases'
+);
+
+reset role;
+
+\echo '=== Photo retention assertions passed ==='

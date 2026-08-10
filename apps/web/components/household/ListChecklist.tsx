@@ -92,13 +92,18 @@ export function ListChecklist({
             </h2>
 
             <ul className="overflow-hidden rounded-lg border border-sand bg-surface shadow-sm">
-              {group.entries.map(({ item, product }) => (
+              {group.entries.map(({ item, product, photoUrl }) => (
                 <ChecklistRow
                   key={item.id}
                   itemId={item.id}
-                  name={localizedName(product, locale)}
-                  detail={productDetail(product)}
-                  icon={product.icon ?? group.category.icon}
+                  // A photographed item has no catalogue name to show. The
+                  // picture is the name — the label exists for screen
+                  // readers and for the case where the image cannot load.
+                  name={product ? localizedName(product, locale) : t("worker.photoItem")}
+                  detail={product ? productDetail(product) : ""}
+                  icon={product ? (product.icon ?? group.category.icon) : group.category.icon}
+                  photoUrl={photoUrl}
+                  photoPurged={item.photo_path !== null && item.photo_deleted_at !== null}
                   quantity={Number(item.quantity)}
                   unit={item.unit}
                   note={item.note}
@@ -148,6 +153,8 @@ function ChecklistRow({
   name,
   detail,
   icon,
+  photoUrl,
+  photoPurged,
   quantity,
   unit,
   note,
@@ -159,6 +166,8 @@ function ChecklistRow({
   name: string;
   detail: string;
   icon: string | null;
+  photoUrl: string | null;
+  photoPurged: boolean;
   quantity: number;
   unit: string;
   note: string | null;
@@ -207,9 +216,32 @@ function ChecklistRow({
             ✓
           </span>
 
-          <span aria-hidden className="text-2xl leading-none">
-            {icon ?? "📦"}
-          </span>
+          {photoPurged ? (
+            /* Purged after purchase (20260810160000_photo_retention.sql).
+               The item stays on the list; the picture is gone, and the
+               placeholder says so rather than showing a broken image. */
+            <span
+              aria-label={t("worker.photoUnavailable")}
+              className="flex size-14 shrink-0 items-center justify-center rounded-lg border border-dashed border-sand text-ink-faint"
+            >
+              <span aria-hidden className="text-lg">🗑</span>
+            </span>
+          ) : photoUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element --
+               next/image would need the Supabase host in remotePatterns
+               and would proxy a signed, short-lived URL through the
+               optimizer, which caches it past its expiry. A 56px
+               thumbnail is not worth that. */
+            <img
+              src={photoUrl}
+              alt=""
+              className="size-14 shrink-0 rounded-lg border border-sand object-cover"
+            />
+          ) : (
+            <span aria-hidden className="text-2xl leading-none">
+              {icon ?? "📦"}
+            </span>
+          )}
 
           <span className="min-w-0 flex-1">
             <span

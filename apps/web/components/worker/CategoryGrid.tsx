@@ -7,7 +7,7 @@ import { localizedName } from "@/lib/catalog/localized";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
- * The worker's first screen: fifteen large, icon-led tiles.
+ * The worker's first screen: large, icon-led tiles.
  *
  * Two columns, not three or four. The target user may have limited
  * literacy in every language on offer, so the icon has to carry as much
@@ -22,7 +22,9 @@ export function CategoryGrid({ categories }: { categories: Category[] }) {
       {categories.map((category) => (
         <li key={category.id}>
           <Link
-            href={`/worker/c/${category.key}`}
+            // The capture tile opens the camera instead of a product
+            // list; it has no products by design (categories.is_capture).
+            href={category.is_capture ? "/worker/photo" : `/worker/c/${category.key}`}
             className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-sand bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >
             <span aria-hidden className="text-4xl leading-none">

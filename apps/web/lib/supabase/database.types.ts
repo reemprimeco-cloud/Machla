@@ -108,6 +108,9 @@ export interface Database {
           icon: string | null;
           sort_order: number;
           is_active: boolean;
+          /** The capture pseudo-category: the worker's browse grid opens
+           * a camera on this tile instead of a product list. */
+          is_capture: boolean;
           name_en: string;
           name_ar: string;
           name_hi: string;
@@ -239,7 +242,15 @@ export interface Database {
         Row: {
           id: string;
           list_id: string;
-          product_id: string;
+          // Nullable since 20260810140000_photo_items.sql: an item is a
+          // catalogue product XOR a photograph, enforced by
+          // shopping_list_items_product_xor_photo.
+          product_id: string | null;
+          photo_path: string | null;
+          /** Set when the photograph behind photo_path has been purged —
+           * on purchase, or on list completion. The row survives; the
+           * image does not. */
+          photo_deleted_at: string | null;
           category_id: string;
           quantity: number;
           unit: string;
@@ -253,7 +264,6 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["shopping_list_items"]["Row"]> & {
           list_id: string;
-          product_id: string;
           category_id: string;
           unit: string;
           sort_order: number;
@@ -359,6 +369,28 @@ export interface Database {
       get_frequent_products: {
         Args: { p_limit?: number };
         Returns: Database["public"]["Tables"]["products"]["Row"][];
+      };
+
+      // Photographed items — supabase/migrations/*_photo_items.sql.
+      // add_photo_item re-checks that the object path sits under this
+      // household AND this list; the storage policy can only see the
+      // household segment.
+      add_photo_item: {
+        Args: {
+          p_list_id: string;
+          p_photo_path: string;
+          p_quantity?: number;
+          p_note?: string | null;
+        };
+        Returns: string;
+      };
+      remove_photo_item: {
+        Args: { p_item_id: string };
+        Returns: boolean;
+      };
+      mark_photo_purged: {
+        Args: { p_item_id: string };
+        Returns: boolean;
       };
 
       // Phase 7 RPCs — supabase/migrations/*_phase7_household_lists.sql.

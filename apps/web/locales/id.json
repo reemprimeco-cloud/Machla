@@ -113,7 +113,19 @@
     "addMore": "Tambah lagi",
     "newList": "Mulai daftar baru",
     "remove": "Hapus",
-    "noProducts": "Belum ada produk di sini."
+    "noProducts": "Belum ada produk di sini.",
+    "photoItem": "Barang berfoto",
+    "photoTile": "Ambil foto",
+    "photoTitle": "Foto barangnya",
+    "photoHint": "Tidak ada di daftar? Ambil foto dan kirim.",
+    "photoTake": "Ambil foto",
+    "photoRetake": "Ambil ulang",
+    "photoAdd": "Tambah ke daftar",
+    "photoAdding": "Menambahkan…",
+    "photoTooLarge": "Foto terlalu besar. Coba lagi.",
+    "photoFailed": "Foto tidak terkirim. Coba lagi.",
+    "photoRemove": "Hapus foto",
+    "photoUnavailable": "Foto tidak tersedia"
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",

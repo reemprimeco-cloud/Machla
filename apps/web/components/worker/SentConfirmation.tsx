@@ -50,13 +50,22 @@ export function SentConfirmation({
             {localizedName(group.category, locale)}
           </h2>
           <ul className="rounded-lg border border-sand bg-surface shadow-sm">
-            {group.entries.map(({ item, product }) => (
+            {group.entries.map(({ item, product, photoUrl }) => (
               <li
                 key={item.id}
                 className="flex items-center justify-between gap-3 border-b border-sand px-4 py-3 last:border-b-0"
               >
+                {photoUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element --
+                     signed URL; see ListReview for why not next/image. */
+                  <img
+                    src={photoUrl}
+                    alt=""
+                    className="size-10 shrink-0 rounded-md border border-sand object-cover"
+                  />
+                ) : null}
                 <span className="hl-body min-w-0 flex-1 truncate text-ink">
-                  {localizedName(product, locale)}
+                  {product ? localizedName(product, locale) : t("worker.photoItem")}
                 </span>
                 <span className="hl-label shrink-0 tabular-nums text-ink-muted">
                   {Number(item.quantity)} {item.unit}

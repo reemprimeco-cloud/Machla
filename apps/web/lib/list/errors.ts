@@ -22,6 +22,8 @@ export type ListErrorCode =
   | "LIST_ARCHIVED"
   | "INVALID_STATUS"
   | "ITEM_NOT_FOUND"
+  | "INVALID_PHOTO_PATH"
+  | "TOO_MANY_PHOTOS"
   | "NOT_CONFIGURED"
   | "UNKNOWN";
 
@@ -38,6 +40,8 @@ const KNOWN_CODES: ListErrorCode[] = [
   "LIST_ARCHIVED",
   "INVALID_STATUS",
   "ITEM_NOT_FOUND",
+  "INVALID_PHOTO_PATH",
+  "TOO_MANY_PHOTOS",
 ];
 
 export function toListErrorCode(message: string | undefined): ListErrorCode {

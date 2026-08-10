@@ -5,7 +5,7 @@ import type { Database } from "@/lib/supabase/database.types";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 import { createClient } from "@/lib/supabase/server";
 
-import { groupEntries, type ListGroup } from "./queries";
+import { groupEntries, signPhotoPaths, type ListGroup } from "./queries";
 
 /**
  * The household's view of received lists.
@@ -75,14 +75,23 @@ export async function getHouseholdListDetail(
 
   if (!items || items.length === 0) return { summary, groups: [] };
 
-  const productIds = [...new Set(items.map((item) => item.product_id))];
-  const { data: products } = await supabase.from("products").select("*").in("id", productIds);
+  const productIds = [...new Set(items.map((item) => item.product_id))].filter(
+    (id): id is string => id !== null,
+  );
+  const { data: products } = productIds.length
+    ? await supabase.from("products").select("*").in("id", productIds)
+    : { data: [] };
   const productById = new Map((products ?? []).map((product) => [product.id, product]));
+
+  // Signed the same way as on the worker's side, with this caller's own
+  // client — so the household reads the photograph only because they are
+  // an active member, by the same rule that lets them read the list.
+  const photoUrlByPath = await signPhotoPaths(items);
 
   // The same grouping function the worker's own review screen uses, so
   // the two sides cannot drift: what the owner shops from is what the
   // worker saw before sending (§16A.1).
-  return { summary, groups: groupEntries(items, productById, categories) };
+  return { summary, groups: groupEntries(items, productById, categories, photoUrlByPath) };
 }
 
 /** Item-count progress, never quantity-weighted: ten units of one product

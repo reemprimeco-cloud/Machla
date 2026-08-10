@@ -6,7 +6,7 @@ import { useState, useTransition } from "react";
 
 import { Card, ErrorText, PrimaryButton, Screen } from "@/components/ui/Primitives";
 import { localizedName, productDetail } from "@/lib/catalog/localized";
-import { sendListAction } from "@/lib/list/actions";
+import { removePhotoItemAction, sendListAction } from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
 import type { ListGroup } from "@/lib/list/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -73,30 +73,56 @@ export function ListReview({
               </h2>
 
               <ul className="space-y-2">
-                {group.entries.map(({ item, product }) => (
+                {group.entries.map(({ item, product, photoUrl }) => (
                   <li
                     key={item.id}
                     className="flex items-center gap-3 rounded-lg border border-sand bg-surface p-3 shadow-sm"
                   >
-                    <span aria-hidden className="text-3xl leading-none">
-                      {group.category.icon ?? "📦"}
-                    </span>
+                    {photoUrl ? (
+                      /* eslint-disable-next-line @next/next/no-img-element --
+                         a signed, short-lived URL must not go through the
+                         image optimizer, which would cache it past expiry. */
+                      <img
+                        src={photoUrl}
+                        alt=""
+                        className="size-14 shrink-0 rounded-lg border border-sand object-cover"
+                      />
+                    ) : (
+                      <span aria-hidden className="text-3xl leading-none">
+                        {product?.icon ?? group.category.icon ?? "📦"}
+                      </span>
+                    )}
 
                     <div className="min-w-0 flex-1">
                       <p className="hl-label truncate text-ink">
-                        {localizedName(product, locale)}
+                        {product ? localizedName(product, locale) : t("worker.photoItem")}
                       </p>
-                      <p className="hl-caption truncate">{productDetail(product)}</p>
+                      {product ? (
+                        <p className="hl-caption truncate">{productDetail(product)}</p>
+                      ) : item.note ? (
+                        <p className="hl-caption truncate">“{item.note}”</p>
+                      ) : null}
                     </div>
 
-                    <div className="w-32 shrink-0">
-                      <QuantityStepper
-                        householdId={householdId}
-                        productId={product.id}
+                    {product ? (
+                      <div className="w-32 shrink-0">
+                        <QuantityStepper
+                          householdId={householdId}
+                          productId={product.id}
+                          quantity={Number(item.quantity)}
+                          label={localizedName(product, locale)}
+                        />
+                      </div>
+                    ) : (
+                      /* A photographed item has no product to step, so the
+                         only edit it offers is removal. Quantity is fixed
+                         at what was chosen when the photo was added. */
+                      <PhotoItemControls
+                        itemId={item.id}
                         quantity={Number(item.quantity)}
-                        label={localizedName(product, locale)}
+                        onError={setError}
                       />
-                    </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -115,5 +141,45 @@ export function ListReview({
         </>
       )}
     </Screen>
+  );
+}
+
+/**
+ * The only edit a photographed item offers: remove it.
+ *
+ * There is no stepper because there is no product to key one on, and the
+ * quantity was fixed when the photograph was added. Removal is the
+ * escape hatch for "wrong picture", which is the realistic mistake.
+ */
+function PhotoItemControls({
+  itemId,
+  quantity,
+  onError,
+}: {
+  itemId: string;
+  quantity: number;
+  onError: (code: ListErrorCode) => void;
+}) {
+  const { t } = useLocale();
+  const [pending, startTransition] = useTransition();
+
+  return (
+    <div className="flex shrink-0 items-center gap-2">
+      <span className="hl-label tabular-nums text-ink-muted">{quantity}</span>
+      <button
+        type="button"
+        disabled={pending}
+        aria-label={t("worker.photoRemove")}
+        onClick={() =>
+          startTransition(async () => {
+            const result = await removePhotoItemAction(itemId);
+            if (!result.ok) onError(result.code);
+          })
+        }
+        className="flex size-12 items-center justify-center rounded-pill border border-sand bg-surface text-lg text-ink disabled:opacity-40"
+      >
+        <span aria-hidden>✕</span>
+      </button>
+    </div>
   );
 }
