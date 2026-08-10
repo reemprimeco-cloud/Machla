@@ -83,12 +83,38 @@ and caps at 2 MB. This row becomes real when licensed photography lands.
 
 ## 5. Open advisor notices, and why
 
-`get_advisors` still reports, all expected:
+`get_advisors` reports four classes, all expected. Counts are not given
+here on purpose — they move as Supabase adds lints and as the tables fill
+— but nothing outside these four classes should be present, and anything
+that is deserves investigation rather than the linter's suggested fix.
 
-- **`authenticated_security_definer_function_executable`** (12) — one per
-  user-facing RPC. That is the design: each checks `auth.uid()` internally,
-  which the linter cannot see (§5).
-- **`unused_index`** on `notifications_user_unread_idx` — unused because
-  the table is empty, not because the query is missing.
+- **`authenticated_security_definer_function_executable`** — one per
+  user-facing RPC, plus `is_active_member`. This is the design, not a
+  finding: each function checks `auth.uid()` in its own body, which the
+  linter cannot see, and it is exactly how a client is allowed to write
+  anything at all (`18-backend-contract.md` §3).
+
+  **Do not "fix" this by revoking `EXECUTE` from `authenticated`.** That
+  would leave the application with no write path whatsoever, and RLS
+  policies would fail outright, because they call `is_active_member`.
+  `is_active_member` is safe to expose for a second reason worth stating:
+  it takes no user id and resolves membership against `auth.uid()`, so a
+  caller invoking it directly can only learn about themselves.
+
+- **`unindexed_foreign_keys`** — five, each deliberate and argued in
+  `20260809210000_phase10_performance.sql` §3: `households.owner_user_id`
+  (one row per household; the members table is the real access path),
+  `products.subcategory_id` (unused in V1), and three attribution columns
+  never filtered on —`notifications.actor_user_id`,
+  `shopping_list_items.purchased_by_user_id`, and
+  `household_invitations.used_by_user_id`. An index is not free: it is
+  paid on every write, and `shopping_list_items` is the hot table.
+
+- **`unused_index`** — the tables are empty, so nothing has had occasion
+  to use them. This lint only becomes informative after real traffic; the
+  one index that was genuinely redundant
+  (`products_search_keywords_gin_idx`) was dropped in Phase 10 §4 on the
+  strength of an argument, not of this counter.
+
 - **`auth_db_connections_absolute`** — a dashboard setting (fixed
   connection count for the Auth server). Owner's call at deploy time.

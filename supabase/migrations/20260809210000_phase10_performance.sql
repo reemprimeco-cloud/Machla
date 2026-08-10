@@ -146,10 +146,12 @@ create index if not exists household_invitations_created_by_idx
 
 -- Deliberately NOT indexed: households.owner_user_id (one row per
 -- household, and the members table is the real access path),
--- products.subcategory_id (unused in V1), notifications.actor_user_id and
--- shopping_list_items.purchased_by_user_id (attribution only — never
--- filtered on, and `on delete set null` does not need an index to be
--- correct, only to be fast on a rare admin action).
+-- products.subcategory_id (unused in V1), and the three attribution
+-- columns — notifications.actor_user_id,
+-- shopping_list_items.purchased_by_user_id and
+-- household_invitations.used_by_user_id (never filtered on, and
+-- `on delete set null` does not need an index to be correct, only to be
+-- fast on a rare admin action).
 
 -- ============================================================
 -- 4. A genuinely redundant index  (lint 0005_unused_index)
