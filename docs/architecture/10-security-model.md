@@ -274,3 +274,43 @@ The RPC needs it independently because it is SECURITY DEFINER and therefore
 bypasses the policies — a definer function that forgets a rule the policies
 enforce is a way around them, which is the general lesson worth carrying
 into future phases.
+
+## 5E. Phase 10 — the removed-worker regression
+
+Worth recording in full, because the *shape* of the mistake is the lesson.
+
+Phase 8 tightened list visibility so a Worker sees only their own lists,
+by adding a second branch to the policy:
+
+```sql
+-- Phase 8 (wrong)
+is_active_member(household_id, array['owner','member'])
+or created_by_user_id = auth.uid()
+```
+
+The second branch carries **no membership condition**. So the moment a
+worker was removed from the household, `is_active_member` went false while
+`created_by_user_id = auth.uid()` stayed true — and they could still read
+every list they had ever sent. §5 of this document promises the opposite:
+"access is gone the instant the row updates". It was, on the ordinary
+path; the authorship shortcut walked around it.
+
+```sql
+-- Phase 10 (right)
+is_active_member(household_id)
+and (
+  is_active_member(household_id, array['owner','member'])
+  or created_by_user_id = (select auth.uid())
+)
+```
+
+**The rule to carry forward: an "or mine" clause must NARROW an access
+rule, never widen it.** Membership first, then whatever refines it. The
+same mistake is available on every future policy that wants to give
+someone access to their own rows.
+
+It was caught by `07_phase10_qa_test.sql` asserting the master plan's own
+scenario 4 ("removed worker loses access immediately") at the *list* layer
+rather than only the membership layer, where Phase 4 had already proved it.
+The lesson there is smaller but real: a guarantee proved at one layer is
+not proved at the layers built on top of it later.

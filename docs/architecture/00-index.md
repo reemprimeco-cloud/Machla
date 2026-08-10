@@ -55,3 +55,4 @@ native apps, `13` for the shopping-list grouping/checklist requirement,
 `14` for every decision made on your behalf that needed explicit approval,
 and `15` for how Phase 2 implemented localization on top of the Phase 1
 foundation.
+- `16-qa-coverage-matrix.md` — where each Phase 10 QA and security requirement is actually verified, and what is measured but deliberately unfixed.

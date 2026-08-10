@@ -1,0 +1,94 @@
+# 16 — QA & Security Coverage Matrix (Phase 10)
+
+Where each thing the master plan's Phase 10 asks for is actually verified.
+The point of the table is traceability: if a row has no location, it is not
+tested, and saying so is more useful than implying otherwise.
+
+The SQL suite runs with `./supabase/tests/run-tests.sh` (260 assertions).
+Browser checks are ephemeral Playwright runs, re-creatable from the
+commands in §3.
+
+## 1. Master plan Phase 10 checklist
+
+| Requirement | Where | Notes |
+|---|---|---|
+| Authentication tests | `01`, `04`-`07` (`AUTH_REQUIRED` paths) | Signed-out callers refused by every RPC |
+| Authorization tests | `01`, `04`, `05`, `07` | Role matrix enforced in Postgres |
+| RLS tests | `04`-`07`, run as `authenticated` | Superuser bypasses RLS, so the role switch is what makes them real |
+| Invitation security tests | `01` | Expiry, reuse, revocation, row-locking |
+| Cross-household access tests | `04` §4, `05` §6, `06` §7 | Both RPC and direct-read paths |
+| RTL tests | Playwright, 9 locales × 3 viewports | `dir`/`lang` asserted per locale |
+| All 9 language tests | Playwright + `check-locales.mjs` | Key parity 147 keys × 9 |
+| Mobile browser tests | Playwright at 320/375/412 | No viewport overflow on either edge |
+| PWA install tests | §3 below | Manifest, icons, maskable, service worker |
+| Performance tests | §2 below + `07` §2 | Advisors, indexes, transfer weight |
+| Image optimization | Partial — see §4 | No photography exists yet |
+| Search tests | `03` | Cross-language, brand, transliteration, limits |
+| Duplicate submission tests | `07` §4 | Double join, double add, double send, double check-off |
+
+## 2. Amendment 1 (§16A) automated tests
+
+| Requirement | Where |
+|---|---|
+| Correct category grouping | `06` §1 (the §16A.12 scenario), `04` §8 |
+| No random ordering | `03` (unique `sort_order`), `06` §1 |
+| Purchase-status persistence | `05` §3, `06` §7 |
+| Worker cannot modify purchase status | `05` §5, `04` §7 |
+| Owner cannot modify requested quantity | `05` §3, `06` §1, `05` §8 (structural) |
+| Progress calculation | `05` §3, `06` §1 |
+| Cross-household isolation of lists | `05` §6, `06` §7 |
+| Completed / unavailable states | `05` §3, §7 |
+
+## 3. Browser checks (ephemeral)
+
+Run against `npm run build && npm run start`, using the pre-installed
+Chromium at `/opt/pw-browsers/chromium-1194/chrome-linux/chrome`:
+
+- **Layout/RTL/i18n** — 3 viewports × 9 locales × 5 routes = 135 checks:
+  no element overflows either viewport edge, `dir`/`lang` correct, no
+  interactive target under 44×24px. Negative-controlled (see
+  `15-localization-architecture.md` §10 — the first version was blind).
+- **PWA** — manifest has `display: standalone`, 192/512 icons that
+  resolve, and a **maskable** icon; the service worker registers and takes
+  scope.
+
+Routes behind authentication cannot be reached here (phone auth is not
+configured), so the worker/household screens are audited through a
+temporary preview route with hostile fixtures, removed afterwards.
+
+## 4. Measured, and deliberately not fixed
+
+**First-screen weight.** `/welcome` transfers ~773 KB, of which **~502 KB
+is fonts** — it is the one screen that renders all five scripts at once
+(the language picker shows every language in its own alphabet, which is
+the entire point of the screen). Every later screen loads one family:
+`/login` is ~404 KB, and the fonts are then cached.
+
+The obvious fix — subsetting each font to just the glyphs in that
+language's own name — is **not available**: `next/font/google` in this
+version has no `text` option (checked in
+`node_modules/next/dist/compiled/@next/font/dist/google/`, not assumed).
+The alternatives are self-hosting hand-subsetted woff2 files or rendering
+the names as SVG, both of which cost more than they save right now.
+
+Mitigating factors, which is why this is recorded rather than hacked
+around: the fonts are `display: swap` so nothing blocks on them, tier-2
+fonts are `preload: false`, and each language row also carries a romanised
+name and a flag, so the row is identifiable even before its font arrives.
+
+**Image optimization.** Nothing to optimize yet — every `image_url` is
+null and the UI renders per-type glyphs
+(`11-product-catalog-architecture.md` §7.5). The uploader already resizes
+and caps at 2 MB. This row becomes real when licensed photography lands.
+
+## 5. Open advisor notices, and why
+
+`get_advisors` still reports, all expected:
+
+- **`authenticated_security_definer_function_executable`** (12) — one per
+  user-facing RPC. That is the design: each checks `auth.uid()` internally,
+  which the linter cannot see (§5).
+- **`unused_index`** on `notifications_user_unread_idx` — unused because
+  the table is empty, not because the query is missing.
+- **`auth_db_connections_absolute`** — a dashboard setting (fixed
+  connection count for the Auth server). Owner's call at deploy time.
