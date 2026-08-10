@@ -30,6 +30,23 @@ These need account access and cannot be done from the repository.
   without this the build finds no Next.js app.
 - Framework preset: Next.js. Build and output settings need no override.
 
+**This has already been got wrong once, and the failure is misleading.**
+Deploying with the root directory unset produces a live URL that returns:
+
+```text
+404: NOT_FOUND
+Code: NOT_FOUND
+```
+
+That reads like a routing bug in the app. It is not. The repository root
+has no `package.json`, so Vercel detects no framework, runs no build at
+all, and publishes an empty directory — the application was never
+compiled. The build log for such a deployment finishes in seconds and
+never mentions `next build`, which is the quickest way to confirm it.
+
+Changing the setting afterwards does **not** rebuild on its own:
+Deployments → ⋯ → Redeploy, or push a commit.
+
 ### 2.2 Environment variables (Vercel → Settings → Environment Variables)
 
 | Variable | Value | Scope |
