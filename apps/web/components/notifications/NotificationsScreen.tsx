@@ -141,7 +141,7 @@ function PreferenceToggle({
             await setNotificationPreferenceAction(type, next);
           });
         }}
-        className="size-6 shrink-0 accent-[var(--hl-green-700)]"
+        className="size-7 shrink-0 accent-[var(--hl-green-700)]"
       />
     </label>
   );

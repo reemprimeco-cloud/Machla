@@ -1,19 +1,43 @@
-// Minimal PWA service worker — Phase 1 foundation only.
+// HomeList service worker — Phase 9 (offline-friendly behaviour).
 //
-// Caches the app shell so the manifest's installability checks pass and a
-// repeat visit has something to serve while offline. This is deliberately
-// not a full offline-first strategy: Phase 9 ("UX / Visual Polish") is
-// where real offline-friendly behavior for the worker/household flows is
-// designed and tested.
+// Replaces the Phase 1 placeholder, which cached "/" and fell back to the
+// cache on any failure. That was enough to make the app installable and
+// nothing more.
+//
+// The strategy here is shaped by who uses this: a worker on a cheap
+// Android phone, on supermarket wifi or a weak mobile signal, mid-shop.
+// What matters is that the app OPENS and says something truthful, not
+// that it works fully offline — the list lives in Postgres, and pretending
+// a queued write succeeded would be worse than saying "no connection".
+//
+//   navigations   → network first, fall back to cache, then to /offline
+//   static assets → cache first (fonts, icons, flags, build output)
+//   everything else (Supabase, Server Actions, POSTs) → network only
+//
+// That last line is the important one. Authenticated API responses are
+// never cached: they are per-user, they go stale the moment anyone else
+// touches the list, and a cached one could show household A's data to a
+// household B session on a shared device.
 
-const CACHE_NAME = "homelist-shell-v1";
-const SHELL_URLS = ["/"];
+const VERSION = "v2";
+const SHELL_CACHE = `homelist-shell-${VERSION}`;
+const ASSET_CACHE = `homelist-assets-${VERSION}`;
+const OFFLINE_URL = "/offline";
+
+// Only what is safe to precache: the offline page and the icons. Not "/",
+// which redirects based on session and locale and would poison the cache
+// with one user's landing place.
+const PRECACHE = [OFFLINE_URL, "/icon.svg", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_URLS)),
+    caches
+      .open(SHELL_CACHE)
+      // Individually, so one 404 does not abort the whole install and
+      // leave the worker permanently un-activated.
+      .then((cache) => Promise.allSettled(PRECACHE.map((url) => cache.add(url))))
+      .then(() => self.skipWaiting()),
   );
-  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
@@ -23,18 +47,90 @@ self.addEventListener("activate", (event) => {
       .then((keys) =>
         Promise.all(
           keys
-            .filter((key) => key !== CACHE_NAME)
+            .filter((key) => key !== SHELL_CACHE && key !== ASSET_CACHE)
             .map((key) => caches.delete(key)),
         ),
-      ),
+      )
+      .then(() => self.clients.claim()),
   );
-  self.clients.claim();
 });
+
+/** Build output and static assets: content-hashed or rarely changing, so
+ * serving a cached copy immediately is both safe and the whole point. */
+function isStaticAsset(url) {
+  return (
+    url.pathname.startsWith("/_next/static/") ||
+    url.pathname.startsWith("/flags/") ||
+    url.pathname.startsWith("/icons/") ||
+    url.pathname === "/icon.svg" ||
+    url.pathname === "/apple-icon.png"
+  );
+}
 
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
+  const { request } = event;
 
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request)),
-  );
+  // Never touch anything that changes server state.
+  if (request.method !== "GET") return;
+
+  const url = new URL(request.url);
+
+  // Cross-origin (Supabase above all) is left entirely alone: its
+  // responses are authenticated and per-user.
+  if (url.origin !== self.location.origin) return;
+
+  // Server Actions and route handlers — same reasoning.
+  if (url.pathname.startsWith("/api/")) return;
+
+  if (isStaticAsset(url)) {
+    event.respondWith(cacheFirst(request));
+    return;
+  }
+
+  if (request.mode === "navigate") {
+    event.respondWith(navigationWithOfflineFallback(request));
+  }
+
+  // Everything else (RSC payloads, data requests) falls through to the
+  // network untouched. Caching them would risk showing one household's
+  // data inside another's session.
 });
+
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(ASSET_CACHE);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    // A missing asset offline is survivable — the page still renders,
+    // just without that font or flag.
+    return Response.error();
+  }
+}
+
+async function navigationWithOfflineFallback(request) {
+  try {
+    const response = await fetch(request);
+    // Deliberately NOT cached: an authenticated page cached here would be
+    // served to whoever opens the app next on a shared phone.
+    return response;
+  } catch {
+    const offline = await caches.match(OFFLINE_URL);
+    if (offline) return offline;
+
+    // Last resort, if even the precache failed. Kept minimal and
+    // untranslated on purpose — reaching this means the app has never
+    // successfully loaded, so there is no locale preference to honour.
+    return new Response(
+      "<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width'>" +
+        "<title>Offline</title><p style='font:16px system-ui;padding:2rem;text-align:center'>📡</p>",
+      { status: 503, headers: { "Content-Type": "text/html; charset=utf-8" } },
+    );
+  }
+}

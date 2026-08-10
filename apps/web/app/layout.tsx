@@ -10,6 +10,7 @@ import {
 import { cookies } from "next/headers";
 
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
+import { ConnectionBanner } from "@/components/ui/ConnectionBanner";
 import { getServerUserProfile } from "@/lib/auth/session";
 import { branding } from "@/lib/branding";
 import { DEFAULT_LOCALE, directionFor, isSupportedLocale, scriptFor } from "@/lib/i18n/config";
@@ -139,6 +140,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex h-full min-h-screen flex-col antialiased">
         <LocaleProvider initialLocale={initialLocale}>
           {children}
+          <ConnectionBanner />
           <ServiceWorkerRegistration />
         </LocaleProvider>
       </body>

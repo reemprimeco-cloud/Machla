@@ -34,7 +34,7 @@ export function WorkerBar({
         <Link
           href={backHref}
           aria-label={t("common.back")}
-          className="flex size-11 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface text-ink"
+          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface text-ink"
         >
           {/* Mirrors automatically in RTL: the glyph is flipped by the
               parent's direction, so no per-locale icon swap is needed. */}
@@ -50,7 +50,7 @@ export function WorkerBar({
 
       <Link
         href="/worker/list"
-        className="hl-label flex min-h-11 shrink-0 items-center gap-2 rounded-pill bg-green-700 px-4 text-on-green"
+        className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-green-700 px-4 text-on-green"
       >
         <span aria-hidden>🧺</span>
         <span>{itemCount}</span>
@@ -100,7 +100,7 @@ export function NotificationBell({ unreadCount }: { unreadCount: number }) {
     <Link
       href="/notifications"
       aria-label={t("notif.title")}
-      className="relative flex size-11 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface"
+      className="relative flex size-12 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface"
     >
       <span aria-hidden className="text-lg leading-none">
         🔔

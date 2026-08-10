@@ -227,3 +227,38 @@ sheet. Summary of what changed in this document's terms:
   `app/manifest.ts` now points at `icon-192.png`/`icon-512.png`.
 - **§7 above** records the language-picker redesign and the reversed
   "no instruction text" decision.
+
+---
+
+## 10. Phase 9 — the RTL + 9-language surface, measured
+
+Risk item 14 called the testing surface here large: nine languages, two of
+them RTL, on small screens. Phase 9 measured it rather than reasoning about
+it.
+
+A Playwright pass covered **3 viewports × 9 locales × 5 routes = 135 page
+checks**, at 320px (smallest Android in common use), 375px (iPhone SE) and
+412px, asserting on each:
+
+- no element overflows the viewport, on **either** edge — in RTL an
+  over-wide element overflows to the *left*, so checking only the right
+  edge would miss exactly the case this project is most exposed to;
+- `<html dir>` matches the locale (`rtl` for ar/ur, `ltr` otherwise) and
+  `<html lang>` matches;
+- no interactive target is under 44px tall or 24px wide.
+
+Result: no problems. The routes behind authentication cannot be reached in
+this environment (phone auth is not yet configured), so the product grid,
+category grid and worker bar were audited through a temporary preview route
+rendering them with deliberately hostile fixtures — the longest real
+product names in all nine languages, a 999 quantity, a very long household
+name, and a two-digit unread badge. That route was removed afterwards; it
+is not in the repository.
+
+**The audit itself was negative-controlled, and needed it.** The first
+version measured overflow with `documentElement.scrollWidth -
+clientWidth`, which never moves in this layout — it reported "no problems"
+while being structurally incapable of detecting any. Injecting a 900px
+element and a 20px button proved it blind. The working version measures
+each element's own bounding box and skips those inside a scrollable
+ancestor. A layout check that has never been shown to fail is not evidence.

@@ -163,5 +163,17 @@
     "myLists": "My lists",
     "noMyLists": "You haven't sent a list yet",
     "justNow": "Just now"
+  },
+  "state": {
+    "loading": "Loading…",
+    "errorTitle": "Something went wrong",
+    "errorHint": "Please try again.",
+    "retry": "Try again",
+    "notFoundTitle": "Not found",
+    "notFoundHint": "This page doesn't exist or is no longer available.",
+    "goHome": "Go to start",
+    "offlineTitle": "No connection",
+    "offlineHint": "You're offline. Your list is safe — try again when you have signal.",
+    "offlineBanner": "No connection"
   }
 }

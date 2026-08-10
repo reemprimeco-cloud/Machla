@@ -66,13 +66,13 @@ explicit rule: "Never rely only on frontend route protection" (Section
 of what the route layer does, so this is defense-in-depth, not the
 primary control.
 
-## 4. Implementation status (Phases 2-8)
+## 4. Implementation status (Phases 2-9)
 
 `/` is now pure routing with no UI of its own, gating in order: no locale
 cookie → `/welcome`; no session → `/login`; no household → `/onboarding`;
 otherwise → `/worker` for a Worker, `/home` for an Owner/Member.
 
-Built as of Phase 8:
+Built as of Phase 9:
 
 ```text
 /welcome                 language picker                    [Phase 2]
@@ -93,7 +93,21 @@ Built as of Phase 8:
 /home/lists/[id]         the checklist the household shops  [Phase 7]
 /worker/lists            the worker's own sent-list history [Phase 8]
 /notifications           inbox + per-type switches          [Phase 8]
+/offline                 shown by the service worker        [Phase 9]
 ```
+
+Phase 9 added the file-convention states around these: `app/error.tsx`
+(segment error boundary), `app/not-found.tsx`, and `loading.tsx` under
+`/worker`, `/worker/list`, `/worker/lists`, `/home` and `/notifications`.
+
+Two Next.js 16 details worth recording, both checked against the bundled
+docs rather than assumed:
+
+- the error boundary receives **`retry`**, not the `reset` earlier versions
+  passed (`reset` still exists but the docs steer away from it);
+- a directory whose name starts with `_` is a **private folder** and is not
+  routed at all — an ephemeral `app/__preview` page during the Phase 9
+  audit silently 404'd because of it.
 
 `/notifications` is shared by both experiences — RLS scopes the rows to
 the caller, so no role check is needed to keep the two inboxes apart. It

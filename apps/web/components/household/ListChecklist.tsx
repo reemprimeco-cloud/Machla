@@ -198,7 +198,7 @@ function ChecklistRow({
         >
           <span
             aria-hidden
-            className={`flex size-8 shrink-0 items-center justify-center rounded-pill border-2 text-sm ${
+            className={`flex size-9 shrink-0 items-center justify-center rounded-pill border-2 text-base ${
               isPurchased
                 ? "border-green-700 bg-green-700 text-on-green"
                 : "border-sand bg-surface text-transparent"
@@ -233,7 +233,7 @@ function ChecklistRow({
           onClick={() => change(isUnavailable ? "pending" : "unavailable")}
           aria-pressed={isUnavailable}
           aria-label={`${t("hlists.unavailable")} — ${name}`}
-          className={`flex size-11 shrink-0 items-center justify-center rounded-pill border text-lg ${
+          className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg ${
             isUnavailable ? "border-warning bg-warning text-cream" : "border-sand bg-surface"
           }`}
         >

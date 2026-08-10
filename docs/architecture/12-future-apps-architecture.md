@@ -84,3 +84,33 @@ requiring new product decisions later.
 - No offline-first sync engine now — the PWA's "offline-friendly
   behavior" (Phase 9) is basic (cached shell, graceful degradation), not
   a full offline data-sync layer; that's a native-app-era concern.
+
+---
+
+## Phase 9 — offline behaviour (relevant to the future native apps)
+
+The service worker's strategy is worth carrying forward, because a native
+app faces the same question with the same answer.
+
+```text
+navigations   → network first, cache fallback, then /offline
+static assets → cache first (build output, fonts, icons, flags)
+everything else (Supabase, Server Actions, POSTs) → network only
+```
+
+The third line is the load-bearing one. Authenticated API responses are
+**never** cached: they are per-user, they go stale the moment anyone else
+touches the list, and a cached one could show household A's data inside a
+household B session on a shared phone — which is exactly the device
+situation this product is built for.
+
+Nor is an offline write queue implemented. It would be the natural next
+step, and it is deliberately not taken in V1: the list lives in Postgres,
+and telling a worker their item was added when it was only queued locally
+is worse than telling them there is no connection. `/offline` says so, and
+the connection banner says it persistently while the device is offline —
+without it, a tap that does nothing reads as the app being broken rather
+than the signal being gone.
+
+A native client should reach the same conclusion, or implement a real
+queue with real conflict handling — not a cache that pretends.

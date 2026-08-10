@@ -163,5 +163,17 @@
     "myLists": "Mga listahan ko",
     "noMyLists": "Wala ka pang naipadalang listahan",
     "justNow": "Ngayon lang"
+  },
+  "state": {
+    "loading": "Naglo-load…",
+    "errorTitle": "May mali",
+    "errorHint": "Pakisubukan ulit.",
+    "retry": "Subukan ulit",
+    "notFoundTitle": "Hindi nakita",
+    "notFoundHint": "Wala ang page na ito o hindi na available.",
+    "goHome": "Pumunta sa simula",
+    "offlineTitle": "Walang koneksyon",
+    "offlineHint": "Offline ka. Ligtas ang listahan mo — subukan ulit kapag may signal.",
+    "offlineBanner": "Walang koneksyon"
   }
 }
