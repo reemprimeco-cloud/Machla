@@ -56,3 +56,4 @@ native apps, `13` for the shopping-list grouping/checklist requirement,
 and `15` for how Phase 2 implemented localization on top of the Phase 1
 foundation.
 - `16-qa-coverage-matrix.md` — where each Phase 10 QA and security requirement is actually verified, and what is measured but deliberately unfixed.
+- `17-deployment.md` — Phase 11: what is ready in the repo, what must be done in the Vercel/Supabase dashboards, and the CSP note for whoever changes it.
