@@ -43,11 +43,22 @@ you want in practice.
 
 ## 5. Can one user belong to more than one household?
 
-**Decision:** the schema does not prevent it (no uniqueness constraint
-beyond `(household_id, user_id)`); V1 UI is not required to build a
-household-switcher for this edge case, but `08-route-map.md` reserves
-`/switch-household` for it. Low risk either way — flagging for awareness,
-not urgent approval, since it doesn't block Phase 1–4.
+**Original decision:** the schema does not prevent it (no uniqueness
+constraint beyond `(household_id, user_id)`); V1 UI was not required to
+build a household-switcher for this edge case, but `08-route-map.md`
+reserved `/switch-household` for it. Low risk either way — flagged for
+awareness, not urgent approval, since it didn't block Phase 1–4.
+
+**Reversed 2026-08-12.** The premise was that belonging to more than one
+household would be a rare edge case not worth UI. It stopped being an
+edge case once "My home" and "My office" — one person running two
+households, each with its own helper — became a real, explicitly
+requested scenario rather than a hypothetical. A switcher is now built:
+`/home` lists every household the caller belongs to as a card, and
+`create_household`/`accept_invitation` never assumed a first household in
+the first place, so nothing at the data layer needed to change — only the
+routes that used to redirect an already-a-member caller away from
+`/onboarding` and `/household/new`. Full design in `08-route-map.md` §4.1.
 
 ## 6. Catalog population approach: human-curated import vs. automated scraping
 

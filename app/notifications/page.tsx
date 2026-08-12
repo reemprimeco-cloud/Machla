@@ -31,7 +31,7 @@ export default async function NotificationsPage() {
     <NotificationsScreen
       notifications={notifications}
       preferences={preferences}
-      backHref={membership?.role === "worker" ? "/worker" : "/home"}
+      variant={membership?.role === "worker" ? "worker" : "household"}
     />
   );
 }

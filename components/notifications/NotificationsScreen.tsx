@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTransition } from "react";
 
+import { HomeTabBar } from "@/components/household/HomeTabBar";
 import { Card, Screen } from "@/components/ui/Primitives";
 import { setNotificationPreferenceAction } from "@/lib/notifications/actions";
 import type { Notification } from "@/lib/notifications/queries";
@@ -39,11 +40,16 @@ const PREF_KEYS: Record<NotificationType, MessageKey> = {
 export function NotificationsScreen({
   notifications,
   preferences,
-  backHref,
+  variant,
 }: {
   notifications: Notification[];
   preferences: NotificationPreferences;
-  backHref: string;
+  /** A worker has no tab bar of their own (WorkerBar's back arrow is the
+   * only way here), so that variant keeps the explicit "Back" link. An
+   * owner/member already has the household tab bar's own Notifications
+   * tab as "you are here" — this variant renders that bar instead,
+   * rather than a redundant link back to a page also reachable by tab. */
+  variant: "household" | "worker";
 }) {
   const { t, locale } = useLocale();
 
@@ -110,9 +116,17 @@ export function NotificationsScreen({
         </Card>
       </section>
 
-      <Link href={backHref} className="hl-label text-center text-green-700 underline">
-        {t("common.back")}
-      </Link>
+      {variant === "worker" ? (
+        <Link href="/worker" className="hl-label text-center text-green-700 underline">
+          {t("common.back")}
+        </Link>
+      ) : (
+        // Reserves the same space a fixed HomeTabBar needs everywhere
+        // else under /home — this page sits outside that layout (see the
+        // prop comment above), so it has to add the padding itself.
+        <div className="pb-16" aria-hidden />
+      )}
+      {variant === "household" ? <HomeTabBar /> : null}
     </Screen>
   );
 }

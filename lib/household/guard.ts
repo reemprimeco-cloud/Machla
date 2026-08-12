@@ -3,8 +3,9 @@ import "server-only";
 import { redirect } from "next/navigation";
 
 import { getServerUserProfile } from "@/lib/auth/session";
+import { getSelectedHouseholdId } from "./currentHousehold";
 import type { Membership } from "./queries";
-import { getPrimaryMembership } from "./queries";
+import { getActiveMemberships, getPrimaryMembership } from "./queries";
 
 /**
  * Server-side route guards for the household experience.
@@ -18,17 +19,37 @@ import { getPrimaryMembership } from "./queries";
  * showing them an empty or broken page.
  */
 
-/** Requires a signed-in user who belongs to a household, in an
- * owner/member role. Workers are sent to their own experience. */
+/**
+ * Requires a signed-in user who belongs to a household in an owner/member
+ * role, and resolves WHICH one: a user can belong to several (My Home, My
+ * Office, ...), and the Homes switcher (`app/home/page.tsx`) lets them
+ * choose which is "current" via `hl_household` (`currentHousehold.ts`).
+ *
+ * The cookie is only ever a hint — it is re-checked here against the
+ * caller's real active memberships on every call, so a stale value (the
+ * household was left, or the cookie is forged) just falls back to the
+ * first owner/member membership rather than granting anything. This
+ * function is defence in depth, not the authorization boundary; every RPC
+ * downstream re-checks `auth.uid()` against `household_members` itself.
+ *
+ * A user with no owner/member household at all, but at least one worker
+ * membership, is sent to that experience instead of the switcher — the
+ * switcher has nothing to show them.
+ */
 export async function requireHouseholdAccess(): Promise<Membership> {
   const profile = await getServerUserProfile();
   if (!profile) redirect("/login");
 
-  const membership = await getPrimaryMembership();
-  if (!membership) redirect("/onboarding");
-  if (membership.role === "worker") redirect("/worker");
+  const memberships = await getActiveMemberships();
+  const homes = memberships.filter((membership) => membership.role !== "worker");
 
-  return membership;
+  if (homes.length === 0) {
+    if (memberships.length === 0) redirect("/onboarding");
+    redirect("/worker");
+  }
+
+  const selectedId = await getSelectedHouseholdId();
+  return homes.find((home) => home.householdId === selectedId) ?? homes[0];
 }
 
 /** Requires the owner specifically — the household-management actions

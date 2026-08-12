@@ -36,21 +36,19 @@ landing page) is wanted later.
   /worker/profile              — language, logout
 
 (household)                    — auth required, active role='owner'|'member'
-  /home                        — dashboard: new/recent lists
-  /home/lists                  — all lists
+  /home                        — Homes switcher: every household the user
+                                   belongs to, as a card (superseded
+                                   /switch-household, below — see §4)
+  /home/dashboard               — the currently-selected household: new/recent lists
+  /home/lists                  — all lists (currently-selected household)
   /home/lists/[listId]         — grouped list + purchase checklist + progress
   /home/members                — member/worker management (Owner sees manage
                                    actions; Member sees read-only)
   /home/invitations             — active invitations (Owner-only; Member gets
                                    redirected/403 server-side too, not just hidden)
-  /home/settings                — household name, display language (Owner-only)
-  /home/profile                 — own language, logout
-
-(shared)
-  /switch-household             — only rendered if the signed-in user has
-                                    >1 active household_members row (edge
-                                    case the schema allows; see
-                                    05-household-model.md §2 item 5)
+  /home/settings                — ACCOUNT-level: profile, language, logout —
+                                   not household-level (superseded an earlier
+                                   plan for this path, see §4)
   /logout
 ```
 
@@ -71,6 +69,47 @@ primary control.
 `/` is now pure routing with no UI of its own, gating in order: no locale
 cookie → `/welcome`; no session → `/login`; no household → `/onboarding`;
 otherwise → `/worker` for a Worker, `/home` for an Owner/Member.
+
+### 4.1 The Homes switcher (supersedes the reserved `/switch-household`)
+
+Item 5 in `14-technical-risks-decisions.md` deferred a household switcher
+as a V1 edge case not worth building — every user, in practice, would
+have exactly one household. That stopped holding once "My home" and "My
+office" as separate households, each with its own helper, became a real
+request rather than a hypothetical multi-membership edge case, so this
+reverses that call rather than special-casing around it.
+
+`/home` is now the switcher itself (not a separate `/switch-household`,
+which is no longer reserved) — every household the caller is an
+owner/member of, as a card, always shown rather than only when there
+happens to be more than one. `lib/household/currentHousehold.ts` stores
+which one is "current" in a cookie, the same device-preference pattern
+`lib/i18n/cookie.ts` already uses for locale; `requireHouseholdAccess()`
+resolves it (falling back to the first membership if the cookie is
+unset, stale, or forged — it is never itself an authorization check, see
+the function's own doc comment). What used to render at `/home` moved to
+`/home/dashboard` unchanged.
+
+A persistent bottom tab bar (`components/household/HomeTabBar.tsx`,
+mounted by `app/home/layout.tsx`) replaces the per-screen "back" links
+across this whole route group: Homes, Notifications, Settings — visible
+on every `/home/*` page. `/notifications` is shared with the worker
+experience and sits outside this layout, so `NotificationsScreen`
+mounts the same bar itself for a household caller rather than via layout
+nesting.
+
+One correctness pitfall worth recording: `app/home/layout.tsx` calls
+`requireHouseholdAccess()` itself, redirecting on the same conditions
+every page under it already re-checks. That looks redundant —
+`getServerUserProfile`/`getActiveMemberships` are `cache()`'d, so the
+second call costs nothing — but it is not decorative. A layout with no
+awaited work of its own starts streaming its shell to the client
+immediately; a `redirect()` thrown later by a child page then arrives as
+a 200 response carrying a client-side refresh instruction instead of a
+real HTTP 307. Confirmed by curling an unauthenticated `/home/lists`
+before this fix (200) and after (307) — the layout being `async` and
+awaiting the guard before rendering anything is what restores the real
+status code for every route underneath it.
 
 Built as of Phase 9:
 
@@ -124,8 +163,9 @@ Opening `/home/lists/[id]` marks the list viewed as a side effect —
 best-effort, and the RPC only ever moves `sent → viewed`, so re-opening a
 completed list cannot walk its status backwards.
 
-Still unbuilt: `/home/settings`, `/home/profile`, `/worker/profile`, and
-`/switch-household`.
+Still unbuilt: `/worker/profile` (the worker experience still uses
+`AccountActions` inline rather than its own settings screen — see §4.1
+for why the household side moved to a dedicated one).
 
 Notes on the guards themselves:
 

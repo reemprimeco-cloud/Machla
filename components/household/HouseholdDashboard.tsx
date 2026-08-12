@@ -8,18 +8,18 @@ import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { HouseholdRole } from "@/lib/supabase/database.types";
 
-import { NotificationBell } from "@/components/worker/WorkerChrome";
-
-import { AccountActions } from "./AccountActions";
 import { Progress } from "./ListsInbox";
 
+/** `unreadCount` is currently unused here — the bottom tab bar's own
+ * Notifications tab carries the badge instead of this screen's header —
+ * kept as a prop so the caller (app/home/dashboard/page.tsx) doesn't need
+ * to change its data fetching if a header badge comes back later. */
 export function HouseholdDashboard({
   householdName,
   role,
   memberCount,
   recentLists,
   openCount,
-  unreadCount,
 }: {
   householdName: string;
   role: HouseholdRole;
@@ -32,9 +32,8 @@ export function HouseholdDashboard({
 
   return (
     <Screen>
-      <div className="flex items-center justify-between gap-3 py-2">
+      <div className="flex items-center justify-center py-2">
         <MachlaLockup size={28} />
-        <NotificationBell unreadCount={unreadCount} />
       </div>
       <h1 className="hl-title text-center text-ink">{householdName}</h1>
 
@@ -106,8 +105,6 @@ export function HouseholdDashboard({
           </Link>
         ) : null}
       </nav>
-
-      <AccountActions />
     </Screen>
   );
 }

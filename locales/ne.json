@@ -66,7 +66,17 @@
     "title": "घर",
     "people": "मानिसहरू",
     "invitations": "निमन्त्रणाहरू",
-    "peopleCount": "{count} जना"
+    "peopleCount": "{count} जना",
+    "myHomes": "मेरा घरहरू",
+    "addHome": "अर्को घर थप्नुहोस्",
+    "tabHomes": "घरहरू",
+    "tabSettings": "सेटिङहरू",
+    "tabBarLabel": "मुख्य"
+  },
+  "settings": {
+    "title": "सेटिङहरू",
+    "profile": "प्रोफाइल",
+    "general": "सामान्य"
   },
   "members": {
     "title": "मानिसहरू",

@@ -66,7 +66,17 @@
     "title": "නිවස",
     "people": "පුද්ගලයින්",
     "invitations": "ආරාධනා",
-    "peopleCount": "පුද්ගලයින් {count}"
+    "peopleCount": "පුද්ගලයින් {count}",
+    "myHomes": "මගේ නිවාස",
+    "addHome": "තවත් නිවසක් එකතු කරන්න",
+    "tabHomes": "නිවාස",
+    "tabSettings": "සැකසුම්",
+    "tabBarLabel": "ප්‍රධාන"
+  },
+  "settings": {
+    "title": "සැකසුම්",
+    "profile": "පැතිකඩ",
+    "general": "සාමාන්‍ය"
   },
   "members": {
     "title": "පුද්ගලයින්",

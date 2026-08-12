@@ -66,7 +66,17 @@
     "title": "घर",
     "people": "लोग",
     "invitations": "निमंत्रण",
-    "peopleCount": "{count} लोग"
+    "peopleCount": "{count} लोग",
+    "myHomes": "मेरे घर",
+    "addHome": "एक और घर जोड़ें",
+    "tabHomes": "घर",
+    "tabSettings": "सेटिंग्स",
+    "tabBarLabel": "मुख्य"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "profile": "प्रोफ़ाइल",
+    "general": "सामान्य"
   },
   "members": {
     "title": "लोग",

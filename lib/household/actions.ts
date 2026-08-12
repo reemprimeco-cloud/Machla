@@ -1,9 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
+import { setSelectedHouseholdId } from "./currentHousehold";
 import type { ActionResult } from "./errors";
 import { toHouseholdErrorCode } from "./errors";
+import { getActiveMemberships } from "./queries";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 import { createClient } from "@/lib/supabase/server";
 
@@ -149,4 +152,28 @@ export async function removeMemberAction(
 
   revalidatePath("/home/members");
   return { ok: true, value: undefined };
+}
+
+/**
+ * Switches which household the owner/member experience shows — called
+ * from a card on the Homes switcher (`app/home/page.tsx`).
+ *
+ * Re-validates the id against the caller's own active memberships before
+ * writing the cookie. Not because the cookie grants anything by itself —
+ * every downstream query is RLS-scoped regardless
+ * (docs/architecture/10-security-model.md §1) — but so a forged or stale
+ * id can't even cosmetically select a household the user has no access
+ * to; it silently falls through to whatever `requireHouseholdAccess`
+ * would have picked anyway.
+ */
+export async function selectHouseholdAction(householdId: string): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+
+  const memberships = await getActiveMemberships();
+  const isOwnerOrMember = memberships.some(
+    (membership) => membership.householdId === householdId && membership.role !== "worker",
+  );
+  if (isOwnerOrMember) await setSelectedHouseholdId(householdId);
+
+  redirect("/home/dashboard");
 }

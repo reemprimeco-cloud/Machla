@@ -1,28 +1,31 @@
-import { HouseholdDashboard } from "@/components/household/HouseholdDashboard";
-import { requireHouseholdAccess } from "@/lib/household/guard";
-import { getHouseholdMembers } from "@/lib/household/queries";
-import { getHouseholdLists, isOpen } from "@/lib/list/household";
-import { getUnreadCount } from "@/lib/notifications/queries";
+import { redirect } from "next/navigation";
 
-/** Household dashboard: incoming lists first, then the people and
- * invitation screens. */
-export default async function HomePage() {
-  const membership = await requireHouseholdAccess();
+import { HomesSwitcher } from "@/components/household/HomesSwitcher";
+import { getServerUserProfile } from "@/lib/auth/session";
+import { getActiveMemberships } from "@/lib/household/queries";
 
-  const [members, lists, unreadCount] = await Promise.all([
-    getHouseholdMembers(membership.householdId),
-    getHouseholdLists(membership.householdId),
-    getUnreadCount(),
-  ]);
+/**
+ * The front door for the owner/member experience: every household the
+ * signed-in user belongs to, as a card — "My home", "My office", however
+ * many they run. Tapping one sets it as current (`selectHouseholdAction`)
+ * and opens `/home/dashboard`.
+ *
+ * A user with no owner/member household routes onward exactly like
+ * `requireHouseholdAccess` would: to `/worker` if they have a worker
+ * membership instead, to `/onboarding` if they have none at all. This
+ * page has nothing to switch between in either case.
+ */
+export default async function HomesPage() {
+  const profile = await getServerUserProfile();
+  if (!profile) redirect("/login");
 
-  return (
-    <HouseholdDashboard
-      householdName={membership.householdName}
-      role={membership.role}
-      memberCount={members.length}
-      recentLists={lists.slice(0, 3)}
-      openCount={lists.filter(isOpen).length}
-      unreadCount={unreadCount}
-    />
-  );
+  const memberships = await getActiveMemberships();
+  const homes = memberships.filter((membership) => membership.role !== "worker");
+
+  if (homes.length === 0) {
+    if (memberships.length === 0) redirect("/onboarding");
+    redirect("/worker");
+  }
+
+  return <HomesSwitcher homes={homes} />;
 }

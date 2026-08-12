@@ -2,20 +2,22 @@ import { redirect } from "next/navigation";
 
 import { OnboardingChoices } from "@/components/household/OnboardingChoices";
 import { getServerUserProfile } from "@/lib/auth/session";
-import { getPrimaryMembership } from "@/lib/household/queries";
 
 /**
- * The fork in the road for a signed-in user with no household yet
- * (docs/architecture/08-route-map.md): join one with an invitation code,
- * or create one and become its owner.
+ * The fork in the road: join a household with an invitation code, or
+ * create one and become its owner.
+ *
+ * Reachable two ways — a brand-new signed-in user with no household at
+ * all (routed here by `/`, docs/architecture/08-route-map.md), and an
+ * existing owner/member adding another one from the Homes switcher's
+ * "+ Add another home" (`components/household/HomesSwitcher.tsx`). Both
+ * are the same fork, so this page no longer redirects away just because
+ * the caller already belongs to a household — only signed-out visitors
+ * are turned back.
  */
 export default async function OnboardingPage() {
   const profile = await getServerUserProfile();
   if (!profile) redirect("/login");
-
-  // Already in a household — nothing to onboard.
-  const membership = await getPrimaryMembership();
-  if (membership) redirect("/");
 
   return <OnboardingChoices />;
 }

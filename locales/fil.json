@@ -66,7 +66,17 @@
     "title": "Tahanan",
     "people": "Mga tao",
     "invitations": "Mga imbitasyon",
-    "peopleCount": "{count} tao"
+    "peopleCount": "{count} tao",
+    "myHomes": "Mga tahanan ko",
+    "addHome": "Magdagdag ng ibang tahanan",
+    "tabHomes": "Mga Tahanan",
+    "tabSettings": "Mga Setting",
+    "tabBarLabel": "Pangunahin"
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "profile": "Profile",
+    "general": "Pangkalahatan"
   },
   "members": {
     "title": "Mga tao",
