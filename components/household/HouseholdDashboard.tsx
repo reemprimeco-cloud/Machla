@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { HomeListLockup } from "@/components/brand/HomeListIcon";
+import { MachlaLockup } from "@/components/brand/MachlaIcon";
 import { Card, Screen } from "@/components/ui/Primitives";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -33,7 +33,7 @@ export function HouseholdDashboard({
   return (
     <Screen>
       <div className="flex items-center justify-between gap-3 py-2">
-        <HomeListLockup size={28} />
+        <MachlaLockup size={28} />
         <NotificationBell unreadCount={unreadCount} />
       </div>
       <h1 className="hl-title text-center text-ink">{householdName}</h1>

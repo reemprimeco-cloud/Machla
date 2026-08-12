@@ -73,6 +73,10 @@
   --font-devanagari: var(--font-devanagari-nf, "Noto Sans Devanagari"), sans-serif;
   --font-telugu: var(--font-telugu-nf, "Noto Sans Telugu"), sans-serif;
   --font-sinhala: var(--font-sinhala-nf, "Noto Sans Sinhala"), sans-serif;
+  --font-ethiopic: var(--font-ethiopic-nf, "Noto Sans Ethiopic"), sans-serif;
+  /* Noto Sans leads for Fon, not Poppins: Poppins lacks ɖ ɛ ɔ ŋ and the
+     combining tone marks the script needs. */
+  --font-latin-ext: var(--font-latin-ext-nf, "Noto Sans"), var(--font-latin);
 
   --font-ui: var(--font-latin);
   --hl-lh-ui: 1.5;
@@ -126,6 +130,15 @@ html[data-script="sinhala"] {
   --font-ui: var(--font-sinhala);
   --hl-lh-ui: 1.75;
 }
+html[data-script="ethiopic"] {
+  --font-ui: var(--font-ethiopic);
+  --hl-lh-ui: 1.75;
+}
+html[data-script="latin-ext"] {
+  --font-ui: var(--font-latin-ext);
+  --hl-lh-ui: 1.55;
+}
+
 /* Nastaliq is calligraphic with deep descenders and a sloping baseline —
    it needs roughly double Latin's leading. Any element that can hold
    Urdu must use min-height, never height, or the descenders clip. */

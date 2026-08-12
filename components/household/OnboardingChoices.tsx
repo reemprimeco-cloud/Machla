@@ -1,6 +1,6 @@
 "use client";
 
-import { HomeListLockup } from "@/components/brand/HomeListIcon";
+import { MachlaLockup } from "@/components/brand/MachlaIcon";
 import { ChoiceCard, Screen } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -10,7 +10,7 @@ export function OnboardingChoices() {
   return (
     <Screen>
       <div className="flex flex-col items-center gap-6 py-6">
-        <HomeListLockup size={36} />
+        <MachlaLockup size={36} />
         <h1 className="hl-title text-ink">{t("onboarding.title")}</h1>
       </div>
 

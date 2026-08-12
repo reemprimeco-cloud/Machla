@@ -262,3 +262,50 @@ while being structurally incapable of detecting any. Injecting a 900px
 element and a 20px button proved it blind. The working version measures
 each element's own bounding box and skips those inside a scrollable
 ancestor. A layout check that has never been shown to fail is not evidence.
+
+## 11. Expansion to 12 languages, and the Machla rename (2026-08-12)
+
+Owner-approved, same day: three languages added (Amharic, French, Fon),
+and the product renamed HomeList → Machla, source in a new UI kit
+("Machla UI Kit 2") that also supplied fresh flag SVGs for the added
+locales and set the design vocabulary (`LANGUAGES`, `useLocale`,
+`MachlaIcon`) this codebase's equivalents are now aligned to in spirit,
+though not renamed 1:1 — see the note in `lib/branding.ts` on why the
+`--hl-*` CSS custom property prefix was kept rather than swapped to the
+kit's `--mc-*`: the values are byte-identical, and renaming every
+`className` in the app would have been pure churn for zero visible change.
+
+**Fon required a new script category.** Existing locales cover latin,
+arabic, nastaliq, devanagari, telugu, sinhala. Fon (Fɔngbè) needed a
+seventh: `latin-ext`. Poppins — the app's tier-1 Latin font — does not
+contain ɖ ɛ ɔ ŋ or the combining tone marks (U+0300/U+0301) the language
+actually uses; left as plain `latin` it would either render tofu or
+silently fall back mid-word and break the line. `Noto_Sans` with the
+`latin-ext` subset (confirmed present in `next/font/google`'s font data
+before writing the code, not assumed) is loaded for this locale only and
+takes priority over Poppins in the font stack — see the `latin-ext` block
+in `app/globals.css` and the `notoSansLatinExt` instance in `app/layout.tsx`.
+
+**Benin is French, not French-and-nothing-else.** French is Benin's
+official language and was already covered by the `fr` locale — a
+separate "Benin" entry would have been a duplicate of it. Fon earns its
+own row because it is the country's largest indigenous language and a
+materially different reading choice from French for many Beninese
+workers, not a duplicate. (My first pass at this, before the kit arrived,
+mapped "Benin" to French alone — the kit's authored reasoning for adding
+Fon specifically was better than that assumption, and superseded it.)
+
+**Catalogue coverage did not grow with the UI.** `categories`/`products`
+still carry nine `name_*` columns. Amharic, French and Fon fall back to
+the English product name until the catalogue gets real columns for
+them — a content project, not a code one. `toCatalogLocale()` in
+`lib/i18n/config.ts` is the one place that mapping lives; `localizedName()`
+routes through it rather than every call site knowing about the split.
+
+**Fon's translation is a first draft, not a reviewed one — flagged more
+urgently than any other locale in this project.** Telugu, Sinhala and
+Nepali (§10's list, README "Before it can launch") already carry a
+native-speaker-review flag; Fon's is stronger because the language has
+markedly less digital presence than the other eleven, so translation
+confidence here is genuinely lower, not just cautious boilerplate. Treat
+every Fon string as provisional until a native speaker has read it.

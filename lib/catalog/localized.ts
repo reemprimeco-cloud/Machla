@@ -1,5 +1,5 @@
-import type { LocaleCode } from "@/lib/i18n/config";
-import { DEFAULT_LOCALE } from "@/lib/i18n/config";
+import type { CatalogLocaleCode, LocaleCode } from "@/lib/i18n/config";
+import { DEFAULT_LOCALE, toCatalogLocale } from "@/lib/i18n/config";
 
 /**
  * Picking the right localized column off a catalogue row.
@@ -14,17 +14,20 @@ import { DEFAULT_LOCALE } from "@/lib/i18n/config";
  * Shared by server and client components, hence no "server-only".
  */
 
-/** The nine name columns every catalogue row carries. */
+/** The nine name columns every catalogue row carries. Keyed on
+ * CatalogLocaleCode, not LocaleCode: UI locales without catalogue
+ * columns (am, fr) are mapped down by toCatalogLocale below. */
 export type LocalizedNames = {
-  [K in `name_${LocaleCode}`]: string;
+  [K in `name_${CatalogLocaleCode}`]: string;
 };
 
 export function localizedName(row: LocalizedNames, locale: LocaleCode): string {
+  const catalogLocale = toCatalogLocale(locale);
   // Every row is validated to carry all nine names before import
   // (catalog-import/scripts/build-catalog.mjs), so the fallback is a
   // belt-and-braces guard against a row written outside that pipeline —
   // an untranslated name is far better than a blank card.
-  return row[`name_${locale}`] || row[`name_${DEFAULT_LOCALE}`] || "";
+  return row[`name_${catalogLocale}`] || row[`name_${toCatalogLocale(DEFAULT_LOCALE)}`] || "";
 }
 
 /** Brand + size, the line under a product's name. Both are optional and

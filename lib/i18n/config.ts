@@ -19,7 +19,10 @@ export type LocaleCode =
   | "fil"
   | "ne"
   | "id"
-  | "si";
+  | "si"
+  | "am"
+  | "fr"
+  | "fon";
 
 export type TextDirection = "ltr" | "rtl";
 
@@ -31,7 +34,15 @@ export type TextDirection = "ltr" | "rtl";
  * (`arabic`) style within the language picker itself, where a tall
  * Nastaliq line would break the card grid — see LanguagePicker.
  */
-export type Script = "latin" | "arabic" | "nastaliq" | "devanagari" | "telugu" | "sinhala";
+export type Script =
+  | "latin"
+  | "arabic"
+  | "nastaliq"
+  | "devanagari"
+  | "telugu"
+  | "sinhala"
+  | "ethiopic"
+  | "latin-ext";
 
 export interface LocaleMeta {
   code: LocaleCode;
@@ -71,6 +82,22 @@ export const LOCALES: readonly LocaleMeta[] = [
   { code: "ne", nativeName: "नेपाली", englishName: "Nepali", direction: "ltr", script: "devanagari", flagIso: "np" },
   { code: "id", nativeName: "Bahasa Indonesia", englishName: "Indonesian", direction: "ltr", script: "latin", flagIso: "id" },
   { code: "si", nativeName: "සිංහල", englishName: "Sinhala", direction: "ltr", script: "sinhala", flagIso: null },
+  // Owner-requested expansion beyond the master plan's original nine
+  // (2026-08-12): Ethiopian and Francophone West African workers.
+  // French also covers Benin, where it is the official language.
+  { code: "am", nativeName: "አማርኛ", englishName: "Amharic", direction: "ltr", script: "ethiopic", flagIso: "et" },
+  { code: "fr", nativeName: "Français", englishName: "French", direction: "ltr", script: "latin", flagIso: "fr" },
+  // Benin's OFFICIAL language is French (the "fr" row above already covers
+  // it) — a separate "Benin" locale would have been a duplicate. Fon
+  // (Fɔngbè) is the country's largest indigenous language and the reason
+  // Benin earns its own row: it is a materially different reading choice
+  // from French for many Beninese workers, not a duplicate of it.
+  //
+  // script: "latin-ext", not "latin" — Fɔngbè uses ɖ ɛ ɔ ŋ and combining
+  // tone marks (U+0300/U+0301) that Poppins does not contain. Tagged
+  // separately so the font stack can put Noto Sans first for this locale
+  // only, rather than silently tofu-ing or breaking line rhythm mid-word.
+  { code: "fon", nativeName: "Fɔngbè", englishName: "Fon", direction: "ltr", script: "latin-ext", flagIso: "bj" },
 ] as const;
 
 export const DEFAULT_LOCALE: LocaleCode = "en";
@@ -106,4 +133,25 @@ export function scriptFor(code: string): Script {
 export function pickerScriptFor(code: string): Script {
   const script = scriptFor(code);
   return script === "nastaliq" ? "arabic" : script;
+}
+
+/**
+ * The locales the CATALOGUE has real name columns for (`name_en` …
+ * `name_si` on categories/products). UI locales added later (am, fr)
+ * fall back to English product names until the catalogue grows their
+ * columns — a content project like the photography, tracked in
+ * 15-localization-architecture.md §11. App-chrome strings are fully
+ * translated for every locale regardless; this split only affects what
+ * a product card calls the product.
+ */
+export type CatalogLocaleCode = "ar" | "en" | "hi" | "te" | "ur" | "fil" | "ne" | "id" | "si";
+
+const CATALOG_FALLBACK: Partial<Record<LocaleCode, CatalogLocaleCode>> = {
+  am: "en",
+  fr: "en",
+  fon: "en",
+};
+
+export function toCatalogLocale(code: LocaleCode): CatalogLocaleCode {
+  return CATALOG_FALLBACK[code] ?? (code as CatalogLocaleCode);
 }

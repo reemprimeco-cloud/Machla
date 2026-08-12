@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 /**
- * HomeList is a private application, not a website.
+ * Machla is a private application, not a website.
  *
  * Every meaningful screen is behind authentication, so a crawler can only
  * ever reach /welcome and /login — and indexing those puts a household

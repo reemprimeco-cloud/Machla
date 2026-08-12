@@ -6,6 +6,8 @@ import {
   Noto_Sans_Sinhala,
   Noto_Sans_Telugu,
   Poppins,
+  Noto_Sans,
+  Noto_Sans_Ethiopic,
 } from "next/font/google";
 import { cookies } from "next/headers";
 
@@ -80,6 +82,27 @@ const notoSansSinhala = Noto_Sans_Sinhala({
   preload: false,
 });
 
+// Fon (Fɔngbè) uses ɖ ɛ ɔ ŋ and combining tone marks that Poppins does not
+// contain — left on "latin" alone it renders tofu, or worse, silently
+// falls back mid-word and breaks the line. The subsets order matters here:
+// "latin-ext" is requested so this instance actually carries the glyphs
+// Poppins is missing, rather than duplicating what Poppins already covers.
+const notoSansLatinExt = Noto_Sans({
+  variable: "--font-latin-ext-nf",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+
+const notoSansEthiopic = Noto_Sans_Ethiopic({
+  variable: "--font-ethiopic-nf",
+  subsets: ["ethiopic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+
 const FONT_VARIABLES = [
   poppins.variable,
   ibmPlexSansArabic.variable,
@@ -87,6 +110,8 @@ const FONT_VARIABLES = [
   notoSansDevanagari.variable,
   notoSansTelugu.variable,
   notoSansSinhala.variable,
+  notoSansEthiopic.variable,
+  notoSansLatinExt.variable,
 ].join(" ");
 
 export const metadata: Metadata = {

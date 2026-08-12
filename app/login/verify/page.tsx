@@ -1,9 +1,10 @@
 "use client";
 
+import { branding } from "@/lib/branding";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import { OTP_CHANNEL } from "@/lib/auth/phone";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -118,7 +119,7 @@ function VerifyForm() {
 
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-6 py-16">
-      <HomeListIcon size={56} variant="flat" title="HomeList" />
+      <MachlaIcon size={56} variant="flat" title={branding.name} />
 
       <div className="space-y-1 text-center">
         <h1 className="hl-title text-ink">{t("auth.codeTitle")}</h1>

@@ -1,8 +1,9 @@
 "use client";
 
+import { branding } from "@/lib/branding";
 import { useRouter } from "next/navigation";
 
-import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import type { LocaleCode, LocaleMeta } from "@/lib/i18n/config";
 import { LOCALES, pickerScriptFor } from "@/lib/i18n/config";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -85,7 +86,7 @@ export default function WelcomePage() {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-[var(--hl-content-max)] flex-col bg-bg">
       <header className="flex flex-col items-center gap-3 px-6 pb-6 pt-10">
-        <HomeListIcon size={64} variant="tile" title="HomeList" />
+        <MachlaIcon size={64} variant="tile" title={branding.name} />
         <h1 className="hl-title text-ink">Choose your language</h1>
         <p className="hl-caption text-center">You can change this any time in Settings.</p>
       </header>

@@ -1,8 +1,11 @@
 import type { LocaleCode } from "./config";
 import { DEFAULT_LOCALE, isSupportedLocale } from "./config";
 
+import am from "@/locales/am.json";
 import ar from "@/locales/ar.json";
 import en from "@/locales/en.json";
+import fon from "@/locales/fon.json";
+import fr from "@/locales/fr.json";
 import fil from "@/locales/fil.json";
 import hi from "@/locales/hi.json";
 import id from "@/locales/id.json";
@@ -24,7 +27,7 @@ import ur from "@/locales/ur.json";
  * (e.g. a key added but not yet translated) falls back to English for
  * that key alone, rather than rendering blank or crashing.
  */
-const RAW_MESSAGES: Record<LocaleCode, Messages> = { ar, en, hi, te, ur, fil, ne, id, si };
+const RAW_MESSAGES: Record<LocaleCode, Messages> = { ar, en, hi, te, ur, fil, ne, id, si, am, fr, fon };
 
 export type Messages = typeof en;
 

@@ -90,7 +90,7 @@
     "revoke": "रद्द गर्नुहोस्",
     "revoking": "रद्द हुँदैछ…",
     "expires": "{date} मा समाप्त",
-    "shareMessage": "HomeList मा मेरो घरमा सामेल हुनुहोस्: {link}"
+    "shareMessage": "Machla मा मेरो घरमा सामेल हुनुहोस्: {link}"
   },
   "worker": {
     "yourHome": "तपाईंको घर",

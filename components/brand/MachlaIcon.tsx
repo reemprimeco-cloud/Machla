@@ -1,7 +1,9 @@
+import { branding } from "@/lib/branding";
+
 /**
- * HomeList — Concept A "Roofline" (docs/design/BRAND.md).
- * Ported from the HomeList UI Kit. Pure SVG, no hooks/browser APIs — safe
- * to use as a Server Component.
+ * Machla — Concept A "Roofline" (docs/design/BRAND.md).
+ * Ported from the Machla UI Kit (renamed from HomeList 2026-08-12). Pure
+ * SVG, no hooks/browser APIs — safe to use as a Server Component.
  *
  * Two renderings of the same mark:
  *   variant="flat"  -> solid fills. Use everywhere in the UI: nav, headers,
@@ -13,7 +15,7 @@
  * only when it stands alone as the sole identifier of the app.
  */
 
-interface HomeListIconProps {
+interface MachlaIconProps {
   size?: number;
   variant?: "flat" | "tile";
   /** Accessible name. Omit when the wordmark or an adjacent label already names it. */
@@ -36,7 +38,7 @@ function Figures({ fill, opacity = 1 }: { fill: string; opacity?: number }) {
   );
 }
 
-export function HomeListIcon({ size = 40, variant = "flat", title, className }: HomeListIconProps) {
+export function MachlaIcon({ size = 40, variant = "flat", title, className }: MachlaIconProps) {
   const uid = variant === "tile" ? "hl-tile" : "hl-flat";
   const a11y = title
     ? { role: "img" as const, "aria-label": title }
@@ -93,8 +95,17 @@ export function HomeListIcon({ size = 40, variant = "flat", title, className }: 
   );
 }
 
-/** Horizontal lockup: mark + bilingual wordmark. */
-export function HomeListLockup({
+/**
+ * Horizontal lockup: mark + bilingual wordmark.
+ *
+ * Reads the name from branding.ts rather than hard-coding it — this is
+ * the one component that used to hard-code "HomeList" directly, which is
+ * exactly the mistake the master plan's "centralize the brand name" rule
+ * exists to prevent. It surfaced during the Machla rename: everywhere
+ * else already imported from branding.ts, so the rename was a one-file
+ * change except here.
+ */
+export function MachlaLockup({
   size = 36,
   showArabic = true,
 }: {
@@ -104,10 +115,10 @@ export function HomeListLockup({
   return (
     <span
       role="img"
-      aria-label="HomeList"
+      aria-label={branding.name}
       style={{ display: "inline-flex", alignItems: "center", gap: size * 0.34 }}
     >
-      <HomeListIcon size={size} />
+      <MachlaIcon size={size} />
       <span style={{ display: "flex", flexDirection: "column", lineHeight: 1.05 }}>
         <span
           style={{
@@ -118,7 +129,7 @@ export function HomeListLockup({
             color: "var(--hl-ink)",
           }}
         >
-          HomeList
+          {branding.name}
         </span>
         {showArabic && (
           <span
@@ -130,7 +141,7 @@ export function HomeListLockup({
               color: "var(--hl-green-700)",
             }}
           >
-            هوم ليست
+            {branding.nameAr}
           </span>
         )}
       </span>
@@ -138,4 +149,4 @@ export function HomeListLockup({
   );
 }
 
-export default HomeListIcon;
+export default MachlaIcon;

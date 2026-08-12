@@ -1,8 +1,9 @@
-# HomeList
+# Machla
 
 Multilingual household shopping-list app for Kuwait. A mobile-first PWA that
 connects household owners with the domestic workers who shop for them, in
-nine languages, with pictures instead of prose.
+twelve languages, with pictures instead of prose. Renamed from HomeList
+2026-08-12 — see `docs/architecture/15-localization-architecture.md` §11.
 
 **Status: all 12 phases implemented.** One Next.js app serves both
 experiences; one Supabase project holds the data and every authorization
@@ -24,14 +25,16 @@ No prices anywhere — deliberately. The catalogue is reference data for
 *naming* products, not a store.
 
 **Languages:** Arabic, English, Hindi, Telugu, Urdu, Filipino, Nepali,
-Indonesian, Sinhala. Arabic and Urdu render RTL, using CSS logical
-properties throughout rather than mirrored stylesheets.
+Indonesian, Sinhala, Amharic, French, Fon. Arabic and Urdu render RTL,
+using CSS logical properties throughout rather than mirrored stylesheets.
+Fon's translation is a first draft awaiting native-speaker review — see
+the localization doc §11 before treating it as finished.
 
 ## Repository layout
 
 ```text
 app/  components/  lib/     the Next.js application (both experiences)
-locales/                    147+ keys in 9 languages, parity-checked
+locales/                    160 keys in 12 languages, parity-checked
 supabase/migrations/        schema, RLS policies and every write RPC
 supabase/tests/             295 SQL assertions, run as `authenticated`
 catalog-import/             catalogue data + importer (run from a laptop)
