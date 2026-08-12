@@ -23,8 +23,8 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
 
   return (
     <Screen title={t("home.myHomes")}>
-      <div className="flex items-center justify-center py-2">
-        <MachlaLockup size={28} />
+      <div className="flex items-center justify-center py-4">
+        <MachlaLockup size={48} />
       </div>
 
       <ul className="flex flex-col gap-3">

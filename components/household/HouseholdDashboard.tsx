@@ -9,7 +9,6 @@ import { localizedName } from "@/lib/catalog/localized";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
-import type { HouseholdRole } from "@/lib/supabase/database.types";
 
 import { Progress } from "./ListsInbox";
 
@@ -21,10 +20,11 @@ import { Progress } from "./ListsInbox";
  * Home-screen layout follows the Machla UI Kit's home screen (greeting,
  * hero progress card, category grid, "Your lists") with one deliberate
  * subtraction: no prices, no cart, no checkout — this app was never
- * repriced, only reskinned (docs/design/BRAND.md, 2026-08 renovation). */
+ * repriced, only reskinned (docs/design/BRAND.md, 2026-08 renovation).
+ * People/Invitations live in Settings now, not here (2026-08 feedback)
+ * — see components/household/SettingsScreen.tsx. */
 export function HouseholdDashboard({
   householdName,
-  role,
   memberCount,
   recentLists,
   openCount,
@@ -33,7 +33,6 @@ export function HouseholdDashboard({
   greetingKey,
 }: {
   householdName: string;
-  role: HouseholdRole;
   memberCount: number;
   recentLists: HouseholdList[];
   openCount: number;
@@ -167,30 +166,6 @@ export function HouseholdDashboard({
           </ul>
         )}
       </section>
-
-      <nav className="flex flex-col gap-3">
-        <Link
-          href="/home/members"
-          className="flex min-h-14 items-center justify-between rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
-        >
-          <span className="hl-heading text-ink">{t("home.people")}</span>
-          <span className="hl-caption">
-            {t("home.peopleCount", { count: memberCount })}
-          </span>
-        </Link>
-
-        {/* Invitation management is owner-only — the route itself also
-            redirects a non-owner, and the RPCs refuse them regardless
-            (docs/architecture/04-roles-permission-matrix.md). */}
-        {role === "owner" ? (
-          <Link
-            href="/home/invitations"
-            className="flex min-h-14 items-center rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
-          >
-            <span className="hl-heading text-ink">{t("home.invitations")}</span>
-          </Link>
-        ) : null}
-      </nav>
     </Screen>
   );
 }

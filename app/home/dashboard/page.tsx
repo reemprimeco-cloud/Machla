@@ -8,8 +8,8 @@ import { getHouseholdLists, isOpen } from "@/lib/list/household";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
 /** The currently-selected household's dashboard (see `app/home/page.tsx`
- * for the switcher that picks which one): incoming lists first, then the
- * people and invitation screens. */
+ * for the switcher that picks which one): incoming lists first. People
+ * and invitations live in Settings (app/home/settings/page.tsx). */
 export default async function DashboardPage() {
   const membership = await requireHouseholdAccess();
 
@@ -24,7 +24,6 @@ export default async function DashboardPage() {
   return (
     <HouseholdDashboard
       householdName={membership.householdName}
-      role={membership.role}
       memberCount={members.length}
       recentLists={lists.slice(0, 3)}
       openCount={lists.filter(isOpen).length}
