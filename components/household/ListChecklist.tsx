@@ -3,9 +3,19 @@
 import Link from "next/link";
 import { useOptimistic, useState, useTransition } from "react";
 
-import { Card, ErrorText, PrimaryButton, Screen, SecondaryButton } from "@/components/ui/Primitives";
+import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
+import {
+  Card,
+  ErrorText,
+  PrimaryButton,
+  Screen,
+  SecondaryButton,
+} from "@/components/ui/Primitives";
 import { localizedName, productDetail } from "@/lib/catalog/localized";
-import { setListCompletedAction, setPurchaseStatusAction } from "@/lib/list/actions";
+import {
+  setListCompletedAction,
+  setPurchaseStatusAction,
+} from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
 import type { HouseholdList } from "@/lib/list/household";
 import type { ListGroup } from "@/lib/list/queries";
@@ -46,7 +56,9 @@ export function ListChecklist({
   const [error, setError] = useState<ListErrorCode | null>(null);
 
   const total = Number(summary.total_items);
-  const [purchased, setPurchased] = useOptimistic(Number(summary.purchased_items));
+  const [purchased, setPurchased] = useOptimistic(
+    Number(summary.purchased_items),
+  );
   const percent = total ? Math.round((purchased / total) * 100) : 0;
   const isComplete = summary.status === "completed";
 
@@ -62,7 +74,9 @@ export function ListChecklist({
     <Screen>
       <header className="space-y-2">
         <h1 className="hl-title text-ink">
-          {t("hlists.from", { name: summary.created_by_name ?? t("hlists.someone") })}
+          {t("hlists.from", {
+            name: summary.created_by_name ?? t("hlists.someone"),
+          })}
         </h1>
         {summary.sent_at ? (
           <p className="hl-caption">
@@ -99,11 +113,21 @@ export function ListChecklist({
                   // A photographed item has no catalogue name to show. The
                   // picture is the name — the label exists for screen
                   // readers and for the case where the image cannot load.
-                  name={product ? localizedName(product, locale) : t("worker.photoItem")}
+                  name={
+                    product
+                      ? localizedName(product, locale)
+                      : t("worker.photoItem")
+                  }
                   detail={product ? productDetail(product) : ""}
-                  icon={product ? (product.icon ?? group.category.icon) : group.category.icon}
+                  icon={
+                    product
+                      ? (product.icon ?? group.category.icon)
+                      : group.category.icon
+                  }
                   photoUrl={photoUrl}
-                  photoPurged={item.photo_path !== null && item.photo_deleted_at !== null}
+                  photoPurged={
+                    item.photo_path !== null && item.photo_deleted_at !== null
+                  }
                   quantity={Number(item.quantity)}
                   unit={item.unit}
                   note={item.note}
@@ -114,7 +138,8 @@ export function ListChecklist({
                     // "purchased" move the number.
                     if (before === after) return;
                     if (after === "purchased") setPurchased(purchased + 1);
-                    else if (before === "purchased") setPurchased(purchased - 1);
+                    else if (before === "purchased")
+                      setPurchased(purchased - 1);
                   }}
                   onError={setError}
                 />
@@ -124,11 +149,17 @@ export function ListChecklist({
         ))
       )}
 
-      <ErrorText>{error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}</ErrorText>
+      <ErrorText>
+        {error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}
+      </ErrorText>
 
       {groups.length > 0 ? (
         isComplete ? (
-          <SecondaryButton onClick={toggleComplete} disabled={pending} className="w-full">
+          <SecondaryButton
+            onClick={toggleComplete}
+            disabled={pending}
+            className="w-full"
+          >
             {t("hlists.reopen")}
           </SecondaryButton>
         ) : (
@@ -141,7 +172,10 @@ export function ListChecklist({
         )
       ) : null}
 
-      <Link href="/home/lists" className="hl-label text-center text-green-700 underline">
+      <Link
+        href="/home/lists"
+        className="hl-label text-center text-green-700 underline"
+      >
         {t("common.back")}
       </Link>
     </Screen>
@@ -195,19 +229,21 @@ function ChecklistRow({
   return (
     <li className="border-b border-sand last:border-b-0">
       <div className="flex items-center gap-3 px-3 py-2">
-        {/* The whole row is the checkbox: a 48px target that toggles
-            purchased, because that is the action taken most often, in a
-            supermarket aisle, one-handed. */}
+        {/* Checkbox + text are still one big toggle target, split either
+            side of the photo — which needs its own tap target now that it
+            opens full-size (PhotoThumbnail) rather than being decoration
+            inside this button. Nesting a <button> inside a <button> is
+            invalid HTML and unreliable to click, hence the split. */}
         <button
           type="button"
           onClick={() => change(isPurchased ? "pending" : "purchased")}
           aria-pressed={isPurchased}
           aria-label={`${t("hlists.purchased")} — ${name}`}
-          className="flex min-h-12 flex-1 items-center gap-3 text-start"
+          className="flex min-h-12 shrink-0 items-center"
         >
           <span
             aria-hidden
-            className={`flex size-9 shrink-0 items-center justify-center rounded-pill border-2 text-base ${
+            className={`flex size-9 items-center justify-center rounded-pill border-2 text-base ${
               isPurchased
                 ? "border-green-700 bg-green-700 text-on-green"
                 : "border-sand bg-surface text-transparent"
@@ -215,34 +251,28 @@ function ChecklistRow({
           >
             ✓
           </span>
+        </button>
 
-          {photoPurged ? (
-            /* Purged after purchase (20260810160000_photo_retention.sql).
-               The item stays on the list; the picture is gone, and the
-               placeholder says so rather than showing a broken image. */
-            <span
-              aria-label={t("worker.photoUnavailable")}
-              className="flex size-14 shrink-0 items-center justify-center rounded-lg border border-dashed border-sand text-ink-faint"
-            >
-              <span aria-hidden className="text-lg">🗑</span>
-            </span>
-          ) : photoUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element --
-               next/image would need the Supabase host in remotePatterns
-               and would proxy a signed, short-lived URL through the
-               optimizer, which caches it past its expiry. A 56px
-               thumbnail is not worth that. */
-            <img
-              src={photoUrl}
-              alt=""
-              className="size-14 shrink-0 rounded-lg border border-sand object-cover"
-            />
-          ) : (
-            <span aria-hidden className="text-2xl leading-none">
-              {icon ?? "📦"}
-            </span>
-          )}
+        {photoUrl || photoPurged ? (
+          <PhotoThumbnail
+            photoUrl={photoUrl}
+            purged={photoPurged}
+            label={name}
+            sizeClassName="size-14"
+          />
+        ) : (
+          <span aria-hidden className="shrink-0 text-2xl leading-none">
+            {icon ?? "📦"}
+          </span>
+        )}
 
+        <button
+          type="button"
+          onClick={() => change(isPurchased ? "pending" : "purchased")}
+          aria-pressed={isPurchased}
+          aria-label={`${t("hlists.purchased")} — ${name}`}
+          className="flex min-h-12 flex-1 items-center gap-3 text-start"
+        >
           <span className="min-w-0 flex-1">
             <span
               className={`hl-body block truncate ${
@@ -251,8 +281,12 @@ function ChecklistRow({
             >
               {name}
             </span>
-            {detail ? <span className="hl-caption block truncate">{detail}</span> : null}
-            {note ? <span className="hl-caption block truncate">“{note}”</span> : null}
+            {detail ? (
+              <span className="hl-caption block truncate">{detail}</span>
+            ) : null}
+            {note ? (
+              <span className="hl-caption block truncate">“{note}”</span>
+            ) : null}
           </span>
 
           <span className="hl-label shrink-0 tabular-nums text-ink-muted">
@@ -266,7 +300,9 @@ function ChecklistRow({
           aria-pressed={isUnavailable}
           aria-label={`${t("hlists.unavailable")} — ${name}`}
           className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg ${
-            isUnavailable ? "border-warning bg-warning text-cream" : "border-sand bg-surface"
+            isUnavailable
+              ? "border-warning bg-warning text-cream"
+              : "border-sand bg-surface"
           }`}
         >
           <span aria-hidden>✕</span>

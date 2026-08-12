@@ -125,7 +125,8 @@
     "photoTooLarge": "ፎቶው በጣም ትልቅ ነው። እንደገና ይሞክሩ።",
     "photoFailed": "ፎቶው መላክ አልቻለም። እንደገና ይሞክሩ።",
     "photoRemove": "ፎቶ አስወግድ",
-    "photoUnavailable": "ፎቶ የለም"
+    "photoUnavailable": "ፎቶ የለም",
+    "photoView": "ፎቶ ይመልከቱ"
   },
   "errors": {
     "notOwner": "ይህን ማድረግ የሚችለው የቤቱ ባለቤት ብቻ ነው።",

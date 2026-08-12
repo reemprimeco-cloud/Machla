@@ -125,7 +125,8 @@
     "photoTooLarge": "الصورة كبيرة جدًا. حاول مرة أخرى.",
     "photoFailed": "تعذّر إرسال الصورة. حاول مرة أخرى.",
     "photoRemove": "حذف الصورة",
-    "photoUnavailable": "الصورة غير متاحة"
+    "photoUnavailable": "الصورة غير متاحة",
+    "photoView": "عرض الصورة"
   },
   "errors": {
     "notOwner": "صاحب البيت فقط يمكنه القيام بذلك.",

@@ -125,7 +125,8 @@
     "photoTooLarge": "Foto terlalu besar. Coba lagi.",
     "photoFailed": "Foto tidak terkirim. Coba lagi.",
     "photoRemove": "Hapus foto",
-    "photoUnavailable": "Foto tidak tersedia"
+    "photoUnavailable": "Foto tidak tersedia",
+    "photoView": "Lihat foto"
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",

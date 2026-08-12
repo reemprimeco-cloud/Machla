@@ -74,6 +74,17 @@ enough not to expire mid-aisle, short enough that a URL copied out of the
 page stops working the same day. Signed URLs deliberately do not go
 through `next/image` — the optimizer would cache them past their expiry.
 
+**Thumbnails open full-size on tap** (`components/photo/PhotoThumbnail.tsx`),
+shared by the household checklist and both worker screens. A 40-56px crop
+defeats the point of the feature — the picture has to actually be
+recognisable — so the same component renders the small thumbnail as a
+button and a full-screen overlay on tap, reusing the identical signed URL
+rather than minting a second one. In the household checklist this required
+splitting what used to be one big "tap anywhere to toggle purchased" row
+into two toggle buttons flanking the photo, because a `<button>` cannot
+contain another interactive element — the photo needed its own tap target
+to open, not just decorate, the row.
+
 ## 4. What the SQL suite proves, and what it cannot
 
 `supabase/tests/09_photo_items_test.sql` covers the RPCs, the XOR

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
 import { Card, Screen } from "@/components/ui/Primitives";
 import { localizedName } from "@/lib/catalog/localized";
 import type { ListGroup } from "@/lib/list/queries";
@@ -50,28 +51,37 @@ export function SentConfirmation({
             {localizedName(group.category, locale)}
           </h2>
           <ul className="rounded-lg border border-sand bg-surface shadow-sm">
-            {group.entries.map(({ item, product, photoUrl }) => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between gap-3 border-b border-sand px-4 py-3 last:border-b-0"
-              >
-                {photoUrl ? (
-                  /* eslint-disable-next-line @next/next/no-img-element --
-                     signed URL; see ListReview for why not next/image. */
-                  <img
-                    src={photoUrl}
-                    alt=""
-                    className="size-10 shrink-0 rounded-md border border-sand object-cover"
-                  />
-                ) : null}
-                <span className="hl-body min-w-0 flex-1 truncate text-ink">
-                  {product ? localizedName(product, locale) : t("worker.photoItem")}
-                </span>
-                <span className="hl-label shrink-0 tabular-nums text-ink-muted">
-                  {Number(item.quantity)} {item.unit}
-                </span>
-              </li>
-            ))}
+            {group.entries.map(({ item, product, photoUrl }) => {
+              const label = product
+                ? localizedName(product, locale)
+                : t("worker.photoItem");
+              return (
+                <li
+                  key={item.id}
+                  className="flex items-center justify-between gap-3 border-b border-sand px-4 py-3 last:border-b-0"
+                >
+                  {photoUrl ||
+                  (item.photo_path !== null &&
+                    item.photo_deleted_at !== null) ? (
+                    <PhotoThumbnail
+                      photoUrl={photoUrl}
+                      purged={
+                        item.photo_path !== null &&
+                        item.photo_deleted_at !== null
+                      }
+                      label={label}
+                      sizeClassName="size-10"
+                    />
+                  ) : null}
+                  <span className="hl-body min-w-0 flex-1 truncate text-ink">
+                    {label}
+                  </span>
+                  <span className="hl-label shrink-0 tabular-nums text-ink-muted">
+                    {Number(item.quantity)} {item.unit}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))}

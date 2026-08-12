@@ -125,7 +125,8 @@
     "photoTooLarge": "यह फ़ोटो बहुत बड़ी है। फिर कोशिश करें।",
     "photoFailed": "फ़ोटो नहीं भेजी जा सकी। फिर कोशिश करें।",
     "photoRemove": "फ़ोटो हटाएँ",
-    "photoUnavailable": "फ़ोटो उपलब्ध नहीं"
+    "photoUnavailable": "फ़ोटो उपलब्ध नहीं",
+    "photoView": "फ़ोटो देखें"
   },
   "errors": {
     "notOwner": "यह केवल घर के मालिक कर सकते हैं।",

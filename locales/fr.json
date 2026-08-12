@@ -125,7 +125,8 @@
     "photoTooLarge": "Cette photo est trop grande. Réessayez.",
     "photoFailed": "La photo n'a pas pu être envoyée. Réessayez.",
     "photoRemove": "Retirer la photo",
-    "photoUnavailable": "Photo indisponible"
+    "photoUnavailable": "Photo indisponible",
+    "photoView": "Voir la photo"
   },
   "errors": {
     "notOwner": "Seul le chef de famille peut faire cela.",

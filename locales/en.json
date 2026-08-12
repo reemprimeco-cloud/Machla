@@ -125,7 +125,8 @@
     "photoTooLarge": "That picture is too large. Try again.",
     "photoFailed": "The photo could not be sent. Try again.",
     "photoRemove": "Remove photo",
-    "photoUnavailable": "Photo unavailable"
+    "photoUnavailable": "Photo unavailable",
+    "photoView": "View photo"
   },
   "errors": {
     "notOwner": "Only the home owner can do this.",

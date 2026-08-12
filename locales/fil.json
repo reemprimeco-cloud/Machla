@@ -125,7 +125,8 @@
     "photoTooLarge": "Masyadong malaki ang larawan. Subukan ulit.",
     "photoFailed": "Hindi naipadala ang larawan. Subukan ulit.",
     "photoRemove": "Alisin ang larawan",
-    "photoUnavailable": "Walang larawan"
+    "photoUnavailable": "Walang larawan",
+    "photoView": "Tingnan ang larawan"
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",

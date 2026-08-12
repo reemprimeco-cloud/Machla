@@ -125,7 +125,8 @@
     "photoTooLarge": "Fɔto elɔ ma tobo lo. Lɛ́ tɛnkpɔ́n.",
     "photoFailed": "É sixu sɛ́n fɔto ɔ ǎ. Lɛ́ tɛnkpɔ́n.",
     "photoRemove": "Ɖe fɔto ɔ",
-    "photoUnavailable": "Fɔto ɔ kú ɖò fí ǎ"
+    "photoUnavailable": "Fɔto ɔ kú ɖò fí ǎ",
+    "photoView": "Kpɔ́n fɔto ɔ"
   },
   "errors": {
     "notOwner": "Xwégán ɔ kɛɖɛ wɛ sixu bló mɔ̌.",

@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import { Card, ErrorText, PrimaryButton, Screen } from "@/components/ui/Primitives";
+import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
+import {
+  Card,
+  ErrorText,
+  PrimaryButton,
+  Screen,
+} from "@/components/ui/Primitives";
 import { localizedName, productDetail } from "@/lib/catalog/localized";
 import { removePhotoItemAction, sendListAction } from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
@@ -51,7 +57,11 @@ export function ListReview({
 
   return (
     <Screen>
-      <WorkerBar title={t("worker.myList")} backHref="/worker" itemCount={itemCount} />
+      <WorkerBar
+        title={t("worker.myList")}
+        backHref="/worker"
+        itemCount={itemCount}
+      />
 
       {itemCount === 0 ? (
         <Card>
@@ -73,69 +83,80 @@ export function ListReview({
               </h2>
 
               <ul className="space-y-2">
-                {group.entries.map(({ item, product, photoUrl }) => (
-                  <li
-                    key={item.id}
-                    className="flex items-center gap-3 rounded-lg border border-sand bg-surface p-3 shadow-sm"
-                  >
-                    {photoUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element --
-                         a signed, short-lived URL must not go through the
-                         image optimizer, which would cache it past expiry. */
-                      <img
-                        src={photoUrl}
-                        alt=""
-                        className="size-14 shrink-0 rounded-lg border border-sand object-cover"
-                      />
-                    ) : (
-                      <span aria-hidden className="text-3xl leading-none">
-                        {product?.icon ?? group.category.icon ?? "📦"}
-                      </span>
-                    )}
-
-                    <div className="min-w-0 flex-1">
-                      <p className="hl-label truncate text-ink">
-                        {product ? localizedName(product, locale) : t("worker.photoItem")}
-                      </p>
-                      {product ? (
-                        <p className="hl-caption truncate">{productDetail(product)}</p>
-                      ) : item.note ? (
-                        <p className="hl-caption truncate">“{item.note}”</p>
-                      ) : null}
-                    </div>
-
-                    {product ? (
-                      <div className="w-32 shrink-0">
-                        <QuantityStepper
-                          householdId={householdId}
-                          productId={product.id}
-                          quantity={Number(item.quantity)}
-                          label={localizedName(product, locale)}
+                {group.entries.map(({ item, product, photoUrl }) => {
+                  const label = product
+                    ? localizedName(product, locale)
+                    : t("worker.photoItem");
+                  return (
+                    <li
+                      key={item.id}
+                      className="flex items-center gap-3 rounded-lg border border-sand bg-surface p-3 shadow-sm"
+                    >
+                      {photoUrl ? (
+                        <PhotoThumbnail
+                          photoUrl={photoUrl}
+                          purged={
+                            item.photo_path !== null &&
+                            item.photo_deleted_at !== null
+                          }
+                          label={label}
+                          sizeClassName="size-14"
                         />
+                      ) : (
+                        <span aria-hidden className="text-3xl leading-none">
+                          {product?.icon ?? group.category.icon ?? "📦"}
+                        </span>
+                      )}
+
+                      <div className="min-w-0 flex-1">
+                        <p className="hl-label truncate text-ink">{label}</p>
+                        {product ? (
+                          <p className="hl-caption truncate">
+                            {productDetail(product)}
+                          </p>
+                        ) : item.note ? (
+                          <p className="hl-caption truncate">“{item.note}”</p>
+                        ) : null}
                       </div>
-                    ) : (
-                      /* A photographed item has no product to step, so the
+
+                      {product ? (
+                        <div className="w-32 shrink-0">
+                          <QuantityStepper
+                            householdId={householdId}
+                            productId={product.id}
+                            quantity={Number(item.quantity)}
+                            label={localizedName(product, locale)}
+                          />
+                        </div>
+                      ) : (
+                        /* A photographed item has no product to step, so the
                          only edit it offers is removal. Quantity is fixed
                          at what was chosen when the photo was added. */
-                      <PhotoItemControls
-                        itemId={item.id}
-                        quantity={Number(item.quantity)}
-                        onError={setError}
-                      />
-                    )}
-                  </li>
-                ))}
+                        <PhotoItemControls
+                          itemId={item.id}
+                          quantity={Number(item.quantity)}
+                          onError={setError}
+                        />
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ))}
 
-          <ErrorText>{error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}</ErrorText>
+          <ErrorText>
+            {error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}
+          </ErrorText>
 
           <PrimaryButton onClick={send} disabled={pending || !listId}>
             {pending ? t("worker.sending") : t("worker.send")}
           </PrimaryButton>
 
-          <Link href="/worker" className="hl-label text-center text-green-700 underline">
+          <Link
+            href="/worker"
+            className="hl-label text-center text-green-700 underline"
+          >
             {t("worker.addMore")}
           </Link>
         </>
