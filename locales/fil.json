@@ -137,7 +137,9 @@
     "photoFailed": "Hindi naipadala ang larawan. Subukan ulit.",
     "photoRemove": "Alisin ang larawan",
     "photoUnavailable": "Walang larawan",
-    "photoView": "Tingnan ang larawan"
+    "photoView": "Tingnan ang larawan",
+    "addNote": "Magdagdag ng tala",
+    "noteHint": "hal. walang lactose"
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",

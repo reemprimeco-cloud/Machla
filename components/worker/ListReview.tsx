@@ -18,6 +18,7 @@ import type { ListGroup } from "@/lib/list/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
+import { NoteField } from "./NoteField";
 import { QuantityStepper } from "./QuantityStepper";
 import { WorkerBar } from "./WorkerChrome";
 
@@ -93,54 +94,70 @@ export function ListReview({
                   return (
                     <li
                       key={item.id}
-                      className="flex items-center gap-3 rounded-lg border border-sand bg-surface p-3 shadow-sm"
+                      className="flex flex-col gap-2 rounded-lg border border-sand bg-surface p-3 shadow-sm"
                     >
-                      {photoUrl ? (
-                        <PhotoThumbnail
-                          photoUrl={photoUrl}
-                          purged={
-                            item.photo_path !== null &&
-                            item.photo_deleted_at !== null
-                          }
-                          label={label}
-                          sizeClassName="size-14"
-                        />
-                      ) : (
-                        <span aria-hidden className="text-3xl leading-none">
-                          {product?.icon ?? group.category.icon ?? "📦"}
-                        </span>
-                      )}
-
-                      <div className="min-w-0 flex-1">
-                        <p className="hl-label truncate text-ink">{label}</p>
-                        {product ? (
-                          <p className="hl-caption truncate">
-                            {productDetail(product)}
-                          </p>
-                        ) : item.note ? (
-                          <p className="hl-caption truncate">“{item.note}”</p>
-                        ) : null}
-                      </div>
-
-                      {product ? (
-                        <div className="w-32 shrink-0">
-                          <QuantityStepper
-                            householdId={householdId}
-                            productId={product.id}
-                            quantity={Number(item.quantity)}
-                            label={localizedName(product, locale)}
+                      <div className="flex items-center gap-3">
+                        {photoUrl ? (
+                          <PhotoThumbnail
+                            photoUrl={photoUrl}
+                            purged={
+                              item.photo_path !== null &&
+                              item.photo_deleted_at !== null
+                            }
+                            label={label}
+                            sizeClassName="size-14"
                           />
+                        ) : (
+                          <span aria-hidden className="text-3xl leading-none">
+                            {product?.icon ?? group.category.icon ?? "📦"}
+                          </span>
+                        )}
+
+                        <div className="min-w-0 flex-1">
+                          <p className="hl-label truncate text-ink">{label}</p>
+                          {product ? (
+                            <p className="hl-caption truncate">
+                              {productDetail(product)}
+                            </p>
+                          ) : item.note ? (
+                            <p className="hl-caption truncate">“{item.note}”</p>
+                          ) : null}
                         </div>
-                      ) : (
-                        /* A photographed item has no product to step, so the
+
+                        {product ? (
+                          <div className="w-32 shrink-0">
+                            <QuantityStepper
+                              householdId={householdId}
+                              productId={product.id}
+                              quantity={Number(item.quantity)}
+                              label={localizedName(product, locale)}
+                            />
+                          </div>
+                        ) : (
+                          /* A photographed item has no product to step, so the
                          only edit it offers is removal. Quantity is fixed
                          at what was chosen when the photo was added. */
-                        <PhotoItemControls
-                          itemId={item.id}
+                          <PhotoItemControls
+                            itemId={item.id}
+                            quantity={Number(item.quantity)}
+                            onError={setError}
+                          />
+                        )}
+                      </div>
+
+                      {/* The catalogue has one entry for "Milk", not one
+                          per size or variant — a note is how "lactose-free"
+                          or "1 piece" survives being generic. Only for a
+                          catalogue product: a photo already answers "which
+                          one" by being a picture of it. */}
+                      {product && listId ? (
+                        <NoteField
+                          listId={listId}
+                          productId={product.id}
                           quantity={Number(item.quantity)}
-                          onError={setError}
+                          note={item.note}
                         />
-                      )}
+                      ) : null}
                     </li>
                   );
                 })}
@@ -156,7 +173,10 @@ export function ListReview({
             {pending ? t("worker.sending") : t("worker.send")}
           </PrimaryButton>
 
-          <Link href={basePath} className="hl-label text-center text-green-700 underline">
+          <Link
+            href={basePath}
+            className="hl-label text-center text-green-700 underline"
+          >
             {t("worker.addMore")}
           </Link>
         </>

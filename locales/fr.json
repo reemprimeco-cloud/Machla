@@ -137,7 +137,9 @@
     "photoFailed": "La photo n'a pas pu être envoyée. Réessayez.",
     "photoRemove": "Retirer la photo",
     "photoUnavailable": "Photo indisponible",
-    "photoView": "Voir la photo"
+    "photoView": "Voir la photo",
+    "addNote": "Ajouter une note",
+    "noteHint": "ex. sans lactose"
   },
   "errors": {
     "notOwner": "Seul le chef de famille peut faire cela.",

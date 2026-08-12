@@ -196,6 +196,40 @@ select test_assert(
   'a note is trimmed before storage'
 );
 
+-- 20260812120000_list_item_note_preserved.sql: a quantity-only call
+-- (p_update_note defaults false) must not wipe out a note set earlier —
+-- this is exactly what the quantity stepper's own calls look like.
+select set_list_item(:'list_p1'::uuid, :'prod_tomato'::uuid, 3);
+
+select test_assert(
+  (select quantity = 3 and note = 'ripe ones' from shopping_list_items
+   where list_id = :'list_p1' and product_id = :'prod_tomato'),
+  'a quantity-only call (p_update_note defaulting false) preserves the existing note'
+);
+
+-- An explicit note edit (p_update_note = true) does change it, including
+-- to a different value.
+select set_list_item(:'list_p1'::uuid, :'prod_tomato'::uuid, 3, 'on the vine', true);
+
+select test_assert(
+  (select note = 'on the vine' from shopping_list_items
+   where list_id = :'list_p1' and product_id = :'prod_tomato'),
+  'p_update_note = true replaces an existing note'
+);
+
+-- ...and can clear it back to null, which p_update_note = false can never
+-- do — the whole reason the two are distinguished.
+select set_list_item(:'list_p1'::uuid, :'prod_tomato'::uuid, 3, null, true);
+
+select test_assert(
+  (select note is null from shopping_list_items
+   where list_id = :'list_p1' and product_id = :'prod_tomato'),
+  'p_update_note = true can clear a note back to null'
+);
+
+-- Restore the note the rest of the file assumes is there.
+select set_list_item(:'list_p1'::uuid, :'prod_tomato'::uuid, 1, 'ripe ones', true);
+
 select test_raises(
   format($$ select set_list_item(%L::uuid, %L::uuid, 0) $$, :'list_p1', :'prod_butter'),
   'INVALID_QUANTITY',
@@ -498,7 +532,7 @@ select test_assert(
   (select bool_and(has_function_privilege('anon', f, 'EXECUTE') is false)
    from unnest(array[
      'public.get_or_create_draft_list(uuid, text)'::regprocedure,
-     'public.set_list_item(uuid, uuid, numeric, text)'::regprocedure,
+     'public.set_list_item(uuid, uuid, numeric, text, boolean)'::regprocedure,
      'public.remove_list_item(uuid, uuid)'::regprocedure,
      'public.send_list(uuid)'::regprocedure,
      'public.get_frequent_products(int)'::regprocedure,
@@ -511,7 +545,7 @@ select test_assert(
   (select bool_and(has_function_privilege('authenticated', f, 'EXECUTE'))
    from unnest(array[
      'public.get_or_create_draft_list(uuid, text)'::regprocedure,
-     'public.set_list_item(uuid, uuid, numeric, text)'::regprocedure,
+     'public.set_list_item(uuid, uuid, numeric, text, boolean)'::regprocedure,
      'public.remove_list_item(uuid, uuid)'::regprocedure,
      'public.send_list(uuid)'::regprocedure,
      'public.get_frequent_products(int)'::regprocedure

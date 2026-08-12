@@ -137,7 +137,9 @@
     "photoFailed": "ፎቶው መላክ አልቻለም። እንደገና ይሞክሩ።",
     "photoRemove": "ፎቶ አስወግድ",
     "photoUnavailable": "ፎቶ የለም",
-    "photoView": "ፎቶ ይመልከቱ"
+    "photoView": "ፎቶ ይመልከቱ",
+    "addNote": "ማስታወሻ ጨምር",
+    "noteHint": "ለምሳሌ: ላክቶስ የሌለው"
   },
   "errors": {
     "notOwner": "ይህን ማድረግ የሚችለው የቤቱ ባለቤት ብቻ ነው።",

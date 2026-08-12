@@ -137,7 +137,9 @@
     "photoFailed": "É sixu sɛ́n fɔto ɔ ǎ. Lɛ́ tɛnkpɔ́n.",
     "photoRemove": "Ɖe fɔto ɔ",
     "photoUnavailable": "Fɔto ɔ kú ɖò fí ǎ",
-    "photoView": "Kpɔ́n fɔto ɔ"
+    "photoView": "Kpɔ́n fɔto ɔ",
+    "addNote": "Sɔ́ ɖó nùɖiɖɔ",
+    "noteHint": "ɖi: lactose kú ɖ'emɛ ǎ"
   },
   "errors": {
     "notOwner": "Xwégán ɔ kɛɖɛ wɛ sixu bló mɔ̌.",

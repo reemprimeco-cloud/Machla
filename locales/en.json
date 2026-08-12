@@ -137,7 +137,9 @@
     "photoFailed": "The photo could not be sent. Try again.",
     "photoRemove": "Remove photo",
     "photoUnavailable": "Photo unavailable",
-    "photoView": "View photo"
+    "photoView": "View photo",
+    "addNote": "Add a note",
+    "noteHint": "e.g. lactose-free"
   },
   "errors": {
     "notOwner": "Only the home owner can do this.",

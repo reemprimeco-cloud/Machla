@@ -46,10 +46,13 @@ export async function setProductQuantityAction(
 
   const supabase = await createClient();
 
-  const { data: listId, error: draftError } = await supabase.rpc("get_or_create_draft_list", {
-    p_household_id: householdId,
-    p_language: language,
-  });
+  const { data: listId, error: draftError } = await supabase.rpc(
+    "get_or_create_draft_list",
+    {
+      p_household_id: householdId,
+      p_language: language,
+    },
+  );
 
   if (draftError || !listId) {
     return { ok: false, code: toListErrorCode(draftError?.message) };
@@ -57,7 +60,10 @@ export async function setProductQuantityAction(
 
   const { error } =
     quantity <= 0
-      ? await supabase.rpc("remove_list_item", { p_list_id: listId, p_product_id: productId })
+      ? await supabase.rpc("remove_list_item", {
+          p_list_id: listId,
+          p_product_id: productId,
+        })
       : await supabase.rpc("set_list_item", {
           p_list_id: listId,
           p_product_id: productId,
@@ -66,8 +72,44 @@ export async function setProductQuantityAction(
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
+  // /home/shop is a second entry point onto this same action (the
+  // owner/member's own list, 08-route-map.md §4.2) — both route trees'
+  // client-side Router Cache need invalidating, not just the worker's.
   revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
   return { ok: true, value: listId };
+}
+
+/**
+ * Sets or clears a product's note without touching its quantity —
+ * distinct from setProductQuantityAction because set_list_item only
+ * actually changes the note when p_update_note is true
+ * (20260812120000_list_item_note_preserved.sql); a quantity-only call
+ * must never pass true, or every stepper tap would wipe out someone
+ * else's earlier note.
+ */
+export async function setItemNoteAction(
+  listId: string,
+  productId: string,
+  quantity: number,
+  note: string | null,
+): Promise<ListActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("set_list_item", {
+    p_list_id: listId,
+    p_product_id: productId,
+    p_quantity: quantity,
+    p_note: note,
+    p_update_note: true,
+  });
+
+  if (error) return { ok: false, code: toListErrorCode(error.message) };
+
+  revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
+  return { ok: true, value: undefined };
 }
 
 export async function removeFromListAction(
@@ -85,6 +127,7 @@ export async function removeFromListAction(
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
   revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
   return { ok: true, value: undefined };
 }
 
@@ -109,7 +152,8 @@ export async function ensureDraftAction(
     p_language: language,
   });
 
-  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+  if (error || !data)
+    return { ok: false, code: toListErrorCode(error?.message) };
   return { ok: true, value: data };
 }
 
@@ -141,35 +185,48 @@ export async function addPhotoItemAction(
     p_note: note,
   });
 
-  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+  if (error || !data)
+    return { ok: false, code: toListErrorCode(error?.message) };
 
   revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
   return { ok: true, value: data };
 }
 
 /** Removes a photographed item. Keyed by item id, because a photographed
  * item has no product id for removeFromListAction to match on. */
-export async function removePhotoItemAction(itemId: string): Promise<ListActionResult> {
+export async function removePhotoItemAction(
+  itemId: string,
+): Promise<ListActionResult> {
   if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
 
   const supabase = await createClient();
-  const { error } = await supabase.rpc("remove_photo_item", { p_item_id: itemId });
+  const { error } = await supabase.rpc("remove_photo_item", {
+    p_item_id: itemId,
+  });
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
   revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
   return { ok: true, value: undefined };
 }
 
-export async function sendListAction(listId: string): Promise<ListActionResult<string>> {
+export async function sendListAction(
+  listId: string,
+): Promise<ListActionResult<string>> {
   if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
 
   const supabase = await createClient();
-  const { data, error } = await supabase.rpc("send_list", { p_list_id: listId });
+  const { data, error } = await supabase.rpc("send_list", {
+    p_list_id: listId,
+  });
 
-  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+  if (error || !data)
+    return { ok: false, code: toListErrorCode(error?.message) };
 
   revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
   return { ok: true, value: data };
 }
 

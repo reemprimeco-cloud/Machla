@@ -137,7 +137,9 @@
     "photoFailed": "Foto tidak terkirim. Coba lagi.",
     "photoRemove": "Hapus foto",
     "photoUnavailable": "Foto tidak tersedia",
-    "photoView": "Lihat foto"
+    "photoView": "Lihat foto",
+    "addNote": "Tambah catatan",
+    "noteHint": "cth. bebas laktosa"
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",
