@@ -13,7 +13,7 @@
   },
   "auth": {
     "phoneTitle": "What's your phone number?",
-    "phoneHint": "We'll text you a code to sign in.",
+    "phoneHint": "We will send you a code on WhatsApp.",
     "phoneLabel": "Phone number",
     "sendCode": "Send code",
     "sending": "Sending…",

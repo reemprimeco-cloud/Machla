@@ -142,6 +142,23 @@ SID/token pair in Supabase, in which case Twilio's message log shows no
 attempt at all. Twilio Console → Monitor → Logs → Messaging carries the
 per-attempt error code and is the fastest diagnosis.
 
+**The chosen channel is WhatsApp** (`OTP_CHANNEL` in `lib/auth/phone.ts`;
+decision record in `14-technical-risks-decisions.md` item 10). What the
+dashboards must have for it to work:
+
+1. Twilio: a WhatsApp **authentication template** in the Content Template
+   Builder (an OTP body with a code variable), approved, giving an
+   `HX…` Content SID.
+2. Supabase → Phone provider: that Content SID in the **"Twilio Content
+   SID (For WhatsApp Only)"** field, and a Messaging Service whose sender
+   pool includes the WhatsApp sender.
+3. The verify step needs nothing: `verifyOtp` keeps `type: "sms"` for
+   both channels.
+
+**Test phone numbers** (same panel) map a number to a fixed code and skip
+the provider entirely — the way to exercise every flow with no message
+cost, and the reason development never blocks on messaging paperwork.
+
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when
 phone auth was switched on. It is not merely unused — §6 rules it out —

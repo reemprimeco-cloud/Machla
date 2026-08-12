@@ -85,11 +85,33 @@ Confirm, or say Members should also be able to invite Workers.
 
 ## 10. SMS/OTP delivery sub-provider for Kuwait numbers
 
-**Not yet decided — needed before Phase 3.** Supabase Auth needs an SMS
-provider configured (Twilio, MessageBird, Vonage, etc.); Kuwait number
-deliverability should be verified with whichever is chosen. No default
-recommended here since this is an account/vendor decision, not a purely
-technical one.
+**Decided 2026-08-12, owner-approved: Twilio, delivering the OTP over
+WhatsApp, with Kuwait SMS sender-ID registration running in parallel.**
+
+How the decision fell out, because each step was forced by a verified
+fact rather than preference:
+
+- The owner's Twilio account is active with an approved Business Profile,
+  but its only sender is a WhatsApp Business number — the first real OTP
+  send failed because no SMS route to +965 exists on the account.
+- Branded SMS to Kuwait is not a configuration change: Twilio requires
+  carrier pre-registration of the sender ID (NOCs to Zain and Ooredoo,
+  trade licence for domestic entities) — weeks of paperwork, which has
+  been started, not skipped.
+- WhatsApp is effectively universal among this app's users in Kuwait, and
+  the account is already approved for it.
+
+**Relation to the master plan's "no WhatsApp" rule:** that exclusion is
+about product features (sharing lists, chat). Using WhatsApp as the OTP
+*transport* — invisible to the application, which still calls Supabase
+Auth exactly as before — was judged infrastructure, and explicitly put to
+the owner rather than assumed, per the standing rule on authentication
+decisions. The owner chose it.
+
+Implementation is one constant, `OTP_CHANNEL` in `lib/auth/phone.ts`;
+when SMS registration completes, flipping it back (or offering both) is
+the entire change. Supabase-side requirements live in
+`06-auth-otp-flow.md` §5A.
 
 ## 11. Ownership transfer / co-ownership
 

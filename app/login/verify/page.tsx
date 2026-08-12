@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { HomeListIcon } from "@/components/brand/HomeListIcon";
+import { OTP_CHANNEL } from "@/lib/auth/phone";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -99,7 +100,10 @@ function VerifyForm() {
     }
 
     const supabase = createClient();
-    const { error: resendError } = await supabase.auth.signInWithOtp({ phone });
+    const { error: resendError } = await supabase.auth.signInWithOtp({
+      phone,
+      options: { channel: OTP_CHANNEL },
+    });
 
     if (resendError) {
       setStatus("error");

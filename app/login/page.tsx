@@ -5,7 +5,7 @@ import { Suspense, useState } from "react";
 
 import { HomeListIcon } from "@/components/brand/HomeListIcon";
 import { safeNextPath } from "@/lib/auth/nextPath";
-import { DEFAULT_PHONE_PREFIX, isValidPhone, normalizePhone } from "@/lib/auth/phone";
+import { DEFAULT_PHONE_PREFIX, isValidPhone, normalizePhone, OTP_CHANNEL } from "@/lib/auth/phone";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
@@ -48,7 +48,10 @@ function LoginForm() {
     }
 
     const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithOtp({ phone: normalized });
+    const { error: signInError } = await supabase.auth.signInWithOtp({
+      phone: normalized,
+      options: { channel: OTP_CHANNEL },
+    });
 
     if (signInError) {
       setStatus("error");

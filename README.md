@@ -78,12 +78,13 @@ These need dashboard access and cannot be done from this repository.
 [`docs/architecture/17-deployment.md`](docs/architecture/17-deployment.md)
 has the detail.
 
-1. **Finish the auth configuration.** Phone + Twilio are enabled; still
-   to do: disable the Email provider (on by default, and ruled out by
-   design), confirm SMS OTP length is 6, raise the OTP expiry from 60s,
-   and set a send rate limit. `docs/architecture/06-auth-otp-flow.md` §5A
-   explains each. Then sign in with a real phone, which is the one path
-   never exercised.
+1. **Finish the auth configuration.** The OTP travels over **WhatsApp**
+   (owner decision, `docs/architecture/14-technical-risks-decisions.md`
+   item 10; Kuwait SMS sender registration in parallel). Still to do in
+   dashboards: an approved WhatsApp auth template's Content SID in the
+   Supabase Phone panel; disable the Email provider; OTP length 6, expiry
+   300s, rate limit. `docs/architecture/06-auth-otp-flow.md` §5A explains
+   each.
 2. **A backup plan for the database.** The free tier has none, and this
    project holds the only copy of every household's data. The catalogue is
    reproducible from `catalog-import/`; households, lists and memberships

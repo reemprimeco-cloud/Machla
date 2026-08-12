@@ -13,7 +13,7 @@
   },
   "auth": {
     "phoneTitle": "Berapa nomor telepon Anda?",
-    "phoneHint": "Kami akan mengirimkan kode lewat SMS untuk masuk.",
+    "phoneHint": "Kami akan mengirim kode lewat WhatsApp.",
     "phoneLabel": "Nomor telepon",
     "sendCode": "Kirim kode",
     "sending": "Mengirim…",

@@ -13,7 +13,7 @@
   },
   "auth": {
     "phoneTitle": "Ano ang iyong numero ng telepono?",
-    "phoneHint": "Magpapadala kami sa iyo ng code para makapag-sign in.",
+    "phoneHint": "Magpapadala kami ng code sa WhatsApp mo.",
     "phoneLabel": "Numero ng telepono",
     "sendCode": "Ipadala ang code",
     "sending": "Ipinapadala…",
