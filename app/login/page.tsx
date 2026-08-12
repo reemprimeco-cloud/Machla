@@ -11,6 +11,7 @@ import {
   isValidPhone,
   KUWAIT_DIAL_CODE,
   LOCAL_NUMBER_LENGTH,
+  normalizeDigits,
   OTP_CHANNEL,
   toE164FromLocal,
 } from "@/lib/auth/phone";
@@ -129,7 +130,7 @@ function LoginForm() {
               // A paste of the full number with country code still works:
               // "+96565068000" -> strip -> "96565068000" -> drop the 965.
               onChange={(event) => {
-                let digits = event.target.value.replace(/\D/g, "");
+                let digits = normalizeDigits(event.target.value).replace(/\D/g, "");
                 if (digits.startsWith("965") && digits.length > LOCAL_NUMBER_LENGTH) {
                   digits = digits.slice(3);
                 }

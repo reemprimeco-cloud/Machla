@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
-import { OTP_CHANNEL } from "@/lib/auth/phone";
+import { normalizeDigits, OTP_CHANNEL } from "@/lib/auth/phone";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -154,7 +154,9 @@ function VerifyForm() {
             // value first, so e.g. pasting "12ab3456" could drop digits
             // that were "pushed out" by the letters within the raw
             // 6-char window. Strip non-digits first, then cap at 6.
-            onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
+            onChange={(event) =>
+              setCode(normalizeDigits(event.target.value).replace(/\D/g, "").slice(0, 6))
+            }
             className="hl-title min-h-12 rounded-lg border border-sand bg-surface px-4 text-center tracking-[0.3em] text-ink outline-none focus-visible:border-green-700"
             aria-invalid={status === "error"}
           />

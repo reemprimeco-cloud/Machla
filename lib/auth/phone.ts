@@ -1,4 +1,41 @@
 /**
+ * Converts digits typed in a non-Latin script (Arabic-Indic, Persian/Urdu,
+ * Devanagari, Telugu, fullwidth) to plain ASCII 0-9, in place, leaving
+ * everything else untouched.
+ *
+ * Necessary because JS's `\d`/`\D` regex classes only ever match ASCII
+ * digits — someone typing on an Arabic, Hindi, Telugu, etc. keyboard's
+ * native numerals into the phone or OTP box would otherwise have every
+ * digit silently stripped by the `.replace(/\D/g, "")` those inputs use,
+ * rather than converted, since `\D` treats a native digit as "not a
+ * digit" exactly like a letter.
+ *
+ * Each block below is Unicode's contiguous 0-9 run for that script, so a
+ * character's value is just its offset from the block's zero.
+ */
+const DIGIT_BLOCK_STARTS = [
+  0x0660, // Arabic-Indic ٠-٩ (Arabic)
+  0x06f0, // Extended Arabic-Indic ۰-۹ (Persian/Urdu)
+  0x0966, // Devanagari ०-९ (Hindi/Nepali)
+  0x0c66, // Telugu ౦-౯
+  0x0de6, // Sinhala Lith ෦-෯
+  0xff10, // Fullwidth 0-9 (some IMEs)
+];
+
+export function normalizeDigits(input: string): string {
+  return Array.from(input)
+    .map((char) => {
+      const code = char.codePointAt(0)!;
+      if (code >= 0x30 && code <= 0x39) return char; // already ASCII 0-9
+      for (const base of DIGIT_BLOCK_STARTS) {
+        if (code >= base && code <= base + 9) return String(code - base);
+      }
+      return char;
+    })
+    .join("");
+}
+
+/**
  * Minimal E.164 phone validation/normalization, shared by /login and
  * /login/verify. Supabase Auth expects E.164 (+<country code><number>,
  * digits only after the leading +).
