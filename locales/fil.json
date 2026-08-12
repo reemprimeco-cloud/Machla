@@ -86,7 +86,8 @@
     "general": "Pangkalahatan",
     "pushEnable": "Mga push notification",
     "pushHint": "Makatanggap ng abiso sa device na ito kapag may naipadala, nabuksan, o natapos na listahan.",
-    "pushBlocked": "Naka-block ang mga notification sa settings ng iyong browser."
+    "pushBlocked": "Naka-block ang mga notification sa settings ng iyong browser.",
+    "about": "Tungkol sa app"
   },
   "members": {
     "title": "Mga tao",
@@ -213,5 +214,14 @@
     "offlineTitle": "Walang koneksyon",
     "offlineHint": "Offline ka. Ligtas ang listahan mo — subukan ulit kapag may signal.",
     "offlineBanner": "Walang koneksyon"
+  },
+  "about": {
+    "title": "Tungkol sa {name}",
+    "point1": "Ikinokonekta ng {name} ang iyong tahanan sa iyong katulong sa pamamagitan ng isang shared shopping list.",
+    "point2": "Nagba-browse ang iyong katulong ayon sa kategorya at idinaragdag ang kailangan sa basket.",
+    "point3": "Natatanggap mo ang listahan na naka-grupo na ayon sa kategorya — Dairy, Bakery, Karne at Isda, at iba pa.",
+    "point4": "Magdagdag ng opsyonal na tala sa anumang item, tulad ng “lactose-free” — hindi na kailangan ng duplicate na produkto.",
+    "point5": "I-check ang mga item habang namimili, o markahan ang mga hindi available.",
+    "point6": "Kapag tapos na ang listahan, tapos na talaga ito — nananatiling malinis ang iyong home screen."
   }
 }

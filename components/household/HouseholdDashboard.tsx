@@ -58,7 +58,7 @@ export function HouseholdDashboard({
         >
           <span aria-hidden>👤</span>
         </Link>
-        <MachlaLockup size={26} showArabic={false} />
+        <MachlaLockup size={34} showArabic={false} />
         <Link
           href="/home/shop/search"
           aria-label={t("worker.browse")}

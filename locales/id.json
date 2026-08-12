@@ -86,7 +86,8 @@
     "general": "Umum",
     "pushEnable": "Notifikasi push",
     "pushHint": "Dapatkan notifikasi di perangkat ini saat daftar dikirim, dibuka, atau selesai.",
-    "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda."
+    "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda.",
+    "about": "Tentang aplikasi"
   },
   "members": {
     "title": "Orang",
@@ -213,5 +214,14 @@
     "offlineTitle": "Tidak ada koneksi",
     "offlineHint": "Anda offline. Daftar Anda aman — coba lagi saat ada sinyal.",
     "offlineBanner": "Tidak ada koneksi"
+  },
+  "about": {
+    "title": "Tentang {name}",
+    "point1": "{name} menghubungkan rumah tangga Anda dengan pembantu Anda melalui satu daftar belanja bersama.",
+    "point2": "Pembantu Anda menelusuri berdasarkan kategori dan menambahkan yang diperlukan ke keranjang.",
+    "point3": "Anda menerima daftar yang sudah dikelompokkan berdasarkan kategori — Susu, Roti, Daging & Ikan, dan lainnya.",
+    "point4": "Tambahkan catatan opsional pada item apa pun, seperti “bebas laktosa” — tanpa perlu produk duplikat.",
+    "point5": "Centang item saat Anda berbelanja, atau tandai yang tidak tersedia.",
+    "point6": "Setelah daftar selesai, daftar itu benar-benar selesai — beranda Anda tetap rapi."
   }
 }

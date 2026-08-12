@@ -86,7 +86,8 @@
     "general": "Général",
     "pushEnable": "Notifications push",
     "pushHint": "Recevez une notification sur cet appareil lorsqu'une liste est envoyée, ouverte ou terminée.",
-    "pushBlocked": "Les notifications sont bloquées dans les paramètres de votre navigateur."
+    "pushBlocked": "Les notifications sont bloquées dans les paramètres de votre navigateur.",
+    "about": "À propos de l'application"
   },
   "members": {
     "title": "Personnes",
@@ -213,5 +214,14 @@
     "offlineTitle": "Pas de connexion",
     "offlineHint": "Vous êtes hors ligne. Votre liste est en sécurité — réessayez quand vous avez du réseau.",
     "offlineBanner": "Pas de connexion"
+  },
+  "about": {
+    "title": "À propos de {name}",
+    "point1": "{name} relie votre foyer à votre employée de maison via une liste de courses partagée unique.",
+    "point2": "Votre employée parcourt les catégories et ajoute ce qui est nécessaire au panier.",
+    "point3": "Vous recevez la liste déjà groupée par catégorie — Produits laitiers, Boulangerie, Viande et poisson, et plus.",
+    "point4": "Ajoutez une note facultative sur n'importe quel article, comme «sans lactose» — pas besoin de produits en double.",
+    "point5": "Cochez les articles pendant vos courses, ou signalez ceux qui sont indisponibles.",
+    "point6": "Une fois une liste terminée, elle est vraiment terminée — votre écran d'accueil reste net."
   }
 }

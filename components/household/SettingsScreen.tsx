@@ -70,11 +70,20 @@ export function SettingsScreen({
         <Card className="overflow-hidden !p-0">
           <Link
             href="/welcome"
-            className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
           >
             <span className="hl-body text-ink">
               {t("common.changeLanguage")}
             </span>
+            <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
+              ›
+            </span>
+          </Link>
+          <Link
+            href="/home/settings/about"
+            className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+          >
+            <span className="hl-body text-ink">{t("settings.about")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
               ›
             </span>
@@ -128,6 +137,12 @@ export function SettingsScreen({
       >
         {t("common.logout")}
       </button>
+
+      {/* A fixed, un-translated line by design — a copyright notice reads
+          the same in every language, the way a URL does. */}
+      <p className="hl-caption pb-2 pt-6 text-center text-ink-faint">
+        Copyright © reemora.app 2026
+      </p>
     </Screen>
   );
 }

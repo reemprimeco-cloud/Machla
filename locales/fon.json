@@ -86,7 +86,8 @@
     "general": "Bǐbǐ",
     "pushEnable": "Alaxo lɛ́ e nɔ sɛ́n",
     "pushHint": "Ɖexlɛ́ mì ɖò nùnina elɔ jí é ɖò táwo sín sɛ́n, hunhun kabǐ fó hwenu.",
-    "pushBlocked": "Alaxo lɛ́ wɛ dó xó ɖò browser towe sín ayidonu lɛ́ mɛ."
+    "pushBlocked": "Alaxo lɛ́ wɛ dó xó ɖò browser towe sín ayidonu lɛ́ mɛ.",
+    "about": "Ðò app elɔ jí"
   },
   "members": {
     "title": "Mɛ lɛ́",
@@ -213,5 +214,14 @@
     "offlineTitle": "Kɛ́nnɛkte kú ó",
     "offlineHint": "A kú ɖò kɛ́nnɛkte jí ǎ. Távo towe ɖò ayiha mɛ — lɛ́ tɛnkpɔ́n hwenu e kɛ́nnɛkte lɛ́ gosin ɔ.",
     "offlineBanner": "Kɛ́nnɛkte kú ó"
+  },
+  "about": {
+    "title": "Ðò {name} jí",
+    "point1": "{name} nɔ ɖó xwé towe kpo azɔ̌watɔ́ towe kpo ɖó nu ɖokpo, xota e nyí távo e ye nɔ zán ɖó kpɔ́.",
+    "point2": "Azɔ̌watɔ́ towe nɔ ba nùɖuɖu lɛ́ ɖò akpáxwé lɛ́ mɛ bo nɔ sɔ́ nǔ e hudo é dó kɛkɛ mɛ.",
+    "point3": "A nɔ mɔ távo e ye má gbɔn akpáxwé lɛ́ jí xóxó — Nǔ e sín kanlin mɛ é, Wɔ̌xúxú, Lan kpo Hwɛ́ kpo, kpo ɖevo lɛ́ kpo.",
+    "point4": "Sɔ́ nùɖiɖɔ ɖé dó nǔ ɖebǔ jí, lee “lactose ɖě ɖò mɛ ǎ” ɔ, alǒ ni é ma gbè távo ɖě ɖě ó.",
+    "point5": "Ðexlɛ́ nǔ lɛ́ hwenu e a xɔ nǔ wɛ é, alǒ ɖexlɛ́ ɖɔ nǔ ɖé kú ɖò fí ǎ.",
+    "point6": "Enyi távo ɖé fó ɔ, é fó gbɔn — xwé ce sín nukɔntɔn nɔ ɖò mímɛ́."
   }
 }

@@ -86,7 +86,8 @@
     "general": "General",
     "pushEnable": "Push notifications",
     "pushHint": "Get notified on this device when a list is sent, opened, or finished.",
-    "pushBlocked": "Notifications are blocked in your browser settings."
+    "pushBlocked": "Notifications are blocked in your browser settings.",
+    "about": "About the app"
   },
   "members": {
     "title": "People",
@@ -213,5 +214,14 @@
     "offlineTitle": "No connection",
     "offlineHint": "You're offline. Your list is safe — try again when you have signal.",
     "offlineBanner": "No connection"
+  },
+  "about": {
+    "title": "About {name}",
+    "point1": "{name} connects your household with your helper through one shared shopping list.",
+    "point2": "Your helper browses by category and adds what's needed to the basket.",
+    "point3": "You receive the list already grouped by category — Dairy, Bakery, Meat & Fish, and more.",
+    "point4": "Add an optional note on any item, like “lactose-free” — no need for duplicate products.",
+    "point5": "Check items off as you shop, or mark any that aren't available.",
+    "point6": "Once a list is finished, it's done — your home screen stays clean."
   }
 }
