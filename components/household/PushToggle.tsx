@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { Card } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { getPushSupport, isSubscribed, subscribeToPush, unsubscribeFromPush } from "@/lib/push/subscribe";
 
@@ -14,7 +15,12 @@ import { getPushSupport, isSubscribed, subscribeToPush, unsubscribeFromPush } fr
  *
  * Renders nothing at all when the platform has no Push API (older
  * Safari, non-standalone iOS before 16.4) — a toggle that can never do
- * anything is worse than no toggle.
+ * anything is worse than no toggle. Owns its own `Card` rather than
+ * leaving that to callers: SettingsScreen used to wrap this in one
+ * itself, which meant an empty, padded white box on every unsupported
+ * browser (and briefly on every browser, before the client-only support
+ * check resolves) — an empty wrapper is exactly as visible as a full
+ * one until this component actually has something to put inside it.
  */
 export function PushToggle() {
   const { t } = useLocale();
@@ -48,20 +54,22 @@ export function PushToggle() {
   }
 
   return (
-    <label className="flex min-h-12 items-center justify-between gap-4">
-      <span className="min-w-0">
-        <span className="hl-body block text-ink">{t("settings.pushEnable")}</span>
-        <span className="hl-caption block">
-          {support === "denied" ? t("settings.pushBlocked") : t("settings.pushHint")}
+    <Card>
+      <label className="flex min-h-12 items-center justify-between gap-4">
+        <span className="min-w-0">
+          <span className="hl-body block text-ink">{t("settings.pushEnable")}</span>
+          <span className="hl-caption block">
+            {support === "denied" ? t("settings.pushBlocked") : t("settings.pushHint")}
+          </span>
         </span>
-      </span>
-      <input
-        type="checkbox"
-        checked={enabled}
-        disabled={pending || support === "denied"}
-        onChange={(event) => handleChange(event.target.checked)}
-        className="size-7 shrink-0 accent-[var(--hl-primary)]"
-      />
-    </label>
+        <input
+          type="checkbox"
+          checked={enabled}
+          disabled={pending || support === "denied"}
+          onChange={(event) => handleChange(event.target.checked)}
+          className="size-7 shrink-0 accent-[var(--hl-primary)]"
+        />
+      </label>
+    </Card>
   );
 }

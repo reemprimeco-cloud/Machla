@@ -92,9 +92,7 @@ export function SettingsScreen({
       </section>
 
       <section className="space-y-2">
-        <Card>
-          <PushToggle />
-        </Card>
+        <PushToggle />
       </section>
 
       <section className="space-y-2">
