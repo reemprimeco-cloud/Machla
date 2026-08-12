@@ -122,23 +122,25 @@ Rate limits themselves live in Authentication → Rate Limits, not in the
 provider panel, and are worth setting before launch for the same reason:
 the cost of the login path is per message sent.
 
-**A Twilio trial account cannot power this flow at all.** Verified against
-Twilio's own documentation (twilio.com/docs/usage/trials) after the first
-real send failed, because the failure teaches the wrong lesson — it looks
-like a configuration mistake and is actually a account-tier wall. Trial
-accounts: send only to at most five manually verified numbers (error
-21608); are restricted to the sign-up country; and may only send
-Twilio's **pre-defined message templates — custom message bodies are not
-supported**. Supabase's OTP is a custom body, so even a verified
-destination number does not make the flow work. Alphanumeric sender IDs
-are likewise paid-account-only.
+**A Twilio trial account cannot power this flow at all** (verified
+against twilio.com/docs/usage/trials): trials send only to five manually
+verified numbers (error 21608), only within the sign-up country, and only
+using Twilio's pre-defined templates — custom bodies like an OTP are not
+supported, so verifying a test number is not a workaround. Alphanumeric
+sender IDs are likewise paid-only. Kept here because the failure mode
+looks exactly like a configuration mistake.
 
-The consequence: verifying test numbers is not a workaround, and the
-upgrade (adding payment) is not merely for launch — it is required for
-the **first successful OTP ever**. After upgrading: enable Kuwait in
-Messaging → Geo Permissions, ensure the Messaging Service's sender pool
-has a sender that can deliver to +965, and complete the compliance
-profile if the console asks for one.
+(The first real send failure on this project was initially attributed to
+this; the account turned out to be active, so the actual cause lay in the
+paid-account checklist below.)
+
+On an active account, the failure points, in observed order of
+likelihood: **Kuwait disabled in Messaging → Geo Permissions** (off by
+default for most destinations; error 21408); the **Messaging Service's
+sender pool** lacking a sender that can deliver to +965; or a wrong
+SID/token pair in Supabase, in which case Twilio's message log shows no
+attempt at all. Twilio Console → Monitor → Logs → Messaging carries the
+per-attempt error code and is the fastest diagnosis.
 
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when
