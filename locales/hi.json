@@ -72,7 +72,13 @@
     "tabHomes": "घर",
     "tabSettings": "सेटिंग्स",
     "tabBarLabel": "मुख्य",
-    "myOwnList": "मेरी अपनी सूची"
+    "myOwnList": "मेरी अपनी सूची",
+    "greetingMorning": "सुप्रभात, {name}",
+    "greetingAfternoon": "शुभ दोपहर, {name}",
+    "greetingEvening": "शुभ संध्या, {name}",
+    "overview": "{openCount} सूचियाँ खुली हैं · {memberCount} सदस्य",
+    "categories": "श्रेणियाँ",
+    "seeAll": "सभी देखें"
   },
   "settings": {
     "title": "सेटिंग्स",
@@ -173,7 +179,9 @@
     "notFound": "उपलब्ध नहीं",
     "sentAt": "{when} भेजी गई",
     "emptyItems": "इस सूची में कुछ नहीं है।",
-    "openLists": "{count} खुली"
+    "openLists": "{count} खुली",
+    "itemsLeft": "{count} वस्तुएं शेष",
+    "allDone": "सभी वस्तुएं खरीदी गईं"
   },
   "notif": {
     "title": "सूचनाएँ",

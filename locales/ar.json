@@ -72,7 +72,13 @@
     "tabHomes": "المنازل",
     "tabSettings": "الإعدادات",
     "tabBarLabel": "الرئيسية",
-    "myOwnList": "قائمتي الخاصة"
+    "myOwnList": "قائمتي الخاصة",
+    "greetingMorning": "صباح الخير، {name}",
+    "greetingAfternoon": "طاب يومك، {name}",
+    "greetingEvening": "مساء الخير، {name}",
+    "overview": "{openCount} قائمة مفتوحة · {memberCount} أفراد",
+    "categories": "الفئات",
+    "seeAll": "عرض الكل"
   },
   "settings": {
     "title": "الإعدادات",
@@ -173,7 +179,9 @@
     "notFound": "غير متوفر",
     "sentAt": "أُرسلت {when}",
     "emptyItems": "هذه القائمة فارغة.",
-    "openLists": "{count} مفتوحة"
+    "openLists": "{count} مفتوحة",
+    "itemsLeft": "{count} عنصر متبقٍ",
+    "allDone": "تم شراء كل العناصر"
   },
   "notif": {
     "title": "الإشعارات",

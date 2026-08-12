@@ -72,7 +72,13 @@
     "tabHomes": "Rumah",
     "tabSettings": "Pengaturan",
     "tabBarLabel": "Utama",
-    "myOwnList": "Daftar saya sendiri"
+    "myOwnList": "Daftar saya sendiri",
+    "greetingMorning": "Selamat pagi, {name}",
+    "greetingAfternoon": "Selamat siang, {name}",
+    "greetingEvening": "Selamat malam, {name}",
+    "overview": "{openCount} daftar terbuka · {memberCount} anggota",
+    "categories": "Kategori",
+    "seeAll": "Lihat semua"
   },
   "settings": {
     "title": "Pengaturan",
@@ -173,7 +179,9 @@
     "notFound": "Tidak tersedia",
     "sentAt": "Dikirim {when}",
     "emptyItems": "Daftar ini kosong.",
-    "openLists": "{count} terbuka"
+    "openLists": "{count} terbuka",
+    "itemsLeft": "{count} barang tersisa",
+    "allDone": "Semua barang telah dibeli"
   },
   "notif": {
     "title": "Notifikasi",

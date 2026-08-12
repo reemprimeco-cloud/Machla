@@ -8,18 +8,74 @@ import type { MessageKey } from "@/lib/i18n/messages";
 
 type Tab = "homes" | "notifications" | "settings";
 
-const TABS: { tab: Tab; href: string; icon: string; labelKey: MessageKey }[] = [
-  { tab: "homes", href: "/home", icon: "🏠", labelKey: "home.tabHomes" },
+/** Line icons, not emoji — matching the Machla UI Kit's nav system
+ * (stroke width 1.9, round joins), which renders identically across
+ * platforms and languages; an emoji glyph varies by OS font and some
+ * (⚙️) render inconsistently in RTL browsers. */
+function HomeGlyph() {
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function BellGlyph() {
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M12 3a5 5 0 00-5 5v3.2c0 .8-.3 1.5-.9 2.1L5 14.5h14l-1.1-1.2a3 3 0 01-.9-2.1V8a5 5 0 00-5-5z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 17.5a2 2 0 004 0"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function AccountGlyph() {
+  return (
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <circle cx="12" cy="8" r="3.6" stroke="currentColor" strokeWidth="1.9" />
+      <path
+        d="M4.5 20c1.2-3.7 4-5.5 7.5-5.5s6.3 1.8 7.5 5.5"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+const TABS: {
+  tab: Tab;
+  href: string;
+  Icon: () => React.JSX.Element;
+  labelKey: MessageKey;
+}[] = [
+  { tab: "homes", href: "/home", Icon: HomeGlyph, labelKey: "home.tabHomes" },
   {
     tab: "notifications",
     href: "/notifications",
-    icon: "🔔",
+    Icon: BellGlyph,
     labelKey: "notif.title",
   },
   {
     tab: "settings",
     href: "/home/settings",
-    icon: "⚙️",
+    Icon: AccountGlyph,
     labelKey: "home.tabSettings",
   },
 ];
@@ -62,7 +118,7 @@ export function HomeTabBar() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="mx-auto flex w-full max-w-[var(--hl-content-max)]">
-        {TABS.map(({ tab, href, icon, labelKey }) => {
+        {TABS.map(({ tab, href, Icon, labelKey }) => {
           const active = isActive(tab, href);
           return (
             <Link
@@ -73,9 +129,7 @@ export function HomeTabBar() {
                 active ? "hl-tab-indicator text-primary" : "text-ink-muted"
               }`}
             >
-              <span aria-hidden className="text-xl leading-none">
-                {icon}
-              </span>
+              <Icon />
               <span className="hl-caption">{t(labelKey)}</span>
             </Link>
           );

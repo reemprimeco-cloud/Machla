@@ -72,7 +72,13 @@
     "tabHomes": "Maisons",
     "tabSettings": "Réglages",
     "tabBarLabel": "Principal",
-    "myOwnList": "Ma propre liste"
+    "myOwnList": "Ma propre liste",
+    "greetingMorning": "Bonjour, {name}",
+    "greetingAfternoon": "Bon après-midi, {name}",
+    "greetingEvening": "Bonsoir, {name}",
+    "overview": "{openCount} listes ouvertes · {memberCount} membres",
+    "categories": "Catégories",
+    "seeAll": "Tout voir"
   },
   "settings": {
     "title": "Réglages",
@@ -173,7 +179,9 @@
     "notFound": "Pas disponible",
     "sentAt": "Envoyée {when}",
     "emptyItems": "Cette liste n'a aucun article.",
-    "openLists": "{count} en cours"
+    "openLists": "{count} en cours",
+    "itemsLeft": "{count} articles restants",
+    "allDone": "Tous les articles achetés"
   },
   "notif": {
     "title": "Notifications",

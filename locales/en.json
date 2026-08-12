@@ -72,7 +72,13 @@
     "tabHomes": "Homes",
     "tabSettings": "Settings",
     "tabBarLabel": "Main",
-    "myOwnList": "My own list"
+    "myOwnList": "My own list",
+    "greetingMorning": "Good morning, {name}",
+    "greetingAfternoon": "Good afternoon, {name}",
+    "greetingEvening": "Good evening, {name}",
+    "overview": "{openCount} lists open · {memberCount} people",
+    "categories": "Categories",
+    "seeAll": "See all"
   },
   "settings": {
     "title": "Settings",
@@ -173,7 +179,9 @@
     "notFound": "Not available",
     "sentAt": "Sent {when}",
     "emptyItems": "This list has no items.",
-    "openLists": "{count} open"
+    "openLists": "{count} open",
+    "itemsLeft": "{count} items left",
+    "allDone": "All items bought"
   },
   "notif": {
     "title": "Notifications",

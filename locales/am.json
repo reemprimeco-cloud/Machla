@@ -72,7 +72,13 @@
     "tabHomes": "ቤቶች",
     "tabSettings": "ቅንብሮች",
     "tabBarLabel": "ዋና",
-    "myOwnList": "የራሴ ዝርዝር"
+    "myOwnList": "የራሴ ዝርዝር",
+    "greetingMorning": "እንደምን አደሩ፣ {name}",
+    "greetingAfternoon": "እንደምን ዋሉ፣ {name}",
+    "greetingEvening": "እንደምን አመሹ፣ {name}",
+    "overview": "{openCount} ዝርዝሮች ክፍት ናቸው · {memberCount} አባላት",
+    "categories": "ምድቦች",
+    "seeAll": "ሁሉንም ይመልከቱ"
   },
   "settings": {
     "title": "ቅንብሮች",
@@ -173,7 +179,9 @@
     "notFound": "አይገኝም",
     "sentAt": "ተልኳል {when}",
     "emptyItems": "ይህ ዝርዝር ምንም ዕቃ የለውም።",
-    "openLists": "{count} ክፍት"
+    "openLists": "{count} ክፍት",
+    "itemsLeft": "{count} ዕቃዎች ቀርተዋል",
+    "allDone": "ሁሉም ዕቃዎች ተገዝተዋል"
   },
   "notif": {
     "title": "ማሳወቂያዎች",

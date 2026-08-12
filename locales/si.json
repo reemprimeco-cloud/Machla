@@ -72,7 +72,13 @@
     "tabHomes": "නිවාස",
     "tabSettings": "සැකසුම්",
     "tabBarLabel": "ප්‍රධාන",
-    "myOwnList": "මගේම ලැයිස්තුව"
+    "myOwnList": "මගේම ලැයිස්තුව",
+    "greetingMorning": "සුභ උදෑසනක්, {name}",
+    "greetingAfternoon": "සුභ දහවලක්, {name}",
+    "greetingEvening": "සුභ සැන්දෑවක්, {name}",
+    "overview": "{openCount} ලැයිස්තු විවෘතයි · සාමාජිකයින් {memberCount}",
+    "categories": "කාණ්ඩ",
+    "seeAll": "සියල්ල බලන්න"
   },
   "settings": {
     "title": "සැකසුම්",
@@ -173,7 +179,9 @@
     "notFound": "නොමැත",
     "sentAt": "{when} එවා ඇත",
     "emptyItems": "මෙම ලැයිස්තුව හිස්.",
-    "openLists": "{count} විවෘතයි"
+    "openLists": "{count} විවෘතයි",
+    "itemsLeft": "අයිතම {count}ක් ඉතිරියි",
+    "allDone": "සියලුම අයිතම මිලදී ගන්නා ලදී"
   },
   "notif": {
     "title": "දැනුම්දීම්",

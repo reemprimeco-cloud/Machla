@@ -72,7 +72,13 @@
     "tabHomes": "Xwé lɛ́",
     "tabSettings": "Ayidonu lɛ́",
     "tabBarLabel": "Nukɔntɔn",
-    "myOwnList": "Wema ce ɖokponɔ"
+    "myOwnList": "Wema ce ɖokponɔ",
+    "greetingMorning": "Ata wǒ zǎnzǎn, {name}",
+    "greetingAfternoon": "Ata wǒ hwenu-adogbo, {name}",
+    "greetingEvening": "Ata wǒ zǎn, {name}",
+    "overview": "Távo {openCount} lɛ́ hun · Mɛ {memberCount}",
+    "categories": "Akpáxwé lɛ́",
+    "seeAll": "Kpɔ́n bǐ"
   },
   "settings": {
     "title": "Ayidonu lɛ́",
@@ -173,7 +179,9 @@
     "notFound": "É kú ɖò fí ǎ",
     "sentAt": "É sɛ́n {when}",
     "emptyItems": "Nǔ ɖebǔ kú ɖò távo elɔ mɛ ó.",
-    "openLists": "{count} ɖò azɔ̌ wa wɛ"
+    "openLists": "{count} ɖò azɔ̌ wa wɛ",
+    "itemsLeft": "Nǔ {count} kpò",
+    "allDone": "Nǔ bǐ xɔ"
   },
   "notif": {
     "title": "Wɛnsagbè lɛ́",

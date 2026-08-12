@@ -1,4 +1,7 @@
 import { HouseholdDashboard } from "@/components/household/HouseholdDashboard";
+import { getServerUserProfile } from "@/lib/auth/session";
+import { getCategories } from "@/lib/catalog/queries";
+import { greetingKeyForNow } from "@/lib/household/greeting";
 import { requireHouseholdAccess } from "@/lib/household/guard";
 import { getHouseholdMembers } from "@/lib/household/queries";
 import { getHouseholdLists, isOpen } from "@/lib/list/household";
@@ -10,10 +13,12 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function DashboardPage() {
   const membership = await requireHouseholdAccess();
 
-  const [members, lists, unreadCount] = await Promise.all([
+  const [members, lists, unreadCount, categories, profile] = await Promise.all([
     getHouseholdMembers(membership.householdId),
     getHouseholdLists(membership.householdId),
     getUnreadCount(),
+    getCategories(),
+    getServerUserProfile(),
   ]);
 
   return (
@@ -24,6 +29,9 @@ export default async function DashboardPage() {
       recentLists={lists.slice(0, 3)}
       openCount={lists.filter(isOpen).length}
       unreadCount={unreadCount}
+      categories={categories}
+      displayName={profile?.display_name ?? null}
+      greetingKey={greetingKeyForNow()}
     />
   );
 }

@@ -72,7 +72,13 @@
     "tabHomes": "Mga Tahanan",
     "tabSettings": "Mga Setting",
     "tabBarLabel": "Pangunahin",
-    "myOwnList": "Sarili kong listahan"
+    "myOwnList": "Sarili kong listahan",
+    "greetingMorning": "Magandang umaga, {name}",
+    "greetingAfternoon": "Magandang hapon, {name}",
+    "greetingEvening": "Magandang gabi, {name}",
+    "overview": "{openCount} listahan ang bukas · {memberCount} miyembro",
+    "categories": "Mga Kategorya",
+    "seeAll": "Tingnan lahat"
   },
   "settings": {
     "title": "Mga Setting",
@@ -173,7 +179,9 @@
     "notFound": "Walang stock",
     "sentAt": "Ipinadala {when}",
     "emptyItems": "Walang laman ang listahang ito.",
-    "openLists": "{count} bukas"
+    "openLists": "{count} bukas",
+    "itemsLeft": "{count} item na natitira",
+    "allDone": "Nabili na lahat ng item"
   },
   "notif": {
     "title": "Mga abiso",

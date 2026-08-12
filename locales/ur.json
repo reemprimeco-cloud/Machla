@@ -72,7 +72,13 @@
     "tabHomes": "گھر",
     "tabSettings": "ترتیبات",
     "tabBarLabel": "مرکزی",
-    "myOwnList": "میری اپنی فہرست"
+    "myOwnList": "میری اپنی فہرست",
+    "greetingMorning": "صبح بخیر، {name}",
+    "greetingAfternoon": "دوپہر بخیر، {name}",
+    "greetingEvening": "شام بخیر، {name}",
+    "overview": "{openCount} فہرستیں کھلی ہیں · {memberCount} افراد",
+    "categories": "زمرہ جات",
+    "seeAll": "سب دیکھیں"
   },
   "settings": {
     "title": "ترتیبات",
@@ -173,7 +179,9 @@
     "notFound": "دستیاب نہیں",
     "sentAt": "{when} بھیجی گئی",
     "emptyItems": "اس فہرست میں کچھ نہیں ہے۔",
-    "openLists": "{count} کھلی"
+    "openLists": "{count} کھلی",
+    "itemsLeft": "{count} اشیاء باقی ہیں",
+    "allDone": "تمام اشیاء خرید لی گئیں"
   },
   "notif": {
     "title": "اطلاعات",

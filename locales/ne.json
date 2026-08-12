@@ -72,7 +72,13 @@
     "tabHomes": "घरहरू",
     "tabSettings": "सेटिङहरू",
     "tabBarLabel": "मुख्य",
-    "myOwnList": "मेरो आफ्नै सूची"
+    "myOwnList": "मेरो आफ्नै सूची",
+    "greetingMorning": "शुभ प्रभात, {name}",
+    "greetingAfternoon": "शुभ दिउँसो, {name}",
+    "greetingEvening": "शुभ साँझ, {name}",
+    "overview": "{openCount} सूचीहरू खुला छन् · {memberCount} सदस्यहरू",
+    "categories": "श्रेणीहरू",
+    "seeAll": "सबै हेर्नुहोस्"
   },
   "settings": {
     "title": "सेटिङहरू",
@@ -173,7 +179,9 @@
     "notFound": "उपलब्ध छैन",
     "sentAt": "{when} पठाइयो",
     "emptyItems": "यो सूचीमा केही छैन।",
-    "openLists": "{count} खुला"
+    "openLists": "{count} खुला",
+    "itemsLeft": "{count} वस्तुहरू बाँकी",
+    "allDone": "सबै वस्तुहरू किनियो"
   },
   "notif": {
     "title": "सूचनाहरू",

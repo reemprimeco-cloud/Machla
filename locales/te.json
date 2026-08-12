@@ -72,7 +72,13 @@
     "tabHomes": "ఇళ్ళు",
     "tabSettings": "సెట్టింగ్‌లు",
     "tabBarLabel": "ప్రధాన",
-    "myOwnList": "నా సొంత జాబితా"
+    "myOwnList": "నా సొంత జాబితా",
+    "greetingMorning": "శుభోదయం, {name}",
+    "greetingAfternoon": "శుభ మధ్యాహ్నం, {name}",
+    "greetingEvening": "శుభ సాయంత్రం, {name}",
+    "overview": "{openCount} జాబితాలు తెరిచి ఉన్నాయి · {memberCount} మంది సభ్యులు",
+    "categories": "వర్గాలు",
+    "seeAll": "అన్నీ చూడండి"
   },
   "settings": {
     "title": "సెట్టింగ్‌లు",
@@ -173,7 +179,9 @@
     "notFound": "అందుబాటులో లేదు",
     "sentAt": "{when} పంపబడింది",
     "emptyItems": "ఈ జాబితాలో ఏమీ లేదు.",
-    "openLists": "{count} తెరిచి ఉన్నాయి"
+    "openLists": "{count} తెరిచి ఉన్నాయి",
+    "itemsLeft": "{count} వస్తువులు మిగిలి ఉన్నాయి",
+    "allDone": "అన్ని వస్తువులు కొనుగోలు చేయబడ్డాయి"
   },
   "notif": {
     "title": "నోటిఫికేషన్లు",
