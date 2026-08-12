@@ -42,7 +42,7 @@ inside React components.
   by the Phase 5 import pipeline, read by every client.
 - **Localization strings**: the master-plan rule "UI translations stored
   in structured locale files" means the *content* of `locales/*.json`
-  (Phase 1 `apps/web/locales`) is portable — an Expo app re-uses the same
+  (Phase 1 `locales`) is portable — an Expo app re-uses the same
   JSON files (copied or, once a second client exists, pulled from a
   shared `packages/i18n`), not a redesigned translation set.
 
@@ -62,10 +62,10 @@ requiring new product decisions later.
 
 ## 4. Migration path, when Phase 12 actually starts
 
-1. Extract `apps/web/lib/{supabase,auth,catalog}` and `types/` into
+1. Extract `lib/{supabase,auth,catalog}` and `types/` into
    `packages/{database,auth,catalog,types}` (mechanical, per
    `09-folder-structure.md` §3).
-2. Extract `apps/web/locales` into `packages/i18n`.
+2. Extract `locales` into `packages/i18n`.
 3. Scaffold `apps/worker-app` and `apps/household-app` (Expo), each
    consuming the extracted packages plus the Supabase JS client (which
    has React Native support).

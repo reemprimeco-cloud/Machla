@@ -6,7 +6,7 @@
  * writes to `categories` and `products`, and the only place the service
  * role key is used (docs/architecture/10-security-model.md §6,
  * 11-product-catalog-architecture.md). That key must never appear in
- * apps/web or in any NEXT_PUBLIC_* variable.
+ * the web app or in any NEXT_PUBLIC_* variable.
  *
  *   SUPABASE_URL=https://<ref>.supabase.co \
  *   SUPABASE_SERVICE_ROLE_KEY=<service-role-key> \
@@ -58,7 +58,7 @@ if (SERVICE_ROLE_KEY.length < 40) fail("SUPABASE_SERVICE_ROLE_KEY looks wrong");
 const { createClient } = await import("@supabase/supabase-js").catch(() =>
   fail(
     "@supabase/supabase-js is not installed. Run `npm install` in catalog-import/ first " +
-      "(it is intentionally separate from apps/web — see catalog-import/README.md).",
+      "(it is intentionally separate from the web app — see catalog-import/README.md).",
   ),
 );
 

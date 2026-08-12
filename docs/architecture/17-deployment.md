@@ -26,26 +26,28 @@ These need account access and cannot be done from the repository.
 ### 2.1 Vercel project
 
 - Import `reemprimeco-cloud/Home-list`.
-- **Root directory: `apps/web`.** The repo is a monorepo-ready layout;
-  without this the build finds no Next.js app.
-- Framework preset: Next.js. Build and output settings need no override.
+- **Root directory: leave it at the repository root (the default).**
+- Framework preset: Next.js, auto-detected. Nothing needs overriding.
 
-**This has already been got wrong once, and the failure is misleading.**
-Deploying with the root directory unset produces a live URL that returns:
+**This used to require a manual setting, and getting it wrong was the
+single most expensive mistake in this project's deployment history.** The
+application lived at `apps/web/`, so a default import found no
+`package.json` at the root, detected no framework, ran no build at all,
+and published an empty directory. The result was a live URL serving:
 
 ```text
 404: NOT_FOUND
 Code: NOT_FOUND
 ```
 
-That reads like a routing bug in the app. It is not. The repository root
-has no `package.json`, so Vercel detects no framework, runs no build at
-all, and publishes an empty directory — the application was never
-compiled. The build log for such a deployment finishes in seconds and
-never mentions `next build`, which is the quickest way to confirm it.
+— which reads exactly like a routing bug in the application and is
+nothing of the kind. The tell was a build log that finished in seconds
+and never mentioned `next build`.
 
-Changing the setting afterwards does **not** rebuild on its own:
-Deployments → ⋯ → Redeploy, or push a commit.
+The application was moved to the repository root specifically to delete
+that failure mode (see `09-folder-structure.md`). There is now no
+deployment setting to get wrong: Vercel's zero-configuration Next.js
+detection applies, which is the most heavily travelled path it has.
 
 ### 2.2 Environment variables (Vercel → Settings → Environment Variables)
 
@@ -154,7 +156,7 @@ silent in every other kind of test.
 ## 5. Deploy checklist
 
 ```bash
-cd apps/web
+cd the repository root
 npm run preflight        # locales, env, types, lint, build
 ./../../supabase/tests/run-tests.sh   # 267 assertions
 ```
@@ -163,7 +165,7 @@ Then, in order:
 
 1. Supabase: phone auth done; finish the rest of §2.3 (disable Email,
    OTP length/expiry, rate limit, redirect allow-list).
-2. Vercel: project imported with root directory `apps/web`, env vars set.
+2. Vercel: project imported with root directory the repository root, env vars set.
 3. Deploy. Confirm the response carries `Content-Security-Policy` with a
    `nonce-` value that differs between two requests.
 4. Sign in with a real phone number end to end. This is still the one

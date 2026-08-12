@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Offline catalogue import pipeline. Deliberately separate from apps/web: refreshing the catalogue must never require a UI change or a redeploy, and this is the only code that touches the Supabase service role key.",
+  "description": "Offline catalogue import pipeline. Deliberately separate from the web app: refreshing the catalogue must never require a UI change or a redeploy, and this is the only code that touches the Supabase service role key.",
   "scripts": {
     "validate": "node scripts/build-catalog.mjs --validate",
     "build": "node scripts/build-catalog.mjs --out build/catalog.json",

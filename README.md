@@ -30,12 +30,17 @@ properties throughout rather than mirrored stylesheets.
 ## Repository layout
 
 ```text
-apps/web/            the Next.js application (both experiences)
-supabase/migrations/ the schema, RLS policies and every write RPC
-supabase/tests/      267 SQL assertions, run as `authenticated`
-catalog-import/      catalogue source data + importer (run from a laptop)
-docs/architecture/   19 documents; start at 00-index.md
+app/  components/  lib/     the Next.js application (both experiences)
+locales/                    147+ keys in 9 languages, parity-checked
+supabase/migrations/        schema, RLS policies and every write RPC
+supabase/tests/             295 SQL assertions, run as `authenticated`
+catalog-import/             catalogue data + importer (run from a laptop)
+docs/architecture/          20 documents; start at 00-index.md
 ```
+
+The Next.js app sits at the repository root deliberately: it means Vercel
+needs no build configuration at all. See `docs/architecture/17-deployment.md`
+§2.1 for the deployment failure that motivated it.
 
 ## Where the rules live
 
@@ -57,15 +62,13 @@ before writing any second client.
 ## Running the checks
 
 ```bash
-cd apps/web
 npm install
-npm run preflight              # locales (148 keys × 9), env, tsc, lint, build
-
-./../../supabase/tests/run-tests.sh   # 267 assertions against a local Postgres
+npm run preflight             # locales (160 keys × 9), env, typegen, tsc, lint, build
+./supabase/tests/run-tests.sh # 295 assertions against a local Postgres
 ```
 
 `npm run dev` needs `NEXT_PUBLIC_SUPABASE_URL` and
-`NEXT_PUBLIC_SUPABASE_ANON_KEY` in `apps/web/.env.local`. The service role
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local` at the repository root. The service role
 key belongs to `catalog-import/` alone and must never appear in a
 `NEXT_PUBLIC_` variable — `check:env` fails the preflight if it does.
 
@@ -85,7 +88,7 @@ has the detail.
    project holds the only copy of every household's data. The catalogue is
    reproducible from `catalog-import/`; households, lists and memberships
    are not.
-3. **Vercel project**, root directory `apps/web`, with the two public
+3. **Vercel project**, root directory the repository root, with the two public
    environment variables above.
 4. **Product photography.** The import pipeline is ready and the schema has
    the column; the images themselves are not in the repository.

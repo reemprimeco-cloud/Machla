@@ -123,7 +123,7 @@ Two layers, per master plan Section 4 ("translation fallback logic"):
 
 ## 6. Locale key parity
 
-`apps/web/scripts/check-locales.mjs` (`npm run check:locales`) flattens
+`scripts/check-locales.mjs` (`npm run check:locales`) flattens
 every `locales/*.json` file to its full set of dot-path keys and asserts
 every non-English file has exactly the same key set as `en.json` — no
 missing keys, no stray/typo'd keys. Plain Node, zero dependencies,

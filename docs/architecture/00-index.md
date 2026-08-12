@@ -19,7 +19,7 @@ architecture left open: `06-auth-otp-flow.md` §7 (Phase 3),
 `07-invitation-flow.md` §7 and `10-security-model.md` §5A (Phase 4),
 `08-route-map.md` §4 and `09-folder-structure.md` (running).
 
-The application code lives in `apps/web` (Next.js/TypeScript/Tailwind) and
+The application code lives in the repository root (Next.js/TypeScript/Tailwind) and
 `supabase/migrations` — see those directories for what's actually been
 built. This folder stays the architectural reference those phases
 implement against. `docs/design/` holds the HomeList UI Kit's brand sheet

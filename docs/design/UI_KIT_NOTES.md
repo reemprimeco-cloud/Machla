@@ -2,7 +2,7 @@
 
 The HomeList UI Kit (a standalone design package: brand mark, colour/type
 tokens, flags, icon ladder, and reference React components) was supplied
-during Phase 2 and integrated into `apps/web`. This file records where
+during Phase 2 and integrated into the repository root. This file records where
 each piece landed and the rules that came with it. `docs/design/BRAND.md`
 is the original brand sheet (mark, colour, clear space, print CMYK) —
 copied verbatim, unchanged. The kit's own `README.md`/`tailwind.config.ts`
@@ -13,17 +13,17 @@ here; this file is their Next.js/Tailwind v4 equivalent.
 
 | Kit item | HomeList location |
 |---|---|
-| `public/flags/*.svg` | `apps/web/public/flags/*.svg` (unchanged) |
-| `public/icons/icon-*.png` | `apps/web/public/icons/icon-*.png` (unchanged) |
-| `public/favicon.svg` | `apps/web/app/icon.svg` (Next's auto-favicon convention) |
-| `icon-180.png` | `apps/web/app/apple-icon.png` (Next's auto apple-touch-icon convention) |
-| `src/styles/tokens.css` | merged into `apps/web/app/globals.css` `:root` + `@theme inline` |
-| `src/styles/fonts.css` (script stacks, type scale) | merged into `apps/web/app/globals.css` |
-| `src/styles/base.css` | merged into `apps/web/app/globals.css` `@layer base`/`@layer utilities` |
-| `src/i18n/languages.ts` | merged into `apps/web/lib/i18n/config.ts` (`Script`, `flagIso` fields on `LocaleMeta`) |
+| `public/flags/*.svg` | `public/flags/*.svg` (unchanged) |
+| `public/icons/icon-*.png` | `public/icons/icon-*.png` (unchanged) |
+| `public/favicon.svg` | `app/icon.svg` (Next's auto-favicon convention) |
+| `icon-180.png` | `app/apple-icon.png` (Next's auto apple-touch-icon convention) |
+| `src/styles/tokens.css` | merged into `app/globals.css` `:root` + `@theme inline` |
+| `src/styles/fonts.css` (script stacks, type scale) | merged into `app/globals.css` |
+| `src/styles/base.css` | merged into `app/globals.css` `@layer base`/`@layer utilities` |
+| `src/i18n/languages.ts` | merged into `lib/i18n/config.ts` (`Script`, `flagIso` fields on `LocaleMeta`) |
 | `src/hooks/useLocale.ts` | **not used as-is** — see "What changed" below |
-| `src/brand/HomeListIcon.tsx` | `apps/web/components/brand/HomeListIcon.tsx` (unchanged) |
-| `src/components/LanguagePicker.tsx` | `apps/web/app/welcome/page.tsx` (adapted, see below) |
+| `src/brand/HomeListIcon.tsx` | `components/brand/HomeListIcon.tsx` (unchanged) |
+| `src/components/LanguagePicker.tsx` | `app/welcome/page.tsx` (adapted, see below) |
 
 ## What changed, and why
 
