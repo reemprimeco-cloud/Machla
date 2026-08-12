@@ -14,15 +14,23 @@ import { createClient } from "@/lib/supabase/server";
  * someone else's notification id simply matches nothing.
  */
 
-/** Marks the caller's notifications read. No argument = all of them,
- * which is what opening the notifications screen does. */
+/**
+ * Marks the caller's notifications read. No argument = all of them,
+ * which is what opening the notifications screen does — the page calls
+ * this directly in its render body (app/notifications/page.tsx), not
+ * from a client event, so it must NOT call revalidatePath: Next.js 16
+ * throws "used revalidatePath during render" if a Server Action does
+ * that while it's being awaited as part of rendering a Server Component,
+ * rather than invoked in response to a client interaction. The page's
+ * own request already reads fresh data, and the whole app is dynamically
+ * rendered (no route here is static), so there is nothing stale left for
+ * revalidatePath to fix.
+ */
 export async function markNotificationsReadAction(ids?: string[]): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
   const supabase = await createClient();
   await supabase.rpc("mark_notifications_read", { p_ids: ids ?? null });
-
-  revalidatePath("/", "layout");
 }
 
 export async function setNotificationPreferenceAction(

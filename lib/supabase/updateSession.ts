@@ -22,6 +22,23 @@ export async function updateSession(request: NextRequest) {
   // crashing on every page load.
   if (!isSupabaseConfigured()) return NextResponse.next({ request });
 
+  // Next.js prefetches every <Link> that scrolls into view — and this
+  // app's persistent tab bar alone puts 3+ links on screen at once — so
+  // a real navigation can land while several prefetch requests for OTHER
+  // routes are still in flight. Each one used to call getUser() below,
+  // which can trigger a refresh-token rotation; several firing
+  // concurrently race on the SAME refresh token, and Supabase's reuse
+  // detection invalidates it, silently signing the user out (reported as
+  // "I keep getting logged out" — no server error, no client error, the
+  // session cookie just stops being valid). A prefetch never renders
+  // anything the user sees, so it does not need a fresh session; only a
+  // real navigation refreshes one from here on.
+  const isPrefetch =
+    request.headers.get("next-router-prefetch") === "1" ||
+    request.headers.get("purpose") === "prefetch" ||
+    request.headers.get("sec-purpose") === "prefetch";
+  if (isPrefetch) return NextResponse.next({ request });
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
