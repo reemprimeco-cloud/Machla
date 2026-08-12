@@ -1,6 +1,7 @@
 "use client";
 
 import { branding } from "@/lib/branding";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
@@ -74,7 +75,24 @@ function LoginForm() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-6 py-16">
+    <main className="relative mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-6 py-16">
+      {/* The app runs standalone (manifest display: "standalone"), so on
+          iOS there is no OS-level back gesture and no browser chrome at
+          all — without this, a visitor who opened /welcome, picked a
+          language, and landed here had no way back to change it. Mirrors
+          WorkerBar's back button for the same look everywhere in the app;
+          `start-4` and the rtl:-scale-x-100 glyph flip keep it correct in
+          Arabic/Urdu without a separate RTL variant. */}
+      <Link
+        href="/welcome"
+        aria-label={t("common.back")}
+        className="absolute start-4 top-4 flex size-12 items-center justify-center rounded-pill border border-sand bg-surface text-ink"
+      >
+        <span aria-hidden className="rtl:-scale-x-100 text-lg leading-none">
+          ‹
+        </span>
+      </Link>
+
       <MachlaIcon size={56} variant="flat" title={branding.name} />
 
       <div className="space-y-1 text-center">
