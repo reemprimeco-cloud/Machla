@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# android-twa (android-twa/README.md) — never commit a signing key
+android-twa/node_modules
+android-twa/*.keystore
+android-twa/*.jks
+android-twa/app-release-signed.*
+android-twa/build.gradle
+android-twa/gradlew*
+android-twa/app/
+android-twa/gradle/

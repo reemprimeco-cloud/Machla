@@ -1,0 +1,65 @@
+name: Build Android app (TWA)
+
+# Builds the signed Android App Bundle that wraps machla.reemora.app as a
+# Trusted Web Activity — the store listing for the app, not a rewrite of
+# it; the TWA just shows the live site in Chrome full-screen.
+#
+# WHY THIS RUNS IN CI, NOT LOCALLY: Bubblewrap needs to download the
+# Android SDK/build tools from Google's servers, which a sandboxed dev
+# environment may not have network access to. A GitHub-hosted runner
+# does, and already has a JDK — so this is the path that actually
+# produces a buildable .aab without needing a local Android Studio setup.
+#
+# Required repo secrets (Settings -> Secrets and variables -> Actions),
+# see android-twa/README.md for how to create them:
+#   ANDROID_KEYSTORE_BASE64  - `base64 -w0 your.keystore`
+#   ANDROID_KEYSTORE_PASSWORD
+#   ANDROID_KEY_ALIAS
+#   ANDROID_KEY_PASSWORD
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android-twa
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Decode signing key
+        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > machla-release.keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+      - name: Install Bubblewrap
+        run: npm install --no-save @bubblewrap/cli
+
+      # `bubblewrap build` reads twa-manifest.json in this directory,
+      # downloads the Android SDK on first run, and produces
+      # app-release-signed.aab + app-release-signed.apk.
+      - name: Build signed app bundle
+        run: |
+          npx bubblewrap build \
+            --skipPwaValidation \
+            --password="$ANDROID_KEYSTORE_PASSWORD" \
+            --keyPassword="$ANDROID_KEY_PASSWORD"
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: machla-android-release
+          path: |
+            android-twa/app-release-signed.aab
+            android-twa/app-release-signed.apk
+          retention-days: 30

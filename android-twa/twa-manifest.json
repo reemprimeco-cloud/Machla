@@ -1,0 +1,42 @@
+{
+  "packageId": "app.reemora.machla",
+  "host": "machla.reemora.app",
+  "name": "Machla",
+  "launcherName": "Machla",
+  "display": "standalone",
+  "themeColor": "#E01B6A",
+  "navigationColor": "#E01B6A",
+  "navigationColorDark": "#E01B6A",
+  "navigationDividerColor": "#F7F8FA",
+  "navigationDividerColorDark": "#F7F8FA",
+  "backgroundColor": "#F7F8FA",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://machla.reemora.app/icons/icon-512.png",
+  "maskableIconUrl": "https://machla.reemora.app/icons/maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./machla-release.keystore",
+    "alias": "machla"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://machla.reemora.app/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://machla.reemora.app/",
+  "minSdkVersion": 21,
+  "orientation": "default"
+}

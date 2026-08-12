@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.reemora.machla",
+      "sha256_cert_fingerprints": [
+        "46:D6:3F:05:07:5A:E0:85:76:03:B6:3F:55:AB:46:CB:C4:36:43:A3:49:3E:34:24:6F:2D:3E:0C:BF:A1:97:7E"
+      ]
+    }
+  }
+]
