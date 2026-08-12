@@ -122,6 +122,24 @@ Rate limits themselves live in Authentication → Rate Limits, not in the
 provider panel, and are worth setting before launch for the same reason:
 the cost of the login path is per message sent.
 
+**A Twilio trial account cannot power this flow at all.** Verified against
+Twilio's own documentation (twilio.com/docs/usage/trials) after the first
+real send failed, because the failure teaches the wrong lesson — it looks
+like a configuration mistake and is actually a account-tier wall. Trial
+accounts: send only to at most five manually verified numbers (error
+21608); are restricted to the sign-up country; and may only send
+Twilio's **pre-defined message templates — custom message bodies are not
+supported**. Supabase's OTP is a custom body, so even a verified
+destination number does not make the flow work. Alphanumeric sender IDs
+are likewise paid-account-only.
+
+The consequence: verifying test numbers is not a workaround, and the
+upgrade (adding payment) is not merely for launch — it is required for
+the **first successful OTP ever**. After upgrading: enable Kuwait in
+Messaging → Geo Permissions, ensure the Messaging Service's sender pool
+has a sender that can deliver to +965, and complete the compliance
+profile if the console asks for one.
+
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when
 phone auth was switched on. It is not merely unused — §6 rules it out —
