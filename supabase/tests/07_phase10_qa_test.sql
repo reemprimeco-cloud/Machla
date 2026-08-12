@@ -100,9 +100,15 @@ select test_assert(
 -- ============================================================
 
 -- The structural version of that scenario, and the strongest single
--- statement in this suite: across the whole public schema there is
--- exactly ONE policy that permits a client write, and it is
--- `users_update_own` (a user editing their own display name).
+-- statement in this suite: across the whole public schema there are
+-- exactly TWO policies that permit a client write —
+-- `users_update_own` (a user editing their own display name) and, since
+-- 20260812140000_push_notifications.sql, `push_subscriptions_own` (a
+-- user subscribing/unsubscribing their own device from push). Both are
+-- the same shape: a user acting on their own row by nothing more than
+-- `user_id = (select auth.uid())`, no cross-row authorization decision
+-- for RLS to get wrong — which is exactly the bar `users_update_own` set
+-- as the one precedent for skipping an RPC.
 --
 -- Everything else — households, memberships, invitations, the catalogue,
 -- lists, items, usage stats, notifications — has SELECT policies only, so
@@ -114,8 +120,8 @@ select test_assert(
   (select array_agg(tablename || '.' || policyname order by tablename)
    from pg_policies
    where schemaname = 'public' and cmd <> 'SELECT')
-  = array['users.users_update_own'],
-  'exactly one client write policy exists in the whole schema'
+  = array['push_subscriptions.push_subscriptions_own', 'users.users_update_own'],
+  'exactly two client write policies exist in the whole schema, both own-row'
 );
 
 select test_assert(
