@@ -343,29 +343,41 @@ select test_assert(
 );
 
 select test_login('99000000-0000-0000-0000-000000000001'); -- owner
+-- Of the three lists sent in this household (list8, list8b, list8c),
+-- the first two were completed above — 20260812160000_archive_completed_lists.sql
+-- means completing archives a list immediately, so only the still-open
+-- one is left visible to anyone.
 select test_assert(
-  (select count(*) = 3 from get_household_lists(:'hh8'::uuid)),
-  'the owner sees every list in the household'
+  (select count(*) = 1 from get_household_lists(:'hh8'::uuid)),
+  'the owner sees only the one list still open — the two completed ones archived out of view'
 );
 
 select test_login('99000000-0000-0000-0000-000000000002'); -- member
 select test_assert(
-  (select count(*) = 3 from get_household_lists(:'hh8'::uuid)),
+  (select count(*) = 1 from get_household_lists(:'hh8'::uuid)),
   'and so does a member'
 );
 
--- §16A.10: a completed list keeps the whole record.
+-- §16A.10, as amended by the archive-on-complete change: a completed
+-- list keeps its whole record in the underlying tables — archiving is
+-- not deleting — it is just excluded from every read path, including a
+-- direct id lookup.
 select test_assert(
-  (select completed_at is not null and sent_at is not null and viewed_at is not null
-     and created_by_name = 'Ana'
-   from get_household_lists(:'hh8'::uuid, :'list8'::uuid)),
-  '16A.10: a completed list preserves who sent it and every timestamp'
+  (select count(*) = 0 from get_household_lists(:'hh8'::uuid, :'list8'::uuid)),
+  'a completed list cannot be fetched even by id any more'
+);
+
+select test_assert(
+  (select status = 'archived' and completed_at is not null
+     and sent_at is not null and viewed_at is not null
+   from shopping_lists where id = :'list8'),
+  '16A.10: but its row and every timestamp are still there underneath'
 );
 
 select test_assert(
   (select count(*) = 4 from shopping_list_items
    where list_id = :'list8' and purchased_by_user_id is not null),
-  '16A.10: and who purchased each item'
+  '16A.10: and so is who purchased each item'
 );
 
 -- ============================================================

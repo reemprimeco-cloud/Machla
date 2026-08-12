@@ -275,7 +275,7 @@ The household half is implemented. §5 (requested vs. purchased) and §6
 | `get_household_lists` | any active member | Received lists + **sender name** + progress counts |
 | `mark_list_viewed` | Owner/Member | `sent → viewed`, idempotent, never backwards |
 | `set_purchase_status` | Owner/Member | The *only* write path into purchase state |
-| `set_list_completed` | Owner/Member | `completed`, and reversible back to `viewed` |
+| `set_list_completed` | Owner/Member | `completed` → immediately `archived` (2026-08, see §11.4); no longer reversible |
 
 Plus `assert_can_work_list`, the shared precondition — not granted to
 `authenticated`, same reasoning as `assert_own_draft`.
@@ -315,13 +315,25 @@ not match — `get_household_lists` tripped an earlier, looser version), and
 executable line (`--` comments are stripped first, since its body carries
 a note explaining exactly which columns it omits).
 
-### 11.4 Completion is not gated on the checklist
+### 11.4 Completion is not gated on the checklist — and it is now final
 
 `set_list_completed` closes a list with items still outstanding. A shop
 legitimately finishes with something unavailable, and refusing to close
-would only teach people to tick boxes they did not fill. Reopening drops
-to `viewed`, not `sent` — it has certainly been seen — and items stay
-editable afterwards so a miscount can be corrected.
+would only teach people to tick boxes they did not fill.
+
+**Changed 2026-08** (owner-requested): completing a list no longer leaves
+it in a reopenable `completed` state. `set_list_completed` still passes
+through `completed` — the existing `list_completed` notification trigger
+fires on that transition exactly as before — but then immediately moves
+it to `archived` within the same call
+(`20260812160000_archive_completed_lists.sql`). `assert_can_work_list`
+already refused to act on an archived list (`LIST_ARCHIVED`); this
+migration is what actually reaches that state. `get_household_lists`
+excludes `archived` unconditionally, even on a direct id lookup, so a
+finished list disappears from every list view — the dashboard, the
+household's inbox, the worker's own history — immediately and for
+everyone, with no way back. The row and its items are not deleted, only
+excluded from every read path (see §12.5).
 
 ### 11.5 Progress
 
@@ -415,8 +427,12 @@ of the importer.
 progress, read-only. It reuses `get_household_lists`, which returns only
 the caller's own lists to a Worker.
 
-A completed list preserves the whole record — requested items and
-quantities, categories, purchase status per item, purchased timestamp and
-purchased-by user, the creating worker, and every state timestamp — which
-is the groundwork §16A.11 needs for a future "repeat last week's list"
-without carrying purchase state across.
+A completed (now archived, §11.4) list preserves the whole record —
+requested items and quantities, categories, purchase status per item,
+purchased timestamp and purchased-by user, the creating worker, and every
+state timestamp — which is the groundwork §16A.11 needs for a future
+"repeat last week's list" without carrying purchase state across. That
+record is just no longer reachable through `get_household_lists` once
+archived; a future "repeat last week's list" feature would need its own
+narrow read path, the same way push notifications got `get_pending_pushes`
+rather than widening this one.

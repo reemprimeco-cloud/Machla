@@ -1,16 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useOptimistic, useState, useTransition } from "react";
 
 import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
-import {
-  Card,
-  ErrorText,
-  PrimaryButton,
-  Screen,
-  SecondaryButton,
-} from "@/components/ui/Primitives";
+import { Card, ErrorText, PrimaryButton, Screen } from "@/components/ui/Primitives";
 import { localizedName, productDetail } from "@/lib/catalog/localized";
 import {
   setListCompletedAction,
@@ -29,6 +24,10 @@ const ERROR_KEYS: Partial<Record<ListErrorCode, MessageKey>> = {
   NOT_HOUSEHOLD_SIDE: "errors.notOwner",
   LIST_NOT_FOUND: "errors.listNotFound",
   LIST_NOT_SENT: "errors.listNotFound",
+  // Reachable only in a race: someone else archived this list (or it was
+  // this tab's own stale copy) between page load and a tap here — the
+  // page itself never renders an already-archived list.
+  LIST_ARCHIVED: "errors.listNotFound",
 };
 
 /**
@@ -52,6 +51,7 @@ export function ListChecklist({
   groups: ListGroup[];
 }) {
   const { t, locale } = useLocale();
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<ListErrorCode | null>(null);
 
@@ -60,13 +60,24 @@ export function ListChecklist({
     Number(summary.purchased_items),
   );
   const percent = total ? Math.round((purchased / total) * 100) : 0;
-  const isComplete = summary.status === "completed";
 
-  function toggleComplete() {
+  // Completing a list archives it server-side (set_list_completed,
+  // 20260812160000_archive_completed_lists.sql) — it stops being
+  // reachable at all, from either side, the moment this succeeds. So
+  // there is no "reopen" state to render here any more: this screen can
+  // only ever show a list that is still open. Navigate away immediately
+  // rather than let the automatic post-action refresh land the user on
+  // this same URL's not-found page (getHouseholdListDetail now finds
+  // nothing for an archived id).
+  function markDone() {
     setError(null);
     startTransition(async () => {
-      const result = await setListCompletedAction(summary.id, !isComplete);
-      if (!result.ok) setError(result.code);
+      const result = await setListCompletedAction(summary.id, true);
+      if (!result.ok) {
+        setError(result.code);
+        return;
+      }
+      router.push("/home/lists");
     });
   }
 
@@ -154,22 +165,12 @@ export function ListChecklist({
       </ErrorText>
 
       {groups.length > 0 ? (
-        isComplete ? (
-          <SecondaryButton
-            onClick={toggleComplete}
-            disabled={pending}
-            className="w-full"
-          >
-            {t("hlists.reopen")}
-          </SecondaryButton>
-        ) : (
-          // Deliberately not gated on every item being checked: a shop can
-          // finish with something unavailable, and refusing to close the
-          // list would only teach people to fake the boxes.
-          <PrimaryButton onClick={toggleComplete} disabled={pending}>
-            {t("hlists.markDone")}
-          </PrimaryButton>
-        )
+        // Deliberately not gated on every item being checked: a shop can
+        // finish with something unavailable, and refusing to close the
+        // list would only teach people to fake the boxes.
+        <PrimaryButton onClick={markDone} disabled={pending}>
+          {t("hlists.markDone")}
+        </PrimaryButton>
       ) : null}
 
       <Link

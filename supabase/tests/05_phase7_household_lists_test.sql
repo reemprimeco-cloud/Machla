@@ -289,44 +289,51 @@ select test_assert(
 );
 
 -- ============================================================
--- 7. Completing
+-- 7. Completing — and archiving (20260812160000_archive_completed_lists.sql)
 -- ============================================================
 
 select test_login('77000000-0000-0000-0000-000000000001'); -- owner
 
 -- Deliberately allowed with an item still pending: a shop can finish with
 -- something unavailable, and refusing to close the list would only teach
--- people to fake the checkboxes.
+-- people to fake the checkboxes. Completing ends at 'archived', not
+-- 'completed' — the owner-requested behavior is that a finished list
+-- disappears immediately and for good, not that it lands in a reopenable
+-- state.
 select test_assert(
-  (select status = 'completed' and completed_at is not null
+  (select status = 'archived' and completed_at is not null
    from set_list_completed(:'list7'::uuid, true)),
-  'the owner completes the list even with an item outstanding'
+  'the owner completes the list even with an item outstanding, and it archives'
 );
 
-select test_assert(
-  (select status = 'viewed' and completed_at is null
-   from set_list_completed(:'list7'::uuid, false)),
-  'and can reopen it, dropping back to viewed rather than sent'
+-- No route back: assert_can_work_list refuses to return an archived list
+-- to any RPC, including the "reopen" call itself.
+select test_raises(
+  format($$ select set_list_completed(%L::uuid, false) $$, :'list7'),
+  'LIST_ARCHIVED',
+  'an archived list cannot be reopened'
 );
 
-select set_list_completed(:'list7'::uuid, true);
-
--- Re-opening a completed list must not walk its status backwards.
+-- It also stops appearing anywhere — the household's own list view...
 select test_assert(
-  (select status = 'completed' from get_household_lists(:'hh7'::uuid)),
-  'mark_list_viewed does not undo completion'
+  (select count(*) = 0 from get_household_lists(:'hh7'::uuid)),
+  'a completed list disappears from the household''s list view entirely'
 );
 
+-- ...and even a direct lookup by id, so a stale bookmark or a
+-- notification's "Open list" link finds nothing either.
 select test_assert(
-  (select count(*) = 1 from get_household_lists(:'hh7'::uuid, :'list7'::uuid)),
-  'a single list can be fetched by id'
+  (select count(*) = 0 from get_household_lists(:'hh7'::uuid, :'list7'::uuid)),
+  'an archived list cannot be fetched at all, even by id'
 );
 
--- Items stay editable after completion so a miscount can be corrected.
-select set_purchase_status(:'item_a'::uuid, 'pending');
-select test_assert(
-  (select purchased_items = 1 from get_household_lists(:'hh7'::uuid)),
-  'a completed list can still be corrected'
+-- Nothing can touch it any more, not even the purchase checklist that
+-- used to stay open after completion for correcting a miscount — once
+-- archived, that window is gone too.
+select test_raises(
+  format($$ select set_purchase_status(%L::uuid, 'pending') $$, :'item_a'),
+  'LIST_ARCHIVED',
+  'an archived list cannot be corrected — its items are frozen for good'
 );
 
 -- ============================================================
@@ -380,7 +387,7 @@ select test_assert(
 -- would fail the assertion for saying the right thing.
 select test_assert(
   (select regexp_replace(
-            pg_get_functiondef('public.set_list_item(uuid, uuid, numeric, text)'::regprocedure),
+            pg_get_functiondef('public.set_list_item(uuid, uuid, numeric, text, boolean)'::regprocedure),
             '--[^\n]*', '', 'g')
           !~* 'purchase_status|purchased_at|purchased_by_user_id'),
   'set_list_item does not touch the purchase columns in any executable line'

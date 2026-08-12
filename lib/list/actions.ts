@@ -309,9 +309,20 @@ async function purgePhotoFor(itemId: string): Promise<void> {
   await supabase.rpc("mark_photo_purged", { p_item_id: itemId });
 }
 
-/** Closes a shop, or reopens one closed by mistake. Deliberately allowed
- * with items still outstanding — a shop can finish with something
- * unavailable, and refusing would only teach people to fake the boxes. */
+/**
+ * Closes a shop. Deliberately allowed with items still outstanding — a
+ * shop can finish with something unavailable, and refusing would only
+ * teach people to fake the boxes.
+ *
+ * Final, not reversible: `set_list_completed` archives the list in the
+ * same call (`20260812160000_archive_completed_lists.sql`), so it stops
+ * appearing anywhere for anyone, including the caller — there is no UI
+ * path left that ever passes `completed: false`. The parameter and the
+ * RPC's own reopen branch still exist underneath only because
+ * `assert_can_work_list` refuses to act on an archived list regardless,
+ * which makes that branch unreachable rather than something worth
+ * deleting outright.
+ */
 export async function setListCompletedAction(
   listId: string,
   completed: boolean,
@@ -332,8 +343,6 @@ export async function setListCompletedAction(
   // the point at which no photograph on it has any remaining purpose.
   if (completed) {
     await purgePhotosForList(listId);
-    // Reopening (completed === false) is not a notification type the
-    // trigger fires for — nothing to push.
     await sendPendingPushes(listId, "list_completed");
   }
 
