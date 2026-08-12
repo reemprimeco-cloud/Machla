@@ -5,7 +5,13 @@ import { Suspense, useState } from "react";
 
 import { HomeListIcon } from "@/components/brand/HomeListIcon";
 import { safeNextPath } from "@/lib/auth/nextPath";
-import { DEFAULT_PHONE_PREFIX, isValidPhone, normalizePhone, OTP_CHANNEL } from "@/lib/auth/phone";
+import {
+  isValidPhone,
+  KUWAIT_DIAL_CODE,
+  LOCAL_NUMBER_LENGTH,
+  OTP_CHANNEL,
+  toE164FromLocal,
+} from "@/lib/auth/phone";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
@@ -24,15 +30,17 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const { t } = useLocale();
   const nextPath = safeNextPath(searchParams.get("next"));
-  const [phone, setPhone] = useState(DEFAULT_PHONE_PREFIX);
+  // Only the local digits. The +965 is a fixed chip in the UI, because
+  // asking users to type a country code produced real failed sign-ins.
+  const [localDigits, setLocalDigits] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const normalized = normalizePhone(phone);
+    const normalized = toE164FromLocal(localDigits);
 
-    if (!isValidPhone(normalized)) {
+    if (localDigits.length !== LOCAL_NUMBER_LENGTH || !isValidPhone(normalized)) {
       setStatus("error");
       setError(t("auth.invalidPhone"));
       return;
@@ -76,16 +84,46 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
         <label className="flex flex-col gap-2">
           <span className="hl-label text-ink">{t("auth.phoneLabel")}</span>
-          <input
-            type="tel"
-            inputMode="tel"
+          {/* dir="ltr" on the row: chip and digits must not swap sides in
+              Arabic/Urdu — a phone number reads left-to-right everywhere. */}
+          <div
             dir="ltr"
-            autoComplete="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            className="hl-body min-h-12 rounded-lg border border-sand bg-surface px-4 text-ink outline-none focus-visible:border-green-700"
-            aria-invalid={status === "error"}
-          />
+            className="flex min-h-12 items-stretch overflow-hidden rounded-lg border border-sand bg-surface focus-within:border-green-700"
+          >
+            <span
+              aria-hidden
+              className="flex select-none items-center gap-2 border-e border-sand bg-surface-2 px-3"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element --
+                  a 4KB static SVG; the optimizer adds nothing. */}
+              <img src="/flags/kw.svg" alt="" className="h-4 w-6 rounded-[2px]" />
+              <span className="hl-body text-ink-muted">{KUWAIT_DIAL_CODE}</span>
+            </span>
+            <input
+              type="tel"
+              inputMode="numeric"
+              autoComplete="tel-national"
+              value={localDigits}
+              // No HTML maxLength — it would truncate the raw value before
+              // stripping, dropping digits from a paste like "6506 8000".
+              // Strip non-digits first, then cap (same rule as the OTP box).
+              // A paste of the full number with country code still works:
+              // "+96565068000" -> strip -> "96565068000" -> drop the 965.
+              onChange={(event) => {
+                let digits = event.target.value.replace(/\D/g, "");
+                if (digits.startsWith("965") && digits.length > LOCAL_NUMBER_LENGTH) {
+                  digits = digits.slice(3);
+                }
+                if (digits.startsWith("0")) {
+                  digits = digits.replace(/^0+/, "");
+                }
+                setLocalDigits(digits.slice(0, LOCAL_NUMBER_LENGTH));
+              }}
+              className="hl-body min-w-0 flex-1 bg-transparent px-4 tracking-wide text-ink outline-none"
+              aria-invalid={status === "error"}
+              aria-label={t("auth.phoneLabel")}
+            />
+          </div>
         </label>
 
         {error ? (
@@ -96,7 +134,7 @@ function LoginForm() {
 
         <button
           type="submit"
-          disabled={status === "sending"}
+          disabled={status === "sending" || localDigits.length !== LOCAL_NUMBER_LENGTH}
           className="hl-label min-h-12 rounded-lg bg-green-700 px-4 text-on-green shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
         >
           {status === "sending" ? t("auth.sending") : t("auth.sendCode")}
