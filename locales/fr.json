@@ -71,7 +71,8 @@
     "addHome": "Ajouter une autre maison",
     "tabHomes": "Maisons",
     "tabSettings": "Réglages",
-    "tabBarLabel": "Principal"
+    "tabBarLabel": "Principal",
+    "myOwnList": "Ma propre liste"
   },
   "settings": {
     "title": "Réglages",

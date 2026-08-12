@@ -20,11 +20,17 @@ export function WorkerBar({
   backHref,
   itemCount,
   unreadCount = 0,
+  basePath = "/worker",
 }: {
   title: string;
   backHref?: string;
   itemCount: number;
   unreadCount?: number;
+  /** Lets this same chrome serve a second flow — a household owner/member
+   * building their own list (`app/home/shop/*`), reusing every worker
+   * screen unchanged apart from where its links point. Defaults to the
+   * worker experience these components were built for. */
+  basePath?: string;
 }) {
   const { t } = useLocale();
 
@@ -49,7 +55,7 @@ export function WorkerBar({
       <NotificationBell unreadCount={unreadCount} />
 
       <Link
-        href="/worker/list"
+        href={`${basePath}/list`}
         className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-green-700 px-4 text-on-green"
       >
         <span aria-hidden>🧺</span>
@@ -64,7 +70,13 @@ export function WorkerBar({
  * result page can be linked, shared and re-entered — and so the search
  * itself runs in Postgres, across all nine languages at once, which no
  * client-side filter could reproduce. */
-export function SearchBox({ initialQuery = "" }: { initialQuery?: string }) {
+export function SearchBox({
+  initialQuery = "",
+  basePath = "/worker",
+}: {
+  initialQuery?: string;
+  basePath?: string;
+}) {
   const { t } = useLocale();
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
@@ -75,7 +87,7 @@ export function SearchBox({ initialQuery = "" }: { initialQuery?: string }) {
       onSubmit={(event) => {
         event.preventDefault();
         const trimmed = query.trim();
-        if (trimmed) router.push(`/worker/search?q=${encodeURIComponent(trimmed)}`);
+        if (trimmed) router.push(`${basePath}/search?q=${encodeURIComponent(trimmed)}`);
       }}
       className="flex gap-2"
     >

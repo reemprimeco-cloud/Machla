@@ -15,6 +15,7 @@ export function SearchResults({
   quantities,
   itemCount,
   unreadCount,
+  basePath = "/worker",
 }: {
   query: string;
   products: Product[];
@@ -23,6 +24,7 @@ export function SearchResults({
   quantities: Record<string, number>;
   itemCount: number;
   unreadCount: number;
+  basePath?: string;
 }) {
   const { t } = useLocale();
 
@@ -34,12 +36,13 @@ export function SearchResults({
     <Screen>
       <WorkerBar
         title={t("worker.searchPlaceholder")}
-        backHref="/worker"
+        backHref={basePath}
         itemCount={itemCount}
         unreadCount={unreadCount}
+        basePath={basePath}
       />
 
-      <SearchBox initialQuery={query} />
+      <SearchBox initialQuery={query} basePath={basePath} />
 
       {products.length === 0 ? (
         <Card>

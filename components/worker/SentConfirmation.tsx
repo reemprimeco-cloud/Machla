@@ -20,10 +20,12 @@ export function SentConfirmation({
   householdName,
   groups,
   itemCount,
+  basePath = "/worker",
 }: {
   householdName: string;
   groups: ListGroup[];
   itemCount: number;
+  basePath?: string;
 }) {
   const { t, locale } = useLocale();
 
@@ -87,7 +89,7 @@ export function SentConfirmation({
       ))}
 
       <Link
-        href="/worker"
+        href={basePath}
         className="hl-label min-h-12 content-center rounded-lg bg-green-700 px-4 text-center text-on-green shadow-sm"
       >
         {t("worker.newList")}

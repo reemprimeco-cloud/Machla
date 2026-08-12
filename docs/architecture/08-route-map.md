@@ -49,6 +49,16 @@ landing page) is wanted later.
   /home/settings                — ACCOUNT-level: profile, language, logout —
                                    not household-level (superseded an earlier
                                    plan for this path, see §4)
+  /home/shop                    — owner/member's OWN list — mirrors
+                                   /worker/* exactly (basePath-scoped reuse
+                                   of the same components), for things they
+                                   want to buy themselves, not through a
+                                   helper. See §4.2.
+  /home/shop/c/[key]
+  /home/shop/search
+  /home/shop/list
+  /home/shop/photo
+  /home/shop/sent/[id]
   /logout
 ```
 
@@ -89,6 +99,34 @@ resolves it (falling back to the first membership if the cookie is
 unset, stale, or forged — it is never itself an authorization check, see
 the function's own doc comment). What used to render at `/home` moved to
 `/home/dashboard` unchanged.
+
+### 4.2 The owner/member's own list (`/home/shop/*`)
+
+`04-roles-permission-matrix.md` already listed "Create/build a shopping
+list (draft)" as ✅ for Owner and Member, not just Worker — the RPCs
+(`get_or_create_draft_list`, `set_list_item`, `send_list`, ...,
+`20260809170000_phase6_worker_lists.sql`) check `is_active_member`, no
+role restriction, and say so directly in their own comments. The
+permission existed from Phase 6; only the UI to use it as an owner/member
+didn't.
+
+Rather than a second implementation, `app/home/shop/*` is a thin
+`basePath`-parameterized reuse of every `app/worker/*` screen and
+component: `WorkerHome`, `CategoryGrid`, `CategoryBrowser`,
+`SearchResults`, `ListReview`, `PhotoCapture`, `SentConfirmation`, and
+`WorkerBar`/`SearchBox` all take an optional `basePath` (default
+`/worker`) that the shop variant sets to `/home/shop`, changing only
+where their internal links point. `isWorker` (literally
+`basePath === "/worker"`) hides the two pieces of chrome that would be
+redundant in the shop variant — the "My lists" link (a sent list here
+already appears in `/home/lists` alongside a helper's, since
+`get_household_lists` never filtered by who sent it) and the inline
+account actions (redundant with the Settings tab, §4.1).
+
+No new SQL, no new authorization rule — `getDraftList`/`getListById`
+already key on `created_by_user_id = auth.uid()`, so the owner's own
+draft is already a separate row from a helper's in the same household.
+Reached from a "My own list" card on `/home/dashboard`.
 
 A persistent bottom tab bar (`components/household/HomeTabBar.tsx`,
 mounted by `app/home/layout.tsx`) replaces the per-screen "back" links

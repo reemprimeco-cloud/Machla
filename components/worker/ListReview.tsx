@@ -34,11 +34,13 @@ export function ListReview({
   listId,
   groups,
   itemCount,
+  basePath = "/worker",
 }: {
   householdId: string;
   listId: string | null;
   groups: ListGroup[];
   itemCount: number;
+  basePath?: string;
 }) {
   const { t, locale } = useLocale();
   const router = useRouter();
@@ -50,7 +52,7 @@ export function ListReview({
     setError(null);
     startTransition(async () => {
       const result = await sendListAction(listId);
-      if (result.ok) router.push(`/worker/sent/${listId}`);
+      if (result.ok) router.push(`${basePath}/sent/${listId}`);
       else setError(result.code);
     });
   }
@@ -59,8 +61,9 @@ export function ListReview({
     <Screen>
       <WorkerBar
         title={t("worker.myList")}
-        backHref="/worker"
+        backHref={basePath}
         itemCount={itemCount}
+        basePath={basePath}
       />
 
       {itemCount === 0 ? (
@@ -153,10 +156,7 @@ export function ListReview({
             {pending ? t("worker.sending") : t("worker.send")}
           </PrimaryButton>
 
-          <Link
-            href="/worker"
-            className="hl-label text-center text-green-700 underline"
-          >
+          <Link href={basePath} className="hl-label text-center text-green-700 underline">
             {t("worker.addMore")}
           </Link>
         </>

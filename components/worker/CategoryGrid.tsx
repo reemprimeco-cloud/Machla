@@ -14,7 +14,13 @@ import { useLocale } from "@/lib/i18n/LocaleProvider";
  * of the meaning as the label does — which means it has to be big
  * (master plan Section 3: visual navigation is core, not decoration).
  */
-export function CategoryGrid({ categories }: { categories: Category[] }) {
+export function CategoryGrid({
+  categories,
+  basePath = "/worker",
+}: {
+  categories: Category[];
+  basePath?: string;
+}) {
   const { locale } = useLocale();
 
   return (
@@ -24,7 +30,7 @@ export function CategoryGrid({ categories }: { categories: Category[] }) {
           <Link
             // The capture tile opens the camera instead of a product
             // list; it has no products by design (categories.is_capture).
-            href={category.is_capture ? "/worker/photo" : `/worker/c/${category.key}`}
+            href={category.is_capture ? `${basePath}/photo` : `${basePath}/c/${category.key}`}
             className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-sand bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >
             <span aria-hidden className="text-4xl leading-none">

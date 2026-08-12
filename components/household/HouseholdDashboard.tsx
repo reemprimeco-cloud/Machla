@@ -72,6 +72,18 @@ export function HouseholdDashboard({
         </ul>
       )}
 
+      {/* Same mechanism a helper uses to build and send a list
+          (app/home/shop/*, a `basePath`-scoped reuse of the worker
+          screens) — for the things the owner/member wants to buy
+          themselves, not through a helper. */}
+      <Link
+        href="/home/shop"
+        className="hl-label flex min-h-14 items-center justify-center gap-2 rounded-lg bg-green-700 px-5 text-on-green shadow-sm active:bg-green-600"
+      >
+        <span aria-hidden>🧺</span>
+        <span>{t("home.myOwnList")}</span>
+      </Link>
+
       <nav className="flex flex-col gap-3">
         <Link
           href="/home/lists"

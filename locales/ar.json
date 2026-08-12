@@ -71,7 +71,8 @@
     "addHome": "إضافة منزل آخر",
     "tabHomes": "المنازل",
     "tabSettings": "الإعدادات",
-    "tabBarLabel": "الرئيسية"
+    "tabBarLabel": "الرئيسية",
+    "myOwnList": "قائمتي الخاصة"
   },
   "settings": {
     "title": "الإعدادات",

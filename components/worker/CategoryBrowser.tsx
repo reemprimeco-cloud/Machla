@@ -16,6 +16,7 @@ export function CategoryBrowser({
   quantities,
   itemCount,
   unreadCount,
+  basePath = "/worker",
 }: {
   category: Category;
   products: Product[];
@@ -24,6 +25,7 @@ export function CategoryBrowser({
   quantities: Record<string, number>;
   itemCount: number;
   unreadCount: number;
+  basePath?: string;
 }) {
   const { t, locale } = useLocale();
 
@@ -35,9 +37,10 @@ export function CategoryBrowser({
     <Screen>
       <WorkerBar
         title={`${category.icon ?? ""} ${localizedName(category, locale)}`.trim()}
-        backHref="/worker"
+        backHref={basePath}
         itemCount={itemCount}
         unreadCount={unreadCount}
+        basePath={basePath}
       />
 
       {products.length === 0 ? (

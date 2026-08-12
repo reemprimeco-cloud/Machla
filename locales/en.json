@@ -71,7 +71,8 @@
     "addHome": "Add another home",
     "tabHomes": "Homes",
     "tabSettings": "Settings",
-    "tabBarLabel": "Main"
+    "tabBarLabel": "Main",
+    "myOwnList": "My own list"
   },
   "settings": {
     "title": "Settings",

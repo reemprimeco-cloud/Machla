@@ -22,12 +22,14 @@ import { downscaleToJpeg, PHOTO_MAX_BYTES } from "@/lib/list/photo";
 export function PhotoCapture({
   householdId,
   listId,
+  basePath = "/worker",
 }: {
   householdId: string;
   /** The draft as it existed at render time; null if the worker has not
    * added anything yet. Not required — `add` creates one on demand,
    * because photographing may well be the first thing they do. */
   listId: string | null;
+  basePath?: string;
 }) {
   const { t, locale } = useLocale();
   const router = useRouter();
@@ -112,7 +114,7 @@ export function PhotoCapture({
         return null;
       });
       setQuantity(1);
-      router.push("/worker/list");
+      router.push(`${basePath}/list`);
       router.refresh();
     });
   }
