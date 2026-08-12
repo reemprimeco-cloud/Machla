@@ -183,3 +183,35 @@ Phase 1 usage (storage for product images, auth SMS costs which are
 often billed separately/pass-through, RLS-heavy query patterns) — a
 five-minute check, not a redesign, but worth doing before, not after,
 Phase 5 image uploads begin.
+
+## 16. Browser push delivery: Next.js Server Action, not a database webhook
+
+`20260809200000_phase8_notifications.sql` deliberately left push out of
+scope, but designed `notifications` so that whichever way push later got
+built, it would be "a reader of this table rather than a second,
+parallel notification path that can disagree with it." Two designs
+satisfy that:
+
+1. A Postgres trigger on `notifications` firing a `pg_net` webhook to a
+   Supabase Edge Function, which calls the Web Push protocol.
+2. Sending from the same Next.js Server Actions that already trigger the
+   notification (`sendListAction`, `markListViewedAction`,
+   `setListCompletedAction` — `lib/list/actions.ts`), best-effort, right
+   after the RPC that changed the list's status returns.
+
+Went with (2). (1) needs a deployed Edge Function, a webhook
+configuration, and the VAPID private key stored as a second secret in a
+second place — none of it visible from `supabase/migrations`, which is
+exactly the kind of infrastructure that only becomes visible when it
+silently breaks and nobody remembers where the webhook is registered.
+(2) keeps the whole feature inside the codebase this file describes: one
+migration (`20260812140000_push_notifications.sql`,
+`20260812150000_push_notification_target_role.sql`), one `.env` secret
+alongside the ones `scripts/check-env.mjs` already knows about, and
+ordinary application code (`lib/push/*`) instead of a second deployment
+target. The cost is that a push only sends if the Server Action runs —
+fine here, since the Server Action is the only code path that changes a
+list's status in the first place, and a push that fails to send has
+never once made the underlying action fail (every `sendPendingPushes`
+call is awaited only after the RPC it follows already succeeded, and
+swallows its own errors).

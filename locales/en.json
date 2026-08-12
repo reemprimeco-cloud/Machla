@@ -83,7 +83,10 @@
   "settings": {
     "title": "Settings",
     "profile": "Profile",
-    "general": "General"
+    "general": "General",
+    "pushEnable": "Push notifications",
+    "pushHint": "Get notified on this device when a list is sent, opened, or finished.",
+    "pushBlocked": "Notifications are blocked in your browser settings."
   },
   "members": {
     "title": "People",

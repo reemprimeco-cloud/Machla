@@ -229,6 +229,9 @@ export interface Database {
           actor_name: string | null;
           created_at: string;
           read_at: string | null;
+          // 20260812140000_push_notifications.sql — when a push was
+          // dispatched for this row, set by mark_pushes_sent.
+          pushed_at: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["notifications"]["Row"]> & {
           user_id: string;
@@ -236,6 +239,27 @@ export interface Database {
           type: NotificationType;
         };
         Update: Partial<Database["public"]["Tables"]["notifications"]["Row"]>;
+        Relationships: [];
+      };
+      // 20260812140000_push_notifications.sql. One row per (browser,
+      // device) — RLS-scoped to the caller's own rows, no RPC needed for
+      // the ordinary subscribe/unsubscribe path.
+      push_subscriptions: {
+        Row: {
+          id: string;
+          user_id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["push_subscriptions"]["Row"]> & {
+          user_id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["push_subscriptions"]["Row"]>;
         Relationships: [];
       };
       shopping_list_items: {
@@ -341,12 +365,17 @@ export interface Database {
         Args: { p_household_id: string; p_language?: string };
         Returns: string;
       };
+      // p_update_note added by 20260812120000_list_item_note_preserved.sql:
+      // false (the default) preserves whatever note is already on the row,
+      // which is what the quantity stepper's calls need — they never pass
+      // a note at all and must not wipe out one set from the review screen.
       set_list_item: {
         Args: {
           p_list_id: string;
           p_product_id: string;
           p_quantity?: number;
           p_note?: string | null;
+          p_update_note?: boolean;
         };
         Returns: string;
       };
@@ -426,6 +455,33 @@ export interface Database {
           purchased_items: number;
           unavailable_items: number;
         }[];
+      };
+
+      // Push notifications — supabase/migrations/*_push_notifications.sql.
+      // Both scoped to `actor_user_id = auth.uid()`: the caller can only
+      // ever read back recipients of an action THEY just performed.
+      // is_household_side added by
+      // 20260812150000_push_notification_target_role.sql: whether the
+      // recipient can reach /home/lists/{id} (owner/member) or only
+      // /worker/lists (worker) — list_sent recipients are always the
+      // former, but list_viewed/list_completed go back to whoever
+      // authored the list, which can be either.
+      get_pending_pushes: {
+        Args: { p_list_id: string; p_type: NotificationType };
+        Returns: {
+          notification_id: string;
+          user_id: string;
+          endpoint: string;
+          p256dh: string;
+          auth_key: string;
+          actor_name: string | null;
+          preferred_language: string | null;
+          is_household_side: boolean;
+        }[];
+      };
+      mark_pushes_sent: {
+        Args: { p_notification_ids: string[] };
+        Returns: number;
       };
     };
     Enums: Record<string, never>;

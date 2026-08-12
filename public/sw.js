@@ -134,3 +134,58 @@ async function navigationWithOfflineFallback(request) {
     );
   }
 }
+
+// ============================================================
+// Push notifications
+// ============================================================
+//
+// The payload is built server-side (lib/push/send.ts) already translated
+// into the recipient's own preferred_language — this file never has a
+// locale to work with, since it runs with no page open at all. Every
+// field it reads is assumed present; a malformed payload just shows a
+// generic system notification rather than throwing, since a push that
+// silently disappears is worse than a vague one.
+self.addEventListener("push", (event) => {
+  let payload = {};
+  try {
+    payload = event.data ? event.data.json() : {};
+  } catch {
+    // Not JSON — fall through to the defaults below.
+  }
+
+  const title = payload.title || "Machla";
+  const options = {
+    body: payload.body || "",
+    icon: "/icons/icon-192.png",
+    badge: "/icons/icon-192.png",
+    // Two notifications of the same type replace each other rather than
+    // stacking — "list sent" twice before either is read should read as
+    // one updated alert, not two.
+    tag: payload.tag || "machla-notification",
+    data: { url: payload.url || "/notifications" },
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = event.notification.data && event.notification.data.url;
+  if (!url) return;
+
+  event.waitUntil(
+    (async () => {
+      const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      // Focus an already-open tab rather than opening a second one, the
+      // way every native app's notification tap behaves.
+      for (const client of clients) {
+        if (new URL(client.url).origin === self.location.origin && "focus" in client) {
+          await client.focus();
+          if ("navigate" in client) return client.navigate(url);
+          return;
+        }
+      }
+      return self.clients.openWindow(url);
+    })(),
+  );
+});

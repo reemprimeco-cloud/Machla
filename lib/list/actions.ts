@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { toListErrorCode, type ListActionResult } from "./errors";
+import { sendPendingPushes } from "@/lib/push/send";
 import type { PurchaseStatus } from "@/lib/supabase/database.types";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 import { createClient } from "@/lib/supabase/server";
@@ -227,6 +228,10 @@ export async function sendListAction(
 
   revalidatePath("/worker", "layout");
   revalidatePath("/home", "layout");
+  // Best-effort, after the status change that created the underlying
+  // notification rows has already committed — see sendPendingPushes'
+  // own comment for why a push failure must never surface here.
+  await sendPendingPushes(listId, "list_sent");
   return { ok: true, value: data };
 }
 
@@ -242,7 +247,11 @@ export async function sendListAction(
 export async function markListViewedAction(listId: string): Promise<void> {
   if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
-  await supabase.rpc("mark_list_viewed", { p_list_id: listId });
+  const { data, error } = await supabase.rpc("mark_list_viewed", { p_list_id: listId });
+  // mark_list_viewed is idempotent and returns null on a no-op call
+  // (already viewed, or not sent yet) — only a real sent -> viewed
+  // transition created a notification row worth reading back.
+  if (!error && data) await sendPendingPushes(listId, "list_viewed");
 }
 
 /**
@@ -321,7 +330,12 @@ export async function setListCompletedAction(
   // marked unavailable — or one whose purge failed on a flaky connection
   // — would otherwise keep its photograph forever. Completing the list is
   // the point at which no photograph on it has any remaining purpose.
-  if (completed) await purgePhotosForList(listId);
+  if (completed) {
+    await purgePhotosForList(listId);
+    // Reopening (completed === false) is not a notification type the
+    // trigger fires for — nothing to push.
+    await sendPendingPushes(listId, "list_completed");
+  }
 
   revalidatePath("/home", "layout");
   return { ok: true, value: undefined };

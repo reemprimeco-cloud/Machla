@@ -83,7 +83,10 @@
   "settings": {
     "title": "Réglages",
     "profile": "Profil",
-    "general": "Général"
+    "general": "Général",
+    "pushEnable": "Notifications push",
+    "pushHint": "Recevez une notification sur cet appareil lorsqu'une liste est envoyée, ouverte ou terminée.",
+    "pushBlocked": "Les notifications sont bloquées dans les paramètres de votre navigateur."
   },
   "members": {
     "title": "Personnes",

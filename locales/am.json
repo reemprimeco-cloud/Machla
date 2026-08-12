@@ -83,7 +83,10 @@
   "settings": {
     "title": "ቅንብሮች",
     "profile": "መገለጫ",
-    "general": "አጠቃላይ"
+    "general": "አጠቃላይ",
+    "pushEnable": "ግፋ ማሳወቂያዎች",
+    "pushHint": "ዝርዝር ሲላክ፣ ሲከፈት ወይም ሲጠናቀቅ በዚህ መሳሪያ ላይ ይወቁ።",
+    "pushBlocked": "ማሳወቂያዎች በአሳሽዎ ቅንብሮች ውስጥ ታግደዋል።"
   },
   "members": {
     "title": "ሰዎች",

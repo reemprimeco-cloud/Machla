@@ -83,7 +83,10 @@
   "settings": {
     "title": "Pengaturan",
     "profile": "Profil",
-    "general": "Umum"
+    "general": "Umum",
+    "pushEnable": "Notifikasi push",
+    "pushHint": "Dapatkan notifikasi di perangkat ini saat daftar dikirim, dibuka, atau selesai.",
+    "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda."
   },
   "members": {
     "title": "Orang",

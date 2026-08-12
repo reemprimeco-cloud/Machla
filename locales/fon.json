@@ -83,7 +83,10 @@
   "settings": {
     "title": "Ayidonu lɛ́",
     "profile": "Hwɛ ce",
-    "general": "Bǐbǐ"
+    "general": "Bǐbǐ",
+    "pushEnable": "Alaxo lɛ́ e nɔ sɛ́n",
+    "pushHint": "Ɖexlɛ́ mì ɖò nùnina elɔ jí é ɖò táwo sín sɛ́n, hunhun kabǐ fó hwenu.",
+    "pushBlocked": "Alaxo lɛ́ wɛ dó xó ɖò browser towe sín ayidonu lɛ́ mɛ."
   },
   "members": {
     "title": "Mɛ lɛ́",

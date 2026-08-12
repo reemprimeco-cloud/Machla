@@ -83,7 +83,10 @@
   "settings": {
     "title": "Mga Setting",
     "profile": "Profile",
-    "general": "Pangkalahatan"
+    "general": "Pangkalahatan",
+    "pushEnable": "Mga push notification",
+    "pushHint": "Makatanggap ng abiso sa device na ito kapag may naipadala, nabuksan, o natapos na listahan.",
+    "pushBlocked": "Naka-block ang mga notification sa settings ng iyong browser."
   },
   "members": {
     "title": "Mga tao",

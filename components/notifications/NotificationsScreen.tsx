@@ -92,7 +92,14 @@ export function NotificationsScreen({
               </div>
               {notification.list_id ? (
                 <Link
-                  href={`/home/lists/${notification.list_id}`}
+                  // A worker has no /home/lists/{id} route to reach — send
+                  // them to their own list history instead. The household
+                  // variant is the only one that can open a specific list.
+                  href={
+                    variant === "household"
+                      ? `/home/lists/${notification.list_id}`
+                      : "/worker/lists"
+                  }
                   className="hl-caption shrink-0 self-center text-primary underline"
                 >
                   {t("hlists.openList")}

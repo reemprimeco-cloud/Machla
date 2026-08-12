@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { PushToggle } from "@/components/household/PushToggle";
 import { Card, Screen } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -71,6 +72,12 @@ export function SettingsScreen({
               ›
             </span>
           </Link>
+        </Card>
+      </section>
+
+      <section className="space-y-2">
+        <Card>
+          <PushToggle />
         </Card>
       </section>
 
