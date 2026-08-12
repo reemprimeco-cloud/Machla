@@ -3,7 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 
-import { Card, ErrorText, PrimaryButton, Screen, SecondaryButton } from "@/components/ui/Primitives";
+import {
+  Card,
+  ErrorText,
+  PrimaryButton,
+  Screen,
+  SecondaryButton,
+} from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { addPhotoItemAction, ensureDraftAction } from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
@@ -102,7 +108,12 @@ export function PhotoCapture({
         return;
       }
 
-      const result = await addPhotoItemAction(draft.value, path, quantity, null);
+      const result = await addPhotoItemAction(
+        draft.value,
+        path,
+        quantity,
+        null,
+      );
       if (!result.ok) {
         setError(result.code);
         return;
@@ -145,7 +156,7 @@ export function PhotoCapture({
           <img
             src={previewUrl}
             alt=""
-            className="max-h-72 w-full rounded-lg border border-sand object-contain"
+            className="max-h-72 w-full rounded-lg border border-line object-contain"
           />
 
           <div className="flex items-center justify-between gap-3">
@@ -156,7 +167,9 @@ export function PhotoCapture({
                 onClick={() => setQuantity((n) => Math.max(1, n - 1))}
                 disabled={pending || quantity <= 1}
               />
-              <span className="hl-label w-8 text-center tabular-nums text-ink">{quantity}</span>
+              <span className="hl-label w-8 text-center tabular-nums text-ink">
+                {quantity}
+              </span>
               <StepButton
                 label="+"
                 onClick={() => setQuantity((n) => Math.min(999, n + 1))}
@@ -181,7 +194,7 @@ export function PhotoCapture({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-sand bg-surface text-ink"
+          className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-line bg-surface text-ink"
         >
           <span aria-hidden className="text-5xl leading-none">
             📷
@@ -220,7 +233,7 @@ function StepButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className="flex size-12 items-center justify-center rounded-pill border border-sand bg-surface text-xl text-ink disabled:opacity-40"
+      className="flex size-12 items-center justify-center rounded-pill border border-line bg-surface text-xl text-ink disabled:opacity-40"
     >
       <span aria-hidden>{label}</span>
     </button>

@@ -1,64 +1,100 @@
 @import "tailwindcss";
 
 /* ====================================================================
-   HomeList design tokens — ported from the HomeList UI Kit
-   (docs/design/BRAND.md, docs/architecture/15-localization-architecture.md §9).
-   Single source of truth: every colour here has a verified CMYK
-   equivalent in docs/design/BRAND.md for print use.
+   Machla design tokens — ported from the Machla UI Kit (2026-08 refresh).
+   Supersedes the earlier warm-green "HomeList" palette; the mark is now
+   a gradient shopping basket carrying two leaves (magenta → amber),
+   navy ink, neutral surfaces. See docs/design/BRAND.md for the mark
+   variants, contrast table and CMYK print values.
+
+   TWO LAYERS, and this is the one thing in this file to not get wrong:
+   the brand ramp below (magenta/pink/coral/orange/amber, the gradient
+   itself) is DECORATION — the mark, hero panels, the single gradient CTA
+   per screen. Measured against white, none of it reaches 4.5:1 WCAG AA.
+   Anything a user must read or press uses the interactive ramp
+   (--hl-primary and friends), which is the same hues darkened until they
+   pass. Reaching for --hl-primary-tint or the raw brand hues as a text
+   colour is the mistake this comment exists to prevent.
    ==================================================================== */
 
 :root {
-  /* ---- Brand green --------------------------------------------------- */
-  --hl-green-900: #0e3d30; /* deepest — tile gradient end, dark surfaces */
-  --hl-green-800: #134f3e; /* headings on cream */
-  --hl-green-700: #1f6b57; /* PRIMARY — buttons, active states, brand tile */
-  --hl-green-600: #2e8a6e; /* hover, success */
-  --hl-green-400: #7fb79f; /* dividers on green, disabled-on-dark */
-  --hl-green-100: #dcebe4; /* selected row tint on light bg */
+  /* ---- Brand ramp — decoration only, never behind readable text ------ */
+  --hl-brand-magenta: #ff00cf;
+  --hl-brand-pink: #f5297f;
+  --hl-brand-rose: #fa4685;
+  --hl-brand-coral: #fa6062;
+  --hl-brand-orange: #fb8a2e;
+  --hl-brand-amber: #ffc400;
+  --hl-brand-leaf: #00c186;
+  --hl-brand-teal: #00b4a8;
+  --hl-gradient: linear-gradient(
+    115deg,
+    #ff00cf 0%,
+    #fa1f9e 16%,
+    #fa4685 38%,
+    #fa6062 58%,
+    #fb8a2e 78%,
+    #ffc400 100%
+  );
+  --hl-gradient-soft: linear-gradient(
+    115deg,
+    #ffe8f5 0%,
+    #fff0e2 60%,
+    #fff7de 100%
+  );
 
-  /* ---- Warm neutrals (the "home" side of the palette) ----------------- */
-  --hl-cream: #f6eedf; /* the roof — reversed type, cards on green */
-  --hl-sand: #e8d9bf; /* borders on cream, inactive chips */
-  --hl-walnut: #5c4432; /* long-form body copy alternative */
+  /* ---- Interactive ramp — AA-safe, this is what buttons/links use ----- */
+  --hl-primary: #e01b6a; /* white on it: 4.63 — AA */
+  --hl-primary-hover: #c2185b; /* 5.87 */
+  --hl-primary-press: #a3134c; /* 7.62 */
+  --hl-primary-tint: #ffeaf2; /* selected row / chip background */
+  --hl-primary-line: #ffc9de;
 
   /* ---- Surfaces -------------------------------------------------------- */
-  --hl-bg: #f7f3ec; /* app background — warm, not white */
-  --hl-surface: #ffffff; /* cards */
-  --hl-surface-2: #fbf8f2; /* nested / pressed cards */
+  --hl-bg: #f7f8fa;
+  --hl-surface: #ffffff;
+  --hl-surface-2: #f1f4f7;
+  --hl-line: #e2e8ef; /* borders, dividers, inactive chip edges */
+  --hl-line-soft: #eef2f6;
 
   /* ---- Text -------------------------------------------------------------- */
-  --hl-ink: #22302b; /* primary text */
-  --hl-ink-muted: #6b7a72; /* secondary, romanised language subtitles */
-  --hl-ink-faint: #9aa8a1; /* placeholder, disabled */
-  --hl-on-green: #f6eedf; /* text on --hl-green-700 */
+  --hl-ink: #00233d; /* navy from the wordmark, 16.06 on white */
+  --hl-ink-muted: #3d5468; /* secondary */
+  --hl-ink-faint: #6b8095; /* tertiary, placeholder */
+  --hl-ink-on: #ffffff; /* text on --hl-primary / --hl-go */
 
   /* ---- Semantic ------------------------------------------------------- */
-  --hl-success: #2e8a6e;
-  --hl-warning: #c97b4a; /* terracotta — the only warm accent, use sparingly */
-  --hl-danger: #b3423a;
-  --hl-info: #2e6f8a;
+  --hl-success: #007a4d; /* "go" — confirm, in-list, success; 5.40 on white */
+  --hl-success-tint: #e4f6ed;
+  --hl-warning: #8a5a00; /* amber, darkened for text use; 5.93 on white */
+  --hl-warning-tint: #fff3d6;
+  --hl-danger: #c2183c;
+  --hl-danger-tint: #fdecef;
+  --hl-info: #00838c; /* darkened teal — no direct kit token, kept AA-safe */
 
-  /* ---- Radii — derived from the icon's corner ratio (0.235 x size) --- */
-  --hl-r-sm: 10px;
+  /* ---- Radii ------------------------------------------------------------ */
+  --hl-r-xs: 8px;
+  --hl-r-sm: 12px;
   --hl-r-md: 16px;
   --hl-r-lg: 22px; /* language cards */
   --hl-r-xl: 28px; /* sheets, modals */
   --hl-r-pill: 999px;
 
-  /* ---- Elevation — warm-tinted, never neutral grey -------------------- */
+  /* ---- Elevation — tinted with the navy ink, never neutral grey ------- */
   --hl-shadow-sm:
-    0 1px 2px rgba(19, 79, 62, 0.06), 0 2px 6px rgba(19, 79, 62, 0.05);
+    0 1px 2px rgba(0, 35, 61, 0.06), 0 2px 6px rgba(0, 35, 61, 0.05);
   --hl-shadow-md:
-    0 2px 4px rgba(19, 79, 62, 0.06), 0 8px 20px rgba(19, 79, 62, 0.08);
+    0 2px 4px rgba(0, 35, 61, 0.06), 0 8px 20px rgba(0, 35, 61, 0.08);
   --hl-shadow-lg:
-    0 4px 8px rgba(19, 79, 62, 0.07), 0 18px 40px rgba(19, 79, 62, 0.12);
+    0 4px 8px rgba(0, 35, 61, 0.07), 0 18px 40px rgba(0, 35, 61, 0.12);
+  --hl-shadow-primary: 0 6px 18px rgba(224, 27, 106, 0.28); /* under the gradient CTA */
 
   /* ---- Motion ----------------------------------------------------------- */
   --hl-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 
   /* ---- Layout ------------------------------------------------------------ */
   --hl-tap-min: 48px; /* WCAG 2.5.8 + gloved / one-handed use */
-  --hl-content-max: 640px;
+  --hl-content-max: 480px;
 
   /* ---- Script font stacks ------------------------------------------------
      --font-{latin,arabic,nastaliq,devanagari,telugu,sinhala}-nf are set by
@@ -67,10 +103,15 @@
      property — see the comment on the font() calls in layout.tsx. The
      literal-family fallback only applies before a self-hosted font
      finishes loading, or if next/font ever fails to inject its variable. */
-  --font-latin: var(--font-latin-nf, "Poppins"), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-arabic: var(--font-arabic-nf, "IBM Plex Sans Arabic"), "Geeza Pro", sans-serif;
-  --font-nastaliq: var(--font-nastaliq-nf, "Noto Nastaliq Urdu"), var(--font-arabic), serif;
-  --font-devanagari: var(--font-devanagari-nf, "Noto Sans Devanagari"), sans-serif;
+  --font-latin:
+    var(--font-latin-nf, "Poppins"), system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-arabic:
+    var(--font-arabic-nf, "IBM Plex Sans Arabic"), "Geeza Pro", sans-serif;
+  --font-nastaliq:
+    var(--font-nastaliq-nf, "Noto Nastaliq Urdu"), var(--font-arabic), serif;
+  --font-devanagari:
+    var(--font-devanagari-nf, "Noto Sans Devanagari"), sans-serif;
   --font-telugu: var(--font-telugu-nf, "Noto Sans Telugu"), sans-serif;
   --font-sinhala: var(--font-sinhala-nf, "Noto Sans Sinhala"), sans-serif;
   --font-ethiopic: var(--font-ethiopic-nf, "Noto Sans Ethiopic"), sans-serif;
@@ -84,17 +125,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --hl-bg: #0f1a16;
-    --hl-surface: #16241e;
-    --hl-surface-2: #1d2e27;
-    --hl-ink: #e8efeb;
-    --hl-ink-muted: #9bafa6;
-    --hl-ink-faint: #6b7f76;
-    --hl-green-100: #1b3b31;
-    --hl-sand: #2a3b33;
-    --hl-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --hl-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.35);
-    --hl-shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.45);
+    --hl-bg: #0b1620;
+    --hl-surface: #12212e;
+    --hl-surface-2: #1a2c3b;
+    --hl-line: #24394b;
+    --hl-line-soft: #1c2e3e;
+    --hl-ink: #e8eff5;
+    --hl-ink-muted: #a8bccd;
+    --hl-ink-faint: #7b92a6;
+    /* Lifted, not just the light values reused: the darkened-for-AA pink
+       loses contrast against a dark surface, so the ramp inverts instead
+       of just dimming. Same reasoning applies to go/warn/danger below. */
+    --hl-primary: #ff4f8e;
+    --hl-primary-hover: #ff6e9f;
+    --hl-primary-tint: #33162a;
+    --hl-primary-line: #4a2038;
+    --hl-success: #35c98b;
+    --hl-success-tint: #122f26;
+    --hl-warning: #e8b34a;
+    --hl-warning-tint: #33290f;
+    --hl-danger: #ff6b7e;
+    --hl-danger-tint: #331a20;
+    --hl-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --hl-shadow-md: 0 8px 20px rgba(0, 0, 0, 0.45);
+    --hl-shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.55);
   }
 }
 
@@ -166,31 +220,32 @@ html[data-script="nastaliq"] {
 }
 
 @theme inline {
-  --color-green-900: var(--hl-green-900);
-  --color-green-800: var(--hl-green-800);
-  --color-green-700: var(--hl-green-700);
-  --color-green-600: var(--hl-green-600);
-  --color-green-400: var(--hl-green-400);
-  --color-green-100: var(--hl-green-100);
-
-  --color-cream: var(--hl-cream);
-  --color-sand: var(--hl-sand);
-  --color-walnut: var(--hl-walnut);
+  --color-primary: var(--hl-primary);
+  --color-primary-hover: var(--hl-primary-hover);
+  --color-primary-press: var(--hl-primary-press);
+  --color-primary-tint: var(--hl-primary-tint);
+  --color-primary-line: var(--hl-primary-line);
+  --color-on-primary: var(--hl-ink-on);
 
   --color-bg: var(--hl-bg);
   --color-surface: var(--hl-surface);
   --color-surface-2: var(--hl-surface-2);
+  --color-line: var(--hl-line);
+  --color-line-soft: var(--hl-line-soft);
 
   --color-ink: var(--hl-ink);
   --color-ink-muted: var(--hl-ink-muted);
   --color-ink-faint: var(--hl-ink-faint);
-  --color-on-green: var(--hl-on-green);
 
   --color-success: var(--hl-success);
+  --color-success-tint: var(--hl-success-tint);
   --color-warning: var(--hl-warning);
+  --color-warning-tint: var(--hl-warning-tint);
   --color-danger: var(--hl-danger);
+  --color-danger-tint: var(--hl-danger-tint);
   --color-info: var(--hl-info);
 
+  --radius-xs: var(--hl-r-xs);
   --radius-sm: var(--hl-r-sm);
   --radius-md: var(--hl-r-md);
   --radius-lg: var(--hl-r-lg);
@@ -200,11 +255,12 @@ html[data-script="nastaliq"] {
   --shadow-sm: var(--hl-shadow-sm);
   --shadow-md: var(--hl-shadow-md);
   --shadow-lg: var(--hl-shadow-lg);
+  --shadow-primary: var(--hl-shadow-primary);
 
   --ease-hl: var(--hl-ease);
 
   /* Deliberately no --font-* theme tokens here: no component uses a
-     Tailwind font-* utility class (HomeListLockup sets font-family via
+     Tailwind font-* utility class (MachlaLockup sets font-family via
      inline style, LanguagePicker rows via [data-native-script] CSS
      selectors) — and re-declaring --font-latin etc. under the same name
      inside @theme would risk becoming a self-referential custom property
@@ -238,7 +294,7 @@ html[data-script="nastaliq"] {
 
   /* Keyboard focus is visible everywhere. Never remove this. */
   :focus-visible {
-    outline: 2px solid var(--hl-green-700);
+    outline: 2px solid var(--hl-primary);
     outline-offset: 2px;
     border-radius: var(--hl-r-sm);
   }
@@ -288,6 +344,44 @@ html[data-script="nastaliq"] {
   }
   html:not([data-script="latin"]) .hl-label {
     font-size: 15px;
+  }
+
+  /* The single hero CTA per screen — PrimaryButton in
+     components/ui/Primitives.tsx. Reserved deliberately: using the
+     gradient twice on one screen destroys the hierarchy it exists to
+     create (Machla_UI_Kit/README.md). */
+  .hl-gradient-cta {
+    background: var(--hl-gradient);
+    color: var(--hl-ink-on);
+    box-shadow: var(--hl-shadow-primary);
+    position: relative;
+  }
+  .hl-gradient-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(0, 0, 0, 0);
+    transition: background 140ms var(--hl-ease);
+  }
+  .hl-gradient-cta:hover::after {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  /* The active tab's gradient underline — components/household/HomeTabBar.tsx. */
+  .hl-tab-indicator::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--hl-gradient);
+  }
+  [dir="rtl"] .hl-tab-indicator::before {
+    transform: translateX(50%);
   }
 }
 

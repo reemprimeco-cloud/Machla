@@ -43,7 +43,10 @@ function LoginForm() {
     event.preventDefault();
     const normalized = toE164FromLocal(localDigits);
 
-    if (localDigits.length !== LOCAL_NUMBER_LENGTH || !isValidPhone(normalized)) {
+    if (
+      localDigits.length !== LOCAL_NUMBER_LENGTH ||
+      !isValidPhone(normalized)
+    ) {
       setStatus("error");
       setError(t("auth.invalidPhone"));
       return;
@@ -87,7 +90,7 @@ function LoginForm() {
       <Link
         href="/welcome"
         aria-label={t("common.back")}
-        className="absolute start-4 top-4 flex size-12 items-center justify-center rounded-pill border border-sand bg-surface text-ink"
+        className="absolute start-4 top-4 flex size-12 items-center justify-center rounded-pill border border-line bg-surface text-ink"
       >
         <span aria-hidden className="rtl:-scale-x-100 text-lg leading-none">
           ‹
@@ -108,15 +111,19 @@ function LoginForm() {
               Arabic/Urdu — a phone number reads left-to-right everywhere. */}
           <div
             dir="ltr"
-            className="flex min-h-12 items-stretch overflow-hidden rounded-lg border border-sand bg-surface focus-within:border-green-700"
+            className="flex min-h-12 items-stretch overflow-hidden rounded-lg border border-line bg-surface focus-within:border-primary"
           >
             <span
               aria-hidden
-              className="flex select-none items-center gap-2 border-e border-sand bg-surface-2 px-3"
+              className="flex select-none items-center gap-2 border-e border-line bg-surface-2 px-3"
             >
               {/* eslint-disable-next-line @next/next/no-img-element --
                   a 4KB static SVG; the optimizer adds nothing. */}
-              <img src="/flags/kw.svg" alt="" className="h-4 w-6 rounded-[2px]" />
+              <img
+                src="/flags/kw.svg"
+                alt=""
+                className="h-4 w-6 rounded-[2px]"
+              />
               <span className="hl-body text-ink-muted">{KUWAIT_DIAL_CODE}</span>
             </span>
             <input
@@ -130,8 +137,14 @@ function LoginForm() {
               // A paste of the full number with country code still works:
               // "+96565068000" -> strip -> "96565068000" -> drop the 965.
               onChange={(event) => {
-                let digits = normalizeDigits(event.target.value).replace(/\D/g, "");
-                if (digits.startsWith("965") && digits.length > LOCAL_NUMBER_LENGTH) {
+                let digits = normalizeDigits(event.target.value).replace(
+                  /\D/g,
+                  "",
+                );
+                if (
+                  digits.startsWith("965") &&
+                  digits.length > LOCAL_NUMBER_LENGTH
+                ) {
                   digits = digits.slice(3);
                 }
                 if (digits.startsWith("0")) {
@@ -154,8 +167,10 @@ function LoginForm() {
 
         <button
           type="submit"
-          disabled={status === "sending" || localDigits.length !== LOCAL_NUMBER_LENGTH}
-          className="hl-label min-h-12 rounded-lg bg-green-700 px-4 text-on-green shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
+          disabled={
+            status === "sending" || localDigits.length !== LOCAL_NUMBER_LENGTH
+          }
+          className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
         >
           {status === "sending" ? t("auth.sending") : t("auth.sendCode")}
         </button>

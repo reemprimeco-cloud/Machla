@@ -33,19 +33,26 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
             <form action={selectHouseholdAction.bind(null, home.householdId)}>
               <button
                 type="submit"
-                className="flex min-h-20 w-full items-center gap-4 rounded-lg border border-sand bg-surface p-4 text-start shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
+                className="flex min-h-20 w-full items-center gap-4 rounded-lg border border-line bg-surface p-4 text-start shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
               >
                 <span
                   aria-hidden
-                  className="flex size-12 shrink-0 items-center justify-center rounded-pill bg-green-100 text-2xl leading-none"
+                  className="flex size-12 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-2xl leading-none"
                 >
                   🏠
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="hl-heading block truncate text-ink">{home.householdName}</span>
-                  <span className="hl-caption block">{roleLabel(home.role)}</span>
+                  <span className="hl-heading block truncate text-ink">
+                    {home.householdName}
+                  </span>
+                  <span className="hl-caption block">
+                    {roleLabel(home.role)}
+                  </span>
                 </span>
-                <span aria-hidden className="rtl:-scale-x-100 text-lg leading-none text-ink-muted">
+                <span
+                  aria-hidden
+                  className="rtl:-scale-x-100 text-lg leading-none text-ink-muted"
+                >
                   ›
                 </span>
               </button>
@@ -56,7 +63,7 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
 
       <Link
         href="/onboarding"
-        className="flex min-h-14 items-center justify-center gap-2 rounded-lg border border-dashed border-sand text-green-700"
+        className="flex min-h-14 items-center justify-center gap-2 rounded-lg border border-dashed border-line text-primary"
       >
         <span aria-hidden className="text-lg leading-none">
           +

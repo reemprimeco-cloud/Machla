@@ -206,11 +206,12 @@ sheet. Summary of what changed in this document's terms:
   `data-native-script` attribute, set per-row in the language picker, is
   what makes each language's own name always render in its own script's
   font regardless of the page's currently active one.
-- **Design tokens** (`--hl-*` custom properties: green/cream/sand/walnut
-  palette, radii, shadows, spacing, a dark-mode block, a
-  reduced-motion block) live in `app/globals.css` `:root`, mapped into
-  Tailwind v4 utilities (`bg-green-700`, `text-ink-muted`, `rounded-lg`,
-  `shadow-md`, etc.) via `@theme inline`. Font-family tokens are
+- **Design tokens** (`--hl-*` custom properties: the Machla brand ramp and
+  interactive palette, radii, shadows, spacing, a dark-mode block, a
+  reduced-motion block — `docs/design/BRAND.md`) live in `app/globals.css`
+  `:root`, mapped into Tailwind v4 utilities (`bg-primary`,
+  `text-ink-muted`, `rounded-lg`, `shadow-md`, etc.) via `@theme inline`.
+  Font-family tokens are
   deliberately **not** re-exposed as `@theme` entries — see the comment
   in `globals.css`: giving a `@theme` token the same name as the `:root`
   custom property it reads would risk an invalid self-referential

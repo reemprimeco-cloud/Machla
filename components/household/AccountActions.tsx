@@ -27,7 +27,10 @@ export function AccountActions() {
 
   return (
     <div className="mt-auto flex items-center justify-center gap-6 pt-6">
-      <Link href="/welcome" className="hl-caption text-green-700 underline underline-offset-4">
+      <Link
+        href="/welcome"
+        className="hl-caption text-primary underline underline-offset-4"
+      >
         {t("common.changeLanguage")}
       </Link>
       <button

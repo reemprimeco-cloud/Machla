@@ -54,11 +54,13 @@ export function HouseholdDashboard({
                 <Link
                   href={`/home/lists/${list.id}`}
                   className={`flex flex-col gap-2 rounded-lg border bg-surface p-4 shadow-sm active:bg-surface-2 ${
-                    list.status === "sent" ? "border-green-700" : "border-sand"
+                    list.status === "sent" ? "border-primary" : "border-line"
                   }`}
                 >
                   <span className="hl-heading truncate text-ink">
-                    {t("hlists.from", { name: list.created_by_name ?? t("hlists.someone") })}
+                    {t("hlists.from", {
+                      name: list.created_by_name ?? t("hlists.someone"),
+                    })}
                   </span>
                   <Progress
                     purchased={purchased}
@@ -78,7 +80,7 @@ export function HouseholdDashboard({
           themselves, not through a helper. */}
       <Link
         href="/home/shop"
-        className="hl-label flex min-h-14 items-center justify-center gap-2 rounded-lg bg-green-700 px-5 text-on-green shadow-sm active:bg-green-600"
+        className="hl-label flex min-h-14 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-on-primary shadow-sm active:bg-primary-hover"
       >
         <span aria-hidden>🧺</span>
         <span>{t("home.myOwnList")}</span>
@@ -87,11 +89,11 @@ export function HouseholdDashboard({
       <nav className="flex flex-col gap-3">
         <Link
           href="/home/lists"
-          className="flex min-h-14 items-center justify-between rounded-lg border border-sand bg-surface px-5 shadow-sm active:bg-surface-2"
+          className="flex min-h-14 items-center justify-between rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
         >
           <span className="hl-heading text-ink">{t("hlists.lists")}</span>
           {openCount > 0 ? (
-            <span className="hl-caption rounded-pill bg-green-700 px-2 py-0.5 text-on-green">
+            <span className="hl-caption rounded-pill bg-primary px-2 py-0.5 text-on-primary">
               {t("hlists.openLists", { count: openCount })}
             </span>
           ) : null}
@@ -99,10 +101,12 @@ export function HouseholdDashboard({
 
         <Link
           href="/home/members"
-          className="flex min-h-14 items-center justify-between rounded-lg border border-sand bg-surface px-5 shadow-sm active:bg-surface-2"
+          className="flex min-h-14 items-center justify-between rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
         >
           <span className="hl-heading text-ink">{t("home.people")}</span>
-          <span className="hl-caption">{t("home.peopleCount", { count: memberCount })}</span>
+          <span className="hl-caption">
+            {t("home.peopleCount", { count: memberCount })}
+          </span>
         </Link>
 
         {/* Invitation management is owner-only — the route itself also
@@ -111,7 +115,7 @@ export function HouseholdDashboard({
         {role === "owner" ? (
           <Link
             href="/home/invitations"
-            className="flex min-h-14 items-center rounded-lg border border-sand bg-surface px-5 shadow-sm active:bg-surface-2"
+            className="flex min-h-14 items-center rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
           >
             <span className="hl-heading text-ink">{t("home.invitations")}</span>
           </Link>

@@ -42,7 +42,7 @@ export function SettingsScreen({
         <Card className="flex items-center gap-4">
           <span
             aria-hidden
-            className="flex size-14 shrink-0 items-center justify-center rounded-pill bg-green-100 text-2xl leading-none"
+            className="flex size-14 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-2xl leading-none"
           >
             👤
           </span>
@@ -64,7 +64,9 @@ export function SettingsScreen({
             href="/welcome"
             className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
           >
-            <span className="hl-body text-ink">{t("common.changeLanguage")}</span>
+            <span className="hl-body text-ink">
+              {t("common.changeLanguage")}
+            </span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
               ›
             </span>

@@ -35,7 +35,10 @@ export function ListsInbox({ lists }: { lists: HouseholdList[] }) {
         </ul>
       )}
 
-      <Link href="/home" className="hl-label text-center text-green-700 underline">
+      <Link
+        href="/home"
+        className="hl-label text-center text-primary underline"
+      >
         {t("common.back")}
       </Link>
     </Screen>
@@ -54,7 +57,7 @@ function ListRow({ list }: { list: HouseholdList }) {
     <Link
       href={`/home/lists/${list.id}`}
       className={`flex flex-col gap-2 rounded-lg border bg-surface p-4 shadow-sm active:bg-surface-2 ${
-        isNew ? "border-green-700" : "border-sand"
+        isNew ? "border-primary" : "border-line"
       }`}
     >
       <div className="flex items-baseline justify-between gap-3">
@@ -62,11 +65,13 @@ function ListRow({ list }: { list: HouseholdList }) {
             comes from the RPC, because `users` is scoped by RLS to the
             caller's own row and a plain query could not resolve it. */}
         <span className="hl-heading min-w-0 truncate text-ink">
-          {t("hlists.from", { name: list.created_by_name ?? t("hlists.someone") })}
+          {t("hlists.from", {
+            name: list.created_by_name ?? t("hlists.someone"),
+          })}
         </span>
         <span
           className={`hl-caption shrink-0 rounded-pill px-2 py-0.5 ${
-            isNew ? "bg-green-700 text-on-green" : "bg-surface-2 text-ink-muted"
+            isNew ? "bg-primary text-on-primary" : "bg-surface-2 text-ink-muted"
           }`}
         >
           {t(STATUS_KEYS[list.status] ?? "hlists.statusSent")}
@@ -112,9 +117,14 @@ export function Progress({
         aria-valuemax={100}
         aria-label={t("hlists.progress", { done: purchased, total })}
       >
-        <div className="h-full rounded-pill bg-green-600" style={{ inlineSize: `${percent}%` }} />
+        <div
+          className="h-full rounded-pill bg-primary-hover"
+          style={{ inlineSize: `${percent}%` }}
+        />
       </div>
-      <p className="hl-caption">{t("hlists.progress", { done: purchased, total })}</p>
+      <p className="hl-caption">
+        {t("hlists.progress", { done: purchased, total })}
+      </p>
     </div>
   );
 }

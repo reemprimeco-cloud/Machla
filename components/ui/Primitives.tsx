@@ -35,14 +35,27 @@ export function Screen({
   );
 }
 
-export function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+export function Card({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div className={`rounded-lg border border-sand bg-surface p-4 shadow-sm ${className}`}>
+    <div
+      className={`rounded-lg border border-line bg-surface p-4 shadow-sm ${className}`}
+    >
       {children}
     </div>
   );
 }
 
+/** The single hero action on a screen — reviews, sends, confirms. Carries
+ * the brand gradient (`.hl-gradient-cta`, app/globals.css): reserved for
+ * exactly one per screen by convention (Machla UI Kit), which every
+ * screen already followed before this existed, since a Server Action
+ * flow only ever has one thing that moves it forward. */
 export function PrimaryButton({
   children,
   ...props
@@ -50,7 +63,7 @@ export function PrimaryButton({
   return (
     <button
       {...props}
-      className={`hl-label min-h-12 w-full rounded-lg bg-green-700 px-4 text-on-green shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60 ${props.className ?? ""}`}
+      className={`hl-gradient-cta hl-label min-h-12 w-full rounded-lg px-4 transition-transform duration-150 ease-hl active:scale-[0.98] disabled:opacity-60 disabled:active:scale-100 ${props.className ?? ""}`}
     >
       {children}
     </button>
@@ -64,7 +77,7 @@ export function SecondaryButton({
   return (
     <button
       {...props}
-      className={`hl-label min-h-12 rounded-lg border border-sand bg-surface px-4 text-ink transition-colors duration-150 ease-hl disabled:opacity-60 ${props.className ?? ""}`}
+      className={`hl-label min-h-12 rounded-lg border border-line bg-surface px-4 text-ink transition-colors duration-150 ease-hl disabled:opacity-60 ${props.className ?? ""}`}
     >
       {children}
     </button>
@@ -80,7 +93,7 @@ export function TextField({
       <span className="hl-label text-ink">{label}</span>
       <input
         {...props}
-        className={`hl-body min-h-12 rounded-lg border border-sand bg-surface px-4 text-ink outline-none focus-visible:border-green-700 ${props.className ?? ""}`}
+        className={`hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary ${props.className ?? ""}`}
       />
     </label>
   );
@@ -109,7 +122,7 @@ export function ChoiceCard({
   return (
     <Link
       href={href}
-      className="flex min-h-20 flex-col justify-center gap-1 rounded-lg border border-sand bg-surface px-5 py-4 shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
+      className="flex min-h-20 flex-col justify-center gap-1 rounded-lg border border-line bg-surface px-5 py-4 shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
     >
       <span className="hl-heading text-ink">{title}</span>
       <span className="hl-caption">{hint}</span>
@@ -132,7 +145,8 @@ const ERROR_MESSAGE_KEYS: Partial<Record<HouseholdErrorCode, MessageKey>> = {
  * message rather than surfacing database detail. */
 export function useErrorMessage() {
   const { t } = useLocale();
-  return (code: HouseholdErrorCode) => t(ERROR_MESSAGE_KEYS[code] ?? "errors.generic");
+  return (code: HouseholdErrorCode) =>
+    t(ERROR_MESSAGE_KEYS[code] ?? "errors.generic");
 }
 
 /** Role label, translated. Roles come back from the database as stable

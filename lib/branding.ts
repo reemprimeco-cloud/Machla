@@ -15,12 +15,17 @@
  * one-file change instead of a grep-and-pray.
  *
  * themeColor/backgroundColor match the design tokens (docs/design/BRAND.md,
- * --hl-green-700 / --hl-bg in app/globals.css) — keep the three in sync if
+ * --hl-primary / --hl-bg in app/globals.css) — keep the three in sync if
  * either changes. The CSS custom property PREFIX (--hl-*) was deliberately
- * NOT renamed to --mc-* along with the brand: it is internal, invisible to
- * users, byte-identical in value to the new kit's --mc-* tokens, and a
- * repo-wide rename of every className would have been pure churn with no
- * user-visible benefit.
+ * NOT renamed to --mc-* along with the 2026-08 visual renovation (the new
+ * Machla UI Kit's gradient mark, magenta-to-amber ramp, navy ink): it is
+ * internal, invisible to users, byte-identical in value to the kit's
+ * --mc-* tokens, and a repo-wide rename of every className would have been
+ * pure churn with no user-visible benefit. What DID need renaming — every
+ * Tailwind utility that baked a literal old colour into its name
+ * (bg-green-700, border-sand, text-cream, ...) — was renamed, because
+ * leaving `bg-green-700` rendering pink is exactly the kind of misleading
+ * code this project's own conventions rule out.
  */
 
 export const branding = {
@@ -35,8 +40,8 @@ export const branding = {
   shortName: "Machla",
   description:
     "A simple visual shopping list that connects households with domestic workers, in any language.",
-  themeColor: "#1F6B57",
-  backgroundColor: "#F7F3EC",
+  themeColor: "#E01B6A",
+  backgroundColor: "#F7F8FA",
   alternateNames: [
     "HomeList",
     "My Home List",

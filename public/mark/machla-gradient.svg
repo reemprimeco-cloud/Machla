@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none"><defs>
+<linearGradient id="gradient-cart" x1="84" y1="436" x2="446" y2="70" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FF00CF"/><stop offset=".16" stop-color="#FA1F9E"/>
+<stop offset=".38" stop-color="#FA4685"/><stop offset=".58" stop-color="#FA6062"/>
+<stop offset=".74" stop-color="#FB8A2E"/><stop offset=".90" stop-color="#FFA80D"/><stop offset="1" stop-color="#FFC400"/></linearGradient>
+<linearGradient id="gradient-letter" x1="240" y1="330" x2="350" y2="240" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FA4F73"/><stop offset=".55" stop-color="#FA7A5A"/>
+<stop offset="1" stop-color="#FFB552"/></linearGradient>
+<linearGradient id="gradient-lLa" x1="92" y1="92" x2="302" y2="200" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#00B074"/><stop offset="1" stop-color="#00F2D8"/></linearGradient>
+<linearGradient id="gradient-lLb" x1="100" y1="100" x2="302" y2="204" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#007F4E"/><stop offset="1" stop-color="#00C186"/></linearGradient>
+<linearGradient id="gradient-lRa" x1="414" y1="22" x2="316" y2="196" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#00F0E6"/><stop offset="1" stop-color="#00B4A8"/></linearGradient>
+<linearGradient id="gradient-lRb" x1="406" y1="34" x2="316" y2="196" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#00A6B0"/><stop offset="1" stop-color="#00707E"/></linearGradient>
+</defs><path d="M302,200 C222,214 136,182 92,92 C182,60 272,102 302,200 Z" fill="url(#gradient-lLa)"/><path d="M302,200 C222,214 136,182 92,92 C190,118 264,150 302,200 Z" fill="url(#gradient-lLb)"/><path d="M316,196 C300,116 336,54 414,22 C438,102 400,166 316,196 Z" fill="url(#gradient-lRa)"/><path d="M316,196 C300,116 336,54 414,22 C362,96 326,148 316,196 Z" fill="url(#gradient-lRb)"/><path d="M74,208 L142,200" stroke="url(#gradient-cart)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M140,200 L424,192 L410,352 L186,360 Z" stroke="url(#gradient-cart)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M182,382 L404,368" stroke="url(#gradient-cart)" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="258" cy="424" r="27" stroke="url(#gradient-cart)" stroke-width="26" fill="none"/><circle cx="378" cy="410" r="27" stroke="url(#gradient-cart)" stroke-width="26" fill="none"/><path d="M242,336 L250,240 L296,300 L336,234 L348,326" stroke="url(#gradient-letter)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>

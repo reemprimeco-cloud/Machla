@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { Card, ErrorText, Screen, useErrorMessage, useRoleLabel } from "@/components/ui/Primitives";
+import {
+  Card,
+  ErrorText,
+  Screen,
+  useErrorMessage,
+  useRoleLabel,
+} from "@/components/ui/Primitives";
 import { removeMemberAction } from "@/lib/household/actions";
 import type { HouseholdMember } from "@/lib/household/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -77,7 +83,9 @@ export function MembersList({
                       disabled={removingId === member.user_id}
                       className="hl-label shrink-0 text-danger underline underline-offset-4 disabled:opacity-60"
                     >
-                      {removingId === member.user_id ? t("members.removing") : t("members.remove")}
+                      {removingId === member.user_id
+                        ? t("members.removing")
+                        : t("members.remove")}
                     </button>
                   ) : null}
                 </Card>
@@ -87,7 +95,10 @@ export function MembersList({
         </ul>
       )}
 
-      <Link href="/home" className="hl-label mt-2 text-green-700 underline underline-offset-4">
+      <Link
+        href="/home"
+        className="hl-label mt-2 text-primary underline underline-offset-4"
+      >
         {t("common.back")}
       </Link>
     </Screen>

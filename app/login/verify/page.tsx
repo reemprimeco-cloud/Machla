@@ -31,7 +31,9 @@ function VerifyForm() {
   const nextPath = safeNextPath(searchParams.get("next"));
 
   const [code, setCode] = useState("");
-  const [status, setStatus] = useState<"idle" | "verifying" | "resending" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "verifying" | "resending" | "error"
+  >("idle");
   const [error, setError] = useState<string | null>(null);
   const [resent, setResent] = useState(false);
   // Every resend is a paid SMS, and Supabase Auth refuses a second OTP to
@@ -155,9 +157,13 @@ function VerifyForm() {
             // that were "pushed out" by the letters within the raw
             // 6-char window. Strip non-digits first, then cap at 6.
             onChange={(event) =>
-              setCode(normalizeDigits(event.target.value).replace(/\D/g, "").slice(0, 6))
+              setCode(
+                normalizeDigits(event.target.value)
+                  .replace(/\D/g, "")
+                  .slice(0, 6),
+              )
             }
-            className="hl-title min-h-12 rounded-lg border border-sand bg-surface px-4 text-center tracking-[0.3em] text-ink outline-none focus-visible:border-green-700"
+            className="hl-title min-h-12 rounded-lg border border-line bg-surface px-4 text-center tracking-[0.3em] text-ink outline-none focus-visible:border-primary"
             aria-invalid={status === "error"}
           />
         </label>
@@ -167,12 +173,14 @@ function VerifyForm() {
             {error}
           </p>
         ) : null}
-        {resent ? <p className="hl-caption text-success">{t("auth.codeResent")}</p> : null}
+        {resent ? (
+          <p className="hl-caption text-success">{t("auth.codeResent")}</p>
+        ) : null}
 
         <button
           type="submit"
           disabled={status === "verifying" || code.length !== 6}
-          className="hl-label min-h-12 rounded-lg bg-green-700 px-4 text-on-green shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
+          className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
         >
           {status === "verifying" ? t("auth.verifying") : t("auth.verify")}
         </button>
@@ -181,7 +189,7 @@ function VerifyForm() {
           <button
             type="button"
             onClick={() => router.push("/login")}
-            className="hl-caption text-green-700 underline underline-offset-4"
+            className="hl-caption text-primary underline underline-offset-4"
           >
             {t("auth.changeNumber")}
           </button>
@@ -189,17 +197,19 @@ function VerifyForm() {
             type="button"
             onClick={handleResend}
             disabled={status === "resending" || cooldown > 0}
-            className="hl-caption text-green-700 underline underline-offset-4 disabled:no-underline disabled:opacity-60"
+            className="hl-caption text-primary underline underline-offset-4 disabled:no-underline disabled:opacity-60"
           >
             {cooldown > 0
               ? /* The count stays LTR inside Arabic/Urdu, same rule as the
                    phone number above. */
-                t("auth.resendIn").split("{seconds}").map((part, index) => (
-                  <span key={index}>
-                    {index > 0 && <bdi dir="ltr">{cooldown}</bdi>}
-                    {part}
-                  </span>
-                ))
+                t("auth.resendIn")
+                  .split("{seconds}")
+                  .map((part, index) => (
+                    <span key={index}>
+                      {index > 0 && <bdi dir="ltr">{cooldown}</bdi>}
+                      {part}
+                    </span>
+                  ))
               : t("auth.resendCode")}
           </button>
         </div>

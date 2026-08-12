@@ -36,7 +36,7 @@ export function ConnectionBanner() {
   return (
     <div
       role="status"
-      className="sticky top-0 z-20 flex min-h-10 items-center justify-center gap-2 bg-warning px-4 text-center text-cream"
+      className="sticky top-0 z-20 flex min-h-10 items-center justify-center gap-2 bg-warning px-4 text-center text-white"
     >
       <span aria-hidden>📡</span>
       <span className="hl-label">{t("state.offlineBanner")}</span>

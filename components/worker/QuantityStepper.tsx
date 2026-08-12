@@ -50,7 +50,7 @@ export function QuantityStepper({
         type="button"
         onClick={() => change(1)}
         aria-label={`${t("worker.add")} — ${label}`}
-        className="hl-label min-h-12 w-full rounded-pill bg-green-700 px-4 text-on-green transition-colors duration-150 ease-hl active:bg-green-600"
+        className="hl-label min-h-12 w-full rounded-pill bg-primary px-4 text-on-primary transition-colors duration-150 ease-hl active:bg-primary-hover"
       >
         {t("worker.add")}
       </button>
@@ -58,7 +58,7 @@ export function QuantityStepper({
   }
 
   return (
-    <div className="flex min-h-12 items-center justify-between gap-2 rounded-pill border border-green-700 bg-green-100 px-1">
+    <div className="flex min-h-12 items-center justify-between gap-2 rounded-pill border border-primary bg-primary-tint px-1">
       <StepButton
         onClick={() => change(optimisticQuantity - 1)}
         label={`${optimisticQuantity <= 1 ? t("worker.remove") : "−"} — ${label}`}
@@ -123,7 +123,7 @@ export function ProductCard({
   const detail = productDetail(product);
 
   return (
-    <li className="flex flex-col gap-2 rounded-lg border border-sand bg-surface p-3 shadow-sm">
+    <li className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm">
       <div className="flex aspect-square items-center justify-center rounded-md bg-surface-2">
         {product.image_url ? (
           // Catalogue images are arbitrary remote URLs, set by the offline
@@ -132,7 +132,11 @@ export function ProductCard({
           // adding a photo a code change — exactly what
           // 11-product-catalog-architecture.md §7 sets out to avoid.
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.image_url} alt="" className="size-full rounded-md object-cover" />
+          <img
+            src={product.image_url}
+            alt=""
+            className="size-full rounded-md object-cover"
+          />
         ) : (
           // icon → category icon → box. The per-type icon is what stops a
           // category page being 24 identical tiles; the category icon is

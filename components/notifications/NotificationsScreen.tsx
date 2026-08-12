@@ -9,7 +9,10 @@ import { setNotificationPreferenceAction } from "@/lib/notifications/actions";
 import type { Notification } from "@/lib/notifications/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
-import type { NotificationPreferences, NotificationType } from "@/lib/supabase/database.types";
+import type {
+  NotificationPreferences,
+  NotificationType,
+} from "@/lib/supabase/database.types";
 
 const MESSAGE_KEYS: Record<NotificationType, MessageKey> = {
   list_sent: "notif.listSent",
@@ -61,12 +64,12 @@ export function NotificationsScreen({
           <p className="hl-caption mt-1">{t("notif.noneHint")}</p>
         </Card>
       ) : (
-        <ul className="overflow-hidden rounded-lg border border-sand bg-surface shadow-sm">
+        <ul className="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`flex items-start gap-3 border-b border-sand px-4 py-3 last:border-b-0 ${
-                notification.read_at ? "" : "bg-green-100"
+              className={`flex items-start gap-3 border-b border-line px-4 py-3 last:border-b-0 ${
+                notification.read_at ? "" : "bg-primary-tint"
               }`}
             >
               <span aria-hidden className="text-2xl leading-none">
@@ -90,7 +93,7 @@ export function NotificationsScreen({
               {notification.list_id ? (
                 <Link
                   href={`/home/lists/${notification.list_id}`}
-                  className="hl-caption shrink-0 self-center text-green-700 underline"
+                  className="hl-caption shrink-0 self-center text-primary underline"
                 >
                   {t("hlists.openList")}
                 </Link>
@@ -117,7 +120,10 @@ export function NotificationsScreen({
       </section>
 
       {variant === "worker" ? (
-        <Link href="/worker" className="hl-label text-center text-green-700 underline">
+        <Link
+          href="/worker"
+          className="hl-label text-center text-primary underline"
+        >
           {t("common.back")}
         </Link>
       ) : (
@@ -155,7 +161,7 @@ function PreferenceToggle({
             await setNotificationPreferenceAction(type, next);
           });
         }}
-        className="size-7 shrink-0 accent-[var(--hl-green-700)]"
+        className="size-7 shrink-0 accent-[var(--hl-primary)]"
       />
     </label>
   );

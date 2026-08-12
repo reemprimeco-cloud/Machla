@@ -58,7 +58,7 @@ export function NoteField({
         placeholder={t("worker.noteHint")}
         maxLength={140}
         disabled={pending}
-        className="hl-caption min-h-10 w-full rounded-md border border-sand bg-surface px-3 text-ink outline-none focus-visible:border-green-700"
+        className="hl-caption min-h-10 w-full rounded-md border border-line bg-surface px-3 text-ink outline-none focus-visible:border-primary"
       />
     );
   }
@@ -71,7 +71,7 @@ export function NoteField({
         setEditing(true);
       }}
       disabled={pending}
-      className="hl-caption self-start truncate text-start text-green-700 underline underline-offset-2 disabled:opacity-60"
+      className="hl-caption self-start truncate text-start text-primary underline underline-offset-2 disabled:opacity-60"
     >
       {optimisticNote ? `“${optimisticNote}”` : t("worker.addNote")}
     </button>

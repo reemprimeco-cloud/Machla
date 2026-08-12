@@ -105,7 +105,7 @@ export function ListChecklist({
               {localizedName(group.category, locale)}
             </h2>
 
-            <ul className="overflow-hidden rounded-lg border border-sand bg-surface shadow-sm">
+            <ul className="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
               {group.entries.map(({ item, product, photoUrl }) => (
                 <ChecklistRow
                   key={item.id}
@@ -174,7 +174,7 @@ export function ListChecklist({
 
       <Link
         href="/home/lists"
-        className="hl-label text-center text-green-700 underline"
+        className="hl-label text-center text-primary underline"
       >
         {t("common.back")}
       </Link>
@@ -227,7 +227,7 @@ function ChecklistRow({
   const isUnavailable = optimisticStatus === "unavailable";
 
   return (
-    <li className="border-b border-sand last:border-b-0">
+    <li className="border-b border-line last:border-b-0">
       <div className="flex items-center gap-3 px-3 py-2">
         {/* Checkbox + text are still one big toggle target, split either
             side of the photo — which needs its own tap target now that it
@@ -245,8 +245,8 @@ function ChecklistRow({
             aria-hidden
             className={`flex size-9 items-center justify-center rounded-pill border-2 text-base ${
               isPurchased
-                ? "border-green-700 bg-green-700 text-on-green"
-                : "border-sand bg-surface text-transparent"
+                ? "border-primary bg-primary text-on-primary"
+                : "border-line bg-surface text-transparent"
             }`}
           >
             ✓
@@ -301,8 +301,8 @@ function ChecklistRow({
           aria-label={`${t("hlists.unavailable")} — ${name}`}
           className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg ${
             isUnavailable
-              ? "border-warning bg-warning text-cream"
-              : "border-sand bg-surface"
+              ? "border-warning bg-warning text-white"
+              : "border-line bg-surface"
           }`}
         >
           <span aria-hidden>✕</span>

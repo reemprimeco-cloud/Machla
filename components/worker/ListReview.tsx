@@ -94,7 +94,7 @@ export function ListReview({
                   return (
                     <li
                       key={item.id}
-                      className="flex flex-col gap-2 rounded-lg border border-sand bg-surface p-3 shadow-sm"
+                      className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm"
                     >
                       <div className="flex items-center gap-3">
                         {photoUrl ? (
@@ -175,7 +175,7 @@ export function ListReview({
 
           <Link
             href={basePath}
-            className="hl-label text-center text-green-700 underline"
+            className="hl-label text-center text-primary underline"
           >
             {t("worker.addMore")}
           </Link>
@@ -217,7 +217,7 @@ function PhotoItemControls({
             if (!result.ok) onError(result.code);
           })
         }
-        className="flex size-12 items-center justify-center rounded-pill border border-sand bg-surface text-lg text-ink disabled:opacity-40"
+        className="flex size-12 items-center justify-center rounded-pill border border-line bg-surface text-lg text-ink disabled:opacity-40"
       >
         <span aria-hidden>✕</span>
       </button>

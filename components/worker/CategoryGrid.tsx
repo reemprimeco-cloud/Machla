@@ -30,13 +30,19 @@ export function CategoryGrid({
           <Link
             // The capture tile opens the camera instead of a product
             // list; it has no products by design (categories.is_capture).
-            href={category.is_capture ? `${basePath}/photo` : `${basePath}/c/${category.key}`}
-            className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-sand bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
+            href={
+              category.is_capture
+                ? `${basePath}/photo`
+                : `${basePath}/c/${category.key}`
+            }
+            className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >
             <span aria-hidden className="text-4xl leading-none">
               {category.icon ?? "📦"}
             </span>
-            <span className="hl-label text-ink">{localizedName(category, locale)}</span>
+            <span className="hl-label text-ink">
+              {localizedName(category, locale)}
+            </span>
           </Link>
         </li>
       ))}

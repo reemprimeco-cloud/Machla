@@ -1,5 +1,17 @@
 # HomeList UI Kit — integration notes
 
+**Historical record of the Phase 2 integration.** A second kit (the
+Machla UI Kit, 2026-08) replaced the mark, palette and component styling
+described here — `docs/design/BRAND.md` now documents that one, and
+`app/globals.css`'s `--hl-*` tokens carry its values, not these. This
+file is kept because the mechanics it describes (cookie persistence over
+the kit's `localStorage`, `next/font` self-hosting over runtime `<link>`
+injection, routing instead of the kit's `onDone` callback) are still
+exactly how the app works — only the visual values moved, not the
+integration approach. `src/brand/HomeListIcon.tsx` below is now
+`components/brand/MachlaIcon.tsx`, renamed along with the rest of the
+Machla rename, before this second kit existed.
+
 The HomeList UI Kit (a standalone design package: brand mark, colour/type
 tokens, flags, icon ladder, and reference React components) was supplied
 during Phase 2 and integrated into the repository root. This file records where
@@ -67,10 +79,13 @@ routes (see `08-route-map.md`).
 - **Logical properties only.** `ms-4` not `ml-4`, `text-start` not
   `text-left`. Tailwind v4 ships these natively; they resolve against
   `<html dir>`, which `LocaleProvider` already sets.
-- **Numbers stay LTR inside RTL text.** Wrap KWD amounts, phone numbers,
-  and times in `<bdi>` or `dir="ltr"` — use the `.hl-ltr-num` utility
-  (`app/globals.css`) or `dir="ltr"` directly. KWD is 3 decimals:
-  `12.500 KWD`; phone is `+965 XXXX XXXX`.
+- **Numbers stay LTR inside RTL text.** Wrap phone numbers, times, and
+  counts ("12 of 34 done") in `<bdi>` or `dir="ltr"` — use the
+  `.hl-ltr-num` utility (`app/globals.css`) or `dir="ltr"` directly.
+  Phone is `+965 XXXX XXXX`. (The kit's own note here was about KWD
+  amounts — this app has no prices anywhere, deliberately, see the
+  README, so that specific case doesn't apply; the underlying rule
+  about numerals inside RTL text still does.)
 - **Directional icons flip in RTL, semantic icons never do.** Chevrons,
   back arrows, progress indicators: wrap in `.hl-flip-rtl`. Home, check,
   trash, avatar icons: never flip.

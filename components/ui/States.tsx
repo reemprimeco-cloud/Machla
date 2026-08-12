@@ -116,7 +116,7 @@ export function HomeLink() {
   return (
     <Link
       href="/"
-      className="hl-label min-h-12 content-center rounded-lg bg-green-700 px-4 text-center text-on-green shadow-sm"
+      className="hl-label min-h-12 content-center rounded-lg bg-primary px-4 text-center text-on-primary shadow-sm"
     >
       {t("state.goHome")}
     </Link>

@@ -52,7 +52,7 @@ export function SentConfirmation({
             </span>
             {localizedName(group.category, locale)}
           </h2>
-          <ul className="rounded-lg border border-sand bg-surface shadow-sm">
+          <ul className="rounded-lg border border-line bg-surface shadow-sm">
             {group.entries.map(({ item, product, photoUrl }) => {
               const label = product
                 ? localizedName(product, locale)
@@ -60,7 +60,7 @@ export function SentConfirmation({
               return (
                 <li
                   key={item.id}
-                  className="flex items-center justify-between gap-3 border-b border-sand px-4 py-3 last:border-b-0"
+                  className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 last:border-b-0"
                 >
                   {photoUrl ||
                   (item.photo_path !== null &&
@@ -90,7 +90,7 @@ export function SentConfirmation({
 
       <Link
         href={basePath}
-        className="hl-label min-h-12 content-center rounded-lg bg-green-700 px-4 text-center text-on-green shadow-sm"
+        className="hl-label min-h-12 content-center rounded-lg bg-primary px-4 text-center text-on-primary shadow-sm"
       >
         {t("worker.newList")}
       </Link>

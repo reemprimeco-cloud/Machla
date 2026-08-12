@@ -81,7 +81,7 @@ export function WorkerHome({
       {isWorker ? (
         <Link
           href="/worker/lists"
-          className="flex min-h-14 items-center rounded-lg border border-sand bg-surface px-5 shadow-sm active:bg-surface-2"
+          className="flex min-h-14 items-center rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
         >
           <span className="hl-heading text-ink">{t("notif.myLists")}</span>
         </Link>

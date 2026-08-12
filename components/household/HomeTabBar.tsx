@@ -10,8 +10,18 @@ type Tab = "homes" | "notifications" | "settings";
 
 const TABS: { tab: Tab; href: string; icon: string; labelKey: MessageKey }[] = [
   { tab: "homes", href: "/home", icon: "🏠", labelKey: "home.tabHomes" },
-  { tab: "notifications", href: "/notifications", icon: "🔔", labelKey: "notif.title" },
-  { tab: "settings", href: "/home/settings", icon: "⚙️", labelKey: "home.tabSettings" },
+  {
+    tab: "notifications",
+    href: "/notifications",
+    icon: "🔔",
+    labelKey: "notif.title",
+  },
+  {
+    tab: "settings",
+    href: "/home/settings",
+    icon: "⚙️",
+    labelKey: "home.tabSettings",
+  },
 ];
 
 /**
@@ -48,7 +58,7 @@ export function HomeTabBar() {
   return (
     <nav
       aria-label={t("home.tabBarLabel")}
-      className="fixed inset-x-0 bottom-0 z-20 border-t border-sand bg-surface/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface/95 backdrop-blur"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="mx-auto flex w-full max-w-[var(--hl-content-max)]">
@@ -59,8 +69,8 @@ export function HomeTabBar() {
               key={tab}
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 ${
-                active ? "text-green-700" : "text-ink-muted"
+              className={`relative flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 ${
+                active ? "hl-tab-indicator text-primary" : "text-ink-muted"
               }`}
             >
               <span aria-hidden className="text-xl leading-none">

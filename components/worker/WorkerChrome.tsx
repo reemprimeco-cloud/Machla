@@ -35,12 +35,12 @@ export function WorkerBar({
   const { t } = useLocale();
 
   return (
-    <div className="sticky top-0 z-10 -mx-5 mb-2 flex items-center gap-3 border-b border-sand bg-bg/95 px-5 py-3 backdrop-blur">
+    <div className="sticky top-0 z-10 -mx-5 mb-2 flex items-center gap-3 border-b border-line bg-bg/95 px-5 py-3 backdrop-blur">
       {backHref ? (
         <Link
           href={backHref}
           aria-label={t("common.back")}
-          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface text-ink"
+          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-ink"
         >
           {/* Mirrors automatically in RTL: the glyph is flipped by the
               parent's direction, so no per-locale icon swap is needed. */}
@@ -56,11 +56,13 @@ export function WorkerBar({
 
       <Link
         href={`${basePath}/list`}
-        className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-green-700 px-4 text-on-green"
+        className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-primary px-4 text-on-primary"
       >
         <span aria-hidden>🧺</span>
         <span>{itemCount}</span>
-        <span className="sr-only">{t("worker.myListWithCount", { count: itemCount })}</span>
+        <span className="sr-only">
+          {t("worker.myListWithCount", { count: itemCount })}
+        </span>
       </Link>
     </div>
   );
@@ -87,7 +89,8 @@ export function SearchBox({
       onSubmit={(event) => {
         event.preventDefault();
         const trimmed = query.trim();
-        if (trimmed) router.push(`${basePath}/search?q=${encodeURIComponent(trimmed)}`);
+        if (trimmed)
+          router.push(`${basePath}/search?q=${encodeURIComponent(trimmed)}`);
       }}
       className="flex gap-2"
     >
@@ -97,7 +100,7 @@ export function SearchBox({
         onChange={(event) => setQuery(event.target.value)}
         placeholder={t("worker.searchPlaceholder")}
         aria-label={t("worker.searchPlaceholder")}
-        className="hl-body min-h-12 w-full rounded-pill border border-sand bg-surface px-5 text-ink outline-none focus-visible:border-green-700"
+        className="hl-body min-h-12 w-full rounded-pill border border-line bg-surface px-5 text-ink outline-none focus-visible:border-primary"
       />
     </form>
   );
@@ -112,7 +115,7 @@ export function NotificationBell({ unreadCount }: { unreadCount: number }) {
     <Link
       href="/notifications"
       aria-label={t("notif.title")}
-      className="relative flex size-12 shrink-0 items-center justify-center rounded-pill border border-sand bg-surface"
+      className="relative flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface"
     >
       <span aria-hidden className="text-lg leading-none">
         🔔
@@ -120,7 +123,7 @@ export function NotificationBell({ unreadCount }: { unreadCount: number }) {
       {unreadCount > 0 ? (
         <span
           aria-hidden
-          className="absolute -top-1 -end-1 min-w-5 rounded-pill bg-danger px-1 text-center text-xs leading-5 text-cream"
+          className="absolute -top-1 -end-1 min-w-5 rounded-pill bg-danger px-1 text-center text-xs leading-5 text-white"
         >
           {unreadCount > 9 ? "9+" : unreadCount}
         </span>

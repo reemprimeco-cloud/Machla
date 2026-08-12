@@ -13,7 +13,10 @@ import {
   useErrorMessage,
   useRoleLabel,
 } from "@/components/ui/Primitives";
-import { createInvitationAction, revokeInvitationAction } from "@/lib/household/actions";
+import {
+  createInvitationAction,
+  revokeInvitationAction,
+} from "@/lib/household/actions";
 import type { Invitation } from "@/lib/household/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -108,14 +111,18 @@ export function InvitationsManager({
           onClick={() => handleCreate("worker")}
           disabled={creating !== null}
         >
-          {creating === "worker" ? t("invitations.creating") : t("invitations.inviteWorker")}
+          {creating === "worker"
+            ? t("invitations.creating")
+            : t("invitations.inviteWorker")}
         </PrimaryButton>
         <SecondaryButton
           type="button"
           onClick={() => handleCreate("member")}
           disabled={creating !== null}
         >
-          {creating === "member" ? t("invitations.creating") : t("invitations.inviteMember")}
+          {creating === "member"
+            ? t("invitations.creating")
+            : t("invitations.inviteMember")}
         </SecondaryButton>
       </div>
 
@@ -137,14 +144,21 @@ export function InvitationsManager({
                     {/* The code is Latin/numeric regardless of UI
                         language, so it stays LTR inside RTL layouts
                         (docs/design/UI_KIT_NOTES.md). */}
-                    <bdi dir="ltr" className="hl-title tracking-[0.15em] text-ink">
+                    <bdi
+                      dir="ltr"
+                      className="hl-title tracking-[0.15em] text-ink"
+                    >
                       {formatCode(invitation.code)}
                     </bdi>
-                    <span className="hl-caption">{roleLabel(invitation.role)}</span>
+                    <span className="hl-caption">
+                      {roleLabel(invitation.role)}
+                    </span>
                   </div>
                   <span className="hl-caption shrink-0 text-end">
                     {t("invitations.expires", {
-                      date: new Date(invitation.expires_at).toLocaleDateString(locale),
+                      date: new Date(invitation.expires_at).toLocaleDateString(
+                        locale,
+                      ),
                     })}
                   </span>
                 </div>
@@ -153,9 +167,11 @@ export function InvitationsManager({
                   <button
                     type="button"
                     onClick={() => handleShare(invitation)}
-                    className="hl-label text-green-700 underline underline-offset-4"
+                    className="hl-label text-primary underline underline-offset-4"
                   >
-                    {copiedId === invitation.id ? t("invitations.copied") : t("invitations.share")}
+                    {copiedId === invitation.id
+                      ? t("invitations.copied")
+                      : t("invitations.share")}
                   </button>
                   <button
                     type="button"
@@ -174,7 +190,10 @@ export function InvitationsManager({
         </ul>
       )}
 
-      <Link href="/home" className="hl-label mt-2 text-green-700 underline underline-offset-4">
+      <Link
+        href="/home"
+        className="hl-label mt-2 text-primary underline underline-offset-4"
+      >
         {t("common.back")}
       </Link>
     </Screen>

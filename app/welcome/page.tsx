@@ -52,7 +52,7 @@ function FlagBadge({ language }: { language: LocaleMeta }) {
     <span
       aria-hidden
       data-native-script={pickerScriptFor(language.code)}
-      className="grid h-[22px] w-8 place-items-center rounded-[3px] bg-green-100 text-[13px] font-semibold text-green-800"
+      className="grid h-[22px] w-8 place-items-center rounded-[3px] bg-primary-tint text-[13px] font-semibold text-primary-press"
     >
       {language.nativeName.slice(0, 1)}
     </span>
@@ -61,7 +61,13 @@ function FlagBadge({ language }: { language: LocaleMeta }) {
 
 function CheckIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden className="shrink-0">
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      aria-hidden
+      className="shrink-0"
+    >
       <path
         d="M5 12.5l4.5 4.5L19 7.5"
         fill="none"
@@ -88,7 +94,9 @@ export default function WelcomePage() {
       <header className="flex flex-col items-center gap-3 px-6 pb-6 pt-10">
         <MachlaIcon size={64} variant="tile" title={branding.name} />
         <h1 className="hl-title text-ink">Choose your language</h1>
-        <p className="hl-caption text-center">You can change this any time in Settings.</p>
+        <p className="hl-caption text-center">
+          You can change this any time in Settings.
+        </p>
       </header>
 
       <ul className="flex flex-1 flex-col gap-2 px-4 pb-10" role="list">
@@ -104,9 +112,9 @@ export default function WelcomePage() {
                 className={[
                   "flex min-h-12 w-full items-center gap-4 rounded-lg px-4 py-3 text-start",
                   "transition-colors duration-150 ease-hl",
-                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700",
+                  "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
                   selected
-                    ? "bg-green-700 text-on-green shadow-md"
+                    ? "bg-primary text-on-primary shadow-md"
                     : "bg-surface text-ink shadow-sm hover:bg-surface-2 active:bg-surface-2",
                 ].join(" ")}
               >
@@ -122,9 +130,10 @@ export default function WelcomePage() {
                   </span>
                   <span
                     dir="ltr"
-                    className={["truncate text-[13px]", selected ? "text-cream/70" : "text-ink-muted"].join(
-                      " ",
-                    )}
+                    className={[
+                      "truncate text-[13px]",
+                      selected ? "text-white/70" : "text-ink-muted",
+                    ].join(" ")}
                   >
                     {language.englishName}
                   </span>
