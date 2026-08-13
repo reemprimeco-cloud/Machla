@@ -51,1506 +51,574 @@
     "French is low-risk; Fon is the most likely to need correction, since",
     "several of these fruits have no settled Fon term and the entries lean on",
     "borrowings. Fixing one is an edit to product-types.json plus a re-run of",
-    "the importer -- no schema change, no redeploy."
+    "the importer -- no schema change, no redeploy.",
+    "",
+    "2026-08 — ONE PRODUCT PER TYPE. The catalogue previously carried",
+    "brand+size variants: 311 rows for 184 types, so browsing Dairy showed",
+    "six Fresh Milk tiles that differed only by a brand name and a pack",
+    "size. The owner's requirement is the opposite -- one 'Milk', one",
+    "'Yogurt', one 'Cream' -- with anything more specific written as the",
+    "optional note on the list item ('lactose-free', '2 litre'), which is",
+    "what shopping_list_items.note has existed for since Phase 6.",
+    "",
+    "So `brand` and `size` are no longer set by this file, natural_key is",
+    "just '<type>||', and the products table is a vocabulary of THINGS",
+    "rather than of shelf SKUs. The columns remain in the schema: they cost",
+    "nothing empty, and a future 'preferred brand' feature would want them",
+    "back rather than a migration to re-add them."
   ],
   "products": [
     {
-      "type": "tomato",
-      "size": "1 kg"
+      "type": "tomato"
     },
     {
-      "type": "potato",
-      "size": "1 kg"
+      "type": "potato"
     },
     {
-      "type": "onion",
-      "size": "1 kg"
+      "type": "onion"
     },
     {
-      "type": "cucumber",
-      "size": "1 kg"
+      "type": "cucumber"
     },
     {
-      "type": "carrot",
-      "size": "1 kg"
+      "type": "carrot"
     },
     {
-      "type": "lettuce",
-      "size": "1 head"
+      "type": "lettuce"
     },
     {
-      "type": "capsicum",
-      "size": "500 g"
+      "type": "capsicum"
     },
     {
-      "type": "garlic",
-      "size": "500 g"
+      "type": "garlic"
     },
     {
-      "type": "ginger",
-      "size": "250 g"
+      "type": "ginger"
     },
     {
-      "type": "lemon",
-      "size": "500 g"
+      "type": "lemon"
     },
     {
-      "type": "banana",
-      "size": "1 kg"
+      "type": "banana"
     },
     {
-      "type": "apple",
-      "size": "1 kg"
+      "type": "apple"
     },
     {
-      "type": "orange",
-      "size": "1 kg"
+      "type": "orange"
     },
     {
-      "type": "grapes",
-      "size": "500 g"
+      "type": "grapes"
     },
     {
-      "type": "watermelon",
-      "size": "1 pc"
+      "type": "watermelon"
     },
     {
-      "type": "mango",
-      "size": "1 kg"
+      "type": "mango"
     },
     {
-      "type": "dates",
-      "size": "1 kg"
+      "type": "dates"
     },
     {
-      "type": "apple_green",
-      "size": "1 kg"
+      "type": "apple_green"
     },
     {
-      "type": "grapes_red",
-      "size": "500 g"
+      "type": "grapes_red"
     },
     {
-      "type": "mandarin",
-      "size": "1 kg"
+      "type": "mandarin"
     },
     {
-      "type": "lime",
-      "size": "500 g"
+      "type": "lime"
     },
     {
-      "type": "strawberry",
-      "size": "250 g"
+      "type": "strawberry"
     },
     {
-      "type": "blueberries",
-      "size": "125 g"
+      "type": "blueberries"
     },
     {
-      "type": "raspberry",
-      "size": "125 g"
+      "type": "raspberry"
     },
     {
-      "type": "cherry",
-      "size": "500 g"
+      "type": "cherry"
     },
     {
-      "type": "peach",
-      "size": "1 kg"
+      "type": "peach"
     },
     {
-      "type": "plum",
-      "size": "1 kg"
+      "type": "plum"
     },
     {
-      "type": "pear",
-      "size": "1 kg"
+      "type": "pear"
     },
     {
-      "type": "kiwi",
-      "size": "500 g"
+      "type": "kiwi"
     },
     {
-      "type": "pineapple",
-      "size": "1 pc"
+      "type": "pineapple"
     },
     {
-      "type": "pomegranate",
-      "size": "1 kg"
+      "type": "pomegranate"
     },
     {
-      "type": "avocado",
-      "size": "1 pc"
+      "type": "avocado"
     },
     {
-      "type": "cantaloupe",
-      "size": "1 pc"
+      "type": "cantaloupe"
     },
     {
-      "type": "cabbage",
-      "size": "1 pc"
+      "type": "cabbage"
     },
     {
-      "type": "eggplant",
-      "size": "1 kg"
+      "type": "eggplant"
     },
     {
-      "type": "zucchini",
-      "size": "1 kg"
+      "type": "zucchini"
     },
     {
-      "type": "green_chili",
-      "size": "250 g"
+      "type": "green_chili"
     },
     {
-      "type": "coriander_fresh",
-      "size": "1 bunch"
+      "type": "coriander_fresh"
     },
     {
-      "type": "mint",
-      "size": "1 bunch"
+      "type": "mint"
     },
     {
-      "type": "spinach",
-      "size": "1 bunch"
+      "type": "spinach"
     },
     {
-      "type": "milk_fresh",
-      "brand": "Almarai",
-      "size": "1 L"
+      "type": "milk_fresh"
     },
     {
-      "type": "milk_fresh",
-      "brand": "Almarai",
-      "size": "2 L"
+      "type": "milk_long_life"
     },
     {
-      "type": "milk_fresh",
-      "brand": "KDD",
-      "size": "1 L"
+      "type": "laban"
     },
     {
-      "type": "milk_fresh",
-      "brand": "KDD",
-      "size": "2 L"
+      "type": "yogurt"
     },
     {
-      "type": "milk_fresh",
-      "brand": "Nadec",
-      "size": "1 L"
+      "type": "labneh"
     },
     {
-      "type": "milk_fresh",
-      "brand": "Al Safi",
-      "size": "1 L"
+      "type": "cheese_slices"
     },
     {
-      "type": "milk_long_life",
-      "brand": "Almarai",
-      "size": "1 L"
+      "type": "cheese_white"
     },
     {
-      "type": "milk_long_life",
-      "brand": "KDD",
-      "size": "1 L"
+      "type": "cheese_triangles"
     },
     {
-      "type": "milk_long_life",
-      "brand": "Nadec",
-      "size": "1 L"
+      "type": "cream"
     },
     {
-      "type": "laban",
-      "brand": "Almarai",
-      "size": "1 L"
+      "type": "butter"
     },
     {
-      "type": "laban",
-      "brand": "KDD",
-      "size": "1 L"
+      "type": "eggs"
     },
     {
-      "type": "yogurt",
-      "brand": "Almarai",
-      "size": "170 g"
+      "type": "milk_powder"
     },
     {
-      "type": "yogurt",
-      "brand": "KDD",
-      "size": "170 g"
+      "type": "chicken_whole"
     },
     {
-      "type": "yogurt",
-      "brand": "Nadec",
-      "size": "400 g"
+      "type": "chicken_breast"
     },
     {
-      "type": "labneh",
-      "brand": "Puck",
-      "size": "500 g"
+      "type": "chicken_legs"
     },
     {
-      "type": "labneh",
-      "brand": "Almarai",
-      "size": "500 g"
+      "type": "minced_beef"
     },
     {
-      "type": "cheese_slices",
-      "brand": "Kraft",
-      "size": "200 g"
+      "type": "beef_cubes"
     },
     {
-      "type": "cheese_slices",
-      "brand": "Puck",
-      "size": "200 g"
+      "type": "mutton"
     },
     {
-      "type": "cheese_slices",
-      "brand": "Almarai",
-      "size": "200 g"
+      "type": "fish_hamour"
     },
     {
-      "type": "cheese_white",
-      "brand": "Puck",
-      "size": "500 g"
+      "type": "fish_zubaidi"
     },
     {
-      "type": "cheese_white",
-      "brand": "Almarai",
-      "size": "500 g"
+      "type": "shrimp"
     },
     {
-      "type": "cheese_triangles",
-      "brand": "La Vache Qui Rit",
-      "size": "8 pcs"
+      "type": "turkey_slices"
     },
     {
-      "type": "cheese_triangles",
-      "brand": "Kiri",
-      "size": "12 pcs"
+      "type": "arabic_bread"
     },
     {
-      "type": "cheese_triangles",
-      "brand": "Puck",
-      "size": "8 pcs"
+      "type": "sliced_bread"
     },
     {
-      "type": "cream",
-      "brand": "Puck",
-      "size": "250 ml"
+      "type": "brown_bread"
     },
     {
-      "type": "cream",
-      "brand": "Nestlé",
-      "size": "250 ml"
+      "type": "burger_buns"
     },
     {
-      "type": "cream",
-      "brand": "Almarai",
-      "size": "250 ml"
+      "type": "croissant"
     },
     {
-      "type": "butter",
-      "brand": "Lurpak",
-      "size": "200 g"
+      "type": "paratha_bread"
     },
     {
-      "type": "butter",
-      "brand": "Anchor",
-      "size": "200 g"
+      "type": "cake"
     },
     {
-      "type": "butter",
-      "brand": "Almarai",
-      "size": "100 g"
+      "type": "rusk"
     },
     {
-      "type": "eggs",
-      "size": "30 pcs"
+      "type": "basmati_rice"
     },
     {
-      "type": "eggs",
-      "size": "15 pcs"
+      "type": "egyptian_rice"
     },
     {
-      "type": "eggs",
-      "size": "6 pcs"
+      "type": "spaghetti"
     },
     {
-      "type": "milk_powder",
-      "brand": "Nido",
-      "size": "900 g"
+      "type": "macaroni"
     },
     {
-      "type": "milk_powder",
-      "brand": "Anchor",
-      "size": "900 g"
+      "type": "noodles"
     },
     {
-      "type": "milk_powder",
-      "brand": "Almarai",
-      "size": "400 g"
+      "type": "vermicelli"
     },
     {
-      "type": "chicken_whole",
-      "size": "1 kg"
+      "type": "lentils_red"
     },
     {
-      "type": "chicken_whole",
-      "brand": "Americana",
-      "size": "1.1 kg"
+      "type": "chickpeas_dry"
     },
     {
-      "type": "chicken_whole",
-      "brand": "Sadia",
-      "size": "1.2 kg"
+      "type": "white_beans"
     },
     {
-      "type": "chicken_whole",
-      "brand": "Seara",
-      "size": "1 kg"
+      "type": "bulgur"
     },
     {
-      "type": "chicken_breast",
-      "size": "1 kg"
+      "type": "oats"
     },
     {
-      "type": "chicken_breast",
-      "brand": "Sadia",
-      "size": "1 kg"
+      "type": "flour"
     },
     {
-      "type": "chicken_legs",
-      "size": "1 kg"
+      "type": "sunflower_oil"
     },
     {
-      "type": "chicken_legs",
-      "brand": "Sadia",
-      "size": "1 kg"
+      "type": "corn_oil"
     },
     {
-      "type": "minced_beef",
-      "size": "1 kg"
+      "type": "olive_oil"
     },
     {
-      "type": "beef_cubes",
-      "size": "1 kg"
+      "type": "ghee"
     },
     {
-      "type": "mutton",
-      "size": "1 kg"
+      "type": "sugar"
     },
     {
-      "type": "mutton",
-      "size": "500 g"
+      "type": "salt"
     },
     {
-      "type": "fish_hamour",
-      "size": "1 kg"
+      "type": "black_pepper"
     },
     {
-      "type": "fish_zubaidi",
-      "size": "1 kg"
+      "type": "turmeric"
     },
     {
-      "type": "shrimp",
-      "size": "1 kg"
+      "type": "cumin"
     },
     {
-      "type": "shrimp",
-      "size": "400 g"
+      "type": "coriander_powder"
     },
     {
-      "type": "turkey_slices",
-      "brand": "Americana",
-      "size": "200 g"
+      "type": "chili_powder"
     },
     {
-      "type": "turkey_slices",
-      "brand": "Sadia",
-      "size": "200 g"
+      "type": "mixed_spices"
     },
     {
-      "type": "arabic_bread",
-      "brand": "Kuwait Flour Mills",
-      "size": "6 pcs (large)"
+      "type": "cardamom"
     },
     {
-      "type": "arabic_bread",
-      "brand": "Kuwait Flour Mills",
-      "size": "10 pcs (small)"
+      "type": "cinnamon"
     },
     {
-      "type": "sliced_bread",
-      "brand": "Lusine",
-      "size": "600 g"
+      "type": "yeast"
     },
     {
-      "type": "sliced_bread",
-      "brand": "Kuwait Flour Mills",
-      "size": "550 g"
+      "type": "baking_powder"
     },
     {
-      "type": "brown_bread",
-      "brand": "Lusine",
-      "size": "600 g"
+      "type": "vinegar"
     },
     {
-      "type": "burger_buns",
-      "brand": "Lusine",
-      "size": "6 pcs"
+      "type": "tomato_paste"
     },
     {
-      "type": "croissant",
-      "brand": "Lusine",
-      "size": "4 pcs"
+      "type": "canned_tomato"
     },
     {
-      "type": "paratha_bread",
-      "brand": "Switz",
-      "size": "5 pcs"
+      "type": "tuna_can"
     },
     {
-      "type": "cake",
-      "brand": "Lusine",
-      "size": "400 g"
+      "type": "canned_beans"
     },
     {
-      "type": "rusk",
-      "brand": "Britannia",
-      "size": "300 g"
+      "type": "canned_corn"
     },
     {
-      "type": "basmati_rice",
-      "brand": "India Gate",
-      "size": "5 kg"
+      "type": "chickpeas_can"
     },
     {
-      "type": "basmati_rice",
-      "brand": "India Gate",
-      "size": "1 kg"
+      "type": "ketchup"
     },
     {
-      "type": "basmati_rice",
-      "brand": "Daawat",
-      "size": "5 kg"
+      "type": "mayonnaise"
     },
     {
-      "type": "basmati_rice",
-      "brand": "Abu Kass",
-      "size": "5 kg"
+      "type": "mustard"
     },
     {
-      "type": "basmati_rice",
-      "brand": "Al Walimah",
-      "size": "5 kg"
+      "type": "hot_sauce"
     },
     {
-      "type": "egyptian_rice",
-      "brand": "Al Osra",
-      "size": "5 kg"
+      "type": "soy_sauce"
     },
     {
-      "type": "egyptian_rice",
-      "brand": "Abu Kass",
-      "size": "2 kg"
+      "type": "tahini"
     },
     {
-      "type": "spaghetti",
-      "brand": "Barilla",
-      "size": "500 g"
+      "type": "jam"
     },
     {
-      "type": "spaghetti",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "honey"
     },
     {
-      "type": "spaghetti",
-      "brand": "Regal",
-      "size": "400 g"
+      "type": "peanut_butter"
     },
     {
-      "type": "macaroni",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "frozen_vegetables"
     },
     {
-      "type": "macaroni",
-      "brand": "Barilla",
-      "size": "500 g"
+      "type": "frozen_peas"
     },
     {
-      "type": "noodles",
-      "brand": "Indomie",
-      "size": "5 pcs"
+      "type": "frozen_fries"
     },
     {
-      "type": "noodles",
-      "brand": "Maggi",
-      "size": "5 pcs"
+      "type": "frozen_nuggets"
     },
     {
-      "type": "vermicelli",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "frozen_samosa"
     },
     {
-      "type": "lentils_red",
-      "brand": "Bayara",
-      "size": "1 kg"
+      "type": "frozen_paratha"
     },
     {
-      "type": "lentils_red",
-      "brand": "Al Alali",
-      "size": "500 g"
+      "type": "ice_cream"
     },
     {
-      "type": "chickpeas_dry",
-      "brand": "Bayara",
-      "size": "1 kg"
+      "type": "frozen_fish"
     },
     {
-      "type": "white_beans",
-      "brand": "Bayara",
-      "size": "1 kg"
+      "type": "water_bottle"
     },
     {
-      "type": "bulgur",
-      "brand": "Bayara",
-      "size": "1 kg"
+      "type": "orange_juice"
     },
     {
-      "type": "oats",
-      "brand": "Quaker",
-      "size": "500 g"
+      "type": "apple_juice"
     },
     {
-      "type": "oats",
-      "brand": "Quaker",
-      "size": "1 kg"
+      "type": "mango_juice"
     },
     {
-      "type": "flour",
-      "brand": "Kuwait Flour Mills",
-      "size": "2 kg"
+      "type": "soft_drink"
     },
     {
-      "type": "flour",
-      "brand": "Kuwait Flour Mills",
-      "size": "5 kg"
+      "type": "tea_bags"
     },
     {
-      "type": "flour",
-      "brand": "Al Wazzan",
-      "size": "2 kg"
+      "type": "black_tea"
     },
     {
-      "type": "sunflower_oil",
-      "brand": "Afia",
-      "size": "1.5 L"
+      "type": "green_tea"
     },
     {
-      "type": "sunflower_oil",
-      "brand": "Afia",
-      "size": "750 ml"
+      "type": "instant_coffee"
     },
     {
-      "type": "sunflower_oil",
-      "brand": "Rahma",
-      "size": "1.5 L"
+      "type": "arabic_coffee"
     },
     {
-      "type": "corn_oil",
-      "brand": "Mazola",
-      "size": "1.5 L"
+      "type": "potato_chips"
     },
     {
-      "type": "corn_oil",
-      "brand": "Afia",
-      "size": "1.5 L"
+      "type": "biscuits"
     },
     {
-      "type": "olive_oil",
-      "brand": "Rahma",
-      "size": "500 ml"
+      "type": "chocolate"
     },
     {
-      "type": "olive_oil",
-      "brand": "Bertolli",
-      "size": "500 ml"
+      "type": "wafer"
     },
     {
-      "type": "olive_oil",
-      "brand": "Al Jouf",
-      "size": "500 ml"
+      "type": "mixed_nuts"
     },
     {
-      "type": "ghee",
-      "brand": "Nadec",
-      "size": "800 g"
+      "type": "peanuts"
     },
     {
-      "type": "ghee",
-      "brand": "Rahma",
-      "size": "800 g"
+      "type": "popcorn"
     },
     {
-      "type": "sugar",
-      "brand": "Al Osra",
-      "size": "2 kg"
+      "type": "candy"
     },
     {
-      "type": "sugar",
-      "brand": "Deemah",
-      "size": "1 kg"
+      "type": "dish_soap"
     },
     {
-      "type": "salt",
-      "brand": "Al Alali",
-      "size": "750 g"
+      "type": "dishwasher_tablets"
     },
     {
-      "type": "salt",
-      "brand": "Bayara",
-      "size": "500 g"
+      "type": "laundry_powder"
     },
     {
-      "type": "black_pepper",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "laundry_liquid"
     },
     {
-      "type": "black_pepper",
-      "brand": "Eastern",
-      "size": "100 g"
+      "type": "fabric_softener"
     },
     {
-      "type": "turmeric",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "bleach"
     },
     {
-      "type": "turmeric",
-      "brand": "Eastern",
-      "size": "100 g"
+      "type": "floor_cleaner"
     },
     {
-      "type": "cumin",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "glass_cleaner"
     },
     {
-      "type": "cumin",
-      "brand": "Bayara",
-      "size": "200 g"
+      "type": "bathroom_cleaner"
     },
     {
-      "type": "coriander_powder",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "sponge"
     },
     {
-      "type": "chili_powder",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "cleaning_gloves"
     },
     {
-      "type": "chili_powder",
-      "brand": "National",
-      "size": "100 g"
+      "type": "garbage_bags"
     },
     {
-      "type": "mixed_spices",
-      "brand": "Shan",
-      "size": "100 g"
+      "type": "air_freshener"
     },
     {
-      "type": "mixed_spices",
-      "brand": "National",
-      "size": "100 g"
+      "type": "shampoo"
     },
     {
-      "type": "mixed_spices",
-      "brand": "Eastern",
-      "size": "100 g"
+      "type": "conditioner"
     },
     {
-      "type": "cardamom",
-      "brand": "Bayara",
-      "size": "100 g"
+      "type": "soap_bar"
     },
     {
-      "type": "cinnamon",
-      "brand": "Bayara",
-      "size": "100 g"
+      "type": "body_wash"
     },
     {
-      "type": "yeast",
-      "brand": "Saf-Instant",
-      "size": "500 g"
+      "type": "toothpaste"
     },
     {
-      "type": "baking_powder",
-      "brand": "Bayara",
-      "size": "100 g"
+      "type": "toothbrush"
     },
     {
-      "type": "vinegar",
-      "brand": "Al Alali",
-      "size": "473 ml"
+      "type": "deodorant"
     },
     {
-      "type": "tomato_paste",
-      "brand": "Al Alali",
-      "size": "135 g"
+      "type": "razor"
     },
     {
-      "type": "tomato_paste",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "hand_wash"
     },
     {
-      "type": "tomato_paste",
-      "brand": "California Garden",
-      "size": "135 g"
+      "type": "body_lotion"
     },
     {
-      "type": "canned_tomato",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "hair_oil"
     },
     {
-      "type": "tuna_can",
-      "brand": "California Garden",
-      "size": "185 g"
+      "type": "sanitary_pads"
     },
     {
-      "type": "tuna_can",
-      "brand": "Al Alali",
-      "size": "185 g"
+      "type": "facial_tissue"
     },
     {
-      "type": "tuna_can",
-      "brand": "Rio Mare",
-      "size": "160 g"
+      "type": "toilet_paper"
     },
     {
-      "type": "canned_beans",
-      "brand": "California Garden",
-      "size": "400 g"
+      "type": "kitchen_towel"
     },
     {
-      "type": "canned_beans",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "aluminum_foil"
     },
     {
-      "type": "canned_corn",
-      "brand": "Al Alali",
-      "size": "340 g"
+      "type": "cling_film"
     },
     {
-      "type": "canned_corn",
-      "brand": "Del Monte",
-      "size": "340 g"
+      "type": "baking_paper"
     },
     {
-      "type": "chickpeas_can",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "matches"
     },
     {
-      "type": "ketchup",
-      "brand": "Heinz",
-      "size": "342 g"
+      "type": "batteries"
     },
     {
-      "type": "ketchup",
-      "brand": "Al Alali",
-      "size": "340 g"
+      "type": "light_bulb"
     },
     {
-      "type": "mayonnaise",
-      "brand": "Hellmann's",
-      "size": "473 ml"
+      "type": "insect_spray"
     },
     {
-      "type": "mayonnaise",
-      "brand": "American Garden",
-      "size": "473 ml"
+      "type": "paper_napkins"
     },
     {
-      "type": "mustard",
-      "brand": "French's",
-      "size": "226 g"
+      "type": "diapers"
     },
     {
-      "type": "hot_sauce",
-      "brand": "Tabasco",
-      "size": "60 ml"
+      "type": "baby_wipes"
     },
     {
-      "type": "hot_sauce",
-      "brand": "American Garden",
-      "size": "150 ml"
+      "type": "baby_shampoo"
     },
     {
-      "type": "soy_sauce",
-      "brand": "Kikkoman",
-      "size": "150 ml"
+      "type": "baby_soap"
     },
     {
-      "type": "tahini",
-      "brand": "Al Kanater",
-      "size": "400 g"
+      "type": "baby_lotion"
     },
     {
-      "type": "jam",
-      "brand": "Vitrac",
-      "size": "430 g"
+      "type": "infant_formula"
     },
     {
-      "type": "jam",
-      "brand": "Al Alali",
-      "size": "400 g"
+      "type": "baby_food"
     },
     {
-      "type": "honey",
-      "brand": "Al Shifa",
-      "size": "500 g"
-    },
-    {
-      "type": "honey",
-      "brand": "Langnese",
-      "size": "500 g"
-    },
-    {
-      "type": "peanut_butter",
-      "brand": "American Garden",
-      "size": "510 g"
-    },
-    {
-      "type": "frozen_vegetables",
-      "brand": "Sunbulah",
-      "size": "400 g"
-    },
-    {
-      "type": "frozen_vegetables",
-      "brand": "Americana",
-      "size": "400 g"
-    },
-    {
-      "type": "frozen_peas",
-      "brand": "Sunbulah",
-      "size": "400 g"
-    },
-    {
-      "type": "frozen_fries",
-      "brand": "McCain",
-      "size": "1 kg"
-    },
-    {
-      "type": "frozen_fries",
-      "brand": "Americana",
-      "size": "1 kg"
-    },
-    {
-      "type": "frozen_nuggets",
-      "brand": "Americana",
-      "size": "400 g"
-    },
-    {
-      "type": "frozen_nuggets",
-      "brand": "Sadia",
-      "size": "400 g"
-    },
-    {
-      "type": "frozen_samosa",
-      "brand": "Sunbulah",
-      "size": "20 pcs"
-    },
-    {
-      "type": "frozen_samosa",
-      "brand": "Al Kabeer",
-      "size": "20 pcs"
-    },
-    {
-      "type": "frozen_paratha",
-      "brand": "Switz",
-      "size": "5 pcs"
-    },
-    {
-      "type": "frozen_paratha",
-      "brand": "Al Kabeer",
-      "size": "5 pcs"
-    },
-    {
-      "type": "ice_cream",
-      "brand": "KDD",
-      "size": "1 L"
-    },
-    {
-      "type": "ice_cream",
-      "brand": "Nestlé",
-      "size": "1 L"
-    },
-    {
-      "type": "frozen_fish",
-      "brand": "Americana",
-      "size": "500 g"
-    },
-    {
-      "type": "water_bottle",
-      "brand": "Hayat",
-      "size": "1.5 L"
-    },
-    {
-      "type": "water_bottle",
-      "brand": "Hayat",
-      "size": "500 ml"
-    },
-    {
-      "type": "water_bottle",
-      "brand": "Nestlé Pure Life",
-      "size": "1.5 L"
-    },
-    {
-      "type": "water_bottle",
-      "brand": "Aquafina",
-      "size": "1.5 L"
-    },
-    {
-      "type": "orange_juice",
-      "brand": "KDD",
-      "size": "1 L"
-    },
-    {
-      "type": "orange_juice",
-      "brand": "Almarai",
-      "size": "1 L"
-    },
-    {
-      "type": "orange_juice",
-      "brand": "Rani",
-      "size": "240 ml"
-    },
-    {
-      "type": "apple_juice",
-      "brand": "KDD",
-      "size": "1 L"
-    },
-    {
-      "type": "apple_juice",
-      "brand": "Almarai",
-      "size": "1 L"
-    },
-    {
-      "type": "mango_juice",
-      "brand": "KDD",
-      "size": "1 L"
-    },
-    {
-      "type": "mango_juice",
-      "brand": "Rani",
-      "size": "240 ml"
-    },
-    {
-      "type": "soft_drink",
-      "brand": "Pepsi",
-      "size": "1.5 L"
-    },
-    {
-      "type": "soft_drink",
-      "brand": "7UP",
-      "size": "1.5 L"
-    },
-    {
-      "type": "soft_drink",
-      "brand": "Coca-Cola",
-      "size": "1.5 L"
-    },
-    {
-      "type": "tea_bags",
-      "brand": "Lipton",
-      "size": "100 pcs"
-    },
-    {
-      "type": "tea_bags",
-      "brand": "Ahmad Tea",
-      "size": "100 pcs"
-    },
-    {
-      "type": "black_tea",
-      "brand": "Alkbous",
-      "size": "400 g"
-    },
-    {
-      "type": "black_tea",
-      "brand": "Rabea",
-      "size": "400 g"
-    },
-    {
-      "type": "green_tea",
-      "brand": "Lipton",
-      "size": "25 pcs"
-    },
-    {
-      "type": "instant_coffee",
-      "brand": "Nescafé",
-      "size": "200 g"
-    },
-    {
-      "type": "instant_coffee",
-      "brand": "Nescafé 3in1",
-      "size": "20 pcs"
-    },
-    {
-      "type": "arabic_coffee",
-      "brand": "Najjar",
-      "size": "200 g"
-    },
-    {
-      "type": "potato_chips",
-      "brand": "Lay's",
-      "size": "155 g"
-    },
-    {
-      "type": "potato_chips",
-      "brand": "Pringles",
-      "size": "165 g"
-    },
-    {
-      "type": "potato_chips",
-      "brand": "Chipsy",
-      "size": "150 g"
-    },
-    {
-      "type": "biscuits",
-      "brand": "Oreo",
-      "size": "12 pcs"
-    },
-    {
-      "type": "biscuits",
-      "brand": "Ülker",
-      "size": "175 g"
-    },
-    {
-      "type": "biscuits",
-      "brand": "Loacker",
-      "size": "100 g"
-    },
-    {
-      "type": "chocolate",
-      "brand": "Galaxy",
-      "size": "90 g"
-    },
-    {
-      "type": "chocolate",
-      "brand": "KitKat",
-      "size": "4 fingers"
-    },
-    {
-      "type": "chocolate",
-      "brand": "Snickers",
-      "size": "50 g"
-    },
-    {
-      "type": "chocolate",
-      "brand": "Mars",
-      "size": "51 g"
-    },
-    {
-      "type": "wafer",
-      "brand": "Loacker",
-      "size": "45 g"
-    },
-    {
-      "type": "wafer",
-      "brand": "Ülker",
-      "size": "40 g"
-    },
-    {
-      "type": "mixed_nuts",
-      "brand": "Bayara",
-      "size": "300 g"
-    },
-    {
-      "type": "peanuts",
-      "brand": "Bayara",
-      "size": "200 g"
-    },
-    {
-      "type": "popcorn",
-      "brand": "Act II",
-      "size": "99 g"
-    },
-    {
-      "type": "candy",
-      "brand": "Mentos",
-      "size": "38 g"
-    },
-    {
-      "type": "dish_soap",
-      "brand": "Fairy",
-      "size": "750 ml"
-    },
-    {
-      "type": "dish_soap",
-      "brand": "Pril",
-      "size": "750 ml"
-    },
-    {
-      "type": "dish_soap",
-      "brand": "Sunlight",
-      "size": "750 ml"
-    },
-    {
-      "type": "dishwasher_tablets",
-      "brand": "Finish",
-      "size": "30 pcs"
-    },
-    {
-      "type": "laundry_powder",
-      "brand": "Tide",
-      "size": "3 kg"
-    },
-    {
-      "type": "laundry_powder",
-      "brand": "Ariel",
-      "size": "3 kg"
-    },
-    {
-      "type": "laundry_powder",
-      "brand": "Persil",
-      "size": "3 kg"
-    },
-    {
-      "type": "laundry_liquid",
-      "brand": "Ariel",
-      "size": "2 L"
-    },
-    {
-      "type": "laundry_liquid",
-      "brand": "Persil",
-      "size": "2 L"
-    },
-    {
-      "type": "fabric_softener",
-      "brand": "Comfort",
-      "size": "2 L"
-    },
-    {
-      "type": "fabric_softener",
-      "brand": "Downy",
-      "size": "2 L"
-    },
-    {
-      "type": "bleach",
-      "brand": "Clorox",
-      "size": "1 L"
-    },
-    {
-      "type": "floor_cleaner",
-      "brand": "Dettol",
-      "size": "1 L"
-    },
-    {
-      "type": "floor_cleaner",
-      "brand": "Flash",
-      "size": "1 L"
-    },
-    {
-      "type": "glass_cleaner",
-      "brand": "Windex",
-      "size": "500 ml"
-    },
-    {
-      "type": "bathroom_cleaner",
-      "brand": "Harpic",
-      "size": "750 ml"
-    },
-    {
-      "type": "sponge",
-      "brand": "Scotch-Brite",
-      "size": "3 pcs"
-    },
-    {
-      "type": "cleaning_gloves",
-      "size": "1 pair (M)"
-    },
-    {
-      "type": "garbage_bags",
-      "brand": "Sanita",
-      "size": "30 pcs"
-    },
-    {
-      "type": "garbage_bags",
-      "size": "50 pcs"
-    },
-    {
-      "type": "air_freshener",
-      "brand": "Air Wick",
-      "size": "300 ml"
-    },
-    {
-      "type": "air_freshener",
-      "brand": "Febreze",
-      "size": "300 ml"
-    },
-    {
-      "type": "shampoo",
-      "brand": "Head & Shoulders",
-      "size": "400 ml"
-    },
-    {
-      "type": "shampoo",
-      "brand": "Pantene",
-      "size": "400 ml"
-    },
-    {
-      "type": "shampoo",
-      "brand": "Dove",
-      "size": "400 ml"
-    },
-    {
-      "type": "conditioner",
-      "brand": "Pantene",
-      "size": "400 ml"
-    },
-    {
-      "type": "soap_bar",
-      "brand": "Lux",
-      "size": "4 pcs"
-    },
-    {
-      "type": "soap_bar",
-      "brand": "Dettol",
-      "size": "4 pcs"
-    },
-    {
-      "type": "soap_bar",
-      "brand": "Lifebuoy",
-      "size": "4 pcs"
-    },
-    {
-      "type": "body_wash",
-      "brand": "Dove",
-      "size": "500 ml"
-    },
-    {
-      "type": "toothpaste",
-      "brand": "Colgate",
-      "size": "100 ml"
-    },
-    {
-      "type": "toothpaste",
-      "brand": "Signal",
-      "size": "100 ml"
-    },
-    {
-      "type": "toothpaste",
-      "brand": "Sensodyne",
-      "size": "75 ml"
-    },
-    {
-      "type": "toothbrush",
-      "brand": "Colgate",
-      "size": "2 pcs"
-    },
-    {
-      "type": "deodorant",
-      "brand": "Rexona",
-      "size": "150 ml"
-    },
-    {
-      "type": "deodorant",
-      "brand": "Nivea",
-      "size": "150 ml"
-    },
-    {
-      "type": "razor",
-      "brand": "Gillette",
-      "size": "5 pcs"
-    },
-    {
-      "type": "hand_wash",
-      "brand": "Dettol",
-      "size": "400 ml"
-    },
-    {
-      "type": "hand_wash",
-      "brand": "Lifebuoy",
-      "size": "400 ml"
-    },
-    {
-      "type": "body_lotion",
-      "brand": "Nivea",
-      "size": "400 ml"
-    },
-    {
-      "type": "body_lotion",
-      "brand": "Vaseline",
-      "size": "400 ml"
-    },
-    {
-      "type": "hair_oil",
-      "brand": "Parachute",
-      "size": "200 ml"
-    },
-    {
-      "type": "hair_oil",
-      "brand": "Dabur Amla",
-      "size": "200 ml"
-    },
-    {
-      "type": "sanitary_pads",
-      "brand": "Always",
-      "size": "10 pcs"
-    },
-    {
-      "type": "facial_tissue",
-      "brand": "Fine",
-      "size": "200 pcs"
-    },
-    {
-      "type": "facial_tissue",
-      "brand": "Kleenex",
-      "size": "150 pcs"
-    },
-    {
-      "type": "toilet_paper",
-      "brand": "Fine",
-      "size": "8 rolls"
-    },
-    {
-      "type": "toilet_paper",
-      "brand": "Sanita",
-      "size": "8 rolls"
-    },
-    {
-      "type": "kitchen_towel",
-      "brand": "Sanita",
-      "size": "2 rolls"
-    },
-    {
-      "type": "kitchen_towel",
-      "brand": "Fine",
-      "size": "2 rolls"
-    },
-    {
-      "type": "aluminum_foil",
-      "brand": "Sanita",
-      "size": "30 m"
-    },
-    {
-      "type": "cling_film",
-      "brand": "Sanita",
-      "size": "30 m"
-    },
-    {
-      "type": "baking_paper",
-      "brand": "Sanita",
-      "size": "10 m"
-    },
-    {
-      "type": "matches",
-      "size": "10 boxes"
-    },
-    {
-      "type": "batteries",
-      "brand": "Duracell",
-      "size": "AA 4 pcs"
-    },
-    {
-      "type": "batteries",
-      "brand": "Energizer",
-      "size": "AAA 4 pcs"
-    },
-    {
-      "type": "light_bulb",
-      "brand": "Philips",
-      "size": "9 W"
-    },
-    {
-      "type": "insect_spray",
-      "brand": "Pif Paf",
-      "size": "400 ml"
-    },
-    {
-      "type": "paper_napkins",
-      "brand": "Fine",
-      "size": "100 pcs"
-    },
-    {
-      "type": "diapers",
-      "brand": "Pampers",
-      "size": "Size 3, 60 pcs"
-    },
-    {
-      "type": "diapers",
-      "brand": "Pampers",
-      "size": "Size 4, 54 pcs"
-    },
-    {
-      "type": "diapers",
-      "brand": "Huggies",
-      "size": "Size 3, 58 pcs"
-    },
-    {
-      "type": "baby_wipes",
-      "brand": "Pampers",
-      "size": "64 pcs"
-    },
-    {
-      "type": "baby_wipes",
-      "brand": "Johnson's",
-      "size": "80 pcs"
-    },
-    {
-      "type": "baby_shampoo",
-      "brand": "Johnson's",
-      "size": "500 ml"
-    },
-    {
-      "type": "baby_soap",
-      "brand": "Johnson's",
-      "size": "125 g"
-    },
-    {
-      "type": "baby_lotion",
-      "brand": "Johnson's",
-      "size": "500 ml"
-    },
-    {
-      "type": "infant_formula",
-      "brand": "Nido",
-      "size": "900 g"
-    },
-    {
-      "type": "infant_formula",
-      "brand": "Aptamil",
-      "size": "900 g"
-    },
-    {
-      "type": "infant_formula",
-      "brand": "NAN",
-      "size": "800 g"
-    },
-    {
-      "type": "baby_food",
-      "brand": "Cerelac",
-      "size": "400 g"
-    },
-    {
-      "type": "pet_food",
-      "brand": "Whiskas",
-      "size": "1.2 kg"
-    },
-    {
-      "type": "pet_food",
-      "brand": "Pedigree",
-      "size": "1.5 kg"
+      "type": "pet_food"
     }
   ]
 }

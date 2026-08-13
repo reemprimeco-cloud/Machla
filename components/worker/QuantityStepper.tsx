@@ -100,12 +100,16 @@ function StepButton({
 /**
  * A product tile: picture, name, brand/size, stepper.
  *
- * `image_url` is null for every row in the Phase 5 catalogue — no
- * third-party product photography was re-hosted
- * (11-product-catalog-architecture.md §7.5) — so the category icon stands
- * in. That is the designed fallback, not a placeholder for missing work:
- * a large familiar glyph is more use to a low-literacy shopper than a
- * broken image frame.
+ * `image_url` was null for every row until 2026-08, when the owner
+ * supplied licensed photography for the 24 fruits in Fruits & Vegetables
+ * (catalog-import/images/, uploaded to the public `product-images`
+ * bucket). The remaining ~150 product types still have none and fall
+ * back to their per-type icon.
+ *
+ * That fallback is the designed behaviour, not a placeholder for missing
+ * work: a large familiar glyph is more use to a low-literacy shopper than
+ * a broken image frame, and no third-party product photography is ever
+ * re-hosted to fill the gap (11-product-catalog-architecture.md §7.5).
  */
 export function ProductCard({
   product,
