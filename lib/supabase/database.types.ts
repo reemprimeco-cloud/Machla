@@ -120,6 +120,12 @@ export interface Database {
           name_ne: string;
           name_id: string;
           name_si: string;
+          // 20260812180000_catalog_12_languages.sql — nullable, unlike the
+          // nine above: the catalogue is translated into these
+          // incrementally, and a null falls back to name_en.
+          name_am: string | null;
+          name_fr: string | null;
+          name_fon: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["categories"]["Row"]> & {
           key: string;
@@ -152,6 +158,10 @@ export interface Database {
           name_ne: string;
           name_id: string;
           name_si: string;
+          // 20260812180000_catalog_12_languages.sql — nullable, see categories.
+          name_am: string | null;
+          name_fr: string | null;
+          name_fon: string | null;
           size: string | null;
           unit: string;
           icon: string | null;

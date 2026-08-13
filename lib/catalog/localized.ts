@@ -4,8 +4,8 @@ import { DEFAULT_LOCALE, toCatalogLocale } from "@/lib/i18n/config";
 /**
  * Picking the right localized column off a catalogue row.
  *
- * Product and category names are stored as nine real columns
- * (`name_en` … `name_si`), not as UI translation keys — they are *data*,
+ * Product and category names are stored as real columns
+ * (`name_en` … `name_fon`), not as UI translation keys — they are *data*,
  * curated offline, and they change without a deploy
  * (docs/architecture/11-product-catalog-architecture.md §7,
  * 15-localization-architecture.md). So they never go through `t()`;
@@ -14,19 +14,20 @@ import { DEFAULT_LOCALE, toCatalogLocale } from "@/lib/i18n/config";
  * Shared by server and client components, hence no "server-only".
  */
 
-/** The nine name columns every catalogue row carries. Keyed on
- * CatalogLocaleCode, not LocaleCode: UI locales without catalogue
- * columns (am, fr) are mapped down by toCatalogLocale below. */
+/** The name columns a catalogue row carries. Nine are guaranteed
+ * (`name_en` … `name_si`, NOT NULL and validated before import); the
+ * three added with the twelve-language expansion are nullable and filled
+ * in per row as translation progresses — hence the `| null`. */
 export type LocalizedNames = {
-  [K in `name_${CatalogLocaleCode}`]: string;
+  [K in `name_${CatalogLocaleCode}`]: string | null;
 };
 
 export function localizedName(row: LocalizedNames, locale: LocaleCode): string {
   const catalogLocale = toCatalogLocale(locale);
-  // Every row is validated to carry all nine names before import
-  // (catalog-import/scripts/build-catalog.mjs), so the fallback is a
-  // belt-and-braces guard against a row written outside that pipeline —
-  // an untranslated name is far better than a blank card.
+  // Falls back to English for a row not yet translated into this locale
+  // (name_am/name_fr/name_fon are nullable by design), and as a
+  // belt-and-braces guard for a row written outside the import pipeline.
+  // An untranslated name is far better than a blank card.
   return row[`name_${catalogLocale}`] || row[`name_${toCatalogLocale(DEFAULT_LOCALE)}`] || "";
 }
 

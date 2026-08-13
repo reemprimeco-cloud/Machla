@@ -17,7 +17,17 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+/** The nine names every catalogue row MUST carry — these columns are
+ * NOT NULL in the database, and a row missing one fails the import. */
 export const LANGS = ["en", "ar", "hi", "te", "ur", "fil", "ne", "id", "si"];
+
+/** Added by 20260812180000_catalog_12_languages.sql, and deliberately
+ * OPTIONAL: the columns are nullable, and `localizedName` falls back to
+ * English for a row that has not been translated yet
+ * (lib/catalog/localized.ts). That lets the catalogue be translated a
+ * category at a time instead of requiring all 168 product types in three
+ * more languages before any of it can ship. */
+export const OPTIONAL_LANGS = ["am", "fr", "fon"];
 
 /** Mirrors the products.unit CHECK constraint in the Phase 1 migration.
  * Kept in sync by hand; a mismatch fails the import rather than the
@@ -70,6 +80,9 @@ export function buildCatalog() {
       sort_order: category.sort_order,
       is_active: true,
       ...Object.fromEntries(LANGS.map((lang) => [`name_${lang}`, category.names?.[lang] ?? ""])),
+      ...Object.fromEntries(
+        OPTIONAL_LANGS.map((lang) => [`name_${lang}`, category.names?.[lang]?.trim() || null]),
+      ),
     });
   }
 
@@ -149,6 +162,9 @@ export function buildCatalog() {
       is_active: true,
       sort_order: index,
       ...Object.fromEntries(LANGS.map((lang) => [`name_${lang}`, type.names[lang]])),
+      ...Object.fromEntries(
+        OPTIONAL_LANGS.map((lang) => [`name_${lang}`, type.names[lang]?.trim() || null]),
+      ),
     });
   });
 
@@ -204,7 +220,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   console.log(`categories: ${categories.length}`);
   console.log(`products:   ${products.length}`);
-  console.log(`languages:  ${LANGS.length} (${LANGS.join(", ")})`);
+  console.log(`languages:  ${LANGS.length} required (${LANGS.join(", ")})`);
+  console.log(`            ${OPTIONAL_LANGS.length} optional (${OPTIONAL_LANGS.join(", ")})`);
   console.log("\nproducts per category:");
   for (const category of categories) {
     console.log(`  ${String(category.sort_order).padStart(2)} ${category.key.padEnd(20)} ${byCategory.get(category.key) ?? 0}`);

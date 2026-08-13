@@ -249,9 +249,12 @@
         "te": "నిమ్మకాయ",
         "ur": "لیموں",
         "fil": "Limon",
-        "ne": "कागती",
+        "ne": "निबुवा",
         "id": "Lemon",
-        "si": "දෙහි"
+        "si": "ලෙමන්",
+        "am": "ሎሚ",
+        "fr": "Citrons",
+        "fon": "Kletiman"
       },
       "keywords": [
         "lemon",
@@ -275,7 +278,10 @@
         "fil": "Saging",
         "ne": "केरा",
         "id": "Pisang",
-        "si": "කෙසෙල්"
+        "si": "කෙසෙල්",
+        "am": "ሙዝ",
+        "fr": "Bananes",
+        "fon": "Kwêkwê"
       },
       "keywords": [
         "banana",
@@ -292,23 +298,28 @@
       "unit": "kg",
       "icon": "🍎",
       "names": {
-        "en": "Apples",
-        "ar": "تفاح",
-        "hi": "सेब",
-        "te": "యాపిల్స్",
-        "ur": "سیب",
-        "fil": "Mansanas",
-        "ne": "स्याउ",
-        "id": "Apel",
-        "si": "ඇපල්"
+        "en": "Red Apples",
+        "ar": "تفاح أحمر",
+        "hi": "लाल सेब",
+        "te": "ఎర్ర యాపిల్స్",
+        "ur": "سرخ سیب",
+        "fil": "Pulang Mansanas",
+        "ne": "रातो स्याउ",
+        "id": "Apel Merah",
+        "si": "රතු ඇපල්",
+        "am": "ቀይ ፖም",
+        "fr": "Pommes rouges",
+        "fon": "Pomu vɔvɔ"
       },
       "keywords": [
         "apple",
+        "red apple",
         "tuffah",
         "seb",
         "mansanas",
         "apel",
-        "syau"
+        "syau",
+        "pomme"
       ]
     },
     {
@@ -325,7 +336,10 @@
         "fil": "Dalandan",
         "ne": "सुन्तला",
         "id": "Jeruk",
-        "si": "දොඩම්"
+        "si": "දොඩම්",
+        "am": "ብርቱካን",
+        "fr": "Oranges",
+        "fon": "Blɛfutu"
       },
       "keywords": [
         "orange",
@@ -341,22 +355,27 @@
       "unit": "kg",
       "icon": "🍇",
       "names": {
-        "en": "Grapes",
-        "ar": "عنب",
-        "hi": "अंगूर",
-        "te": "ద్రాక్ష",
-        "ur": "انگور",
-        "fil": "Ubas",
-        "ne": "अंगुर",
-        "id": "Anggur",
-        "si": "මිදි"
+        "en": "Green Grapes",
+        "ar": "عنب أخضر",
+        "hi": "हरे अंगूर",
+        "te": "పచ్చ ద్రాక్ష",
+        "ur": "سبز انگور",
+        "fil": "Berdeng Ubas",
+        "ne": "हरियो अंगुर",
+        "id": "Anggur Hijau",
+        "si": "කොළ මිදි",
+        "am": "አረንጓዴ ወይን",
+        "fr": "Raisins verts",
+        "fon": "Vɛnu amuwutu"
       },
       "keywords": [
         "grapes",
+        "green grapes",
         "inab",
         "angoor",
         "ubas",
-        "anggur"
+        "anggur",
+        "raisin"
       ]
     },
     {
@@ -373,7 +392,10 @@
         "fil": "Pakwan",
         "ne": "हर्बुजा",
         "id": "Semangka",
-        "si": "පැණි කොමඩු"
+        "si": "පැණි කොමඩු",
+        "am": "ሐብሐብ",
+        "fr": "Pastèque",
+        "fon": "Agbotó"
       },
       "keywords": [
         "watermelon",
@@ -397,7 +419,10 @@
         "fil": "Mangga",
         "ne": "आँप",
         "id": "Mangga",
-        "si": "අඹ"
+        "si": "අඹ",
+        "am": "ማንጎ",
+        "fr": "Mangues",
+        "fon": "Mangoro"
       },
       "keywords": [
         "mango",
@@ -420,7 +445,10 @@
         "fil": "Datiles",
         "ne": "छोहडा",
         "id": "Kurma",
-        "si": "රටඉඳි"
+        "si": "රටඉඳි",
+        "am": "ተምር",
+        "fr": "Dattes",
+        "fon": "Detu"
       },
       "keywords": [
         "dates",
@@ -428,6 +456,430 @@
         "khajoor",
         "kurma",
         "datiles"
+      ]
+    },
+    {
+      "key": "apple_green",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍏",
+      "names": {
+        "en": "Green Apples",
+        "ar": "تفاح أخضر",
+        "hi": "हरे सेब",
+        "te": "పచ్చ యాపిల్స్",
+        "ur": "سبز سیب",
+        "fil": "Berdeng Mansanas",
+        "ne": "हरियो स्याउ",
+        "id": "Apel Hijau",
+        "si": "කොළ ඇපල්",
+        "am": "አረንጓዴ ፖም",
+        "fr": "Pommes vertes",
+        "fon": "Pomu amuwutu"
+      },
+      "keywords": [
+        "green apple",
+        "granny smith",
+        "tuffah akhdar",
+        "hara seb",
+        "pomme verte"
+      ]
+    },
+    {
+      "key": "grapes_red",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍇",
+      "names": {
+        "en": "Red Grapes",
+        "ar": "عنب أحمر",
+        "hi": "लाल अंगूर",
+        "te": "ఎర్ర ద్రాక్ష",
+        "ur": "سرخ انگور",
+        "fil": "Pulang Ubas",
+        "ne": "रातो अंगुर",
+        "id": "Anggur Merah",
+        "si": "රතු මිදි",
+        "am": "ቀይ ወይን",
+        "fr": "Raisins rouges",
+        "fon": "Vɛnu vɔvɔ"
+      },
+      "keywords": [
+        "red grapes",
+        "inab ahmar",
+        "lal angoor",
+        "raisin rouge"
+      ]
+    },
+    {
+      "key": "mandarin",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍊",
+      "names": {
+        "en": "Mandarins",
+        "ar": "يوسفي",
+        "hi": "कीनू",
+        "te": "కమలా పండు",
+        "ur": "کینو",
+        "fil": "Mandarin",
+        "ne": "मन्डारिन",
+        "id": "Jeruk Mandarin",
+        "si": "මැන්ඩරින්",
+        "am": "መንደሪን",
+        "fr": "Mandarines",
+        "fon": "Mandarini"
+      },
+      "keywords": [
+        "mandarin",
+        "tangerine",
+        "clementine",
+        "yusufi",
+        "keenu",
+        "mandarine"
+      ]
+    },
+    {
+      "key": "lime",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍋‍🟩",
+      "names": {
+        "en": "Limes",
+        "ar": "ليمون أخضر",
+        "hi": "कागज़ी नींबू",
+        "te": "కాగజీ నిమ్మ",
+        "ur": "سبز لیموں",
+        "fil": "Dayap",
+        "ne": "कागती",
+        "id": "Jeruk Nipis",
+        "si": "දෙහි",
+        "am": "አረንጓዴ ሎሚ",
+        "fr": "Citrons verts",
+        "fon": "Kletiman amuwutu"
+      },
+      "keywords": [
+        "lime",
+        "limoo",
+        "dayap",
+        "kagati",
+        "citron vert",
+        "laimu"
+      ]
+    },
+    {
+      "key": "strawberry",
+      "category": "fruits_vegetables",
+      "unit": "g",
+      "icon": "🍓",
+      "names": {
+        "en": "Strawberries",
+        "ar": "فراولة",
+        "hi": "स्ट्रॉबेरी",
+        "te": "స్ట్రాబెర్రీ",
+        "ur": "اسٹرابیری",
+        "fil": "Strawberry",
+        "ne": "स्ट्रबेरी",
+        "id": "Stroberi",
+        "si": "ස්ට්‍රෝබෙරි",
+        "am": "እንጆሪ",
+        "fr": "Fraises",
+        "fon": "Sitrobɛli"
+      },
+      "keywords": [
+        "strawberry",
+        "farawla",
+        "stroberi",
+        "fraise"
+      ]
+    },
+    {
+      "key": "blueberries",
+      "category": "fruits_vegetables",
+      "unit": "g",
+      "icon": "🫐",
+      "names": {
+        "en": "Blueberries",
+        "ar": "توت أزرق",
+        "hi": "ब्लूबेरी",
+        "te": "బ్లూబెర్రీ",
+        "ur": "بلیو بیری",
+        "fil": "Blueberry",
+        "ne": "ब्लुबेरी",
+        "id": "Blueberry",
+        "si": "බ්ලූබෙරි",
+        "am": "ሰማያዊ እንጆሪ",
+        "fr": "Myrtilles",
+        "fon": "Blubɛli"
+      },
+      "keywords": [
+        "blueberry",
+        "blueberries",
+        "toot azraq",
+        "myrtille"
+      ]
+    },
+    {
+      "key": "raspberry",
+      "category": "fruits_vegetables",
+      "unit": "g",
+      "icon": "🫐",
+      "names": {
+        "en": "Raspberries",
+        "ar": "توت العليق",
+        "hi": "रसभरी",
+        "te": "రాస్‌బెర్రీ",
+        "ur": "رسبیری",
+        "fil": "Raspberry",
+        "ne": "आँइसेलु",
+        "id": "Raspberry",
+        "si": "රාස්බෙරි",
+        "am": "ራስፕቤሪ",
+        "fr": "Framboises",
+        "fon": "Rasupɛli"
+      },
+      "keywords": [
+        "raspberry",
+        "raspberries",
+        "toot alliq",
+        "framboise"
+      ]
+    },
+    {
+      "key": "cherry",
+      "category": "fruits_vegetables",
+      "unit": "g",
+      "icon": "🍒",
+      "names": {
+        "en": "Cherries",
+        "ar": "كرز",
+        "hi": "चेरी",
+        "te": "చెర్రీ",
+        "ur": "چیری",
+        "fil": "Cherry",
+        "ne": "चेरी",
+        "id": "Ceri",
+        "si": "චෙරි",
+        "am": "ቼሪ",
+        "fr": "Cerises",
+        "fon": "Sɛli"
+      },
+      "keywords": [
+        "cherry",
+        "cherries",
+        "karaz",
+        "cerise"
+      ]
+    },
+    {
+      "key": "peach",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍑",
+      "names": {
+        "en": "Peaches",
+        "ar": "خوخ",
+        "hi": "आड़ू",
+        "te": "పీచు",
+        "ur": "آڑو",
+        "fil": "Peach",
+        "ne": "आरु",
+        "id": "Persik",
+        "si": "පීච්",
+        "am": "ኮክ",
+        "fr": "Pêches",
+        "fon": "Pɛci"
+      },
+      "keywords": [
+        "peach",
+        "peaches",
+        "khokh",
+        "aaru",
+        "peche"
+      ]
+    },
+    {
+      "key": "plum",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🟣",
+      "names": {
+        "en": "Plums",
+        "ar": "برقوق",
+        "hi": "आलूबुखारा",
+        "te": "రేగుపండు",
+        "ur": "آلوبخارا",
+        "fil": "Sirwelas",
+        "ne": "आरुबखडा",
+        "id": "Plum",
+        "si": "පිලම්",
+        "am": "ፕለም",
+        "fr": "Prunes",
+        "fon": "Plumu"
+      },
+      "keywords": [
+        "plum",
+        "plums",
+        "barquq",
+        "aloo bukhara",
+        "prune"
+      ]
+    },
+    {
+      "key": "pear",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🍐",
+      "names": {
+        "en": "Pears",
+        "ar": "كمثرى",
+        "hi": "नाशपाती",
+        "te": "బేరిపండు",
+        "ur": "ناشپاتی",
+        "fil": "Peras",
+        "ne": "नास्पाती",
+        "id": "Pir",
+        "si": "පෙයාර්ස්",
+        "am": "ፒር",
+        "fr": "Poires",
+        "fon": "Pwae"
+      },
+      "keywords": [
+        "pear",
+        "pears",
+        "kummathra",
+        "nashpati",
+        "poire"
+      ]
+    },
+    {
+      "key": "kiwi",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🥝",
+      "names": {
+        "en": "Kiwi",
+        "ar": "كيوي",
+        "hi": "कीवी",
+        "te": "కివి",
+        "ur": "کیوی",
+        "fil": "Kiwi",
+        "ne": "किवी",
+        "id": "Kiwi",
+        "si": "කිවි",
+        "am": "ኪዊ",
+        "fr": "Kiwis",
+        "fon": "Kiwi"
+      },
+      "keywords": [
+        "kiwi",
+        "kiwifruit"
+      ]
+    },
+    {
+      "key": "pineapple",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🍍",
+      "names": {
+        "en": "Pineapple",
+        "ar": "أناناس",
+        "hi": "अनानास",
+        "te": "అనాస పండు",
+        "ur": "انناس",
+        "fil": "Pinya",
+        "ne": "भुइँकटहर",
+        "id": "Nanas",
+        "si": "අන්නාසි",
+        "am": "አናናስ",
+        "fr": "Ananas",
+        "fon": "Agɔ̀n"
+      },
+      "keywords": [
+        "pineapple",
+        "ananas",
+        "pinya",
+        "nanas"
+      ]
+    },
+    {
+      "key": "pomegranate",
+      "category": "fruits_vegetables",
+      "unit": "kg",
+      "icon": "🔴",
+      "names": {
+        "en": "Pomegranate",
+        "ar": "رمان",
+        "hi": "अनार",
+        "te": "దానిమ్మ",
+        "ur": "انار",
+        "fil": "Granada",
+        "ne": "अनार",
+        "id": "Delima",
+        "si": "දෙළුම්",
+        "am": "ሮማን",
+        "fr": "Grenades",
+        "fon": "Grenadi"
+      },
+      "keywords": [
+        "pomegranate",
+        "rumman",
+        "anar",
+        "grenade",
+        "delima"
+      ]
+    },
+    {
+      "key": "avocado",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🥑",
+      "names": {
+        "en": "Avocado",
+        "ar": "أفوكادو",
+        "hi": "एवोकाडो",
+        "te": "అవకాడో",
+        "ur": "ایوکاڈو",
+        "fil": "Abukado",
+        "ne": "एभोकाडो",
+        "id": "Alpukat",
+        "si": "අලිගැට පේර",
+        "am": "አቮካዶ",
+        "fr": "Avocats",
+        "fon": "Avoka"
+      },
+      "keywords": [
+        "avocado",
+        "abukado",
+        "alpukat",
+        "avocat"
+      ]
+    },
+    {
+      "key": "cantaloupe",
+      "category": "fruits_vegetables",
+      "unit": "pcs",
+      "icon": "🍈",
+      "names": {
+        "en": "Cantaloupe",
+        "ar": "شمام",
+        "hi": "खरबूजा",
+        "te": "కర్బూజ",
+        "ur": "خربوزہ",
+        "fil": "Milon",
+        "ne": "खरबुजा",
+        "id": "Melon",
+        "si": "කැන්ටලූප්",
+        "am": "ሜሎን",
+        "fr": "Melon",
+        "fon": "Mɛlɔ̃"
+      },
+      "keywords": [
+        "cantaloupe",
+        "melon",
+        "shammam",
+        "kharbooza",
+        "milon"
       ]
     },
     {

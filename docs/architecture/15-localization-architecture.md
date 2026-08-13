@@ -296,12 +296,24 @@ workers, not a duplicate. (My first pass at this, before the kit arrived,
 mapped "Benin" to French alone — the kit's authored reasoning for adding
 Fon specifically was better than that assumption, and superseded it.)
 
-**Catalogue coverage did not grow with the UI.** `categories`/`products`
-still carry nine `name_*` columns. Amharic, French and Fon fall back to
-the English product name until the catalogue gets real columns for
-them — a content project, not a code one. `toCatalogLocale()` in
-`lib/i18n/config.ts` is the one place that mapping lives; `localizedName()`
-routes through it rather than every call site knowing about the split.
+**Catalogue coverage did not grow with the UI — resolved 2026-08, but
+incrementally.** `categories`/`products` originally carried nine `name_*`
+columns, and Amharic, French and Fon fell back to the English product
+name; `toCatalogLocale()` in `lib/i18n/config.ts` held that mapping.
+
+`20260812180000_catalog_12_languages.sql` adds the three missing columns,
+so the split is gone in principle — but they are **nullable**, unlike the
+original nine, and that is the design rather than an oversight. A row
+translated into French uses its French name; a row not yet reached still
+falls back to English, now via `localizedName()`'s own null-check instead
+of a locale-level mapping. That makes translating the catalogue a job
+that can be done a category at a time, rather than one that has to cover
+all 168 product types in three languages before any of it ships.
+`build-catalog.mjs` mirrors the same rule: `LANGS` is required,
+`OPTIONAL_LANGS` is not.
+
+First tranche: the 24 fruits in Fruits & Vegetables (2026-08). The other
+152 types still read English in those three languages.
 
 **Fon's translation is a first draft, not a reviewed one — flagged more
 urgently than any other locale in this project.** Telugu, Sinhala and

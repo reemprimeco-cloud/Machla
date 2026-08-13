@@ -136,22 +136,20 @@ export function pickerScriptFor(code: string): Script {
 }
 
 /**
- * The locales the CATALOGUE has real name columns for (`name_en` …
- * `name_si` on categories/products). UI locales added later (am, fr)
- * fall back to English product names until the catalogue grows their
- * columns — a content project like the photography, tracked in
- * 15-localization-architecture.md §11. App-chrome strings are fully
- * translated for every locale regardless; this split only affects what
- * a product card calls the product.
+ * The locales the CATALOGUE has name columns for — now all twelve, the
+ * same set as the UI (20260812180000_catalog_12_languages.sql).
+ *
+ * The last three are not equivalent to the first nine, though:
+ * `name_en` … `name_si` are NOT NULL and every row is validated to carry
+ * them (catalog-import/scripts/build-catalog.mjs), while `name_am`,
+ * `name_fr` and `name_fon` are nullable and filled in per row as the
+ * catalogue gets translated. `localizedName` falls back to English for a
+ * row that has not been reached yet, so translating is incremental —
+ * category by category — rather than an all-168-types-or-nothing job
+ * (15-localization-architecture.md §11).
  */
-export type CatalogLocaleCode = "ar" | "en" | "hi" | "te" | "ur" | "fil" | "ne" | "id" | "si";
-
-const CATALOG_FALLBACK: Partial<Record<LocaleCode, CatalogLocaleCode>> = {
-  am: "en",
-  fr: "en",
-  fon: "en",
-};
+export type CatalogLocaleCode = LocaleCode;
 
 export function toCatalogLocale(code: LocaleCode): CatalogLocaleCode {
-  return CATALOG_FALLBACK[code] ?? (code as CatalogLocaleCode);
+  return code;
 }

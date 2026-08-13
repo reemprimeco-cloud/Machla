@@ -251,8 +251,13 @@ assert `sort_order` is unique among active categories.
 
 `search_products(p_query text, p_limit int)` is the single read path.
 
-- **`search_text`** concatenates all nine localized names, the brand, the
-  size, and the search aliases, lowercased, into one haystack. It is
+- **`search_text`** concatenates every localized name (the nine required
+  ones, plus `name_am`/`name_fr`/`name_fon` where a row has them —
+  20260812180000_catalog_12_languages.sql), the brand, the size, and the
+  search aliases, lowercased, into one haystack. A product translated
+  into French has to be findable *in* French, or translating it achieved
+  nothing; `concat_ws` skips the nulls, so untranslated rows are
+  unaffected. It is
   maintained by a `before insert or update` **trigger**, not a generated
   column: a generated column requires every expression to be IMMUTABLE,
   which would rule out `unaccent` (only STABLE) later. The trigger gives
