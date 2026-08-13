@@ -1,23 +1,32 @@
-# Images are split by PROVENANCE, not by format, because the two kinds
-# carry different rights and only one of them may be published.
+# Images are split by PROVENANCE, not by format, because the three kinds
+# carry different rights and only two of them may be published. This
+# repository is public: committing an image here publishes it to the
+# whole internet as a standalone downloadable file.
 #
-# This directory root: images supplied by the owner — licensed stock,
-# their own photographs. NOT committed. A stock licence is granted to
-# you, not to everyone who clones this, and this repository is public:
-# committing a licensed image here republishes it to the whole internet
-# as a standalone downloadable file, which is exactly what those licences
+# This directory root — LICENSED STOCK. Not committed. A stock licence is
+# granted to you, not to everyone who clones this, and redistributing the
+# image as a standalone file is the thing those licences most reliably
 # forbid. Keep them here, upload them, leave them out of git.
 #
-# generated/: artwork this project owns outright (AI-generated originals,
-# 2026-08). No third party's rights attach to it, so it IS committed —
-# which makes the catalogue reproducible from a clean checkout instead of
-# depending on the Supabase bucket never being emptied.
+# owned/ — photographs the project owner holds full rights to (their own
+# camera, or bought outright). Committed: no third party's permission is
+# needed to publish them.
 #
-# Both are named after the product type and share one namespace at upload
-# time; a file in this root overrides a generated one of the same name,
-# so replacing generated artwork with a real photograph later is just
-# dropping the file in beside the folder (see ../scripts/upload-images.mjs).
+# generated/ — AI-generated originals produced for this project. Also
+# committed, for the same reason: nobody else's rights attach.
+#
+# All three share one filename namespace at upload time, in the order
+# generated -> owned -> root, so the more specific/deliberate a file is,
+# the more it wins: a real photograph beats generated artwork of the same
+# name, and anything you put in the root beats both
+# (see ../scripts/upload-images.mjs).
+#
+# `*` matches at every depth, so re-including a directory is not enough on
+# its own — the `/**` lines are what actually let the files inside through.
 *
 !.gitignore
 !README.md
+!owned/
+!owned/**
 !generated/
+!generated/**

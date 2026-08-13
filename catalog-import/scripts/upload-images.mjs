@@ -81,25 +81,23 @@ if (!existsSync(IMAGE_DIR)) {
   process.exit(0);
 }
 
-// Two places, one flat namespace. `generated/` holds artwork this project
-// owns outright (AI-generated originals) and IS committed; the directory
-// root holds whatever the owner drops in — licensed stock, their own
-// photographs — and is NOT (catalog-import/images/.gitignore explains
-// why). Both are named after the product type, and a file in the root
-// wins, so replacing a generated image with a real photograph is just
-// dropping it in beside the folder.
+// Three places, one flat namespace, split by who owns the image —
+// catalog-import/images/.gitignore explains which are committed and why.
+// Applied in ascending order of deliberateness, so the later one wins on
+// a filename collision: generated artwork is the fallback, a real
+// photograph beats it, and anything dropped in the root beats both.
 const GENERATED_DIR = path.join(IMAGE_DIR, "generated");
+const OWNED_DIR = path.join(IMAGE_DIR, "owned");
 
 function imagesIn(dir) {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).filter((name) => ACCEPTED.has(path.extname(name).toLowerCase()));
 }
 
-// Filename -> which directory to read it from. Root is applied last, so a
-// file there overrides the generated one of the same name.
-const dirByFile = new Map();
-for (const name of imagesIn(GENERATED_DIR)) dirByFile.set(name, GENERATED_DIR);
-for (const name of imagesIn(IMAGE_DIR)) dirByFile.set(name, IMAGE_DIR);
+const dirByFile = new Map(); // filename -> directory to read it from
+for (const dir of [GENERATED_DIR, OWNED_DIR, IMAGE_DIR]) {
+  for (const name of imagesIn(dir)) dirByFile.set(name, dir);
+}
 
 const files = [...dirByFile.keys()];
 
