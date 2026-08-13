@@ -1,6 +1,23 @@
-# Licensed image files are never committed: the repository is not the
-# right home for stock assets, and a stock licence is granted to you, not
-# to everyone who clones this.
+# Images are split by PROVENANCE, not by format, because the two kinds
+# carry different rights and only one of them may be published.
+#
+# This directory root: images supplied by the owner — licensed stock,
+# their own photographs. NOT committed. A stock licence is granted to
+# you, not to everyone who clones this, and this repository is public:
+# committing a licensed image here republishes it to the whole internet
+# as a standalone downloadable file, which is exactly what those licences
+# forbid. Keep them here, upload them, leave them out of git.
+#
+# generated/: artwork this project owns outright (AI-generated originals,
+# 2026-08). No third party's rights attach to it, so it IS committed —
+# which makes the catalogue reproducible from a clean checkout instead of
+# depending on the Supabase bucket never being emptied.
+#
+# Both are named after the product type and share one namespace at upload
+# time; a file in this root overrides a generated one of the same name,
+# so replacing generated artwork with a real photograph later is just
+# dropping the file in beside the folder (see ../scripts/upload-images.mjs).
 *
 !.gitignore
 !README.md
+!generated/

@@ -81,7 +81,27 @@ if (!existsSync(IMAGE_DIR)) {
   process.exit(0);
 }
 
-const files = readdirSync(IMAGE_DIR).filter((name) => ACCEPTED.has(path.extname(name).toLowerCase()));
+// Two places, one flat namespace. `generated/` holds artwork this project
+// owns outright (AI-generated originals) and IS committed; the directory
+// root holds whatever the owner drops in — licensed stock, their own
+// photographs — and is NOT (catalog-import/images/.gitignore explains
+// why). Both are named after the product type, and a file in the root
+// wins, so replacing a generated image with a real photograph is just
+// dropping it in beside the folder.
+const GENERATED_DIR = path.join(IMAGE_DIR, "generated");
+
+function imagesIn(dir) {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir).filter((name) => ACCEPTED.has(path.extname(name).toLowerCase()));
+}
+
+// Filename -> which directory to read it from. Root is applied last, so a
+// file there overrides the generated one of the same name.
+const dirByFile = new Map();
+for (const name of imagesIn(GENERATED_DIR)) dirByFile.set(name, GENERATED_DIR);
+for (const name of imagesIn(IMAGE_DIR)) dirByFile.set(name, IMAGE_DIR);
+
+const files = [...dirByFile.keys()];
 
 // natural_key is "<type>|<brand>|<size>"; the type is the part before the
 // first pipe, which is what a type-level file is named after.
@@ -158,7 +178,7 @@ let uploaded = 0;
 let pointed = 0;
 
 for (const { file, targets, scope } of uploads) {
-  const body = readFileSync(path.join(IMAGE_DIR, file));
+  const body = readFileSync(path.join(dirByFile.get(file), file));
 
   // The bucket enforces this too, but failing here names the file rather
   // than surfacing an opaque storage error.

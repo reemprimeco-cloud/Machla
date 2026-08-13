@@ -1,5 +1,19 @@
 # Product photography
 
+Two directories, split by **who owns the image** — because only one of
+the two may be committed to what is a public repository:
+
+| | What lives there | Committed? |
+|---|---|---|
+| `./` (here) | Images **you** supply — licensed stock, your own photographs | ✗ no |
+| `./generated/` | AI-generated originals this project owns outright | ✓ yes |
+
+They share one filename namespace at upload time, and a file placed here
+in the root **overrides** a generated one of the same name — so replacing
+generated artwork with a real photograph is just dropping the file in,
+with nothing to delete. See `generated/README.md` for how those were made
+and why several categories were deliberately left on their emoji.
+
 Drop licensed image files here, named after the **product type**:
 
 ```text
