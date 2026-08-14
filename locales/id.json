@@ -223,5 +223,13 @@
     "point4": "Tambahkan catatan opsional pada item apa pun, seperti “bebas laktosa” — tanpa perlu produk duplikat.",
     "point5": "Centang item saat Anda berbelanja, atau tandai yang tidak tersedia.",
     "point6": "Setelah daftar selesai, daftar itu benar-benar selesai — beranda Anda tetap rapi."
+  },
+  "install": {
+    "title": "Tambahkan Machla ke layar utama",
+    "hint": "Terbuka seperti aplikasi, layar penuh — dan begini notifikasi bekerja di iPhone.",
+    "button": "Pasang",
+    "later": "Nanti saja",
+    "iosStep1": "1. Ketuk tombol Bagikan di Safari",
+    "iosStep2": "2. Pilih “Add to Home Screen”"
   }
 }

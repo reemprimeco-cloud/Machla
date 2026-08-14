@@ -223,5 +223,13 @@
     "point4": "Magdagdag ng opsyonal na tala sa anumang item, tulad ng “lactose-free” — hindi na kailangan ng duplicate na produkto.",
     "point5": "I-check ang mga item habang namimili, o markahan ang mga hindi available.",
     "point6": "Kapag tapos na ang listahan, tapos na talaga ito — nananatiling malinis ang iyong home screen."
+  },
+  "install": {
+    "title": "Idagdag ang Machla sa home screen",
+    "hint": "Bubukas na parang app, full screen — at ganito gumagana ang notification sa iPhone.",
+    "button": "I-install",
+    "later": "Hindi muna",
+    "iosStep1": "1. Pindutin ang Share sa Safari",
+    "iosStep2": "2. Piliin ang “Add to Home Screen”"
   }
 }

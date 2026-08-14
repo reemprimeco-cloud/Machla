@@ -223,5 +223,13 @@
     "point4": "Ajoutez une note facultative sur n'importe quel article, comme «sans lactose» — pas besoin de produits en double.",
     "point5": "Cochez les articles pendant vos courses, ou signalez ceux qui sont indisponibles.",
     "point6": "Une fois une liste terminée, elle est vraiment terminée — votre écran d'accueil reste net."
+  },
+  "install": {
+    "title": "Ajoutez Machla à votre écran d'accueil",
+    "hint": "S'ouvre comme une app, en plein écran — et c'est ainsi que les notifications fonctionnent sur iPhone.",
+    "button": "Installer",
+    "later": "Plus tard",
+    "iosStep1": "1. Touchez le bouton Partager dans Safari",
+    "iosStep2": "2. Choisissez « Sur l'écran d'accueil »"
   }
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Screen } from "@/components/ui/Primitives";
 import type { Category, Product } from "@/lib/catalog/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -56,6 +57,8 @@ export function WorkerHome({
       <p className="hl-title text-ink">{t("worker.browse")}</p>
 
       <SearchBox basePath={basePath} />
+
+      <InstallGuide />
 
       {/* Frequently-bought comes before the categories: after a few shops
           it is where most of the list gets built, and it saves the worker

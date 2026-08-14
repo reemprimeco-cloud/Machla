@@ -223,5 +223,13 @@
     "point4": "Add an optional note on any item, like “lactose-free” — no need for duplicate products.",
     "point5": "Check items off as you shop, or mark any that aren't available.",
     "point6": "Once a list is finished, it's done — your home screen stays clean."
+  },
+  "install": {
+    "title": "Add Machla to your home screen",
+    "hint": "Opens like an app, full screen — and it's how notifications work on iPhone.",
+    "button": "Install",
+    "later": "Not now",
+    "iosStep1": "1. Tap the Share button in Safari",
+    "iosStep2": "2. Choose “Add to Home Screen”"
   }
 }

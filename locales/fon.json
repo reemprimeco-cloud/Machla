@@ -223,5 +223,13 @@
     "point4": "Sɔ́ nùɖiɖɔ ɖé dó nǔ ɖebǔ jí, lee “lactose ɖě ɖò mɛ ǎ” ɔ, alǒ ni é ma gbè távo ɖě ɖě ó.",
     "point5": "Ðexlɛ́ nǔ lɛ́ hwenu e a xɔ nǔ wɛ é, alǒ ɖexlɛ́ ɖɔ nǔ ɖé kú ɖò fí ǎ.",
     "point6": "Enyi távo ɖé fó ɔ, é fó gbɔn — xwé ce sín nukɔntɔn nɔ ɖò mímɛ́."
+  },
+  "install": {
+    "title": "Sɔ́ Machla dó nukɔntɔn towe jí",
+    "hint": "É nɔ hun lee app ɖé ɖɔhun, ɖò tɛn bǐ mɛ — bɔ mɔ̌ wɛ alaxo lɛ́ nɔ wà azɔ̌ ɖò iPhone jí.",
+    "button": "Ðó",
+    "later": "Din ǎ",
+    "iosStep1": "1. Zé Share sín bǔtɔ́n ɖò Safari mɛ",
+    "iosStep2": "2. Cyan “Add to Home Screen”"
   }
 }

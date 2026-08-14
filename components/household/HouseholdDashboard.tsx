@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { MachlaLockup } from "@/components/brand/MachlaIcon";
+import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Card, Screen } from "@/components/ui/Primitives";
 import type { Category } from "@/lib/catalog/queries";
 import { localizedName } from "@/lib/catalog/localized";
@@ -76,6 +77,8 @@ export function HouseholdDashboard({
           {t("home.overview", { openCount, memberCount })} · {householdName}
         </p>
       </div>
+
+      <InstallGuide />
 
       {heroList ? <HeroListCard list={heroList} /> : <EmptyHero />}
 
