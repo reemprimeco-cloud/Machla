@@ -1,0 +1,117 @@
+name: Release iOS app to App Store Connect
+
+# Archives, signs, exports, and uploads a build — the whole sequence
+# Xcode's "Product > Archive > Distribute App" does by hand, run
+# unattended on a macOS runner instead.
+#
+# WHY THIS EXISTS: nobody operating this repository is required to own a
+# Mac. ios-build.yml (a separate workflow) proves the Swift compiles on
+# every push; it deliberately skips signing because that needs identity,
+# not just a toolchain. This workflow supplies that identity through an
+# App Store Connect API key rather than an interactively-entered Apple ID
+# — which is also Apple's own recommended path for CI, is scoped to
+# whatever role the key was issued with, and can be revoked in seconds
+# without touching the account password. No Apple ID or password is ever
+# entered here, and no Claude session should ever be given one to type in.
+#
+# -allowProvisioningUpdates + an API key is what makes this
+# non-interactive: on first run, Xcode uses the key to create the
+# distribution certificate and provisioning profile itself, the same way
+# it would if a human clicked "Automatically manage signing" — nobody
+# has to pre-generate and paste in a .p12.
+#
+# Required repo secrets (Settings -> Secrets and variables -> Actions):
+#
+#   APPLE_TEAM_ID                the Team ID from developer.apple.com
+#   APPSTORE_CONNECT_KEY_ID      Key ID of an App Store Connect API key
+#   APPSTORE_CONNECT_ISSUER_ID   that key's Issuer ID
+#   APPSTORE_CONNECT_PRIVATE_KEY the key's .p8 contents, BEGIN/END lines included
+#
+# Generate the API key at App Store Connect -> Users and Access ->
+# Integrations -> App Store Connect API -> Generate API Key. Give it the
+# App Manager role (Admin also works; nothing narrower can create
+# certificates and profiles). This key is a DIFFERENT one from the APNs
+# auth key in ios/README.md step 3 — same-shaped .p8 file, unrelated
+# purpose, do not reuse one for the other.
+#
+# The App Store Connect app record itself (My Apps -> +, bundle ID,
+# name, pricing) still has to exist before the first upload succeeds —
+# that is a one-time setup step in ios/README.md this workflow does not
+# create for you.
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  release:
+    runs-on: macos-15
+    env:
+      KEY_PATH: ${{ github.workspace }}/private_keys/AuthKey_${{ secrets.APPSTORE_CONNECT_KEY_ID }}.p8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: xcodebuild -version
+
+      - name: Install the App Store Connect API key
+        run: |
+          mkdir -p "$(dirname "$KEY_PATH")"
+          printf '%s' "$APPSTORE_CONNECT_PRIVATE_KEY" > "$KEY_PATH"
+        env:
+          APPSTORE_CONNECT_PRIVATE_KEY: ${{ secrets.APPSTORE_CONNECT_PRIVATE_KEY }}
+
+      - name: Archive
+        run: |
+          xcodebuild archive \
+            -project ios/Machla.xcodeproj \
+            -scheme Machla \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Machla.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "${{ secrets.APPSTORE_CONNECT_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}" \
+            DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}" \
+            CODE_SIGN_STYLE=Automatic \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}"
+
+      - name: Write export options
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>teamID</key>
+            <string>${{ secrets.APPLE_TEAM_ID }}</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+          </dict>
+          </plist>
+          PLIST
+
+      - name: Export the .ipa
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/Machla.xcarchive" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "${{ secrets.APPSTORE_CONNECT_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}"
+
+      - name: Upload to App Store Connect
+        run: |
+          xcrun altool --upload-app \
+            --type ios \
+            --file "$RUNNER_TEMP/export/Machla.ipa" \
+            --apiKey "${{ secrets.APPSTORE_CONNECT_KEY_ID }}" \
+            --apiIssuer "${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}"
+
+      - name: Remove the API key from disk
+        if: always()
+        run: rm -f "$KEY_PATH"

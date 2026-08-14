@@ -120,7 +120,12 @@ notifications that appear to come from Machla.
 > testing from Xcode, set `APNS_ENVIRONMENT=sandbox` on a Preview
 > deployment and test against that.
 
-## 5. Open the project
+## 5. Open the project (only needed to test on a real iPhone)
+
+Push notifications do **not** work in the Simulator, so the one thing
+you cannot do without this step is confirm the Settings toggle and a
+delivered notification actually work. Releasing an upload, further
+down, does **not** need this step at all — see "8. Release" below.
 
 ```bash
 open ios/Machla.xcodeproj
@@ -135,9 +140,8 @@ Xcode → target **Machla** → **Signing & Capabilities**:
 3. Confirm **Push Notifications** appears in the capability list — it
    comes from `Machla/Machla.entitlements` and should already be there.
 
-Run it on a real iPhone. Push notifications do **not** work in the
-Simulator, so the toggle in Settings is the one thing you cannot test
-there.
+Run it on a real iPhone, connected by cable or over the network, with
+your Apple ID signed in to Xcode.
 
 > If Xcode refuses to open the project at all, regenerate it:
 > `brew install xcodegen && cd ios && xcodegen generate`. `project.yml`
@@ -223,12 +227,68 @@ does natively:
 this question will not be asked on every upload. That is accurate: the
 app uses HTTPS and nothing else.
 
-## 8. Upload
+## 8. Release
 
-Xcode → **Product → Archive** (the destination must be "Any iOS Device",
-not a simulator) → **Distribute App** → **App Store Connect**.
+**A new build is only needed when something in `ios/` changes.** Changes
+to the web app need no App Store release at all — that is the whole
+point of this app's shape: deploy to Vercel and every installed app has
+it on next launch, with no review and no waiting.
 
-Then TestFlight first, on a real iPhone:
+When `ios/` does change, there are two ways to get a build into App
+Store Connect. Use whichever fits; both produce the same kind of upload.
+
+### Automated — no Mac needed, and the one that does not touch your Apple ID
+
+`.github/workflows/ios-release.yml` does what Xcode's own
+**Product → Archive → Distribute App** does, unattended on a macOS
+GitHub Actions runner: archive, sign, export, and upload. It
+authenticates with an **App Store Connect API key** — Apple's own
+answer to "how does CI do this without a person sitting at Xcode
+entering an Apple ID and a 2FA code" — so nobody, including any
+automated assistant working on this repository, is ever handed your
+Apple ID password. A leaked API key is revoked in App Store Connect in
+seconds; a leaked Apple ID password is a much worse afternoon.
+
+Generate the key **once**, in App Store Connect → **Users and Access** →
+**Integrations** → **App Store Connect API** → **Generate API Key**.
+Give it the **App Manager** role — narrower roles cannot create the
+signing certificate and provisioning profile the first run needs.
+Apple lets you download the `.p8` exactly once, same as the APNs key in
+step 3; **this is a different key from that one**, same file shape,
+unrelated purpose, do not reuse one for the other.
+
+Add four repository secrets (Settings → Secrets and variables →
+Actions):
+
+| Name | Value |
+|---|---|
+| `APPLE_TEAM_ID` | the Team ID from step 1 |
+| `APPSTORE_CONNECT_KEY_ID` | the new key's Key ID |
+| `APPSTORE_CONNECT_ISSUER_ID` | that key's Issuer ID (shown next to it) |
+| `APPSTORE_CONNECT_PRIVATE_KEY` | the whole `.p8` file, `BEGIN`/`END` lines included |
+
+Then, with the app record from step 7 already created (the workflow
+uploads a build into an existing app record; it does not create one):
+Actions tab → **Release iOS app to App Store Connect** → **Run
+workflow**. Ten or so minutes later a new build is processing in App
+Store Connect under TestFlight. Every later release is the same one
+click — no archive, no export, no Transporter, no Mac.
+
+`CURRENT_PROJECT_VERSION` (the build number) is set automatically from
+the CI run number, so uploads never collide on it; bump
+`MARKETING_VERSION` (e.g. 1.0 → 1.1) in the Xcode project yourself when
+the change is worth a new version number a user would see.
+
+### Manual, from Xcode
+
+Same outcome, by hand: **Product → Archive** (destination "Any iOS
+Device", not a simulator) → **Distribute App** → **App Store Connect**.
+Bump `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in the target
+first, the same as above.
+
+### Either way, TestFlight first
+
+On a real iPhone, before submitting for review:
 
 - notifications arrive when the app is closed;
 - tapping one opens the right list;
@@ -236,16 +296,6 @@ Then TestFlight first, on a real iPhone:
 - signing in and staying signed in across a force-quit.
 
 Only then submit for review. First review is typically 24–48 hours.
-
-## Releasing an update
-
-**Changes to the web app need no App Store release at all.** That is the
-whole point of this shape: deploy to Vercel and every installed app has
-it on next launch, with no review and no waiting.
-
-A new build is only needed when something in `ios/` changes. Then: bump
-`MARKETING_VERSION` (e.g. 1.0 → 1.1) and `CURRENT_PROJECT_VERSION`
-(1 → 2) in the Xcode target, archive, upload.
 
 ## Universal links (optional, later)
 
