@@ -150,15 +150,37 @@ your Apple ID signed in to Xcode.
 
 ## 6. Screenshots
 
-App Store Connect requires, at minimum:
+App Store Connect only accepts specific exact pixel dimensions — not
+whatever a real device happens to natively screenshot at (an iPhone 16
+Pro Max, for instance, screenshots at 1320×2868, which the uploader
+rejects). The accepted sizes as of this writing:
 
-- **6.9"** (iPhone 16 Pro Max / 15 Pro Max) — 1320 × 2868
-- **6.5"** (iPhone 11 Pro Max) — 1242 × 2688
+- **1242 × 2688** or **2688 × 1242** (portrait/landscape — the "6.5-inch" bucket)
+- **1284 × 2778** or **2778 × 1284** (portrait/landscape — the "6.7-inch" bucket)
 
-Take them in the Simulator (⌘S saves to the desktop). Five or six
-screens: the dashboard, a list with items, the category grid, the
-worker's browse screen, Settings. Arabic screenshots are worth adding as
-a separate localisation — Kuwait is the market.
+At least one set is required; App Store Connect's uploader tells you
+exactly which sizes it wants if you're ever unsure — trust the live
+error over any list written down here, since Apple has changed this
+before.
+
+**Screenshot from the Simulator, not a physical phone — and pick the
+right model.** A real device (an iPhone 16 Pro Max, say) screenshots at
+its own native resolution, 1320×2868, which the uploader rejects; there
+is no in-between step of resizing it correctly. The Simulator sidesteps
+this entirely, because a handful of older device models happen to
+render at exactly Apple's two accepted sizes:
+
+| Simulator device | ⌘S produces |
+|---|---|
+| iPhone 11 Pro Max | 1242 × 2688 |
+| iPhone 14 Plus (or 13 Pro Max) | 1284 × 2778 |
+
+Run the app on each of those two, sign in with the demo account
+(`+965 90909090`, code `123456`), and ⌘S saves a already-correct PNG to
+the Desktop — no cropping, no resizing, nothing to get wrong. Five or
+six screens: the dashboard, a list with items, the category grid,
+Settings, Notifications. Arabic screenshots are worth adding as a
+separate localisation — Kuwait is the market.
 
 No device frames, no marketing text overlaid on the first screenshot.
 

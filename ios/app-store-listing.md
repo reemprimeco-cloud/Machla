@@ -126,6 +126,16 @@ for Tracking**.
 use data collected from this app to track users?". Nothing here is used
 for advertising or shared with a data broker.
 
+## Content Rights
+
+**"Does your app contain, show, or access third-party content?"** →
+**Yes, it contains, shows, or accesses third-party content, and I have
+the necessary rights.** The product catalogue includes licensed stock
+photography alongside AI-generated and owner-photographed images — see
+`catalog-import/images/README.md` for the licensing rules that governed
+every image that made it into the catalogue. "No third-party content"
+would be false.
+
 ## App Review Information
 
 | Field | Value |
