@@ -160,3 +160,77 @@ is not enabled and no SMS provider is chosen. "Validate the web app first"
 cannot start until that does. Building a native client before then would be
 building on an unvalidated product — which is precisely what this phase's
 first line forbids.
+
+---
+
+## 2026-08 — what actually happened, and why it isn't §4
+
+This document predicted the store apps as **Expo rewrites**: extract the
+shared modules into packages, then build `apps/worker-app` and
+`apps/household-app` as native React Native clients. That is still the
+right shape *if the goal is native screens*. It was not the goal.
+
+The goal was the one in §4.4 — push notifications — and the request that
+produced it ("تطبيق ابل مربوط بالموقع… مع الاشعارات افضل") asked for an
+app **linked to the website**, not a second implementation of it. Two
+rewritten clients would have meant every future change made three times,
+in three languages, released on three schedules, for a household product
+whose screens are a list and a grid.
+
+So both store apps are shells over the deployed web app:
+
+| | What ships | Where it lives |
+|---|---|---|
+| Android | Trusted Web Activity — Chrome renders the live site full-screen | `android-twa/` |
+| iOS | `WKWebView` in a native app, plus APNs | `ios/` |
+
+`ios/README.md` and `android-twa/README.md` carry the operational
+detail. What matters architecturally is the trade this makes:
+
+- **What it buys.** One codebase, still. A change deployed to Vercel is
+  live in both apps on next launch, with no review queue and no version
+  skew — which for a 12-language product with a live catalogue is worth
+  more than native scroll physics.
+- **What it costs.** No native screens, so no native gesture feel and no
+  offline reading of a list. Both were already true of the PWA, and both
+  remain available later: nothing here forecloses §4.
+
+### Push is the one thing the shell had to add
+
+Web Push covers browsers, the installed PWA (iOS 16.4+), and the Android
+TWA, which runs on Chrome's engine and inherits it. It does **not** cover
+an iOS App Store build: Safari grants the Push API only to a site the
+user installed to their own Home Screen, so inside a `WKWebView` there is
+no `PushManager` to subscribe with. That single platform fact is the
+whole reason `ios/` contains any Swift at all.
+
+The response was a second **transport**, not a second notification
+system. `push_subscriptions` gained a `platform` column and an APNs
+device is just another row
+(`20260814100000_apns_push.sql`); `get_pending_pushes` still returns one
+result set and `sendPendingPushes` still runs one loop. This is the same
+rule `20260812140000` set for Web Push — push is "a reader of this table
+rather than a second, parallel notification path that can disagree with
+it" — held to across a platform boundary rather than abandoned at it. An
+iPhone and an Android in one household cannot be told different things
+about the same list, because nothing decides anything twice.
+
+### The CSP forced the bridge's design
+
+Every web-to-native framework — Capacitor included — injects a JavaScript
+bridge into the page. This app serves
+`script-src 'self' 'nonce-…' 'strict-dynamic'` (`proxy.ts`), and an
+injected script carries neither the nonce nor a hash the page vouches
+for, so WebKit is entitled to refuse it. The framework path therefore
+required weakening the app's main XSS defence for packaging convenience.
+
+The bridge uses the two channels a content policy cannot reach instead,
+because neither is a script the page loaded: `messageHandlers` going in,
+`evaluateJavaScript` coming out. Once that decision was made, the
+framework had nothing left to contribute, which is why `ios/` has no
+third-party runtime — six Swift files and no dependency manager.
+
+The pleasant side effect is that the entire native surface is legible:
+three requests in, two callbacks out, stated in one file on each side
+(`lib/native/bridge.ts`, `ios/Machla/NativeBridge.swift`). A framework's
+bridge exposes every plugin it ships; this one exposes what it uses.

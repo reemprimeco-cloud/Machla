@@ -10,7 +10,11 @@ final class LoadState: ObservableObject {
 
 /// The web view, and the small amount of native behaviour around it.
 struct WebAppView: UIViewRepresentable {
-    @ObservedObject var state: LoadState
+    /// Deliberately not `@ObservedObject`: this view only ever *writes*
+    /// to the load state. Observing it as well would rebuild the
+    /// representable — and call `updateUIView` — every time the offline
+    /// screen appeared or went away, for no benefit.
+    let state: LoadState
 
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
