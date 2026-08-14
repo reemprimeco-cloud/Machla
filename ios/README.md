@@ -166,8 +166,15 @@ No device frames, no marketing text overlaid on the first screenshot.
 
 <https://appstoreconnect.apple.com> → My Apps → **+**
 
-- **Name**: `Machla` (must be unique across the entire App Store — check
-  early, because it is claimed on creation).
+- **Name**: `Machlati` (`ماچلتي`) — the App Store *listing* name, a
+  field that lives entirely in App Store Connect and nowhere in this
+  repository. It must be unique across the entire App Store (check
+  early — it is claimed the moment you type it here), which plain
+  `Machla` may not be. This is deliberately separate from the app's own
+  name on the Home Screen and inside every screen (`CFBundleDisplayName`
+  in `Machla/Info.plist`, still `Machla`) — a shopper searching the
+  Store and someone who already has the app installed can land on two
+  different words without anything in the app itself needing to change.
 - **Primary language**: Arabic or English.
 - **Bundle ID**: the one from step 2.
 - **Category**: Shopping. Secondary: Productivity.
