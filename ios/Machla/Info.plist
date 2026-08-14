@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Machla</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+
+	<!-- The twelve languages the web app speaks. Declared here so the App
+	     Store listing shows them, and so iOS picks the right one of the
+	     Strings.swift table for the offline screen rather than defaulting
+	     everyone to English. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ar</string>
+		<string>hi</string>
+		<string>ur</string>
+		<string>ne</string>
+		<string>si</string>
+		<string>te</string>
+		<string>fil</string>
+		<string>id</string>
+		<string>am</string>
+		<string>fr</string>
+		<string>fon</string>
+	</array>
+
+	<!-- Launch screen as a plist dictionary rather than a storyboard: it
+	     is one colour, and a storyboard file would be a binary-ish blob in
+	     the diff for no gain. The colour is the AppBackground colour set,
+	     which matches the app's own background token. -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>AppBackground</string>
+	</dict>
+
+	<!-- Lets APNs wake the app to deliver a notification while it is not
+	     in the foreground. Without this, notifications sent while the app
+	     is closed are the ones most likely to be dropped — which is every
+	     notification that matters here. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+
+	<!-- The app is light-only by decision (the dark-mode stylesheet was
+	     removed in 2026-08); this stops iOS from tinting native chrome
+	     dark around a permanently light page. -->
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
+
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+
+	<!-- Shown verbatim in the permission alert, so they say what the app
+	     actually wants the camera for. iOS requires them even though the
+	     camera is reached through the web view's file input rather than
+	     any native code: an app without these strings crashes the moment
+	     someone taps "Take Photo" in the picker. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Machla uses the camera so you can photograph an item that is not in the product list.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Machla lets you choose a photo of an item that is not in the product list.</string>
+
+	<!-- Answers App Store Connect's export-compliance question in advance.
+	     True for this app: it uses HTTPS and nothing else, which is the
+	     exemption this key declares. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+</dict>
+</plist>

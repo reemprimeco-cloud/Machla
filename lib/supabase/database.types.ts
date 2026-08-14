@@ -17,6 +17,11 @@ export type InvitationStatus = "pending" | "accepted" | "revoked" | "expired";
 export type ShoppingListStatus = "draft" | "sent" | "viewed" | "completed" | "archived";
 export type PurchaseStatus = "pending" | "purchased" | "unavailable";
 export type NotificationType = "list_sent" | "list_viewed" | "list_completed";
+/** Which push transport a push_subscriptions row addresses — a browser
+ * (including an installed PWA) over Web Push, or an App Store build over
+ * APNs. Not a Postgres enum: it is a text column with a CHECK, like the
+ * rest of this schema's small closed sets. */
+export type PushPlatform = "web" | "ios";
 
 /** Per-type in-app notification switches. A missing key means enabled, so
  * adding a new type does not silently mute it for existing users. */
@@ -258,16 +263,22 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
+          /** The push service URL for a web row; `apns://<device token>`
+           * for an ios one. Either way it identifies one installation,
+           * which is why it stays the unique key across both transports
+           * (20260814100000_apns_push.sql). */
           endpoint: string;
-          p256dh: string;
-          auth_key: string;
+          /** Web Push only. Null on an APNs row, which is authenticated
+           * by a signed provider token rather than per-subscription
+           * ECDH — enforced by push_subscriptions_web_keys. */
+          p256dh: string | null;
+          auth_key: string | null;
+          platform: PushPlatform;
           created_at: string;
         };
         Insert: Partial<Database["public"]["Tables"]["push_subscriptions"]["Row"]> & {
           user_id: string;
           endpoint: string;
-          p256dh: string;
-          auth_key: string;
         };
         Update: Partial<Database["public"]["Tables"]["push_subscriptions"]["Row"]>;
         Relationships: [];
@@ -482,11 +493,12 @@ export interface Database {
           notification_id: string;
           user_id: string;
           endpoint: string;
-          p256dh: string;
-          auth_key: string;
+          p256dh: string | null;
+          auth_key: string | null;
           actor_name: string | null;
           preferred_language: string | null;
           is_household_side: boolean;
+          push_platform: PushPlatform;
         }[];
       };
       mark_pushes_sent: {

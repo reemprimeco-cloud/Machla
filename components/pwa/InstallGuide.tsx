@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { Card } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { isNativeApp } from "@/lib/native/bridge";
 
 /**
  * "Add to Home Screen" prompt.
@@ -40,7 +41,11 @@ function isInstalled(): boolean {
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
     // iOS predates display-mode: standalone for home-screen apps.
-    (window.navigator as { standalone?: boolean }).standalone === true
+    (window.navigator as { standalone?: boolean }).standalone === true ||
+    // The App Store build is the most installed this app gets, and it
+    // reports neither of the above — a WKWebView is, as far as the page
+    // can tell, an ordinary browser tab.
+    isNativeApp()
   );
 }
 

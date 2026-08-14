@@ -87,6 +87,7 @@
     "pushEnable": "Notifikasi push",
     "pushHint": "Dapatkan notifikasi di perangkat ini saat daftar dikirim, dibuka, atau selesai.",
     "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda.",
+    "pushBlockedIos": "Notifikasi untuk Machla dimatikan di Pengaturan iPhone Anda.",
     "about": "Tentang aplikasi"
   },
   "members": {

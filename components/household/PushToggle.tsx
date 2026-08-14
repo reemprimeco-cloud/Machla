@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { Card } from "@/components/ui/Primitives";
+import {
+  apnsEndpoint,
+  getNativeDeviceToken,
+  getNativePushStatus,
+  getNativePushStatusOnServer,
+  postToNative,
+  subscribeToNativePush,
+} from "@/lib/native/bridge";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { deletePushSubscriptionAction } from "@/lib/push/actions";
 import { getPushSupport, isSubscribed, subscribeToPush, unsubscribeFromPush } from "@/lib/push/subscribe";
 
 /**
@@ -32,6 +41,19 @@ export function PushToggle() {
   const [enabled, setEnabled] = useState(false);
   const [pending, setPending] = useState(false);
 
+  // Inside the App Store build there is no Push API to ask, so the state
+  // lives in the bridge's store and arrives from Swift. Unlike `support`
+  // above this needs no effect: an external store is exactly what
+  // useSyncExternalStore is for, and it stays consistent between the
+  // server render and the first client one by returning "unsupported"
+  // on the server.
+  const nativeStatus = useSyncExternalStore(
+    subscribeToNativePush,
+    getNativePushStatus,
+    getNativePushStatusOnServer,
+  );
+  const isNative = nativeStatus !== "unsupported";
+
   useEffect(() => {
     function detect() {
       const current = getPushSupport();
@@ -41,10 +63,36 @@ export function PushToggle() {
     detect();
   }, []);
 
-  if (support === "unsupported") return null;
+  // A WKWebView has no PushManager, so on iOS `support` is permanently
+  // "unsupported" and the native check has to come first — otherwise the
+  // one platform that most needs this toggle is the one that never shows
+  // it.
+  if (!isNative && support === "unsupported") return null;
+
+  const blocked = isNative ? nativeStatus === "denied" : support === "denied";
+  const checked = isNative ? nativeStatus === "granted" : enabled;
 
   async function handleChange(next: boolean) {
     setPending(true);
+
+    if (isNative) {
+      if (next) {
+        // The shell answers by calling back with the new status (and a
+        // token, if the user allows it), so there is nothing to await:
+        // the store updates when iOS has actually decided.
+        postToNative({ type: "push:enable" });
+      } else {
+        // Turning notifications off has to remove the row as well as
+        // unregister the device — iOS keeps the permission either way,
+        // and a row left behind would keep this iPhone on the send list.
+        const token = getNativeDeviceToken();
+        postToNative({ type: "push:disable" });
+        if (token) await deletePushSubscriptionAction(apnsEndpoint(token));
+      }
+      setPending(false);
+      return;
+    }
+
     const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
     const ok = next
       ? Boolean(publicKey) && (await subscribeToPush(publicKey!))
@@ -59,13 +107,18 @@ export function PushToggle() {
         <span className="min-w-0">
           <span className="hl-body block text-ink">{t("settings.pushEnable")}</span>
           <span className="hl-caption block">
-            {support === "denied" ? t("settings.pushBlocked") : t("settings.pushHint")}
+            {blocked
+              ? // Same state, two different places to go and undo it —
+                // "your browser settings" is actively unhelpful advice
+                // to someone holding the App Store build.
+                t(isNative ? "settings.pushBlockedIos" : "settings.pushBlocked")
+              : t("settings.pushHint")}
           </span>
         </span>
         <input
           type="checkbox"
-          checked={enabled}
-          disabled={pending || support === "denied"}
+          checked={checked}
+          disabled={pending || blocked}
           onChange={(event) => handleChange(event.target.checked)}
           className="size-7 shrink-0 accent-[var(--hl-primary)]"
         />

@@ -11,6 +11,7 @@ import {
 } from "next/font/google";
 import { cookies } from "next/headers";
 
+import { NativeBridge } from "@/components/native/NativeBridge";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 import { ConnectionBanner } from "@/components/ui/ConnectionBanner";
 import { getServerUserProfile } from "@/lib/auth/session";
@@ -167,6 +168,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           {children}
           <ConnectionBanner />
           <ServiceWorkerRegistration />
+          <NativeBridge />
         </LocaleProvider>
       </body>
     </html>

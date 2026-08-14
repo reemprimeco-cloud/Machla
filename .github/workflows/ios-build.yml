@@ -1,0 +1,51 @@
+name: Build iOS app
+
+# Compiles the App Store shell (ios/) against the iOS Simulator SDK.
+#
+# WHY THIS EXISTS: nothing else in this repository can tell you whether the
+# iOS app builds. It is Swift against UIKit and WebKit, so it needs a Mac
+# with Xcode — a Linux dev environment cannot even parse it usefully. This
+# job is therefore the only automated check that ios/Machla.xcodeproj is
+# valid and the Swift compiles, and it runs on every change to ios/ for
+# exactly that reason.
+#
+# It deliberately does NOT sign, archive or upload. Signing needs the
+# owner's Apple Developer credentials, and a build that needs secrets is a
+# build that stops running on pull requests — which is when a compile
+# error is cheapest to find. Releasing is a manual, human step: see
+# ios/README.md.
+
+on:
+  push:
+    paths:
+      - "ios/**"
+      - ".github/workflows/ios-build.yml"
+  pull_request:
+    paths:
+      - "ios/**"
+      - ".github/workflows/ios-build.yml"
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: xcodebuild -version
+
+      - name: Build for the simulator
+        # CODE_SIGNING_ALLOWED=NO is what lets this run without any Apple
+        # account at all: the simulator does not care, and code signing is
+        # the only part of an iOS build that needs one.
+        run: |
+          xcodebuild build \
+            -project ios/Machla.xcodeproj \
+            -scheme Machla \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""

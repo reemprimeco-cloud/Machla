@@ -44,6 +44,40 @@ export async function savePushSubscriptionAction(subscription: {
   return { ok: !error };
 }
 
+/**
+ * The APNs equivalent: registers this iPhone's device token as a
+ * subscription row so the same fan-out reaches it
+ * (20260814100000_apns_push.sql).
+ *
+ * The token arrives from Swift, and Swift is not a trust boundary the
+ * way the database is — but the string still lands in a unique column
+ * every future send reads, so it is checked for shape here rather than
+ * stored as whatever the bridge happened to say. An APNs token is hex;
+ * 32 bytes today, and Apple has said not to hard-code that, hence the
+ * range.
+ */
+export async function saveApnsTokenAction(token: string): Promise<{ ok: boolean }> {
+  if (!isSupabaseConfigured()) return { ok: false };
+  if (!/^[0-9a-f]{64,200}$/i.test(token)) return { ok: false };
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false };
+
+  const { error } = await supabase.from("push_subscriptions").upsert(
+    {
+      user_id: user.id,
+      endpoint: `apns://${token.toLowerCase()}`,
+      platform: "ios",
+    },
+    { onConflict: "endpoint" },
+  );
+
+  return { ok: !error };
+}
+
 export async function deletePushSubscriptionAction(endpoint: string): Promise<{ ok: boolean }> {
   if (!isSupabaseConfigured()) return { ok: false };
 

@@ -1,0 +1,44 @@
+# XcodeGen spec — a fallback, not the source of truth.
+#
+# Machla.xcodeproj is committed and is what you open. This file exists so
+# that a project file damaged by a merge, an Xcode migration, or a bad
+# edit can be rebuilt in one command rather than reconstructed by hand:
+#
+#   brew install xcodegen && cd ios && xcodegen generate
+#
+# Keep the two in step. Anything changed in Xcode's build settings that
+# matters (bundle id, deployment target, entitlements, version numbers)
+# belongs here as well, or regenerating would quietly undo it.
+
+name: Machla
+options:
+  bundleIdPrefix: app.reemora
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+targets:
+  Machla:
+    type: application
+    platform: iOS
+    sources:
+      - path: Machla
+        excludes:
+          # Referenced by build settings rather than compiled or copied.
+          - Info.plist
+          - Machla.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.reemora.machla
+        PRODUCT_NAME: Machla
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: Machla/Info.plist
+        GENERATE_INFOPLIST_FILE: "NO"
+        CODE_SIGN_ENTITLEMENTS: Machla/Machla.entitlements
+        CODE_SIGN_STYLE: Automatic
+        # Yours, not the code's — this repository is public.
+        DEVELOPMENT_TEAM: ""
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"

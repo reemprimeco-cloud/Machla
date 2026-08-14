@@ -87,6 +87,7 @@
     "pushEnable": "ግፋ ማሳወቂያዎች",
     "pushHint": "ዝርዝር ሲላክ፣ ሲከፈት ወይም ሲጠናቀቅ በዚህ መሳሪያ ላይ ይወቁ።",
     "pushBlocked": "ማሳወቂያዎች በአሳሽዎ ቅንብሮች ውስጥ ታግደዋል።",
+    "pushBlockedIos": "በiPhone ቅንብሮችዎ ውስጥ ለMachla ማሳወቂያዎች ጠፍተዋል።",
     "about": "ስለ መተግበሪያው"
   },
   "members": {

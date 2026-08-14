@@ -8,6 +8,7 @@ import type { MessageKey } from "@/lib/i18n/messages";
 import type { NotificationType } from "@/lib/supabase/database.types";
 import { createClient } from "@/lib/supabase/server";
 
+import { createApnsSender } from "./apns";
 import { isPushConfigured } from "./isConfigured";
 
 const BODY_KEYS: Record<NotificationType, MessageKey> = {
@@ -30,6 +31,11 @@ function ensureVapid(): boolean {
   return true;
 }
 
+/** APNs rows store the device token in `endpoint`, behind this scheme,
+ * so that one unique column keeps addressing one installation whichever
+ * transport it belongs to (20260814100000_apns_push.sql). */
+const APNS_PREFIX = "apns://";
+
 /**
  * Reads back this caller's own fallout from the status change they just
  * made (get_pending_pushes — scoped to actor_user_id = auth.uid(), see
@@ -37,13 +43,24 @@ function ensureVapid(): boolean {
  * recipient translated into THEIR OWN preferred_language, and marks
  * whichever sends succeeded.
  *
+ * Two transports, one fan-out: a browser (or an installed PWA) is
+ * reached over Web Push, an App Store build over APNs. Which one a
+ * recipient needs is a property of the row, not of this function, so
+ * everything either transport does NOT change — who gets told, in what
+ * language, opening which screen — is decided once, above the branch.
+ *
  * Best-effort by design, same as markListViewedAction: a push that
  * fails to send must never fail the caller's action, and every call
  * site awaits this only after its own RPC already succeeded. Errors are
  * swallowed here, not re-thrown, for the same reason.
  */
 export async function sendPendingPushes(listId: string, type: NotificationType): Promise<void> {
-  if (!isPushConfigured() || !ensureVapid()) return;
+  // VAPID missing only disables the web half; APNs has its own
+  // credentials and its own configured-check, so an iPhone-only
+  // deployment still works and vice versa.
+  const web = isPushConfigured() && ensureVapid();
+  const apns = createApnsSender();
+  if (!web && !apns) return;
 
   try {
     const supabase = await createClient();
@@ -62,17 +79,33 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
         const body = getMessage(messages, BODY_KEYS[type], {
           name: row.actor_name ?? getMessage(messages, "hlists.someone"),
         });
-        const payload = JSON.stringify({
-          title: branding.name,
-          body,
-          tag: `list-${listId}-${type}`,
-          url: row.is_household_side ? `/home/lists/${listId}` : "/worker/lists",
-        });
+        const title = branding.name;
+        const threadId = `list-${listId}-${type}`;
+        const url = row.is_household_side ? `/home/lists/${listId}` : "/worker/lists";
+
+        if (row.push_platform === "ios") {
+          if (!apns) return;
+          const result = await apns.send(row.endpoint.slice(APNS_PREFIX.length), {
+            title,
+            body,
+            threadId,
+            url,
+          });
+          if (result.ok) sentIds.push(row.notification_id);
+          // Apple's permanent failures mean the same thing Web Push's
+          // 404/410 does — the app was deleted, or this token was
+          // minted against the other APNs environment. Either way it
+          // will never be deliverable again.
+          else if (result.gone) staleEndpoints.push(row.endpoint);
+          return;
+        }
+
+        if (!web || !row.p256dh || !row.auth_key) return;
 
         try {
           await webpush.sendNotification(
             { endpoint: row.endpoint, keys: { p256dh: row.p256dh, auth: row.auth_key } },
-            payload,
+            JSON.stringify({ title, body, tag: threadId, url }),
           );
           sentIds.push(row.notification_id);
         } catch (err) {
@@ -98,5 +131,10 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
   } catch {
     // Never let a push failure surface to the caller of the action that
     // triggered it — see the function comment above.
+  } finally {
+    // The HTTP/2 session outlives the sends unless it is closed, and a
+    // serverless invocation that never becomes idle is one that gets
+    // killed mid-flight rather than frozen for reuse.
+    apns?.close();
   }
 }

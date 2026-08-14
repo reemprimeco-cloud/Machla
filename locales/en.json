@@ -87,6 +87,7 @@
     "pushEnable": "Push notifications",
     "pushHint": "Get notified on this device when a list is sent, opened, or finished.",
     "pushBlocked": "Notifications are blocked in your browser settings.",
+    "pushBlockedIos": "Notifications are turned off for Machla in your iPhone Settings.",
     "about": "About the app"
   },
   "members": {
