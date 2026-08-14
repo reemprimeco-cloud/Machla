@@ -88,7 +88,8 @@
     "pushHint": "Dapatkan notifikasi di perangkat ini saat daftar dikirim, dibuka, atau selesai.",
     "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda.",
     "pushBlockedIos": "Notifikasi untuk Machla dimatikan di Pengaturan iPhone Anda.",
-    "about": "Tentang aplikasi"
+    "about": "Tentang aplikasi",
+    "privacy": "Kebijakan Privasi"
   },
   "members": {
     "title": "Orang",
@@ -232,5 +233,33 @@
     "later": "Nanti saja",
     "iosStep1": "1. Ketuk tombol Bagikan di Safari",
     "iosStep2": "2. Pilih “Add to Home Screen”"
+  },
+  "privacy": {
+    "title": "Kebijakan Privasi",
+    "updated": "Terakhir diperbarui: 14 Agustus 2026",
+    "intro": "Machla adalah daftar belanja yang digunakan bersama oleh satu rumah tangga dan orang-orang yang berbelanja untuk mereka. Halaman ini menjelaskan dengan kata-kata sederhana apa yang disimpan tentang Anda, siapa yang bisa melihatnya, dan berapa lama disimpan.",
+    "collectTitle": "Apa yang disimpan Machla",
+    "collectBody": "Nomor telepon Anda, yang digunakan untuk masuk. Nama yang Anda pilih untuk ditampilkan ke rumah tangga Anda. Bahasa yang Anda pilih. Rumah tangga mana Anda tergabung, dan peran Anda di masing-masing. Daftar yang Anda buat — produk, jumlah, catatan, dan apa yang dibeli. Foto apa pun yang Anda ambil dari barang yang tidak ada di daftar produk. Dan, jika Anda mengaktifkan notifikasi, sebuah alamat untuk perangkat yang Anda gunakan mengaktifkannya.",
+    "whyTitle": "Mengapa",
+    "whyBody": "Semua itu ada agar aplikasi bisa berfungsi. Tidak ada yang dikumpulkan untuk iklan, tidak ada yang dijual, dan tidak ada yang digunakan untuk membuat profil tentang Anda. Machla tidak memiliki iklan dan tidak melakukan pelacakan.",
+    "seeTitle": "Siapa yang bisa melihatnya",
+    "seeBody": "Hanya orang-orang di rumah tangga Anda. Orang yang berbelanja untuk satu rumah tangga hanya melihat daftar rumah tangga itu, dan tidak ada dari rumah tangga lain. Ini diberlakukan oleh basis data itu sendiri, bukan hanya oleh apa yang ditampilkan di layar.",
+    "photosTitle": "Foto dihapus",
+    "photosBody": "Foto suatu barang dihapus begitu barang itu dibeli, atau begitu daftarnya selesai — mana yang lebih dulu. Hanya rumah tangga Anda sendiri yang pernah melihatnya.",
+    "finishedTitle": "Daftar yang selesai akan hilang",
+    "finishedBody": "Saat daftar ditandai selesai, daftar itu hilang untuk semua orang di rumah tangga, dan tidak ada cara untuk kembali ke daftar tersebut.",
+    "whereTitle": "Di mana data disimpan",
+    "whereBody": "Di basis data Supabase yang berlokasi di Frankfurt, Jerman, dan dilayani oleh Vercel. Kode masuk Anda dikirim melalui WhatsApp oleh Twilio. Notifikasi dikirimkan oleh Apple pada aplikasi iPhone, atau oleh layanan push milik browser Anda sendiri. Perusahaan-perusahaan ini menangani data atas nama kami saja dan tidak untuk tujuan lain.",
+    "cookiesTitle": "Cookie",
+    "cookiesBody": "Dua: satu yang membuat Anda tetap masuk, dan satu yang mengingat bahasa yang Anda pilih. Tidak ada cookie iklan atau pelacakan.",
+    "controlTitle": "Apa yang bisa Anda lakukan",
+    "controlBody": "Matikan notifikasi kapan saja di Pengaturan. Ubah bahasa atau nama tampilan Anda kapan pun Anda mau. Dan Anda dapat meminta agar akun Anda dan semua isinya dihapus — kirim surat ke alamat di bawah ini dan itu akan dilakukan.",
+    "childrenTitle": "Bukan untuk anak-anak",
+    "childrenBody": "Machla tidak ditujukan untuk anak-anak. Mohon jangan gunakan aplikasi ini jika usia Anda di bawah 16 tahun.",
+    "changesTitle": "Perubahan pada halaman ini",
+    "changesBody": "Jika kebijakan ini berubah, tanggal di bagian atas halaman ini akan berubah juga.",
+    "contactTitle": "Kontak",
+    "contactBody": "Kirim surat ke reem@primekw.net untuk pertanyaan apa pun tentang data Anda, atau untuk meminta agar data itu dihapus.",
+    "menu": "Privasi"
   }
 }

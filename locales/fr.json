@@ -88,7 +88,8 @@
     "pushHint": "Recevez une notification sur cet appareil lorsqu'une liste est envoyée, ouverte ou terminée.",
     "pushBlocked": "Les notifications sont bloquées dans les paramètres de votre navigateur.",
     "pushBlockedIos": "Les notifications sont désactivées pour Machla dans les Réglages de votre iPhone.",
-    "about": "À propos de l'application"
+    "about": "À propos de l'application",
+    "privacy": "Politique de confidentialité"
   },
   "members": {
     "title": "Personnes",
@@ -232,5 +233,33 @@
     "later": "Plus tard",
     "iosStep1": "1. Touchez le bouton Partager dans Safari",
     "iosStep2": "2. Choisissez « Sur l'écran d'accueil »"
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "updated": "Dernière mise à jour : 14 août 2026",
+    "intro": "Machla est une liste de courses partagée entre un foyer et les personnes qui font les courses pour lui. Cette page explique en termes simples ce qui est conservé à votre sujet, qui peut le voir, et pendant combien de temps.",
+    "collectTitle": "Ce que Machla conserve",
+    "collectBody": "Votre numéro de téléphone, qui sert à vous connecter. Le nom que vous choisissez de montrer à votre foyer. La langue que vous avez choisie. Les foyers auxquels vous appartenez, et votre rôle dans chacun. Les listes que vous créez — produits, quantités, notes, et ce qui a été acheté. Toute photo que vous prenez d'un article absent de la liste de produits. Et, si vous activez les notifications, une adresse pour l'appareil sur lequel vous les avez activées.",
+    "whyTitle": "Pourquoi",
+    "whyBody": "Chacun de ces éléments existe pour que l'application fonctionne. Rien n'est collecté à des fins publicitaires, rien n'est vendu, et rien n'est utilisé pour établir un profil de vous. Machla ne comporte ni publicité ni pistage.",
+    "seeTitle": "Qui peut le voir",
+    "seeBody": "Seulement les personnes de votre foyer. Une personne qui fait les courses pour un foyer voit les listes de ce foyer, et rien d'aucun autre foyer. Cela est appliqué par la base de données elle-même, pas seulement par ce que les écrans choisissent de montrer.",
+    "photosTitle": "Les photos sont supprimées",
+    "photosBody": "La photo d'un article est supprimée dès qu'il est acheté, ou dès que la liste est terminée — selon ce qui arrive en premier. Seul votre propre foyer la voit jamais.",
+    "finishedTitle": "Les listes terminées disparaissent",
+    "finishedBody": "Lorsqu'une liste est marquée comme terminée, elle disparaît pour tout le monde dans le foyer, et il n'existe aucun moyen d'y revenir.",
+    "whereTitle": "Où c'est conservé",
+    "whereBody": "Dans une base de données Supabase hébergée à Francfort, en Allemagne, et servie par Vercel. Votre code de connexion est envoyé via WhatsApp par Twilio. Les notifications sont livrées par Apple sur l'application iPhone, ou par le service push de votre propre navigateur. Ces entreprises traitent les données uniquement pour notre compte et pour aucune autre finalité.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "Deux seulement : l'un vous maintient connecté, l'autre se souvient de la langue que vous avez choisie. Il n'y a aucun cookie publicitaire ou de pistage.",
+    "controlTitle": "Ce que vous pouvez faire",
+    "controlBody": "Désactivez les notifications à tout moment dans les Paramètres. Changez votre langue ou votre nom affiché quand vous le souhaitez. Et vous pouvez demander la suppression de votre compte et de tout ce qu'il contient — écrivez à l'adresse ci-dessous et cela sera fait.",
+    "childrenTitle": "Pas destiné aux enfants",
+    "childrenBody": "Machla n'est pas destiné aux enfants. Merci de ne pas l'utiliser si vous avez moins de 16 ans.",
+    "changesTitle": "Modifications de cette page",
+    "changesBody": "Si cette politique change, la date en haut de cette page change avec elle.",
+    "contactTitle": "Contact",
+    "contactBody": "Écrivez à reem@primekw.net pour toute question sur vos données, ou pour en demander la suppression.",
+    "menu": "Confidentialité"
   }
 }

@@ -40,6 +40,12 @@ export function AccountActions() {
         >
           {t("common.changeLanguage")}
         </Link>
+        <Link
+          href="/privacy"
+          className="hl-caption text-primary underline underline-offset-4"
+        >
+          {t("settings.privacy")}
+        </Link>
         <button
           type="button"
           onClick={handleLogout}

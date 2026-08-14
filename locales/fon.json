@@ -88,7 +88,8 @@
     "pushHint": "Ɖexlɛ́ mì ɖò nùnina elɔ jí é ɖò táwo sín sɛ́n, hunhun kabǐ fó hwenu.",
     "pushBlocked": "Alaxo lɛ́ wɛ dó xó ɖò browser towe sín ayidonu lɛ́ mɛ.",
     "pushBlockedIos": "Machla sín wɛnjlɛ lɛ ko cí ɖò iPhone towe sín Settings mɛ.",
-    "about": "Ðò app elɔ jí"
+    "about": "Ðò app elɔ jí",
+    "privacy": "Sɛ́n xwitɔgbe tɔn"
   },
   "members": {
     "title": "Mɛ lɛ́",
@@ -232,5 +233,33 @@
     "later": "Din ǎ",
     "iosStep1": "1. Zé Share sín bǔtɔ́n ɖò Safari mɛ",
     "iosStep2": "2. Cyan “Add to Home Screen”"
+  },
+  "privacy": {
+    "title": "Sɛ́n xwitɔgbe tɔn",
+    "updated": "Vɔ́nu wema tɔn: 14 Ǒgusu 2026",
+    "intro": "Machla nyí wema axɔ́ tɔn e xwégbe mɛ lɛ kpó mɛ e nɔ yì axɔ́sà nú ye lɛ kpó nɔ zán ɖó kpɔ́ é. Wexwɛ elɔ nɔ ɖɔ ɖò gbè bunɔ mɛ nǔ e è nɔ yí dó nyi ali dó we é, mɛ e sixu mɔ ɛ é, kpó táan e mɛ è nɔ hɛn ɛ ɖó é.",
+    "collectTitle": "Nǔ e Machla nɔ yí dó nyi ali dó",
+    "collectBody": "Nùkanbyɔ́ towe, xó e jí a nɔ byɔ ɖɔ̀n gbé é. Nyikɔ e a wlan ɖɔ è ni xlɛ́ xwégbe towe é. Gbè e a wlan é. Xwégbe e a nyí hɛnnu tɔn lɛ é, kpó azɔ̌ towe ɖò yeɖokpo ɖokpo mɛ é. Wema e a nɔ wlan lɛ é — nùɖíɖá lɛ, hlɔnhlɔn ye tɔn, wema kpɔ́n tɔn, kpó nǔ e è xɔ é. Fɔtóo ɖě bǔ e a jɛ nú nǔ e ma ɖò wema nùɖíɖá tɔn mɛ ǎ é. Bɔ, enyi a bló bɔ wɛnjlɛ lɛ ɖò azɔ̌ wa wɛ ɔ, adlɛ́sì nú nǔzinzan e jí a bló ɛ ɖè é.",
+    "whyTitle": "Etɛwú",
+    "whyBody": "Yeɖokpo ɖokpo ɖíe ɖò te ɖo bonu app ɔ ni sixu wà azɔ̌. Ðě ma nɔ yí nu tíntɔ́ hwɛ wu ó, ɖě ma nɔ sà ó, bɔ ɖě ma nɔ zán bo dó bló profile towe ó. Tíntɔ́ ɖě kaka ɖě kɔnwe ɖě ma ɖò Machla mɛ ǎ.",
+    "seeTitle": "Mɛ e sixu mɔ ɛ é",
+    "seeBody": "Xwégbe towe hɛnnu lɛ kɛɖɛ. Mɛ e nɔ yì axɔ́sà nú xwégbe ɖé é nɔ mɔ wema xwégbe enɛ tɔn kɛɖɛ, é ma nɔ mɔ nǔ ɖě sín xwégbe ɖěvo ǎ. Ðíe ɖíe nyí sɛ́n ɖò database ɔ mɛ, é gbɔn éɖeɖe wu ǎ.",
+    "photosTitle": "È nɔ súnsún fɔtóo lɛ",
+    "photosBody": "Fɔtóo nùɖíɖá ɖé tɔn nɔ súnsún hwenu e è xɔ nùɖíɖá enɛ é, alǒ hwenu e wema ɔ vɔ é — nǔ e wá jɛ nukɔn ɔ. Xwégbe towe kɛɖɛ wɛ nɔ mɔ ɛ.",
+    "finishedTitle": "Wema e vɔ lɛ é nɔ bú",
+    "finishedBody": "Hwenu e è ɖexlɛ́ ɖɔ wema ɖé vɔ é ɔ, é nɔ bú nú mɛ bǐ ɖò xwégbe mɛ, bɔ ali ɖě ma tíìn bo na lɛ́ kɔ yì mɛ ǎ.",
+    "whereTitle": "Fitɛ è nɔ hɛn ɛ ɖó",
+    "whereBody": "Ðò Supabase database e ɖò Frankfurt, Germany é mɛ, bɔ Vercel wɛ nɔ sɔ́ ɛ jɛ ali jí. Kóodu e a nɔ zán bo nɔ byɔ ɖɔ̀n gbé é nɔ wá gbɔn WhatsApp gudo, sín Twilio dó. Wɛnjlɛ lɛ, Apple wɛ nɔ zɔn dó iPhone app ɔ jí, alǒ push service e browser towe ɖésúnɔ ɖó é. Азɔ̌watɔ́ elɔ lɛ nɔ zán nùɖe lɛ ɖó taji mǐtɔn wu kɛɖɛ, é gbɔn nǔ ɖěvo wu ǎ.",
+    "cookiesTitle": "Cookies lɛ",
+    "cookiesBody": "Wè: ɖokpo nɔ hɛn we ɖò ɖɔ̀n gbé, ɖě ɔ nɔ flín gbè e a wlan é. Cookie e ɖò te nú tíntɔ́ alǒ dó gbɛ̌dó dó lɛ é ɖě ma tíìn ǎ.",
+    "controlTitle": "Nǔ e a sixu wà é",
+    "controlBody": "Sú wɛnjlɛ lɛ hwenu ɖebǔ ɖò Settings mɛ. Ðyɔ gbè towe alǒ nyikɔ e è nɔ xlɛ́ é hwenu ɖebǔ e a jló é. A sixu lɛ́ byɔ ɖɔ è ni súnsún akɔ́n towe kpó nǔ e ɖò mɛ tɔn lɛ bǐ é — wlan wema dó adlɛ́sì e ɖò gudo é, bɔ è na bló.",
+    "childrenTitle": "É ma nyí nú vǐ lɛ ǎ",
+    "childrenBody": "Machla ma nyí nú vǐ lɛ ǎ. Kɛnklɛ́n ma zán ɛ ǎ enyi xwè towe ma ka bɔ 16 ǎ.",
+    "changesTitle": "Ðyɔ e ɖò wexwɛ elɔ jí é",
+    "changesBody": "Enyi sɛ́n elɔ ɖyɔ ɔ, azǎn e ɖò wexwɛ elɔ jí é na ɖyɔ ɖó kpɔ́.",
+    "contactTitle": "Kancica",
+    "contactBody": "Wlan wema dó reem@primekw.net nú biɔsi ɖebǔ e ɖò nǔ towe lɛ jí é, alǒ dó byɔ ɖɔ è ni súnsún ye.",
+    "menu": "Xwitɔgbe"
   }
 }

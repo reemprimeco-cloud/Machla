@@ -176,8 +176,12 @@ already declares: phone number, name, photos, and "other user content"
 (the lists) — all **linked to the user**, all for **app functionality**,
 **none** used for tracking.
 
-You also need a **privacy policy URL** on a public page. There is not one
-yet; it is required, and Apple will reject the submission without it.
+You also need a **privacy policy URL** on a public page. Use
+`https://machla.reemora.app/privacy` — it needs no account to open (App
+Store Connect's field requires exactly that), is served in all twelve
+languages the app ships with, and its content matches
+`Machla/PrivacyInfo.xcprivacy` line for line: phone number, name, photos,
+and the lists themselves, linked to the user, none of it for tracking.
 
 ### App Review notes — read this one carefully
 

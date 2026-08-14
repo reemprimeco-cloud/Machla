@@ -88,7 +88,8 @@
     "pushHint": "Makatanggap ng abiso sa device na ito kapag may naipadala, nabuksan, o natapos na listahan.",
     "pushBlocked": "Naka-block ang mga notification sa settings ng iyong browser.",
     "pushBlockedIos": "Naka-off ang mga notification para sa Machla sa Settings ng iyong iPhone.",
-    "about": "Tungkol sa app"
+    "about": "Tungkol sa app",
+    "privacy": "Patakaran sa Privacy"
   },
   "members": {
     "title": "Mga tao",
@@ -232,5 +233,33 @@
     "later": "Hindi muna",
     "iosStep1": "1. Pindutin ang Share sa Safari",
     "iosStep2": "2. Piliin ang “Add to Home Screen”"
+  },
+  "privacy": {
+    "title": "Patakaran sa Privacy",
+    "updated": "Huling na-update: Agosto 14, 2026",
+    "intro": "Ang Machla ay isang listahan ng pamimili na ibinabahagi ng isang sambahayan at ng mga taong namimili para sa kanila. Sinasabi ng pahinang ito sa simpleng salita kung ano ang itinatago tungkol sa iyo, sino ang makakakita nito, at gaano katagal itong itinatago.",
+    "collectTitle": "Ano ang itinatago ng Machla",
+    "collectBody": "Ang iyong numero ng telepono, na siyang paraan mo ng pag-sign in. Ang pangalang pinili mong ipakita sa iyong sambahayan. Ang wikang pinili mo. Kung aling mga sambahayan ka kabilang, at ang tungkulin mo sa bawat isa. Ang mga listahang ginagawa mo — mga produkto, dami, tala, at kung ano ang nabili. Anumang larawang kinunan mo ng bagay na wala sa listahan ng produkto. At, kung binuksan mo ang mga notification, ang address ng device na binuksan mo iyon.",
+    "whyTitle": "Bakit",
+    "whyBody": "Bawat isa sa mga ito ay para lang gumana ang app. Walang kinokolekta para sa advertising, walang ibinebenta, at walang ginagamit para gumawa ng profile tungkol sa iyo. Walang advertising at walang tracking sa Machla.",
+    "seeTitle": "Sino ang makakakita nito",
+    "seeBody": "Ang mga tao lamang sa iyong sambahayan. Ang taong namimili para sa isang sambahayan ay nakikita lang ang mga listahan ng sambahayang iyon at wala nang iba pa. Ipinapatupad ito ng mismong database, hindi lang ng ipinapakita sa screen.",
+    "photosTitle": "Nade-delete ang mga larawan",
+    "photosBody": "Ang larawan ng isang bagay ay tinatanggal kapag nabili na ang bagay na iyon, o kapag natapos na ang listahan — alinman ang mauna. Ang sambahayan mo lang ang makakakita nito.",
+    "finishedTitle": "Nawawala ang mga tapos nang listahan",
+    "finishedBody": "Kapag minarkahan ang isang listahan bilang tapos na, mawawala ito para sa lahat sa sambahayan, at wala nang paraan pabalik dito.",
+    "whereTitle": "Saan ito itinatago",
+    "whereBody": "Sa isang Supabase database na nasa Frankfurt, Germany, at inihahatid ng Vercel. Ang iyong sign-in code ay ipinapadala sa pamamagitan ng WhatsApp gamit ang Twilio. Ang mga notification ay ipinapadala ng Apple sa iPhone app, o ng sariling push service ng iyong browser. Pinangangasiwaan ng mga kumpanyang ito ang datos para sa amin lang at walang ibang layunin.",
+    "cookiesTitle": "Mga Cookie",
+    "cookiesBody": "Dalawa: isang nagpapanatili sa iyong naka-sign in, at isang nagsasaulo sa wikang pinili mo. Walang mga advertising o tracking cookie.",
+    "controlTitle": "Ano ang magagawa mo",
+    "controlBody": "Patayin ang mga notification anumang oras sa Settings. Palitan ang iyong wika o pangalang ipinapakita kailan mo man gusto. At maaari mong hilingin na burahin ang iyong account at lahat ng laman nito — sumulat sa address sa ibaba at gagawin ito.",
+    "childrenTitle": "Hindi para sa mga bata",
+    "childrenBody": "Ang Machla ay hindi para sa mga bata. Mangyaring huwag itong gamitin kung ikaw ay wala pang 16 taong gulang.",
+    "changesTitle": "Mga pagbabago sa pahinang ito",
+    "changesBody": "Kung magbabago ang patakarang ito, magbabago rin ang petsa sa itaas ng pahinang ito.",
+    "contactTitle": "Makipag-ugnayan",
+    "contactBody": "Sumulat sa reem@primekw.net para sa anumang tanong tungkol sa iyong data, o para hilingin na burahin ito.",
+    "menu": "Privacy"
   }
 }

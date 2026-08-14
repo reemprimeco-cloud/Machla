@@ -88,7 +88,8 @@
     "pushHint": "Get notified on this device when a list is sent, opened, or finished.",
     "pushBlocked": "Notifications are blocked in your browser settings.",
     "pushBlockedIos": "Notifications are turned off for Machla in your iPhone Settings.",
-    "about": "About the app"
+    "about": "About the app",
+    "privacy": "Privacy Policy"
   },
   "members": {
     "title": "People",
@@ -232,5 +233,33 @@
     "later": "Not now",
     "iosStep1": "1. Tap the Share button in Safari",
     "iosStep2": "2. Choose “Add to Home Screen”"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: 14 August 2026",
+    "intro": "Machla is a shopping list shared between a household and the people who shop for it. This page says in plain words what it stores about you, who can see it, and how long it is kept.",
+    "collectTitle": "What Machla stores",
+    "collectBody": "Your phone number, which is how you sign in. The name you choose to show your household. The language you picked. Which households you belong to, and your role in each. The lists you make — products, quantities, notes, and what was bought. Any photo you take of an item that is not in the product list. And, if you turn notifications on, an address for the device you turned them on for.",
+    "whyTitle": "Why",
+    "whyBody": "Every one of those exists so the app can work. Nothing is collected for advertising, nothing is sold, and nothing is used to build a profile of you. Machla carries no advertising and no tracking.",
+    "seeTitle": "Who can see it",
+    "seeBody": "Only the people in your household. Someone who shops for a household sees that household's lists and nothing from any other household. This is enforced by the database itself, not only by what the screens choose to show.",
+    "photosTitle": "Photographs are deleted",
+    "photosBody": "A photo of an item is deleted once that item is bought, or once the list is finished — whichever comes first. Only your own household ever sees it.",
+    "finishedTitle": "Finished lists disappear",
+    "finishedBody": "When a list is marked finished it disappears for everyone in the household, and there is no way back to it.",
+    "whereTitle": "Where it is kept",
+    "whereBody": "In a Supabase database hosted in Frankfurt, Germany, and served by Vercel. Your sign-in code is delivered over WhatsApp by Twilio. Notifications are delivered by Apple on the iPhone app, or by your browser's own push service. These companies handle the data on our behalf and for no other purpose.",
+    "cookiesTitle": "Cookies",
+    "cookiesBody": "Two of them: one that keeps you signed in, and one that remembers the language you chose. There are no advertising or tracking cookies.",
+    "controlTitle": "What you can do",
+    "controlBody": "Turn notifications off at any time in Settings. Change your language or your display name whenever you like. And you can ask for your account and everything in it to be deleted — write to the address below and it will be done.",
+    "childrenTitle": "Not for children",
+    "childrenBody": "Machla is not intended for children. Please do not use it if you are under 16.",
+    "changesTitle": "Changes to this page",
+    "changesBody": "If this policy changes, the date at the top of this page changes with it.",
+    "contactTitle": "Contact",
+    "contactBody": "Write to reem@primekw.net with any question about your data, or to ask for it to be deleted.",
+    "menu": "Privacy"
   }
 }
