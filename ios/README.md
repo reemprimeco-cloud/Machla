@@ -204,11 +204,12 @@ Kuwaiti number and will not receive it, and "could not test the app" is
 an automatic rejection.
 
 Fix it in Supabase before submitting: **Authentication → Sign In / Up →
-Phone → Test OTP**, and add a fixed number/code pair, for example
-`+96500000000 → 123456`. That number then bypasses WhatsApp entirely.
-Put it in the review notes as the demo account, and give it a household
-with a few lists in it so there is something to see. Remove it after
-approval if you would rather it did not exist.
+Phone → Test OTP**. Already set: `+96590909090 → 123456` — entered in
+the dashboard as `96590909090=123456` (the field's own format, no
+leading `+`). That number bypasses WhatsApp entirely. Put it in the
+review notes as the demo account, and give it a household with a few
+lists in it so there is something to see. Remove it after approval if
+you would rather it did not exist.
 
 **b. Guideline 4.2 — Minimum Functionality.** Apple rejects apps that are
 "just a website in a wrapper". Say plainly what this app is and what it
@@ -225,7 +226,7 @@ does natively:
 > iOS. It also handles connectivity loss natively, in the user's own
 > language.
 >
-> Demo account: +965 XXXXXXXX, code 123456. It belongs to a household
+> Demo account: +965 90909090, code 123456. It belongs to a household
 > with sample lists.
 
 ### Export compliance

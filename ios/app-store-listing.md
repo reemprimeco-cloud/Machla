@@ -132,8 +132,8 @@ for advertising or shared with a data broker.
 |---|---|
 | **Contact email** | `reemprimeco@gmail.com` |
 | **Contact phone** | your number, for Apple to reach if needed |
-| **Demo account — username** | the phone number you set as a Test OTP pair in Supabase (Authentication → Sign In / Up → Phone → Test OTP), e.g. `+96500000000` |
-| **Demo account — password** | the fixed code you paired it with, e.g. `123456` |
+| **Demo account — username** | `+96590909090` (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP) |
+| **Demo account — password** | `123456` |
 | **Sign-in required** | Yes |
 
 **Notes** (paste into the Review Notes box):
