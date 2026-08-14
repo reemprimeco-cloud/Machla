@@ -286,6 +286,15 @@ Device", not a simulator) → **Distribute App** → **App Store Connect**.
 Bump `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in the target
 first, the same as above.
 
+> **"Redundant Binary Upload" / "You've already uploaded a build with
+> build number 'N'."** App Store Connect refuses two uploads with the
+> same `CURRENT_PROJECT_VERSION` under the same `MARKETING_VERSION`,
+> forever — even a rejected or since-deleted one still counts. Target →
+> **Signing & Capabilities** (or the General tab) → bump **Build** to
+> anything higher than the last number you uploaded, then archive again.
+> The automated release path above never hits this: it sets the build
+> number from the CI run number, which only ever goes up.
+
 ### Either way, TestFlight first
 
 On a real iPhone, before submitting for review:
