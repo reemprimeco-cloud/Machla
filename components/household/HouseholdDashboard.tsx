@@ -103,7 +103,7 @@ export function HouseholdDashboard({
                 <span aria-hidden className="text-2xl leading-none">
                   {category.icon ?? "📦"}
                 </span>
-                <span className="hl-caption truncate text-ink">
+                <span className="hl-caption w-full min-w-0 truncate text-ink">
                   {localizedName(category, locale)}
                 </span>
               </Link>
@@ -152,7 +152,7 @@ export function HouseholdDashboard({
                       list.status === "sent" ? "border-primary" : "border-line"
                     }`}
                   >
-                    <span className="hl-heading truncate text-ink">
+                    <span className="hl-heading min-w-0 truncate text-ink">
                       {t("hlists.from", {
                         name: list.created_by_name ?? t("hlists.someone"),
                       })}
