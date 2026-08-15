@@ -89,7 +89,12 @@
     "pushBlocked": "ማሳወቂያዎች በአሳሽዎ ቅንብሮች ውስጥ ታግደዋል።",
     "pushBlockedIos": "በiPhone ቅንብሮችዎ ውስጥ ለMachla ማሳወቂያዎች ጠፍተዋል።",
     "about": "ስለ መተግበሪያው",
-    "privacy": "የግላዊነት ፖሊሲ"
+    "privacy": "የግላዊነት ፖሊሲ",
+    "dangerZone": "አደገኛ ቦታ",
+    "deleteAccount": "መለያዬን ሰርዝ",
+    "deletingAccount": "በመሰረዝ ላይ…",
+    "deleteAccountConfirm": "ይህ መለያዎን በቋሚነት ይሰርዛል። ይህ ወደ ኋላ ሊመለስ አይችልም።",
+    "deleteAccountConfirmOwner": "ይህ ቤት የእርስዎ ነው። መለያዎን መሰረዝ ይህን ቤት ለሁሉም ሰው በቋሚነት ይሰርዛል — ዝርዝሮቹን፣ አባላቱን፣ ሁሉንም ነገር። ይህ ወደ ኋላ ሊመለስ አይችልም።"
   },
   "members": {
     "title": "ሰዎች",

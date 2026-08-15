@@ -505,6 +505,13 @@ export interface Database {
         Args: { p_notification_ids: string[] };
         Returns: number;
       };
+      delete_own_account: {
+        Args: Record<string, never>;
+        /** One row per photograph that was on a now-deleted owned
+         * household's lists — the caller purges these Storage objects
+         * itself (see lib/auth/deleteAccount.ts for why). */
+        Returns: { photo_path: string }[];
+      };
     };
     Enums: Record<string, never>;
   };

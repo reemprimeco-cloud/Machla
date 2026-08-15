@@ -89,7 +89,12 @@
     "pushBlocked": "Les notifications sont bloquées dans les paramètres de votre navigateur.",
     "pushBlockedIos": "Les notifications sont désactivées pour Machla dans les Réglages de votre iPhone.",
     "about": "À propos de l'application",
-    "privacy": "Politique de confidentialité"
+    "privacy": "Politique de confidentialité",
+    "dangerZone": "Zone de danger",
+    "deleteAccount": "Supprimer mon compte",
+    "deletingAccount": "Suppression…",
+    "deleteAccountConfirm": "Cela supprimera définitivement votre compte. Cette action est irréversible.",
+    "deleteAccountConfirmOwner": "Vous êtes propriétaire de cette maison. Supprimer votre compte supprimera définitivement cette maison pour tout le monde — ses listes, ses membres, tout. Cette action est irréversible."
   },
   "members": {
     "title": "Personnes",

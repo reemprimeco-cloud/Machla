@@ -89,7 +89,12 @@
     "pushBlocked": "Naka-block ang mga notification sa settings ng iyong browser.",
     "pushBlockedIos": "Naka-off ang mga notification para sa Machla sa Settings ng iyong iPhone.",
     "about": "Tungkol sa app",
-    "privacy": "Patakaran sa Privacy"
+    "privacy": "Patakaran sa Privacy",
+    "dangerZone": "Delikadong bahagi",
+    "deleteAccount": "Burahin ang aking account",
+    "deletingAccount": "Binuburang…",
+    "deleteAccountConfirm": "Permanenteng mabubura ang iyong account. Hindi na ito maibabalik.",
+    "deleteAccountConfirmOwner": "Ikaw ang may-ari ng tahanang ito. Ang pagbura ng iyong account ay permanenteng magbubura ng tahanang ito para sa lahat — ang mga listahan nito, mga miyembro nito, lahat. Hindi na ito maibabalik."
   },
   "members": {
     "title": "Mga tao",

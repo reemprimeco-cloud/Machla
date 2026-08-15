@@ -89,7 +89,12 @@
     "pushBlocked": "Notifications are blocked in your browser settings.",
     "pushBlockedIos": "Notifications are turned off for Machla in your iPhone Settings.",
     "about": "About the app",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "dangerZone": "Danger zone",
+    "deleteAccount": "Delete my account",
+    "deletingAccount": "Deleting…",
+    "deleteAccountConfirm": "This will permanently delete your account. This can't be undone.",
+    "deleteAccountConfirmOwner": "You own this home. Deleting your account will permanently delete this home for everyone — its lists, its members, everything. This can't be undone."
   },
   "members": {
     "title": "People",

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { PushToggle } from "@/components/household/PushToggle";
-import { Card, Screen } from "@/components/ui/Primitives";
+import { Card, ErrorText, Screen, useErrorMessage } from "@/components/ui/Primitives";
+import { deleteAccountAction } from "@/lib/auth/deleteAccount";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
 import type { HouseholdRole } from "@/lib/supabase/database.types";
@@ -31,7 +32,10 @@ export function SettingsScreen({
 }) {
   const router = useRouter();
   const { t } = useLocale();
+  const errorMessage = useErrorMessage();
   const [signingOut, setSigningOut] = useState(false);
+  const [deletingAccount, setDeletingAccount] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   async function handleLogout() {
     setSigningOut(true);
@@ -41,6 +45,27 @@ export function SettingsScreen({
     }
     router.push("/login");
     router.refresh();
+  }
+
+  /** Apple Guideline 5.1.1(v): account deletion, not deactivation, from
+   * inside the app. Owners get a sharper warning — deleting their
+   * account also deletes the household they own, for everyone
+   * (lib/auth/deleteAccount.ts). `deleteAccountAction` redirects on
+   * success, so `result` is only ever reached on failure. */
+  async function handleDeleteAccount() {
+    const confirmKey =
+      role === "owner"
+        ? "settings.deleteAccountConfirmOwner"
+        : "settings.deleteAccountConfirm";
+    if (!window.confirm(t(confirmKey))) return;
+
+    setDeletingAccount(true);
+    setDeleteError(null);
+
+    const result = await deleteAccountAction();
+
+    setDeletingAccount(false);
+    if (!result.ok) setDeleteError(errorMessage(result.code));
   }
 
   return (
@@ -144,6 +169,21 @@ export function SettingsScreen({
       >
         {t("common.logout")}
       </button>
+
+      <section className="space-y-2">
+        <h2 className="hl-label text-ink-muted">{t("settings.dangerZone")}</h2>
+        <ErrorText>{deleteError}</ErrorText>
+        <button
+          type="button"
+          onClick={handleDeleteAccount}
+          disabled={deletingAccount}
+          className="hl-label min-h-12 w-full rounded-lg border border-danger px-4 text-danger disabled:opacity-60"
+        >
+          {deletingAccount
+            ? t("settings.deletingAccount")
+            : t("settings.deleteAccount")}
+        </button>
+      </section>
 
       {/* A fixed, un-translated line by design — a copyright notice reads
           the same in every language, the way a URL does. */}

@@ -250,6 +250,22 @@ does natively:
 >
 > Demo account: +965 90909090, code 123456. It belongs to a household
 > with sample lists.
+>
+> Account deletion (Guideline 5.1.1(v)) is available from inside the
+> app: Settings → Danger zone → Delete my account. It permanently
+> deletes the Supabase auth account; if the account owns a household,
+> that household and everything in it is deleted too.
+
+**c. Guideline 5.1.1(v) — Account deletion.** Live in Settings →
+Danger zone → Delete my account (`components/household/SettingsScreen.tsx`,
+`lib/auth/deleteAccount.ts`). It only works once
+`SUPABASE_SERVICE_ROLE_KEY` is set in Vercel as a **server-side**
+environment variable (Production + Preview) — same place the
+VAPID/APNs secrets went, never as `NEXT_PUBLIC_*`, never committed.
+Get the value from Supabase → Project Settings → API → service_role
+key. Without it, the button fails cleanly with a "not configured"
+error instead of partially deleting anything — so add it before
+resubmitting, or the reviewer will hit that error.
 
 ### Export compliance
 

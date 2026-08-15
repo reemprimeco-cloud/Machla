@@ -89,7 +89,12 @@
     "pushBlocked": "Alaxo lɛ́ wɛ dó xó ɖò browser towe sín ayidonu lɛ́ mɛ.",
     "pushBlockedIos": "Machla sín wɛnjlɛ lɛ ko cí ɖò iPhone towe sín Settings mɛ.",
     "about": "Ðò app elɔ jí",
-    "privacy": "Sɛ́n xwitɔgbe tɔn"
+    "privacy": "Sɛ́n xwitɔgbe tɔn",
+    "dangerZone": "Nǔ vɛwǔ lɛ́",
+    "deleteAccount": "Ðe hwɛ ce",
+    "deletingAccount": "É ɖò didé jí…",
+    "deleteAccountConfirm": "Enɛ ná ɖe hwɛ ce nú kaka. É sixu ma lɛ́ kɔ ǎ.",
+    "deleteAccountConfirmOwner": "Xwé elɔ towe wɛ. Ðíde hwɛ towe ná ɖe xwé elɔ nú mɛbǐ kaka — távo tɔn lɛ́, mɛ e ɖò xwé ɔ mɛ lɛ́, nǔbǐ. É sixu ma lɛ́ kɔ ǎ."
   },
   "members": {
     "title": "Mɛ lɛ́",

@@ -164,6 +164,12 @@ Sign-in is a phone number and a one-time code, normally delivered over
 WhatsApp — the demo account above bypasses that and logs in directly.
 It belongs to a household with a sample list already in it, so there is
 something to see on first launch.
+
+Account deletion (Guideline 5.1.1(v)) is available from inside the app:
+Settings → Danger zone → Delete my account. It permanently deletes the
+Supabase auth account; if the account owns a household, that household
+and everything in it (lists, members, invitations) is deleted too, not
+just the caller's own membership.
 ```
 
 ## Version Information (for build 1.0)
@@ -184,6 +190,14 @@ proprietary encryption, so the answer is **No**.
 
 ## What is NOT in this document
 
+- **`SUPABASE_SERVICE_ROLE_KEY` in Vercel.** Required for account
+  deletion (Settings → Danger zone) to actually work — without it the
+  app fails cleanly with "not configured" instead of partially
+  deleting anything. Add it as a **server-side** environment variable
+  (Production + Preview) in the Vercel project settings, the same way
+  the VAPID/APNs secrets were added; never as `NEXT_PUBLIC_*`, never
+  committed to the repo. Get the value from Supabase → Project
+  Settings → API → service_role key.
 - **Screenshots.** Need an actual running build on a Simulator or
   device — see `ios/README.md` "Screenshots" for exact sizes and what
   to capture.

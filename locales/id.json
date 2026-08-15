@@ -89,7 +89,12 @@
     "pushBlocked": "Notifikasi diblokir di pengaturan browser Anda.",
     "pushBlockedIos": "Notifikasi untuk Machla dimatikan di Pengaturan iPhone Anda.",
     "about": "Tentang aplikasi",
-    "privacy": "Kebijakan Privasi"
+    "privacy": "Kebijakan Privasi",
+    "dangerZone": "Zona berbahaya",
+    "deleteAccount": "Hapus akun saya",
+    "deletingAccount": "Menghapus…",
+    "deleteAccountConfirm": "Ini akan menghapus akun Anda secara permanen. Tindakan ini tidak dapat dibatalkan.",
+    "deleteAccountConfirmOwner": "Anda adalah pemilik rumah ini. Menghapus akun Anda akan menghapus rumah ini secara permanen untuk semua orang — daftarnya, anggotanya, semuanya. Tindakan ini tidak dapat dibatalkan."
   },
   "members": {
     "title": "Orang",
