@@ -78,7 +78,8 @@
     "greetingEvening": "Good evening, {name}",
     "overview": "{openCount} lists open · {memberCount} people",
     "categories": "Categories",
-    "seeAll": "See all"
+    "seeAll": "See all",
+    "selecting": "Opening…"
   },
   "settings": {
     "title": "Settings",

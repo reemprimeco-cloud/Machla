@@ -42,8 +42,44 @@ enum Strings {
         "fon": "Tɛ́n kpɔ́n ɖevo",
     ]
 
+    /// Button labels for the native alert/confirm panel
+    /// (WebAppView.swift's WKUIDelegate methods) — the page's own
+    /// `t()` supplies the message, but WKWebView has no equivalent
+    /// hook for the OK/Cancel button titles themselves.
+    private static let ok: [String: String] = [
+        "en": "OK",
+        "ar": "حسنًا",
+        "hi": "ठीक है",
+        "ur": "ٹھیک ہے",
+        "ne": "ठिक छ",
+        "si": "හරි",
+        "te": "సరే",
+        "fil": "OK",
+        "id": "OK",
+        "am": "እሺ",
+        "fr": "OK",
+        "fon": "OK",
+    ]
+
+    private static let cancel: [String: String] = [
+        "en": "Cancel",
+        "ar": "إلغاء",
+        "hi": "रद्द करें",
+        "ur": "منسوخ کریں",
+        "ne": "रद्द गर्नुहोस्",
+        "si": "අවලංගු කරන්න",
+        "te": "రద్దు చేయండి",
+        "fil": "Kanselahin",
+        "id": "Batal",
+        "am": "ሰርዝ",
+        "fr": "Annuler",
+        "fon": "Glɔ́n",
+    ]
+
     static var offlineTitleText: String { lookup(offlineTitle) }
     static var retryText: String { lookup(retry) }
+    static var okText: String { lookup(ok) }
+    static var cancelText: String { lookup(cancel) }
 
     /// The device may report "ar-KW" or "pt-BR"; the table is keyed by
     /// language alone, and anything it does not carry falls back to

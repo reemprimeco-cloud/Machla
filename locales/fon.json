@@ -78,7 +78,8 @@
     "greetingEvening": "Ata wǒ zǎn, {name}",
     "overview": "Távo {openCount} lɛ́ hun · Mɛ {memberCount}",
     "categories": "Akpáxwé lɛ́",
-    "seeAll": "Kpɔ́n bǐ"
+    "seeAll": "Kpɔ́n bǐ",
+    "selecting": "É ɖò hunhun jí…"
   },
   "settings": {
     "title": "Ayidonu lɛ́",

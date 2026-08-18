@@ -78,7 +78,8 @@
     "greetingEvening": "శుభ సాయంత్రం, {name}",
     "overview": "{openCount} జాబితాలు తెరిచి ఉన్నాయి · {memberCount} మంది సభ్యులు",
     "categories": "వర్గాలు",
-    "seeAll": "అన్నీ చూడండి"
+    "seeAll": "అన్నీ చూడండి",
+    "selecting": "తెరుస్తోంది…"
   },
   "settings": {
     "title": "సెట్టింగ్‌లు",

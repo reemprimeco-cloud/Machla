@@ -78,7 +78,8 @@
     "greetingEvening": "Magandang gabi, {name}",
     "overview": "{openCount} listahan ang bukas · {memberCount} miyembro",
     "categories": "Mga Kategorya",
-    "seeAll": "Tingnan lahat"
+    "seeAll": "Tingnan lahat",
+    "selecting": "Binubuksan…"
   },
   "settings": {
     "title": "Mga Setting",

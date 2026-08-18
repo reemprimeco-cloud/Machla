@@ -78,7 +78,8 @@
     "greetingEvening": "Selamat malam, {name}",
     "overview": "{openCount} daftar terbuka · {memberCount} anggota",
     "categories": "Kategori",
-    "seeAll": "Lihat semua"
+    "seeAll": "Lihat semua",
+    "selecting": "Membuka…"
   },
   "settings": {
     "title": "Pengaturan",

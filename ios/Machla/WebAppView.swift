@@ -169,5 +169,89 @@ struct WebAppView: UIViewRepresentable {
             guard code != NSURLErrorCancelled else { return }
             state.failed = true
         }
+
+        // MARK: - JS alert / confirm / prompt
+        //
+        // WKWebView does not implement these on its own: a page calling
+        // window.alert/confirm/prompt with none of the three methods
+        // below present just hangs — the completion handler nothing ever
+        // calls, blocking that JS execution context forever. The web app
+        // uses window.confirm for its two destructive actions (removing a
+        // household member, deleting an account), so without this the
+        // Settings screen would freeze solid the moment either was
+        // tapped, indistinguishable from a real crash.
+
+        func webView(
+            _ webView: WKWebView,
+            runJavaScriptAlertPanelWithMessage message: String,
+            initiatedByFrame frame: WKFrameInfo,
+            completionHandler: @escaping () -> Void
+        ) {
+            guard let presenter = Self.topViewController() else {
+                completionHandler()
+                return
+            }
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Strings.okText, style: .default) { _ in
+                completionHandler()
+            })
+            presenter.present(alert, animated: true)
+        }
+
+        func webView(
+            _ webView: WKWebView,
+            runJavaScriptConfirmPanelWithMessage message: String,
+            initiatedByFrame frame: WKFrameInfo,
+            completionHandler: @escaping (Bool) -> Void
+        ) {
+            guard let presenter = Self.topViewController() else {
+                completionHandler(false)
+                return
+            }
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Strings.cancelText, style: .cancel) { _ in
+                completionHandler(false)
+            })
+            alert.addAction(UIAlertAction(title: Strings.okText, style: .destructive) { _ in
+                completionHandler(true)
+            })
+            presenter.present(alert, animated: true)
+        }
+
+        func webView(
+            _ webView: WKWebView,
+            runJavaScriptTextInputPanelWithPrompt prompt: String,
+            defaultText: String?,
+            initiatedByFrame frame: WKFrameInfo,
+            completionHandler: @escaping (String?) -> Void
+        ) {
+            guard let presenter = Self.topViewController() else {
+                completionHandler(nil)
+                return
+            }
+            let alert = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
+            alert.addTextField { $0.text = defaultText }
+            alert.addAction(UIAlertAction(title: Strings.cancelText, style: .cancel) { _ in
+                completionHandler(nil)
+            })
+            alert.addAction(UIAlertAction(title: Strings.okText, style: .default) { _ in
+                completionHandler(alert.textFields?.first?.text)
+            })
+            presenter.present(alert, animated: true)
+        }
+
+        /// The deepest `presentedViewController` off the key window's
+        /// root — where a `UIAlertController` has to be presented from,
+        /// and SwiftUI's `App` gives no other handle to reach.
+        private static func topViewController() -> UIViewController? {
+            let scene = UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .first { $0.activationState == .foregroundActive }
+            guard var top = scene?.keyWindow?.rootViewController else { return nil }
+            while let presented = top.presentedViewController {
+                top = presented
+            }
+            return top
+        }
     }
 }

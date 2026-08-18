@@ -78,7 +78,8 @@
     "greetingEvening": "እንደምን አመሹ፣ {name}",
     "overview": "{openCount} ዝርዝሮች ክፍት ናቸው · {memberCount} አባላት",
     "categories": "ምድቦች",
-    "seeAll": "ሁሉንም ይመልከቱ"
+    "seeAll": "ሁሉንም ይመልከቱ",
+    "selecting": "በመክፈት ላይ…"
   },
   "settings": {
     "title": "ቅንብሮች",

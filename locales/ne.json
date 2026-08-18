@@ -78,7 +78,8 @@
     "greetingEvening": "शुभ साँझ, {name}",
     "overview": "{openCount} सूचीहरू खुला छन् · {memberCount} सदस्यहरू",
     "categories": "श्रेणीहरू",
-    "seeAll": "सबै हेर्नुहोस्"
+    "seeAll": "सबै हेर्नुहोस्",
+    "selecting": "खोलिँदैछ…"
   },
   "settings": {
     "title": "सेटिङहरू",

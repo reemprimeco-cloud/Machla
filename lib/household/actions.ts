@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import { setSelectedHouseholdId } from "./currentHousehold";
 import type { ActionResult } from "./errors";
@@ -165,6 +164,13 @@ export async function removeMemberAction(
  * id can't even cosmetically select a household the user has no access
  * to; it silently falls through to whatever `requireHouseholdAccess`
  * would have picked anyway.
+ *
+ * Deliberately does not redirect itself (unlike most other actions in
+ * this file): it's called directly from a client event handler
+ * (HomesSwitcher.tsx) that needs to show pending state while this runs
+ * and navigate only after it resolves — a `redirect()` thrown from in
+ * here would unwind through that handler's own try/catch and get
+ * mistaken for a real failure.
  */
 export async function selectHouseholdAction(householdId: string): Promise<void> {
   if (!isSupabaseConfigured()) return;
@@ -174,6 +180,4 @@ export async function selectHouseholdAction(householdId: string): Promise<void> 
     (membership) => membership.householdId === householdId && membership.role !== "worker",
   );
   if (isOwnerOrMember) await setSelectedHouseholdId(householdId);
-
-  redirect("/home/dashboard");
 }

@@ -78,7 +78,8 @@
     "greetingEvening": "Bonsoir, {name}",
     "overview": "{openCount} listes ouvertes · {memberCount} membres",
     "categories": "Catégories",
-    "seeAll": "Tout voir"
+    "seeAll": "Tout voir",
+    "selecting": "Ouverture…"
   },
   "settings": {
     "title": "Réglages",

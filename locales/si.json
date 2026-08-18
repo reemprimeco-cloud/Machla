@@ -78,7 +78,8 @@
     "greetingEvening": "සුභ සැන්දෑවක්, {name}",
     "overview": "{openCount} ලැයිස්තු විවෘතයි · සාමාජිකයින් {memberCount}",
     "categories": "කාණ්ඩ",
-    "seeAll": "සියල්ල බලන්න"
+    "seeAll": "සියල්ල බලන්න",
+    "selecting": "විවෘත කරමින්…"
   },
   "settings": {
     "title": "සැකසුම්",

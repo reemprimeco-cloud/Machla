@@ -78,7 +78,8 @@
     "greetingEvening": "شام بخیر، {name}",
     "overview": "{openCount} فہرستیں کھلی ہیں · {memberCount} افراد",
     "categories": "زمرہ جات",
-    "seeAll": "سب دیکھیں"
+    "seeAll": "سب دیکھیں",
+    "selecting": "کھولا جا رہا ہے…"
   },
   "settings": {
     "title": "ترتیبات",

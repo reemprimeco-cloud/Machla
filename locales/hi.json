@@ -78,7 +78,8 @@
     "greetingEvening": "शुभ संध्या, {name}",
     "overview": "{openCount} सूचियाँ खुली हैं · {memberCount} सदस्य",
     "categories": "श्रेणियाँ",
-    "seeAll": "सभी देखें"
+    "seeAll": "सभी देखें",
+    "selecting": "खोला जा रहा है…"
   },
   "settings": {
     "title": "सेटिंग्स",
