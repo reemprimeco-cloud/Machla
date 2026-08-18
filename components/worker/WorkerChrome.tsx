@@ -39,14 +39,14 @@ export function WorkerBar({
       {backHref ? (
         <Link
           href={backHref}
-          aria-label={t("common.back")}
-          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-ink"
+          className="hl-label flex min-h-12 shrink-0 items-center gap-1 rounded-pill border border-line bg-surface px-3 text-ink"
         >
           {/* Mirrors automatically in RTL: the glyph is flipped by the
               parent's direction, so no per-locale icon swap is needed. */}
           <span aria-hidden className="rtl:-scale-x-100 text-lg leading-none">
             ‹
           </span>
+          <span>{t("common.back")}</span>
         </Link>
       ) : null}
 
