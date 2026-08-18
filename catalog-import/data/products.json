@@ -195,6 +195,12 @@
       "type": "milk_long_life"
     },
     {
+      "type": "milk_banana"
+    },
+    {
+      "type": "milk_strawberry"
+    },
+    {
       "type": "laban"
     },
     {
@@ -445,6 +451,15 @@
     },
     {
       "type": "mango_juice"
+    },
+    {
+      "type": "fruit_cocktail_juice"
+    },
+    {
+      "type": "passion_fruit_juice"
+    },
+    {
+      "type": "blood_orange_juice"
     },
     {
       "type": "soft_drink"

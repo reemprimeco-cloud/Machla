@@ -1075,6 +1075,56 @@
       ]
     },
     {
+      "key": "milk_banana",
+      "category": "dairy_eggs",
+      "unit": "l",
+      "icon": "🍌",
+      "names": {
+        "en": "Banana Milk",
+        "ar": "حليب بالموز",
+        "hi": "केले का दूध",
+        "te": "అరటి పాలు",
+        "ur": "کیلے کا دودھ",
+        "fil": "Gatas na Saging",
+        "ne": "केराको दूध",
+        "id": "Susu Pisang",
+        "si": "කෙසෙල් කිරි",
+        "am": "የሙዝ ወተት",
+        "fr": "Lait à la banane"
+      },
+      "keywords": [
+        "banana milk",
+        "milk",
+        "haleeb mawz",
+        "gatas saging",
+        "banana"
+      ]
+    },
+    {
+      "key": "milk_strawberry",
+      "category": "dairy_eggs",
+      "unit": "l",
+      "icon": "🍓",
+      "names": {
+        "en": "Strawberry Milk",
+        "ar": "حليب بالفراولة",
+        "hi": "स्ट्रॉबेरी दूध",
+        "te": "స్ట్రాబెర్రీ పాలు",
+        "ur": "اسٹرابیری دودھ",
+        "fil": "Gatas na Strawberry",
+        "ne": "स्ट्रबेरी दूध",
+        "id": "Susu Stroberi",
+        "si": "ස්ට්‍රෝබෙරි කිරි",
+        "am": "የእንጆሪ ወተት",
+        "fr": "Lait à la fraise"
+      },
+      "keywords": [
+        "strawberry milk",
+        "milk",
+        "haleeb farawla"
+      ]
+    },
+    {
       "key": "milk_long_life",
       "category": "dairy_eggs",
       "unit": "l",
@@ -3024,6 +3074,81 @@
         "juice",
         "mango juice",
         "aseer mango"
+      ]
+    },
+    {
+      "key": "fruit_cocktail_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🍹",
+      "names": {
+        "en": "Fruit Cocktail Juice",
+        "ar": "عصير كوكتيل فواكه",
+        "hi": "फ्रूट कॉकटेल जूस",
+        "te": "ఫ్రూట్ కాక్టెయిల్ జ్యూస్",
+        "ur": "فروٹ کاکٹیل جوس",
+        "fil": "Fruit Cocktail Juice",
+        "ne": "फलफूल कककटेल जुस",
+        "id": "Jus Koktail Buah",
+        "si": "පළතුරු කොක්ටේල් යුෂ",
+        "am": "የፍራፍሬ ኮክቴል ጭማቂ",
+        "fr": "Jus cocktail de fruits"
+      },
+      "keywords": [
+        "fruit cocktail juice",
+        "juice",
+        "aseer cocktail fawakeh",
+        "mixed fruit juice"
+      ]
+    },
+    {
+      "key": "passion_fruit_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🧃",
+      "names": {
+        "en": "Passion Fruit Juice",
+        "ar": "عصير باشن فروت",
+        "hi": "पैशन फ्रूट जूस",
+        "te": "పాషన్ ఫ్రూట్ జ్యూస్",
+        "ur": "پیشن فروٹ جوس",
+        "fil": "Passion Fruit Juice",
+        "ne": "प्यासन फ्रुट जुस",
+        "id": "Jus Markisa",
+        "si": "පැෂන් ෆෘට් යුෂ",
+        "am": "የፓሽን ፍሩት ጭማቂ",
+        "fr": "Jus de fruit de la passion"
+      },
+      "keywords": [
+        "passion fruit juice",
+        "juice",
+        "aseer passion fruit",
+        "markisa"
+      ]
+    },
+    {
+      "key": "blood_orange_juice",
+      "category": "drinks",
+      "unit": "l",
+      "icon": "🍊",
+      "names": {
+        "en": "Blood Orange Juice",
+        "ar": "عصير برتقال وردي",
+        "hi": "ब्लड ऑरेंज जूस",
+        "te": "బ్లడ్ ఆరెంజ్ జ్యూస్",
+        "ur": "بلڈ اورنج جوس",
+        "fil": "Blood Orange Juice",
+        "ne": "ब्लड अरेन्ज जुस",
+        "id": "Jus Jeruk Merah",
+        "si": "රතු දොඩම් යුෂ",
+        "am": "ደም ብርቱካን ጭማቂ",
+        "fr": "Jus d'orange sanguine"
+      },
+      "keywords": [
+        "blood orange juice",
+        "pink orange",
+        "juice",
+        "aseer burtuqal wardi"
       ]
     },
     {
