@@ -108,6 +108,43 @@ const IMAGES = {
   laundry_liquid: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084946_def7d8f0-d601-432f-a071-e8dcd8342294.png",
   laundry_powder: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_92a3ba4a-a0e5-48ab-abba-bd0f93dbf9d4.png",
   sponge: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_9543164c-e99d-4dd4-907d-34be8574c338.png",
+
+  // Round 8: Personal Care (13 types).
+  soap_bar: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_16843818-a9ad-43a4-86fd-4e008ce2eab4.png",
+  body_lotion: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_4bab0af9-4ff9-4229-aae1-6697bc0e92a0.png",
+  body_wash: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_fe95ac23-8c56-40d6-9825-6334e98a0022.png",
+  deodorant: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_bbb9bd23-9e61-45c7-b055-5b81636563ac.png",
+  facial_tissue: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_f4e26611-dd8c-4700-a7ce-6ff8d4d2432d.png",
+  conditioner: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_72ba1944-63d4-4949-91d0-7c64f59aabf8.png",
+  hair_oil: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_9045b446-a71b-4fb4-b598-054bbb8b68fe.png",
+  hand_wash: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085111_173216df-d15c-4d08-ab91-28c2c1f2cf63.png",
+  razor: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085220_ea0957fe-c32e-403a-8ddc-5e3e28778d9f.png",
+  sanitary_pads: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085220_d3363d3d-5003-4e2c-acc7-f583a7299f84.png",
+  shampoo: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085220_8346f71f-06b9-49f2-96c9-ef665ee55c8e.png",
+  toothbrush: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085220_93d3f747-d41e-488e-83d9-a81a9a600ae7.png",
+  toothpaste: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085220_23165f37-ffca-4c99-86a1-58dfbd63303e.png",
+
+  // Round 9: Household (10 types).
+  aluminum_foil: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_12336156-eeb5-4917-95c1-ff5acb0d58cd.png",
+  baking_paper: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_e9e171bc-102b-45a4-915f-764e98695d32.png",
+  batteries: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085835_89018e39-be9c-48aa-8a4e-479e0b57e4f9.png",
+  cling_film: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_be2372c0-78c9-482a-92fd-09beecb8c24e.png",
+  insect_spray: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_b5755f06-9b51-4fb6-b2fe-6e5fab3f9b08.png",
+  kitchen_towel: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_6c5e58f3-b9db-4d4d-b882-f9c444a8e636.png",
+  light_bulb: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_a455adaa-c418-4aa0-a195-da552bb91c18.png",
+  matches: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085352_d55cbe3a-5977-4e25-b486-92898222a5a9.png",
+  paper_napkins: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085654_72fc196b-e54a-4cf3-8a88-c930640217af.png",
+  toilet_paper: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085654_6957e987-84aa-430c-bacc-8452301ffeec.png",
+
+  // Round 10 (final): Baby Care (7 types) + Other (1 type).
+  baby_food: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_18d0c5e0-dd10-4bd3-9ca7-1811bc9cd3e7.png",
+  baby_lotion: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_5adeab64-ea42-45ff-92b1-1e4d84a3d9b5.png",
+  baby_shampoo: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_17e29bef-0431-4bfc-a78e-0773cf019c85.png",
+  baby_soap: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_f2421a91-776a-4aa0-9ad3-56d9a97e17ea.png",
+  baby_wipes: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_305e917c-6d29-4d28-857d-1c7ba4dafb63.png",
+  diapers: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_268c416f-f1b2-40e8-b2aa-06428b0161f6.png",
+  infant_formula: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_13e4aeb8-9c53-4804-9034-bebe57029c9d.png",
+  pet_food: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_085948_c9d88659-a580-4503-9a2c-600f295b6e16.png",
 };
 
 mkdirSync(OUT_DIR, { recursive: true });
