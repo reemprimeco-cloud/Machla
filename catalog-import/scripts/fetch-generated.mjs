@@ -83,6 +83,31 @@ const IMAGES = {
   soft_drink: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084425_41910071-8f6b-4e07-ad4d-88f75d935d03.png",
   tea_bags: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084425_ffac42bb-7ff6-427e-8a6c-1d8f6d90a698.png",
   water_bottle: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084425_006b6183-a580-472d-86ac-0249a863f385.png",
+
+  // Round 6: Snacks & Sweets (8 types).
+  biscuits: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_5a72aaba-7630-4a98-9a19-a71b9a12dd45.png",
+  candy: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_153a5326-5f08-4759-9c07-846404338d24.png",
+  chocolate: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_ce2ec6c1-903e-4fa0-ad0a-b4a9a86fb848.png",
+  mixed_nuts: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_2c1f958a-00d3-4c34-85bd-8a74590f297b.png",
+  peanuts: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_ba4eaabe-097e-403d-984e-34a569569692.png",
+  popcorn: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_ae305fa4-1de0-4801-93ad-2e5da1a103b9.png",
+  potato_chips: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084600_7f65008e-e70a-4c9b-998b-577e67cb99a2.png",
+  wafer: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084559_e6b3fcdd-625f-41ae-b0e0-cc552e4ed884.png",
+
+  // Round 7: Cleaning (13 types).
+  air_freshener: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_b3dec533-291e-49f4-b39d-19b3e5450d99.png",
+  bathroom_cleaner: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_538eb649-22d9-4416-999c-f22a6f62bd67.png",
+  bleach: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_b8db3015-0406-4f5b-b085-0a7d0e79df95.png",
+  cleaning_gloves: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_616ea83d-281d-40b7-9a1b-b7161a0b79bd.png",
+  dish_soap: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_f8fd753c-a753-4570-8efe-4c0dd8b3e6ba.png",
+  dishwasher_tablets: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_5f4e2630-65d3-4db0-9282-5389f6ed7827.png",
+  fabric_softener: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084819_982a7a63-ca57-4051-9300-0fcd578bdf52.png",
+  floor_cleaner: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084818_10bd1e2d-ee37-4539-99b9-7bc9fa7b91c4.png",
+  garbage_bags: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_c6a67862-d112-4399-a9a1-193107c347a7.png",
+  glass_cleaner: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_120e9d33-9784-4448-bbce-180b370886d7.png",
+  laundry_liquid: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084946_def7d8f0-d601-432f-a071-e8dcd8342294.png",
+  laundry_powder: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_92a3ba4a-a0e5-48ab-abba-bd0f93dbf9d4.png",
+  sponge: "https://d8j0ntlcm91z4.cloudfront.net/user_3AGhTHKPN3FQpd6GCElZeyNv3tQ/hf_20260819_084945_9543164c-e99d-4dd4-907d-34be8574c338.png",
 };
 
 mkdirSync(OUT_DIR, { recursive: true });
