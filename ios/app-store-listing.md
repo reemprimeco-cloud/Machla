@@ -98,7 +98,7 @@ shopping list,household,groceries,helper,domestic worker,family,multilingual,Kuw
 
 | Field | Value |
 |---|---|
-| **Support URL** | `mailto:reemprimeco@gmail.com` (or a support page, if one exists later) |
+| **Support URL** | `https://machla.reemora.app/support` — App Store Connect's Support URL field requires an http(s) link (a `mailto:` link is rejected by the form), so this is a real public page with the same contact email on it |
 | **Marketing URL** | `https://machla.reemora.app` (optional — leave blank if you'd rather not) |
 | **Privacy Policy URL** | `https://machla.reemora.app/privacy` — public, no account needed, served in all 12 languages |
 

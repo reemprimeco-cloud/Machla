@@ -95,7 +95,8 @@
     "deleteAccount": "Hapus akun saya",
     "deletingAccount": "Menghapus…",
     "deleteAccountConfirm": "Ini akan menghapus akun Anda secara permanen. Tindakan ini tidak dapat dibatalkan.",
-    "deleteAccountConfirmOwner": "Anda adalah pemilik rumah ini. Menghapus akun Anda akan menghapus rumah ini secara permanen untuk semua orang — daftarnya, anggotanya, semuanya. Tindakan ini tidak dapat dibatalkan."
+    "deleteAccountConfirmOwner": "Anda adalah pemilik rumah ini. Menghapus akun Anda akan menghapus rumah ini secara permanen untuk semua orang — daftarnya, anggotanya, semuanya. Tindakan ini tidak dapat dibatalkan.",
+    "support": "Dukungan"
   },
   "members": {
     "title": "Orang",
@@ -267,5 +268,9 @@
     "contactTitle": "Kontak",
     "contactBody": "Kirim surat ke reemprimeco@gmail.com untuk pertanyaan apa pun tentang data Anda, atau untuk meminta agar data itu dihapus.",
     "menu": "Privasi"
+  },
+  "support": {
+    "title": "Butuh bantuan?",
+    "body": "Jika Anda mengalami masalah atau punya pertanyaan tentang {name}, kirim email kepada kami dan kami akan membalasnya."
   }
 }

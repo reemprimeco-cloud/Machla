@@ -95,7 +95,8 @@
     "deleteAccount": "Ðe hwɛ ce",
     "deletingAccount": "É ɖò didé jí…",
     "deleteAccountConfirm": "Enɛ ná ɖe hwɛ ce nú kaka. É sixu ma lɛ́ kɔ ǎ.",
-    "deleteAccountConfirmOwner": "Xwé elɔ towe wɛ. Ðíde hwɛ towe ná ɖe xwé elɔ nú mɛbǐ kaka — távo tɔn lɛ́, mɛ e ɖò xwé ɔ mɛ lɛ́, nǔbǐ. É sixu ma lɛ́ kɔ ǎ."
+    "deleteAccountConfirmOwner": "Xwé elɔ towe wɛ. Ðíde hwɛ towe ná ɖe xwé elɔ nú mɛbǐ kaka — távo tɔn lɛ́, mɛ e ɖò xwé ɔ mɛ lɛ́, nǔbǐ. É sixu ma lɛ́ kɔ ǎ.",
+    "support": "Alɔdo"
   },
   "members": {
     "title": "Mɛ lɛ́",
@@ -267,5 +268,9 @@
     "contactTitle": "Kancica",
     "contactBody": "Wlan wema dó reemprimeco@gmail.com nú biɔsi ɖebǔ e ɖò nǔ towe lɛ jí é, alǒ dó byɔ ɖɔ è ni súnsún ye.",
     "menu": "Xwitɔgbe"
+  },
+  "support": {
+    "title": "A byɔ alɔdo?",
+    "body": "Enyi nùɖé ma yì ganji nú we alǒ a ɖó nùkanbyɔ dó {name} wu ɔ, sɛ́n imeli nú mǐ, mǐ na yí gbè nú we."
   }
 }

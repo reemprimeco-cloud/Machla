@@ -95,7 +95,8 @@
     "deleteAccount": "Burahin ang aking account",
     "deletingAccount": "Binuburang…",
     "deleteAccountConfirm": "Permanenteng mabubura ang iyong account. Hindi na ito maibabalik.",
-    "deleteAccountConfirmOwner": "Ikaw ang may-ari ng tahanang ito. Ang pagbura ng iyong account ay permanenteng magbubura ng tahanang ito para sa lahat — ang mga listahan nito, mga miyembro nito, lahat. Hindi na ito maibabalik."
+    "deleteAccountConfirmOwner": "Ikaw ang may-ari ng tahanang ito. Ang pagbura ng iyong account ay permanenteng magbubura ng tahanang ito para sa lahat — ang mga listahan nito, mga miyembro nito, lahat. Hindi na ito maibabalik.",
+    "support": "Suporta"
   },
   "members": {
     "title": "Mga tao",
@@ -267,5 +268,9 @@
     "contactTitle": "Makipag-ugnayan",
     "contactBody": "Sumulat sa reemprimeco@gmail.com para sa anumang tanong tungkol sa iyong data, o para hilingin na burahin ito.",
     "menu": "Privacy"
+  },
+  "support": {
+    "title": "Kailangan ng tulong?",
+    "body": "Kung may problema ka o may tanong tungkol sa {name}, mag-email sa amin at sasagutin ka namin."
   }
 }

@@ -95,7 +95,8 @@
     "deleteAccount": "Supprimer mon compte",
     "deletingAccount": "Suppression…",
     "deleteAccountConfirm": "Cela supprimera définitivement votre compte. Cette action est irréversible.",
-    "deleteAccountConfirmOwner": "Vous êtes propriétaire de cette maison. Supprimer votre compte supprimera définitivement cette maison pour tout le monde — ses listes, ses membres, tout. Cette action est irréversible."
+    "deleteAccountConfirmOwner": "Vous êtes propriétaire de cette maison. Supprimer votre compte supprimera définitivement cette maison pour tout le monde — ses listes, ses membres, tout. Cette action est irréversible.",
+    "support": "Assistance"
   },
   "members": {
     "title": "Personnes",
@@ -267,5 +268,9 @@
     "contactTitle": "Contact",
     "contactBody": "Écrivez à reemprimeco@gmail.com pour toute question sur vos données, ou pour en demander la suppression.",
     "menu": "Confidentialité"
+  },
+  "support": {
+    "title": "Besoin d'aide ?",
+    "body": "Si vous rencontrez un problème ou avez une question sur {name}, écrivez-nous et nous vous répondrons."
   }
 }

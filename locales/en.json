@@ -95,7 +95,8 @@
     "deleteAccount": "Delete my account",
     "deletingAccount": "Deleting…",
     "deleteAccountConfirm": "This will permanently delete your account. This can't be undone.",
-    "deleteAccountConfirmOwner": "You own this home. Deleting your account will permanently delete this home for everyone — its lists, its members, everything. This can't be undone."
+    "deleteAccountConfirmOwner": "You own this home. Deleting your account will permanently delete this home for everyone — its lists, its members, everything. This can't be undone.",
+    "support": "Support"
   },
   "members": {
     "title": "People",
@@ -267,5 +268,9 @@
     "contactTitle": "Contact",
     "contactBody": "Write to reemprimeco@gmail.com with any question about your data, or to ask for it to be deleted.",
     "menu": "Privacy"
+  },
+  "support": {
+    "title": "Need Help?",
+    "body": "If you run into a problem or have a question about {name}, email us and we'll get back to you."
   }
 }
