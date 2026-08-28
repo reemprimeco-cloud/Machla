@@ -93,6 +93,7 @@ export default function WelcomePage() {
     <div className="mx-auto flex min-h-dvh w-full max-w-[var(--hl-content-max)] flex-col bg-bg">
       <header className="flex flex-col items-center gap-3 px-6 pb-6 pt-10">
         <MachlaIcon size={64} variant="tile" title={branding.name} />
+        <p className="hl-body text-ink-muted">{branding.tagline}</p>
         <h1 className="hl-title text-ink">Choose your language</h1>
         <p className="hl-caption text-center">
           You can change this any time in Settings.
