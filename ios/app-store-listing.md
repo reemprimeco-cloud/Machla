@@ -54,6 +54,11 @@ right on your phone, not buried in an app you have to remember to open.
 Once a list is done, it's done: your home screen stays clean, with
 nothing left over to sort through.
 
+This app is for the household side — it's where lists are sent from
+and where notifications arrive. The person shopping for you can use
+Machla from any phone, iPhone or not, through the website — no app
+required on their end.
+
 Available in 12 languages, so everyone in the household — however they
 read — can use it in their own.
 ```
@@ -75,6 +80,10 @@ Arabic version, for the Arabic App Store localization:
 
 لما تنتهي القائمة، تنتهي فعلاً: صفحتك الرئيسية تضل مرتبة، بدون أي شي
 معلّق تراجعينه.
+
+هذا التطبيق لجانب البيت — منه ترسلين القائمة وتوصلك الإشعارات. أما
+اللي تتسوق لك فتقدر تستخدم ماچلة من أي جوال، حتى لو مو آيفون، عن طريق
+الموقع — بدون ما تحتاج تطبيق من جهتها.
 
 متوفر بـ١٢ لغة، حتى كل فرد بالبيت — أياً كانت لغته — يستخدمه بلغته هو.
 ```
@@ -159,6 +168,12 @@ is notified when a list is sent, opened or completed) — the feature the
 service is built around, and one that is not available to a website on
 iOS. It also handles connectivity loss natively, in the user's own
 language.
+
+This iOS app is built for the household side of that relationship — the
+person who sends the list and needs to know the moment it's shopped.
+The domestic worker who does the actual shopping uses the same service
+from her own phone, Android included, through the website — nothing
+about the service requires her device to be an iPhone.
 
 Sign-in is a phone number and a one-time code, normally delivered over
 WhatsApp — the demo account above bypasses that and logs in directly.
