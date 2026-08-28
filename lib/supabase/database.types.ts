@@ -512,6 +512,24 @@ export interface Database {
          * itself (see lib/auth/deleteAccount.ts for why). */
         Returns: { photo_path: string }[];
       };
+      admin_get_stats: {
+        Args: Record<string, never>;
+        /** Raises FORBIDDEN for anyone but the hardcoded admin phone
+         * number (lib/admin/guard.ts checks the same thing app-side, but
+         * the RPC is the real gate — see the migration's own comment). */
+        Returns: {
+          households: number;
+          workers: number;
+          owners_and_members: number;
+          total_users: number;
+          lists_draft: number;
+          lists_sent: number;
+          lists_viewed: number;
+          lists_completed: number;
+          lists_archived: number;
+          new_users_7d: number;
+        }[];
+      };
     };
     Enums: Record<string, never>;
   };
