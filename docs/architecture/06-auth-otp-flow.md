@@ -158,15 +158,33 @@ dashboards must have for it to work:
 **Test phone numbers** (same panel) map a number to a fixed code and are
 documented as skipping the provider entirely — the way to exercise every
 flow with no message cost, and the reason development never blocks on
-messaging paperwork. In practice, Apple's Guideline 2.1 rejection of
-2026-08-31 (the demo account `+96590909090` / `123456` failing to sign in
-under review) is the one piece of evidence this project has that the
-bypass may not reliably fire for `channel: 'whatsapp'` the same way it
-does for `'sms'` — Supabase's own docs describe the feature in terms of
-skipping *SMS* delivery specifically. Rather than resolve the ambiguity
-against a live account mid-review, `otpChannelFor()` in `lib/auth/phone.ts`
-now force-routes the demo number through `'sms'` regardless of
-`OTP_CHANNEL`, leaving every real user on WhatsApp unaffected.
+messaging paperwork.
+
+**Incident, 2026-08-31 — Apple Guideline 2.1 rejection.** The demo
+account (`+96590909090` / `123456`) failed to sign in under review.
+Suspecting the WhatsApp channel doesn't reliably trip the Test OTP
+bypass the way `'sms'` does (Supabase's own docs describe the feature
+in terms of skipping *SMS* delivery specifically), `otpChannelFor()` in
+`lib/auth/phone.ts` was added to force-route the demo number through
+`'sms'` regardless of `OTP_CHANNEL`. **That alone did not fix it** — a
+follow-up manual test after deploying the channel fix still got
+"That code didn't work." The root cause is still unconfirmed; the
+channel mismatch may be one contributing factor but evidently not the
+whole story, and the Test OTP dashboard entry itself may simply be
+missing, stale, or keyed to the wrong number format.
+
+Separately, `90909090` was a real assigned Kuwaiti mobile range (5/6/9
+are the only prefixes Kuwait carriers use) — if its Test OTP mapping
+were ever absent, a stray sign-in attempt could message an actual
+stranger. The demo account was rotated to `+96510101010` (prefix `1`,
+unassigned in Kuwait's numbering plan) for that reason alone, independent
+of the login bug: `auth.users.phone` and `public.users.phone_number`
+were updated in place for the existing demo user id so its household
+and sample lists carry over unchanged. **Before this works, the Test
+OTP entry must be (re-)created in the Supabase dashboard — Authentication
+→ Sign In / Up → Phone → Test OTP — as `96510101010=123456`** (no
+leading `+`, the field's own format); the old `96590909090` entry should
+be removed once the new one is confirmed working.
 
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when

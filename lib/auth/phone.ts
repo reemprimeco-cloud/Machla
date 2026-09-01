@@ -93,8 +93,15 @@ export const OTP_CHANNEL: "sms" | "whatsapp" = "whatsapp";
  * through `channel: 'whatsapp'` like every other sign-in would send it a
  * real WhatsApp message with a random code instead of tripping that
  * bypass, which is almost certainly why Apple's reviewer couldn't sign in
- * with the documented 123456 code (Guideline 2.1 rejection, 2026-08-31). */
-export const DEMO_ACCOUNT_PHONE = "+96590909090";
+ * with the documented 123456 code (Guideline 2.1 rejection, 2026-08-31).
+ *
+ * Deliberately starts with '1': Kuwaiti mobile numbers only ever start
+ * with 5, 6, or 9 (the old demo number, 90909090, was a real assigned
+ * mobile range). If the Test OTP dashboard entry for this number is ever
+ * missing or misconfigured, a stray signInWithOtp call falls through to
+ * a number no Kuwaiti carrier could deliver to, instead of a live
+ * stranger's phone. */
+export const DEMO_ACCOUNT_PHONE = "+96510101010";
 
 export function otpChannelFor(e164Phone: string): "sms" | "whatsapp" {
   return e164Phone === DEMO_ACCOUNT_PHONE ? "sms" : OTP_CHANNEL;

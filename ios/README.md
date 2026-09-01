@@ -176,7 +176,7 @@ render at exactly Apple's two accepted sizes:
 | iPhone 14 Plus (or 13 Pro Max) | 1284 × 2778 |
 
 Run the app on each of those two, sign in with the demo account
-(`+965 90909090`, code `123456`), and ⌘S saves a already-correct PNG to
+(`+965 10101010`, code `123456`), and ⌘S saves a already-correct PNG to
 the Desktop — no cropping, no resizing, nothing to get wrong. Five or
 six screens: the dashboard, a list with items, the category grid,
 Settings, Notifications. Arabic screenshots are worth adding as a
@@ -226,12 +226,16 @@ Kuwaiti number and will not receive it, and "could not test the app" is
 an automatic rejection.
 
 Fix it in Supabase before submitting: **Authentication → Sign In / Up →
-Phone → Test OTP**. Already set: `+96590909090 → 123456` — entered in
-the dashboard as `96590909090=123456` (the field's own format, no
-leading `+`). That number bypasses WhatsApp entirely. Put it in the
-review notes as the demo account, and give it a household with a few
-lists in it so there is something to see. Remove it after approval if
-you would rather it did not exist.
+Phone → Test OTP**. Set: `+96510101010 → 123456` — entered in the
+dashboard as `96510101010=123456` (the field's own format, no leading
+`+`). That number bypasses WhatsApp entirely. It deliberately starts
+with `1` — no Kuwaiti carrier assigns mobile numbers in that range
+(only 5/6/9), so if this Test OTP mapping is ever missing or wrong, a
+stray sign-in attempt can't reach a real person's phone the way the
+original demo number (`90909090`, a real Kuwaiti mobile range) could
+have. Put it in the review notes as the demo account, and give it a
+household with a few lists in it so there is something to see. Remove
+it after approval if you would rather it did not exist.
 
 **b. Guideline 4.2 — Minimum Functionality.** Apple rejects apps that are
 "just a website in a wrapper". Say plainly what this app is and what it
@@ -248,7 +252,7 @@ does natively:
 > iOS. It also handles connectivity loss natively, in the user's own
 > language.
 >
-> Demo account: +965 90909090, code 123456. It belongs to a household
+> Demo account: +965 10101010, code 123456. It belongs to a household
 > with sample lists.
 >
 > Account deletion (Guideline 5.1.1(v)) is available from inside the

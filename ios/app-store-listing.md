@@ -151,7 +151,7 @@ would be false.
 |---|---|
 | **Contact email** | `reemprimeco@gmail.com` |
 | **Contact phone** | your number, for Apple to reach if needed |
-| **Demo account — username** | `+96590909090` (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP) |
+| **Demo account — username** | `+96510101010` (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP) |
 | **Demo account — password** | `123456` |
 | **Sign-in required** | Yes |
 
