@@ -151,7 +151,7 @@ would be false.
 |---|---|
 | **Contact email** | `reemprimeco@gmail.com` |
 | **Contact phone** | your number, for Apple to reach if needed |
-| **Demo account — username** | the value of `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` on Vercel (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP). Not written here on purpose — see `lib/auth/phone.ts` and `06-auth-otp-flow.md` for why. |
+| **Demo account — username** | the value of `DEMO_ACCOUNT_PHONE` on Vercel. Signs in via a direct server-side bypass, not Twilio/WhatsApp/Supabase Test OTP — see `lib/auth/demoAccount.ts` and `06-auth-otp-flow.md`. Not written here on purpose (a real, owner-identifying number; this repo is public). |
 | **Demo account — password** | `123456` |
 | **Sign-in required** | Yes |
 
@@ -219,6 +219,9 @@ proprietary encryption, so the answer is **No**.
 - **App icon for App Store Connect.** Already built and wired into the
   Xcode project (`Machla/Assets.xcassets/AppIcon.appiconset`); Xcode
   submits it as part of the binary, nothing to upload separately here.
-- **The Test OTP pair itself.** You still need to create it in
-  Supabase (Authentication → Sign In / Up → Phone → Test OTP) before
-  the demo account above is real — see `ios/README.md` step 7a.
+- **`DEMO_ACCOUNT_PHONE` in Vercel.** The demo account isn't real until
+  this is set — server-side only, no `NEXT_PUBLIC_*` prefix, never
+  committed to the repo. Also needs `SUPABASE_SERVICE_ROLE_KEY` (already
+  covered above) since the sign-in bypass uses the admin API. See
+  `ios/README.md`'s App Review notes section and
+  `06-auth-otp-flow.md`.

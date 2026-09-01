@@ -5,7 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
-import { normalizeDigits, otpChannelFor } from "@/lib/auth/phone";
+import {
+  checkDemoAccountAction,
+  demoSignInAction,
+} from "@/lib/auth/demoAccountActions";
+import { normalizeDigits, OTP_CHANNEL } from "@/lib/auth/phone";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -42,10 +46,21 @@ function VerifyForm() {
   // button looks broken and gets tapped repeatedly. Starts on mount
   // because arriving here means /login has just sent the first code.
   const [cooldown, setCooldown] = useState(RESEND_COOLDOWN_SECONDS);
+  // Known only server-side (lib/auth/demoAccount.ts) — asked for once on
+  // arrival so this page can skip ever calling signInWithOtp for it
+  // (a real resend would otherwise message the owner's own real phone
+  // for no reason, and reintroduce the exact bug this bypass exists to
+  // avoid).
+  const [isDemoAccount, setIsDemoAccount] = useState(false);
 
   useEffect(() => {
     if (!phone) router.replace("/login");
   }, [phone, router]);
+
+  useEffect(() => {
+    if (!phone) return;
+    checkDemoAccountAction(phone).then(setIsDemoAccount);
+  }, [phone]);
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -68,16 +83,40 @@ function VerifyForm() {
     }
 
     const supabase = createClient();
-    const { error: verifyError } = await supabase.auth.verifyOtp({
-      phone,
-      token: code,
-      type: "sms",
-    });
 
-    if (verifyError) {
-      setStatus("error");
-      setError(t("auth.invalidCode"));
-      return;
+    if (isDemoAccount) {
+      // No message was ever sent (see /login) — the "code" here is
+      // checked server-side against the fixed demo code, and a match
+      // mints a real session via a magic-link token hash instead of
+      // going through phone verifyOtp at all. See
+      // lib/auth/demoAccount.ts for why.
+      const result = await demoSignInAction(phone, code);
+      if (!result.ok) {
+        setStatus("error");
+        setError(t("auth.invalidCode"));
+        return;
+      }
+      const { error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash: result.tokenHash,
+        type: "magiclink",
+      });
+      if (verifyError) {
+        setStatus("error");
+        setError(t("auth.invalidCode"));
+        return;
+      }
+    } else {
+      const { error: verifyError } = await supabase.auth.verifyOtp({
+        phone,
+        token: code,
+        type: "sms",
+      });
+
+      if (verifyError) {
+        setStatus("error");
+        setError(t("auth.invalidCode"));
+        return;
+      }
     }
 
     // Back to wherever sign-in was triggered from — an invitation deep
@@ -92,6 +131,11 @@ function VerifyForm() {
   }
 
   async function handleResend() {
+    // Nothing was ever sent for the demo account — resend has no
+    // "again" to do. Guarded here as well as by hiding the button, since
+    // this runs from a plain onClick, not a disabled form submit.
+    if (isDemoAccount) return;
+
     setStatus("resending");
     setError(null);
     setResent(false);
@@ -105,7 +149,7 @@ function VerifyForm() {
     const supabase = createClient();
     const { error: resendError } = await supabase.auth.signInWithOtp({
       phone,
-      options: { channel: otpChannelFor(phone) },
+      options: { channel: OTP_CHANNEL },
     });
 
     if (resendError) {
@@ -193,25 +237,29 @@ function VerifyForm() {
           >
             {t("auth.changeNumber")}
           </button>
-          <button
-            type="button"
-            onClick={handleResend}
-            disabled={status === "resending" || cooldown > 0}
-            className="hl-caption text-primary underline underline-offset-4 disabled:no-underline disabled:opacity-60"
-          >
-            {cooldown > 0
-              ? /* The count stays LTR inside Arabic/Urdu, same rule as the
-                   phone number above. */
-                t("auth.resendIn")
-                  .split("{seconds}")
-                  .map((part, index) => (
-                    <span key={index}>
-                      {index > 0 && <bdi dir="ltr">{cooldown}</bdi>}
-                      {part}
-                    </span>
-                  ))
-              : t("auth.resendCode")}
-          </button>
+          {/* Nothing was ever sent for the demo account — there's no
+              "again" for resend to do. */}
+          {!isDemoAccount && (
+            <button
+              type="button"
+              onClick={handleResend}
+              disabled={status === "resending" || cooldown > 0}
+              className="hl-caption text-primary underline underline-offset-4 disabled:no-underline disabled:opacity-60"
+            >
+              {cooldown > 0
+                ? /* The count stays LTR inside Arabic/Urdu, same rule as the
+                     phone number above. */
+                  t("auth.resendIn")
+                    .split("{seconds}")
+                    .map((part, index) => (
+                      <span key={index}>
+                        {index > 0 && <bdi dir="ltr">{cooldown}</bdi>}
+                        {part}
+                      </span>
+                    ))
+                : t("auth.resendCode")}
+            </button>
+          )}
         </div>
       </form>
     </main>

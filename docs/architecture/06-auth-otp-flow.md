@@ -160,52 +160,69 @@ documented as skipping the provider entirely — the way to exercise every
 flow with no message cost, and the reason development never blocks on
 messaging paperwork.
 
-**Incident, 2026-08-31 — Apple Guideline 2.1 rejection.** The demo
-account (`+96590909090` / `123456`) failed to sign in under review.
-Suspecting the WhatsApp channel doesn't reliably trip the Test OTP
-bypass the way `'sms'` does (Supabase's own docs describe the feature
-in terms of skipping *SMS* delivery specifically), `otpChannelFor()` in
-`lib/auth/phone.ts` was added to force-route the demo number through
-`'sms'` regardless of `OTP_CHANNEL`. **That alone did not fix it** — a
-follow-up manual test after deploying the channel fix still got
-"That code didn't work." The root cause is still unconfirmed; the
-channel mismatch may be one contributing factor but evidently not the
-whole story, and the Test OTP dashboard entry itself may simply be
-missing, stale, or keyed to the wrong number format.
+**Incident, 2026-08-31 — Apple Guideline 2.1 rejection, and how it
+actually got fixed.** The demo account (`+96590909090` / `123456`)
+failed to sign in under review. What followed was a chain of plausible
+fixes, each ruled out in turn by a real test against the live project:
 
-Separately, `90909090` was a real assigned Kuwaiti mobile range (5/6/9
-are the only prefixes Kuwait carriers use) — if its Test OTP mapping
-were ever absent, a stray sign-in attempt could message an actual
-stranger. Two further rotations followed, in order:
+1. Suspected the WhatsApp channel doesn't reliably trip Supabase's Test
+   OTP bypass the way `'sms'` does (its own docs describe the feature in
+   terms of skipping *SMS* delivery specifically). Force-routed the demo
+   number through `'sms'`. **Did not fix it** — still "That code didn't
+   work" on a follow-up manual test.
+2. Suspected `90909090` itself was the problem: it's a real assigned
+   Kuwaiti mobile range (5/6/9 are the only prefixes Kuwait carriers
+   use), so a missing Test OTP mapping could message an actual stranger.
+   Rotated to `+96510101010` (prefix `1`, unassigned in Kuwait's
+   numbering plan). **Surfaced new information but did not fix it** —
+   sign-in now failed immediately ("something went wrong", no code
+   screen reached at all), reading as the phone provider rejecting the
+   number's plausibility before ever consulting the Test OTP map.
+3. Rotated again, to the owner's own real number (2026-09-01,
+   owner-approved) — real and valid, so it can't trip that rejection.
+   Fixed the *env var* mismatch that followed (missing leading `+`, and
+   later `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` not matching the Supabase Test
+   OTP entry's format) on two more rounds. **Still did not fix it** — a
+   real, correctly-addressed WhatsApp message with a genuine random code
+   kept arriving instead of the fixed `123456` being accepted. This was
+   the point where "keep debugging Twilio/Supabase's Test OTP feature"
+   was abandoned as a strategy — three real tests in a row disproved
+   three different specific theories about *why* it wasn't firing,
+   without ever establishing that it fires at all on this project.
 
-1. `+96510101010` (prefix `1`, unassigned in Kuwait's numbering plan) —
-   chosen to make a misfire land nowhere deliverable. This instead
-   surfaced a third data point: signing in with it failed immediately
-   ("something went wrong", no code screen reached at all), which reads
-   as the phone provider rejecting the number's plausibility *before*
-   ever consulting the Test OTP map — a real Kuwaiti-shaped number may
-   be a precondition for the bypass to even be considered.
-2. The owner's own real number (2026-09-01, owner-approved) — real and
-   valid, so it can't trip that same rejection, and safe by construction
-   either way: if Test OTP fires, nothing is sent; if it doesn't, the
-   fallback is a real code landing on a phone the owner actually holds,
-   not a stranger's.
+**The actual fix (2026-09-01): stop depending on it.** The demo account
+no longer calls `signInWithOtp`/`verifyOtp` with `type: "sms"` at all —
+see `lib/auth/demoAccount.ts`. `/login` asks a server action
+(`checkDemoAccountAction`) whether the entered number is the demo
+account *before* ever sending a real message; if it is, `/login/verify`
+calls `demoSignInAction` instead of phone `verifyOtp`, which checks the
+code server-side against a fixed value and, on a match, calls
+`admin.generateLink({ type: "magiclink", email })` — a Supabase Admin
+API method explicitly documented for exactly this ("generates an email
+link for a specific action without sending it... build the OTP flow
+yourself"). The client then exchanges the returned `hashed_token` for a
+real session via `verifyOtp({ token_hash, type: "magiclink" })`. No
+Twilio, no WhatsApp, no Test OTP dashboard entry, no message sent
+anywhere, ever, for this account. `auth.users.email` /
+`email_confirmed_at` were set once on the existing demo user id (a
+`demo-account@machla.internal` address nobody reads — it exists only so
+`generateLink` resolves to the existing account rather than creating a
+new, disconnected one) so this account now has both a phone and an
+email identity; `auth.users.phone` and `public.users.phone_number` still
+carry the owner's real number from rotation 3 above, so its household
+and sample lists carry over unchanged.
 
-`auth.users.phone` and `public.users.phone_number` were updated in
-place for the existing demo user id on each rotation, so its household
-and sample lists carry over unchanged throughout.
+The Supabase Test OTP dashboard feature is no longer used or relied on
+by this project — it's undocumented here beyond this incident record as
+a warning, not a recipe.
 
 **The number itself is intentionally not written in this repository.**
-It's set as `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` in Vercel's Production
-environment (read by `otpChannelFor()` in `lib/auth/phone.ts`) rather
-than a literal, precisely because it's now a real, owner-identifying
-phone number and this repo is public. **Before sign-in works, the same
-digits (minus the leading `+`) must be (re-)registered in the Supabase
-dashboard — Authentication → Sign In / Up → Phone → Test OTP — as
-`<digits>=123456`**, matching whatever format the field's own
-placeholder example shows (it includes the country code); any stale
-entry for an earlier rotation's number should be removed once the
-current one is confirmed working.
+It's set as `DEMO_ACCOUNT_PHONE` (server-only — no `NEXT_PUBLIC_`
+prefix, unlike the abandoned channel-forcing attempt, since the check
+now happens entirely in `demoAccountActions.ts` server actions and never
+needs to reach the browser bundle) in Vercel's Production environment,
+precisely because it's a real, owner-identifying phone number and this
+repo is public.
 
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when

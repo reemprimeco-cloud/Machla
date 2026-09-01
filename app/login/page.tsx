@@ -6,13 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
+import { checkDemoAccountAction } from "@/lib/auth/demoAccountActions";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import {
   isValidPhone,
   KUWAIT_DIAL_CODE,
   LOCAL_NUMBER_LENGTH,
   normalizeDigits,
-  otpChannelFor,
+  OTP_CHANNEL,
   toE164FromLocal,
 } from "@/lib/auth/phone";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -61,16 +62,24 @@ function LoginForm() {
       return;
     }
 
-    const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithOtp({
-      phone: normalized,
-      options: { channel: otpChannelFor(normalized) },
-    });
+    // The demo account (lib/auth/demoAccount.ts) never gets a real
+    // message — /login/verify signs it in directly. Checked before
+    // signInWithOtp so the demo number never triggers a real WhatsApp
+    // send in the first place.
+    const isDemo = await checkDemoAccountAction(normalized);
 
-    if (signInError) {
-      setStatus("error");
-      setError(t("auth.genericError"));
-      return;
+    if (!isDemo) {
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithOtp({
+        phone: normalized,
+        options: { channel: OTP_CHANNEL },
+      });
+
+      if (signInError) {
+        setStatus("error");
+        setError(t("auth.genericError"));
+        return;
+      }
     }
 
     const params = new URLSearchParams({ phone: normalized });

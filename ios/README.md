@@ -176,8 +176,8 @@ render at exactly Apple's two accepted sizes:
 | iPhone 14 Plus (or 13 Pro Max) | 1284 × 2778 |
 
 Run the app on each of those two, sign in with the demo account (the
-number in Vercel's `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE`, code `123456`),
-and ⌘S saves a already-correct PNG to
+number in Vercel's `DEMO_ACCOUNT_PHONE`, code `123456`), and ⌘S saves a
+already-correct PNG to
 the Desktop — no cropping, no resizing, nothing to get wrong. Five or
 six screens: the dashboard, a list with items, the category grid,
 Settings, Notifications. Arabic screenshots are worth adding as a
@@ -226,29 +226,27 @@ one-time code over WhatsApp. An Apple reviewer in California has no
 Kuwaiti number and will not receive it, and "could not test the app" is
 an automatic rejection.
 
-Fix it in Supabase before submitting: **Authentication → Sign In / Up →
-Phone → Test OTP**, mapped to code `123456`. The number itself is never
-committed to this repository (see `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` in
-`lib/auth/phone.ts`) — it's set as a Vercel environment variable
-instead, currently the owner's own real number. Two things to get right
-when setting it up:
+The demo account does not go through WhatsApp/Twilio/Supabase's Test OTP
+feature at all — after that chain repeatedly failed against the live
+project (full incident history in `06-auth-otp-flow.md`), the demo
+account was rebuilt to sign in via a direct server-side bypass
+(`lib/auth/demoAccount.ts`) that never sends a real message. Set this up
+before submitting:
 
 1. **Vercel** (Project Settings → Environment Variables, Production):
-   `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` = the E.164 value, e.g.
-   `+9655XXXXXXX`.
-2. **Supabase dashboard**, the *same* digits minus the leading `+`:
-   `5XXXXXXX=123456` for a bare 8-digit Kuwaiti number, or with the
-   `965` country code included if that's what the field's own format
-   expects — check against the placeholder example shown in that field
-   (it includes the country code). Getting this pairing wrong (missing
-   the country code, or a mismatch with the Vercel value) is exactly
-   what caused Apple's Guideline 2.1 rejection and two failed retries —
-   see `06-auth-otp-flow.md` for the full incident history.
+   `DEMO_ACCOUNT_PHONE` = the E.164 value, e.g. `+9655XXXXXXX` — the
+   owner's own real number, or any real number the owner controls.
+   Server-only on purpose (no `NEXT_PUBLIC_` prefix): it's never read in
+   the browser, so it never ships in the client bundle either.
+2. **Supabase**: nothing to configure — no Test OTP entry needed for
+   this number anymore. (If an old Test OTP entry from an earlier
+   rotation still exists, it's inert and can be removed.)
 
-Put the number in the review notes as the demo account (copy it from
-Vercel, not from here), and give it a household with a few lists in it
-so there is something to see. Rotate it after approval if you would
-rather the owner's real number not stay wired up to this indefinitely.
+Redeploy after setting the var (env var changes don't apply to an
+already-built deployment). The code to enter is always `123456`; put the
+number in the review notes as the demo account (copy it from Vercel, not
+from here), and give it a household with a few lists in it so there is
+something to see.
 
 **b. Guideline 4.2 — Minimum Functionality.** Apple rejects apps that are
 "just a website in a wrapper". Say plainly what this app is and what it
@@ -265,9 +263,9 @@ does natively:
 > iOS. It also handles connectivity loss natively, in the user's own
 > language.
 >
-> Demo account: +965 <fill in from Vercel's NEXT_PUBLIC_DEMO_ACCOUNT_PHONE
-> before pasting this>, code 123456. It belongs to a household with
-> sample lists.
+> Demo account: +965 <fill in from Vercel's DEMO_ACCOUNT_PHONE before
+> pasting this>, code 123456. It belongs to a household with sample
+> lists.
 >
 > Account deletion (Guideline 5.1.1(v)) is available from inside the
 > app: Settings → Danger zone → Delete my account. It permanently

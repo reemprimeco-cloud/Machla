@@ -86,33 +86,16 @@ export function toE164FromLocal(localDigits: string): string {
  */
 export const OTP_CHANNEL: "sms" | "whatsapp" = "whatsapp";
 
-/** The App Store Connect demo account (ios/app-store-listing.md). Supabase's
- * Test OTP feature (Authentication → Sign In / Up → Phone → Test OTP) is
- * documented as intercepting SMS delivery specifically — it skips the real
- * provider and accepts only the mapped fixed code. Routing this one number
- * through `channel: 'whatsapp'` like every other sign-in would send it a
- * real WhatsApp message with a random code instead of tripping that
- * bypass, which is almost certainly why Apple's reviewer couldn't sign in
- * with the documented 123456 code (Guideline 2.1 rejection, 2026-08-31).
- *
- * Read from an env var, not a literal, deliberately: after two rotations
- * through fake numbers (90909090 turned out to be a real assigned Kuwaiti
- * mobile range; 10101010 got rejected outright by the phone provider
- * before ever reaching the Test OTP check), the owner's own real number
- * is now the demo account (2026-09-01, owner-approved) — which must not
- * sit as a literal in this public repository. Set
- * NEXT_PUBLIC_DEMO_ACCOUNT_PHONE on Vercel (Production) to the E.164
- * value, e.g. "+9655XXXXXXX"; register the same digits, minus the `+`,
- * in Supabase's Test OTP field as `<digits>=123456`. This has to be
- * NEXT_PUBLIC_ (readable in the browser bundle) because the comparison
- * runs client-side in /login and /login/verify, same as every other
- * NEXT_PUBLIC_ var this app already ships — see scripts/check-env.mjs
- * for why that's a deliberate, audited exception rather than a leak.
- * With the var unset, every sign-in just uses OTP_CHANNEL normally. */
-export const DEMO_ACCOUNT_PHONE = process.env.NEXT_PUBLIC_DEMO_ACCOUNT_PHONE || null;
-
-export function otpChannelFor(e164Phone: string): "sms" | "whatsapp" {
-  return DEMO_ACCOUNT_PHONE !== null && e164Phone === DEMO_ACCOUNT_PHONE
-    ? "sms"
-    : OTP_CHANNEL;
-}
+/**
+ * The App Store Connect demo account no longer goes through this file at
+ * all — see lib/auth/demoAccount.ts. Three things were tried here first,
+ * in order, and none of them actually worked end to end even after
+ * fixing each in turn: forcing the demo number through channel: 'sms' to
+ * trip Supabase's Test OTP bypass (didn't fire), rotating the number
+ * itself twice to rule out it being a real/invalid number (real
+ * WhatsApp codes kept arriving regardless), and an env var mismatch that
+ * looked like the final culprit but wasn't. Rather than keep debugging a
+ * third party's OTP-bypass feature, /login and /login/verify now ask
+ * demoAccountActions.ts first, before ever calling signInWithOtp — see
+ * docs/architecture/06-auth-otp-flow.md for the full incident history.
+ */
