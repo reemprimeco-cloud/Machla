@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
-import { normalizeDigits, OTP_CHANNEL } from "@/lib/auth/phone";
+import { normalizeDigits, otpChannelFor } from "@/lib/auth/phone";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { createClient } from "@/lib/supabase/client";
@@ -105,7 +105,7 @@ function VerifyForm() {
     const supabase = createClient();
     const { error: resendError } = await supabase.auth.signInWithOtp({
       phone,
-      options: { channel: OTP_CHANNEL },
+      options: { channel: otpChannelFor(phone) },
     });
 
     if (resendError) {

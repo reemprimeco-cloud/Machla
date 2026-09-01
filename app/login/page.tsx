@@ -12,7 +12,7 @@ import {
   KUWAIT_DIAL_CODE,
   LOCAL_NUMBER_LENGTH,
   normalizeDigits,
-  OTP_CHANNEL,
+  otpChannelFor,
   toE164FromLocal,
 } from "@/lib/auth/phone";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -64,7 +64,7 @@ function LoginForm() {
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithOtp({
       phone: normalized,
-      options: { channel: OTP_CHANNEL },
+      options: { channel: otpChannelFor(normalized) },
     });
 
     if (signInError) {

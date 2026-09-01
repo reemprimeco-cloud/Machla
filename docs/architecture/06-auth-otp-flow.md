@@ -155,9 +155,18 @@ dashboards must have for it to work:
 3. The verify step needs nothing: `verifyOtp` keeps `type: "sms"` for
    both channels.
 
-**Test phone numbers** (same panel) map a number to a fixed code and skip
-the provider entirely — the way to exercise every flow with no message
-cost, and the reason development never blocks on messaging paperwork.
+**Test phone numbers** (same panel) map a number to a fixed code and are
+documented as skipping the provider entirely — the way to exercise every
+flow with no message cost, and the reason development never blocks on
+messaging paperwork. In practice, Apple's Guideline 2.1 rejection of
+2026-08-31 (the demo account `+96590909090` / `123456` failing to sign in
+under review) is the one piece of evidence this project has that the
+bypass may not reliably fire for `channel: 'whatsapp'` the same way it
+does for `'sms'` — Supabase's own docs describe the feature in terms of
+skipping *SMS* delivery specifically. Rather than resolve the ambiguity
+against a live account mid-review, `otpChannelFor()` in `lib/auth/phone.ts`
+now force-routes the demo number through `'sms'` regardless of
+`OTP_CHANNEL`, leaving every real user on WhatsApp unaffected.
 
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when

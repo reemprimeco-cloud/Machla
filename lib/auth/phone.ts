@@ -85,3 +85,17 @@ export function toE164FromLocal(localDigits: string): string {
  * way; only delivery differs.
  */
 export const OTP_CHANNEL: "sms" | "whatsapp" = "whatsapp";
+
+/** The App Store Connect demo account (ios/app-store-listing.md). Supabase's
+ * Test OTP feature (Authentication → Sign In / Up → Phone → Test OTP) is
+ * documented as intercepting SMS delivery specifically — it skips the real
+ * provider and accepts only the mapped fixed code. Routing this one number
+ * through `channel: 'whatsapp'` like every other sign-in would send it a
+ * real WhatsApp message with a random code instead of tripping that
+ * bypass, which is almost certainly why Apple's reviewer couldn't sign in
+ * with the documented 123456 code (Guideline 2.1 rejection, 2026-08-31). */
+export const DEMO_ACCOUNT_PHONE = "+96590909090";
+
+export function otpChannelFor(e164Phone: string): "sms" | "whatsapp" {
+  return e164Phone === DEMO_ACCOUNT_PHONE ? "sms" : OTP_CHANNEL;
+}
