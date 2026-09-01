@@ -176,15 +176,36 @@ missing, stale, or keyed to the wrong number format.
 Separately, `90909090` was a real assigned Kuwaiti mobile range (5/6/9
 are the only prefixes Kuwait carriers use) — if its Test OTP mapping
 were ever absent, a stray sign-in attempt could message an actual
-stranger. The demo account was rotated to `+96510101010` (prefix `1`,
-unassigned in Kuwait's numbering plan) for that reason alone, independent
-of the login bug: `auth.users.phone` and `public.users.phone_number`
-were updated in place for the existing demo user id so its household
-and sample lists carry over unchanged. **Before this works, the Test
-OTP entry must be (re-)created in the Supabase dashboard — Authentication
-→ Sign In / Up → Phone → Test OTP — as `96510101010=123456`** (no
-leading `+`, the field's own format); the old `96590909090` entry should
-be removed once the new one is confirmed working.
+stranger. Two further rotations followed, in order:
+
+1. `+96510101010` (prefix `1`, unassigned in Kuwait's numbering plan) —
+   chosen to make a misfire land nowhere deliverable. This instead
+   surfaced a third data point: signing in with it failed immediately
+   ("something went wrong", no code screen reached at all), which reads
+   as the phone provider rejecting the number's plausibility *before*
+   ever consulting the Test OTP map — a real Kuwaiti-shaped number may
+   be a precondition for the bypass to even be considered.
+2. The owner's own real number (2026-09-01, owner-approved) — real and
+   valid, so it can't trip that same rejection, and safe by construction
+   either way: if Test OTP fires, nothing is sent; if it doesn't, the
+   fallback is a real code landing on a phone the owner actually holds,
+   not a stranger's.
+
+`auth.users.phone` and `public.users.phone_number` were updated in
+place for the existing demo user id on each rotation, so its household
+and sample lists carry over unchanged throughout.
+
+**The number itself is intentionally not written in this repository.**
+It's set as `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` in Vercel's Production
+environment (read by `otpChannelFor()` in `lib/auth/phone.ts`) rather
+than a literal, precisely because it's now a real, owner-identifying
+phone number and this repo is public. **Before sign-in works, the same
+digits (minus the leading `+`) must be (re-)registered in the Supabase
+dashboard — Authentication → Sign In / Up → Phone → Test OTP — as
+`<digits>=123456`**, matching whatever format the field's own
+placeholder example shows (it includes the country code); any stale
+entry for an earlier rotation's number should be removed once the
+current one is confirmed working.
 
 **Every other provider should be disabled, Email included.** Supabase
 enables Email by default, and it was found enabled on this project when

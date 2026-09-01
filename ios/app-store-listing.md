@@ -151,7 +151,7 @@ would be false.
 |---|---|
 | **Contact email** | `reemprimeco@gmail.com` |
 | **Contact phone** | your number, for Apple to reach if needed |
-| **Demo account — username** | `+96510101010` (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP) |
+| **Demo account — username** | the value of `NEXT_PUBLIC_DEMO_ACCOUNT_PHONE` on Vercel (registered as a Test OTP pair in Supabase — Authentication → Sign In / Up → Phone → Test OTP). Not written here on purpose — see `lib/auth/phone.ts` and `06-auth-otp-flow.md` for why. |
 | **Demo account — password** | `123456` |
 | **Sign-in required** | Yes |
 

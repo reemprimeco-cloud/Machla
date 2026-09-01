@@ -95,14 +95,24 @@ export const OTP_CHANNEL: "sms" | "whatsapp" = "whatsapp";
  * bypass, which is almost certainly why Apple's reviewer couldn't sign in
  * with the documented 123456 code (Guideline 2.1 rejection, 2026-08-31).
  *
- * Deliberately starts with '1': Kuwaiti mobile numbers only ever start
- * with 5, 6, or 9 (the old demo number, 90909090, was a real assigned
- * mobile range). If the Test OTP dashboard entry for this number is ever
- * missing or misconfigured, a stray signInWithOtp call falls through to
- * a number no Kuwaiti carrier could deliver to, instead of a live
- * stranger's phone. */
-export const DEMO_ACCOUNT_PHONE = "+96510101010";
+ * Read from an env var, not a literal, deliberately: after two rotations
+ * through fake numbers (90909090 turned out to be a real assigned Kuwaiti
+ * mobile range; 10101010 got rejected outright by the phone provider
+ * before ever reaching the Test OTP check), the owner's own real number
+ * is now the demo account (2026-09-01, owner-approved) — which must not
+ * sit as a literal in this public repository. Set
+ * NEXT_PUBLIC_DEMO_ACCOUNT_PHONE on Vercel (Production) to the E.164
+ * value, e.g. "+9655XXXXXXX"; register the same digits, minus the `+`,
+ * in Supabase's Test OTP field as `<digits>=123456`. This has to be
+ * NEXT_PUBLIC_ (readable in the browser bundle) because the comparison
+ * runs client-side in /login and /login/verify, same as every other
+ * NEXT_PUBLIC_ var this app already ships — see scripts/check-env.mjs
+ * for why that's a deliberate, audited exception rather than a leak.
+ * With the var unset, every sign-in just uses OTP_CHANNEL normally. */
+export const DEMO_ACCOUNT_PHONE = process.env.NEXT_PUBLIC_DEMO_ACCOUNT_PHONE || null;
 
 export function otpChannelFor(e164Phone: string): "sms" | "whatsapp" {
-  return e164Phone === DEMO_ACCOUNT_PHONE ? "sms" : OTP_CHANNEL;
+  return DEMO_ACCOUNT_PHONE !== null && e164Phone === DEMO_ACCOUNT_PHONE
+    ? "sms"
+    : OTP_CHANNEL;
 }
