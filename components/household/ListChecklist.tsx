@@ -46,9 +46,15 @@ const ERROR_KEYS: Partial<Record<ListErrorCode, MessageKey>> = {
 export function ListChecklist({
   summary,
   groups,
+  backHref,
 }: {
   summary: HouseholdList;
   groups: ListGroup[];
+  /** Where this list was opened from (app/home/lists/[id]/page.tsx reads
+   * ?from=) — "/home" for the dashboard's own hero card, "/home/lists"
+   * for every other entry point, so Back returns to the actual origin
+   * instead of always landing on the full list inbox. */
+  backHref: string;
 }) {
   const { t, locale } = useLocale();
   const router = useRouter();
@@ -77,7 +83,7 @@ export function ListChecklist({
         setError(result.code);
         return;
       }
-      router.push("/home/lists");
+      router.push(backHref);
     });
   }
 
@@ -174,7 +180,7 @@ export function ListChecklist({
       ) : null}
 
       <Link
-        href="/home/lists"
+        href={backHref}
         className="hl-label text-center text-primary underline"
       >
         {t("common.back")}

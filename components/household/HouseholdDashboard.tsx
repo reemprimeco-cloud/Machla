@@ -156,7 +156,10 @@ function HeroListCard({ list }: { list: HouseholdList }) {
 
   return (
     <Link
-      href={`/home/lists/${list.id}`}
+      // ?from=home so the list screen's own Back link returns here
+      // instead of to the full list inbox — this hero card is reached
+      // from the dashboard, not from /home/lists.
+      href={`/home/lists/${list.id}?from=home`}
       className="hl-gradient-cta relative flex items-center justify-between gap-4 overflow-hidden rounded-lg p-5"
     >
       <div className="min-w-0">
