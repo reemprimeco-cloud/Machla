@@ -10,9 +10,7 @@ import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
-/** How far a row slides to reveal the Delete button, in px — also the
- * threshold past which releasing the swipe snaps it open rather than
- * springing back. */
+/** Width of the revealed Delete button, in px. */
 const REVEAL_WIDTH = 88;
 
 /** Status → badge label. The database values are stable identifiers;
@@ -66,9 +64,15 @@ export function ListsInbox({ lists }: { lists: HouseholdList[] }) {
 
 /**
  * Swipe-toward-the-end-of-the-line to reveal a Delete button behind the
- * row, mirroring correctly in RTL via `direction` rather than assuming
- * "left" — a swipe gesture always reveals on the trailing edge, which is
- * the right in English/French but the left in Arabic/Urdu.
+ * row. Built on CSS scroll-snap rather than tracked pointer events: the
+ * "drag" is a real horizontal scroll, so hit-testing, momentum, and
+ * RTL mirroring (a swipe reveals on the trailing edge — the right in
+ * English/French, the left in Arabic/Urdu) all come from the browser's
+ * own scroll engine instead of hand-rolled math. A first version tried
+ * tracking pointer events and computing the transform by hand; the
+ * Delete button rendered but taps on it did nothing on-device, which
+ * reads exactly like a hit-testing gap that custom pointer capture
+ * logic is prone to and that native scrolling doesn't have.
  *
  * Deletion itself is `deleteListAction` (archive_list): the same
  * terminal, no-route-back state completing a list already reaches, not
@@ -81,46 +85,10 @@ function SwipeToDeleteRow({
   list: HouseholdList;
   onDeleted: () => void;
 }) {
-  const { t, direction } = useLocale();
+  const { t } = useLocale();
   const router = useRouter();
-  const isRTL = direction === "rtl";
-
-  const [dragX, setDragX] = useState(0);
-  const [revealed, setRevealed] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const startX = useRef<number | null>(null);
-  const dragged = useRef(false);
-
-  // Positive = revealed toward the trailing edge, regardless of writing
-  // direction — everything below works in this space and flips to a
-  // real translateX only at render time. dragX is the raw delta since
-  // pointerdown; resting position (0 or REVEAL_WIDTH) is added to it and
-  // the sum is clamped to a valid reveal amount.
-  const offset = Math.max(0, Math.min(REVEAL_WIDTH, (revealed ? REVEAL_WIDTH : 0) + dragX));
-
-  function handlePointerDown(event: React.PointerEvent) {
-    if (deleting) return;
-    startX.current = event.clientX;
-    dragged.current = false;
-    (event.target as HTMLElement).setPointerCapture(event.pointerId);
-  }
-
-  function handlePointerMove(event: React.PointerEvent) {
-    if (startX.current === null) return;
-    const raw = event.clientX - startX.current;
-    // Swiping toward the trailing edge is a leftward drag in LTR, a
-    // rightward drag in RTL — normalize both to the same positive sign.
-    const trailing = isRTL ? raw : -raw;
-    if (Math.abs(trailing) > 4) dragged.current = true;
-    setDragX(trailing);
-  }
-
-  function endDrag() {
-    if (startX.current === null) return;
-    startX.current = null;
-    setRevealed(offset > REVEAL_WIDTH / 2);
-    setDragX(0);
-  }
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   async function handleDelete() {
     if (!window.confirm(t("hlists.deleteConfirm"))) return;
@@ -131,39 +99,30 @@ function SwipeToDeleteRow({
       router.refresh();
     } else {
       setDeleting(false);
-      setRevealed(false);
+      scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
     }
   }
 
   return (
-    <div className="relative overflow-hidden rounded-lg">
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={deleting}
-        aria-label={t("hlists.delete")}
-        className="hl-label absolute inset-y-0 flex items-center justify-center bg-danger text-on-primary disabled:opacity-60"
-        style={{ [isRTL ? "left" : "right"]: 0, width: REVEAL_WIDTH }}
-      >
-        {t("hlists.delete")}
-      </button>
+    <div className="overflow-hidden rounded-lg">
       <div
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={endDrag}
-        onPointerCancel={endDrag}
-        onClickCapture={(event) => {
-          // A drag that moved the row is a swipe, not a tap — stop the
-          // inner <Link> from navigating once the gesture is done.
-          if (dragged.current) event.preventDefault();
-        }}
-        style={{
-          transform: `translateX(${isRTL ? offset : -offset}px)`,
-          touchAction: "pan-y",
-        }}
-        className="transition-transform duration-150 ease-hl"
+        ref={scrollerRef}
+        className="flex snap-x snap-mandatory overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        style={{ scrollbarWidth: "none" }}
       >
-        <ListRow list={list} />
+        <div className="w-full shrink-0 snap-start">
+          <ListRow list={list} />
+        </div>
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={deleting}
+          aria-label={t("hlists.delete")}
+          style={{ width: REVEAL_WIDTH }}
+          className="hl-label flex shrink-0 snap-end items-center justify-center self-stretch bg-danger text-on-primary disabled:opacity-60"
+        >
+          {t("hlists.delete")}
+        </button>
       </div>
     </div>
   );
