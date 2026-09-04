@@ -1,7 +1,7 @@
 import { WorkerHome } from "@/components/worker/WorkerHome";
-import { getCategories, getFrequentProducts } from "@/lib/catalog/queries";
+import { getCategories } from "@/lib/catalog/queries";
 import { requireHouseholdAccess } from "@/lib/household/guard";
-import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
+import { getDraftList } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
 /**
@@ -17,20 +17,16 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function ShopPage() {
   const membership = await requireHouseholdAccess();
 
-  const [categories, frequent, draft, unreadCount] = await Promise.all([
+  const [categories, draft, unreadCount] = await Promise.all([
     getCategories(),
-    getFrequentProducts(6),
     getDraftList(membership.householdId),
     getUnreadCount(),
   ]);
 
   return (
     <WorkerHome
-      householdId={membership.householdId}
       householdName={membership.householdName}
       categories={categories}
-      frequent={frequent}
-      quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
       basePath="/home/shop"

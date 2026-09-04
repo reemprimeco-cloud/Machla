@@ -79,16 +79,3 @@ export async function searchProducts(query: string, limit = 40): Promise<Product
   if (error) return [];
   return data ?? [];
 }
-
-/** The caller's most-chosen products. `product_usage_stats` is scoped to
- * `user_id = auth.uid()` by RLS, so this returns one worker's own habits
- * and never another's. */
-export async function getFrequentProducts(limit = 12): Promise<Product[]> {
-  if (!isSupabaseConfigured()) return [];
-
-  const supabase = await createClient();
-  const { data, error } = await supabase.rpc("get_frequent_products", { p_limit: limit });
-
-  if (error) return [];
-  return data ?? [];
-}

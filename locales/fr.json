@@ -127,7 +127,6 @@
     "browse": "De quoi avez-vous besoin ?",
     "searchPlaceholder": "Chercher n'importe quoi",
     "searchNoResults": "Rien trouvé pour « {query} »",
-    "frequent": "Vous achetez souvent",
     "categories": "Catégories",
     "myList": "Ma liste",
     "myListWithCount": "Ma liste ({count})",
