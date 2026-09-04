@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { Card, ErrorText, Screen } from "@/components/ui/Primitives";
 import { deleteListAction } from "@/lib/list/actions";
@@ -16,9 +16,6 @@ const DELETE_ERROR_KEYS: Partial<Record<ListErrorCode, MessageKey>> = {
   LIST_ARCHIVED: "errors.listNotFound",
   NOT_HOUSEHOLD_SIDE: "errors.notOwner",
 };
-
-/** Width of the revealed Delete button, in px. */
-const REVEAL_WIDTH = 88;
 
 /** Status → badge label. The database values are stable identifiers;
  * only the display string is localized. */
@@ -48,7 +45,7 @@ export function ListsInbox({ lists }: { lists: HouseholdList[] }) {
         <ul className="flex flex-col gap-3">
           {visibleLists.map((list) => (
             <li key={list.id}>
-              <SwipeToDeleteRow
+              <DeletableRow
                 list={list}
                 onDeleted={() =>
                   setHiddenIds((prev) => new Set(prev).add(list.id))
@@ -70,22 +67,24 @@ export function ListsInbox({ lists }: { lists: HouseholdList[] }) {
 }
 
 /**
- * Swipe-toward-the-end-of-the-line to reveal a Delete button behind the
- * row. Built on CSS scroll-snap rather than tracked pointer events: the
- * "drag" is a real horizontal scroll, so hit-testing, momentum, and
- * RTL mirroring (a swipe reveals on the trailing edge — the right in
- * English/French, the left in Arabic/Urdu) all come from the browser's
- * own scroll engine instead of hand-rolled math. A first version tried
- * tracking pointer events and computing the transform by hand; the
- * Delete button rendered but taps on it did nothing on-device, which
- * reads exactly like a hit-testing gap that custom pointer capture
- * logic is prone to and that native scrolling doesn't have.
+ * A list row plus an always-visible delete button.
+ *
+ * Two earlier versions hid the delete button behind a swipe gesture — one
+ * with hand-rolled pointer events, one with CSS scroll-snap — and on both,
+ * taps on the revealed button reached the button (visually) but never
+ * fired its onClick on-device (confirmed by window.confirm never
+ * appearing). Both put the tap target inside an `overflow-x` scroll
+ * container, which iOS WKWebView (this app runs standalone, installed to
+ * the homescreen) is known to swallow clicks inside, especially right
+ * after any scroll/snap motion. Rather than a third gesture variant this
+ * can't be tested on-device, the button now lives outside any scrolling
+ * container entirely, sidestepping that whole class of bug.
  *
  * Deletion itself is `deleteListAction` (archive_list): the same
  * terminal, no-route-back state completing a list already reaches, not
  * a real DELETE of the row — see that RPC's own comment for why.
  */
-function SwipeToDeleteRow({
+function DeletableRow({
   list,
   onDeleted,
 }: {
@@ -96,7 +95,6 @@ function SwipeToDeleteRow({
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<ListErrorCode | null>(null);
-  const scrollerRef = useRef<HTMLDivElement>(null);
 
   async function handleDelete() {
     if (!window.confirm(t("hlists.deleteConfirm"))) return;
@@ -109,32 +107,24 @@ function SwipeToDeleteRow({
     } else {
       setDeleting(false);
       setError(result.code);
-      scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
     }
   }
 
   return (
-    <div>
-      <div className="overflow-hidden rounded-lg">
-        <div
-          ref={scrollerRef}
-          className="flex snap-x snap-mandatory overflow-x-auto [&::-webkit-scrollbar]:hidden"
-          style={{ scrollbarWidth: "none" }}
-        >
-          <div className="w-full shrink-0 snap-start">
-            <ListRow list={list} />
-          </div>
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={deleting}
-            aria-label={t("hlists.delete")}
-            style={{ width: REVEAL_WIDTH }}
-            className="hl-label flex shrink-0 snap-end items-center justify-center self-stretch bg-danger text-on-primary disabled:opacity-60"
-          >
-            {t("hlists.delete")}
-          </button>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-stretch gap-2">
+        <div className="min-w-0 flex-1">
+          <ListRow list={list} />
         </div>
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={deleting}
+          aria-label={t("hlists.delete")}
+          className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-xl text-danger active:bg-surface-2 disabled:opacity-60"
+        >
+          <span aria-hidden>🗑️</span>
+        </button>
       </div>
       {error ? (
         <ErrorText>{t(DELETE_ERROR_KEYS[error] ?? "errors.generic")}</ErrorText>
