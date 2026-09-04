@@ -412,6 +412,10 @@ export interface Database {
         Args: { p_ids?: string[] | null };
         Returns: number;
       };
+      clear_notifications: {
+        Args: Record<string, never>;
+        Returns: number;
+      };
       set_notification_preference: {
         Args: { p_type: NotificationType; p_enabled: boolean };
         Returns: NotificationPreferences;

@@ -203,6 +203,8 @@
     "noneHint": "Makikita mo dito kapag may naipadala, nabuksan o natapos na listahan.",
     "listSent": "Nagpadala ng listahan si {name}",
     "listViewed": "Binuksan ni {name} ang listahan mo",
+    "clear": "Burahin lahat",
+    "clearConfirm": "Burahin ang lahat ng abiso? Hindi na ito maibabalik.",
     "listCompleted": "Tapos na ang pamimili ni {name}",
     "markAllRead": "Markahang lahat nabasa",
     "settings": "Mga setting ng abiso",

@@ -203,6 +203,8 @@
     "noneHint": "Vous verrez ici quand une liste est envoyée, ouverte ou terminée.",
     "listSent": "{name} a envoyé une liste",
     "listViewed": "{name} a ouvert votre liste",
+    "clear": "Tout effacer",
+    "clearConfirm": "Effacer toutes les notifications ? Cette action est irréversible.",
     "listCompleted": "{name} a fini les courses",
     "markAllRead": "Tout marquer comme lu",
     "settings": "Réglages des notifications",

@@ -203,6 +203,8 @@
     "noneHint": "Anda akan melihat di sini saat daftar dikirim, dibuka atau selesai.",
     "listSent": "{name} mengirim daftar",
     "listViewed": "{name} membuka daftar Anda",
+    "clear": "Hapus semua",
+    "clearConfirm": "Hapus semua notifikasi? Tindakan ini tidak dapat dibatalkan.",
     "listCompleted": "{name} selesai berbelanja",
     "markAllRead": "Tandai semua dibaca",
     "settings": "Pengaturan notifikasi",

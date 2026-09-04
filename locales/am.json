@@ -203,6 +203,8 @@
     "noneHint": "ዝርዝር ሲላክ፣ ሲከፈት ወይም ሲጠናቀቅ እዚህ ያያሉ።",
     "listSent": "{name} ዝርዝር ልኳል",
     "listViewed": "{name} ዝርዝርዎን ከፍቷል",
+    "clear": "ሁሉንም አጽዳ",
+    "clearConfirm": "ሁሉንም ማሳወቂያዎች ማጽዳት ይፈልጋሉ? ይህ ወደ ኋላ አይመለስም።",
     "listCompleted": "{name} ግብይቱን ጨርሷል",
     "markAllRead": "ሁሉንም እንደተነበበ ምልክት አድርግ",
     "settings": "የማሳወቂያ ቅንብሮች",

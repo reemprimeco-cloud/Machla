@@ -33,6 +33,23 @@ export async function markNotificationsReadAction(ids?: string[]): Promise<void>
   await supabase.rpc("mark_notifications_read", { p_ids: ids ?? null });
 }
 
+/** Clears every one of the caller's own notifications — the manual
+ * "Clear" button on the notifications screen. Notifications otherwise
+ * only ever disappear as a side effect of their own list being archived
+ * (on completion or manual delete), so anything about a list still open
+ * has no other way to leave the inbox. */
+export async function clearNotificationsAction(): Promise<boolean> {
+  if (!isSupabaseConfigured()) return false;
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("clear_notifications");
+
+  if (error) return false;
+
+  revalidatePath("/", "layout");
+  return true;
+}
+
 export async function setNotificationPreferenceAction(
   type: NotificationType,
   enabled: boolean,
