@@ -4,11 +4,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
-import { Card, Screen } from "@/components/ui/Primitives";
+import { Card, ErrorText, Screen } from "@/components/ui/Primitives";
 import { deleteListAction } from "@/lib/list/actions";
+import type { ListErrorCode } from "@/lib/list/errors";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
+
+const DELETE_ERROR_KEYS: Partial<Record<ListErrorCode, MessageKey>> = {
+  LIST_NOT_FOUND: "errors.listNotFound",
+  LIST_ARCHIVED: "errors.listNotFound",
+  NOT_HOUSEHOLD_SIDE: "errors.notOwner",
+};
 
 /** Width of the revealed Delete button, in px. */
 const REVEAL_WIDTH = 88;
@@ -88,42 +95,50 @@ function SwipeToDeleteRow({
   const { t } = useLocale();
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState<ListErrorCode | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   async function handleDelete() {
     if (!window.confirm(t("hlists.deleteConfirm"))) return;
     setDeleting(true);
+    setError(null);
     const result = await deleteListAction(list.id);
     if (result.ok) {
       onDeleted();
       router.refresh();
     } else {
       setDeleting(false);
+      setError(result.code);
       scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
     }
   }
 
   return (
-    <div className="overflow-hidden rounded-lg">
-      <div
-        ref={scrollerRef}
-        className="flex snap-x snap-mandatory overflow-x-auto [&::-webkit-scrollbar]:hidden"
-        style={{ scrollbarWidth: "none" }}
-      >
-        <div className="w-full shrink-0 snap-start">
-          <ListRow list={list} />
-        </div>
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={deleting}
-          aria-label={t("hlists.delete")}
-          style={{ width: REVEAL_WIDTH }}
-          className="hl-label flex shrink-0 snap-end items-center justify-center self-stretch bg-danger text-on-primary disabled:opacity-60"
+    <div>
+      <div className="overflow-hidden rounded-lg">
+        <div
+          ref={scrollerRef}
+          className="flex snap-x snap-mandatory overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: "none" }}
         >
-          {t("hlists.delete")}
-        </button>
+          <div className="w-full shrink-0 snap-start">
+            <ListRow list={list} />
+          </div>
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleting}
+            aria-label={t("hlists.delete")}
+            style={{ width: REVEAL_WIDTH }}
+            className="hl-label flex shrink-0 snap-end items-center justify-center self-stretch bg-danger text-on-primary disabled:opacity-60"
+          >
+            {t("hlists.delete")}
+          </button>
+        </div>
       </div>
+      {error ? (
+        <ErrorText>{t(DELETE_ERROR_KEYS[error] ?? "errors.generic")}</ErrorText>
+      ) : null}
     </div>
   );
 }

@@ -366,7 +366,13 @@ export async function deleteListAction(listId: string): Promise<ListActionResult
   const supabase = await createClient();
   const { error } = await supabase.rpc("archive_list", { p_list_id: listId });
 
-  if (error) return { ok: false, code: toListErrorCode(error.message) };
+  if (error) {
+    // Logged rather than silently mapped: the client-side swipe UI had
+    // no visible error path at all until this, so a failure here looked
+    // indistinguishable from the button simply not working.
+    console.error("[archive_list] error:", error.message);
+    return { ok: false, code: toListErrorCode(error.message) };
+  }
 
   await purgePhotosForList(listId);
 
