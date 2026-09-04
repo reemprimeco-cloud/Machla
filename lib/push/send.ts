@@ -60,7 +60,22 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
   // deployment still works and vice versa.
   const web = isPushConfigured() && ensureVapid();
   const apns = createApnsSender();
-  if (!web && !apns) return;
+  if (!web && !apns) {
+    // Every notification row ever created has pushed_at = null — this is
+    // the prime suspect: if neither transport's env vars are set on
+    // Vercel, every single call returns here, silently, always. Logged
+    // (not thrown) to keep the best-effort contract this function
+    // documents above — a push failure must never fail the caller.
+    console.error(
+      "[push] not configured: web =",
+      isPushConfigured(),
+      "vapid =",
+      web,
+      "apns =",
+      Boolean(apns),
+    );
+    return;
+  }
 
   try {
     const supabase = await createClient();
@@ -68,7 +83,24 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
       p_list_id: listId,
       p_type: type,
     });
-    if (error || !pending || pending.length === 0) return;
+    if (error) {
+      console.error("[push] get_pending_pushes error:", error.message);
+      return;
+    }
+    if (!pending || pending.length === 0) {
+      console.error("[push] no pending rows for", type, listId);
+      return;
+    }
+    console.error(
+      "[push] sending",
+      pending.length,
+      "notification(s) for",
+      type,
+      "web =",
+      web,
+      "apns =",
+      Boolean(apns),
+    );
 
     const sentIds: string[] = [];
     const staleEndpoints: string[] = [];
@@ -84,23 +116,38 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
         const url = row.is_household_side ? `/home/lists/${listId}` : "/worker/lists";
 
         if (row.push_platform === "ios") {
-          if (!apns) return;
+          if (!apns) {
+            console.error("[push] ios row but apns not configured:", row.notification_id);
+            return;
+          }
           const result = await apns.send(row.endpoint.slice(APNS_PREFIX.length), {
             title,
             body,
             threadId,
             url,
           });
-          if (result.ok) sentIds.push(row.notification_id);
-          // Apple's permanent failures mean the same thing Web Push's
-          // 404/410 does — the app was deleted, or this token was
-          // minted against the other APNs environment. Either way it
-          // will never be deliverable again.
-          else if (result.gone) staleEndpoints.push(row.endpoint);
+          if (result.ok) {
+            sentIds.push(row.notification_id);
+          } else {
+            console.error("[push] apns send failed:", result.reason, "gone =", result.gone);
+            // Apple's permanent failures mean the same thing Web Push's
+            // 404/410 does — the app was deleted, or this token was
+            // minted against the other APNs environment. Either way it
+            // will never be deliverable again.
+            if (result.gone) staleEndpoints.push(row.endpoint);
+          }
           return;
         }
 
-        if (!web || !row.p256dh || !row.auth_key) return;
+        if (!web || !row.p256dh || !row.auth_key) {
+          console.error(
+            "[push] web row but not sendable: web =",
+            web,
+            "hasKeys =",
+            Boolean(row.p256dh && row.auth_key),
+          );
+          return;
+        }
 
         try {
           await webpush.sendNotification(
@@ -115,6 +162,7 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
           // removing the row rather than leaving a dead subscription to
           // fail silently on every future notification.
           const statusCode = (err as { statusCode?: number }).statusCode;
+          console.error("[push] web push failed:", statusCode, (err as Error).message);
           if (statusCode === 404 || statusCode === 410) {
             staleEndpoints.push(row.endpoint);
           }
@@ -128,9 +176,11 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
     if (staleEndpoints.length > 0) {
       await supabase.from("push_subscriptions").delete().in("endpoint", staleEndpoints);
     }
-  } catch {
+  } catch (err) {
     // Never let a push failure surface to the caller of the action that
-    // triggered it — see the function comment above.
+    // triggered it — see the function comment above. Logged so a thrown
+    // (not merely returned) error is still visible somewhere.
+    console.error("[push] sendPendingPushes threw:", err);
   } finally {
     // The HTTP/2 session outlives the sends unless it is closed, and a
     // serverless invocation that never becomes idle is one that gets
