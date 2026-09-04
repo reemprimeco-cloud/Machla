@@ -193,7 +193,9 @@
     "emptyItems": "Nǔ ɖebǔ kú ɖò távo elɔ mɛ ó.",
     "openLists": "{count} ɖò azɔ̌ wa wɛ",
     "itemsLeft": "Nǔ {count} kpò",
-    "allDone": "Nǔ bǐ xɔ"
+    "allDone": "Nǔ bǐ xɔ",
+    "delete": "Súnsún",
+    "deleteConfirm": "Á jló ná súnsún távo elɔ? È sixu lɛ́ vɔ́ ɖó te ǎ."
   },
   "notif": {
     "title": "Wɛnsagbè lɛ́",

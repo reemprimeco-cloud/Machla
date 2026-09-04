@@ -193,7 +193,9 @@
     "emptyItems": "Daftar ini kosong.",
     "openLists": "{count} terbuka",
     "itemsLeft": "{count} barang tersisa",
-    "allDone": "Semua barang telah dibeli"
+    "allDone": "Semua barang telah dibeli",
+    "delete": "Hapus",
+    "deleteConfirm": "Hapus daftar ini? Tindakan ini tidak dapat dibatalkan."
   },
   "notif": {
     "title": "Notifikasi",

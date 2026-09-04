@@ -193,7 +193,9 @@
     "emptyItems": "هذه القائمة فارغة.",
     "openLists": "{count} مفتوحة",
     "itemsLeft": "{count} عنصر متبقٍ",
-    "allDone": "تم شراء كل العناصر"
+    "allDone": "تم شراء كل العناصر",
+    "delete": "حذف",
+    "deleteConfirm": "حذف هذي القائمة؟ ما يمكن التراجع."
   },
   "notif": {
     "title": "الإشعارات",

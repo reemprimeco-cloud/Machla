@@ -193,7 +193,9 @@
     "emptyItems": "Cette liste n'a aucun article.",
     "openLists": "{count} en cours",
     "itemsLeft": "{count} articles restants",
-    "allDone": "Tous les articles achetés"
+    "allDone": "Tous les articles achetés",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cette liste ? Cette action est irréversible."
   },
   "notif": {
     "title": "Notifications",

@@ -193,7 +193,9 @@
     "emptyItems": "Walang laman ang listahang ito.",
     "openLists": "{count} bukas",
     "itemsLeft": "{count} item na natitira",
-    "allDone": "Nabili na lahat ng item"
+    "allDone": "Nabili na lahat ng item",
+    "delete": "Tanggalin",
+    "deleteConfirm": "Tanggalin ang listahang ito? Hindi na ito maibabalik."
   },
   "notif": {
     "title": "Mga abiso",

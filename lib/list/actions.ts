@@ -350,6 +350,31 @@ export async function setListCompletedAction(
   return { ok: true, value: undefined };
 }
 
+/**
+ * Swipe-to-delete on the household's list inbox/dashboard. Skips the
+ * 'completed' step and archives the list directly via `archive_list`,
+ * which also clears every notification pointing at it (a "sent a list"
+ * or "opened your list" alert whose list no longer exists anywhere would
+ * otherwise lead nowhere for every recipient, not just the caller).
+ * Same terminal state setListCompletedAction already reaches, same
+ * reason photos are purged: nothing left on an archived list has any
+ * remaining purpose.
+ */
+export async function deleteListAction(listId: string): Promise<ListActionResult> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("archive_list", { p_list_id: listId });
+
+  if (error) return { ok: false, code: toListErrorCode(error.message) };
+
+  await purgePhotosForList(listId);
+
+  revalidatePath("/home", "layout");
+  revalidatePath("/notifications", "layout");
+  return { ok: true, value: undefined };
+}
+
 /** Purges every photograph still present on a list. */
 async function purgePhotosForList(listId: string): Promise<void> {
   const supabase = await createClient();

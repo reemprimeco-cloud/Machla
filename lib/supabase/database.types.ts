@@ -460,6 +460,13 @@ export interface Database {
         Args: { p_list_id: string; p_completed?: boolean };
         Returns: Database["public"]["Tables"]["shopping_lists"]["Row"];
       };
+      /** Household-side swipe-to-delete: archives the list (same terminal
+       * state set_list_completed already reaches) and clears every
+       * notification pointing at it. */
+      archive_list: {
+        Args: { p_list_id: string };
+        Returns: void;
+      };
       get_household_lists: {
         Args: { p_household_id: string; p_list_id?: string | null; p_limit?: number };
         Returns: {

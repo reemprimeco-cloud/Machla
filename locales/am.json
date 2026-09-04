@@ -193,7 +193,9 @@
     "emptyItems": "ይህ ዝርዝር ምንም ዕቃ የለውም።",
     "openLists": "{count} ክፍት",
     "itemsLeft": "{count} ዕቃዎች ቀርተዋል",
-    "allDone": "ሁሉም ዕቃዎች ተገዝተዋል"
+    "allDone": "ሁሉም ዕቃዎች ተገዝተዋል",
+    "delete": "ሰርዝ",
+    "deleteConfirm": "ይህን ዝርዝር መሰረዝ ይፈልጋሉ? ይህ ወደ ኋላ አይመለስም።"
   },
   "notif": {
     "title": "ማሳወቂያዎች",

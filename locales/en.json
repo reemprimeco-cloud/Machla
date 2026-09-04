@@ -193,7 +193,9 @@
     "emptyItems": "This list has no items.",
     "openLists": "{count} open",
     "itemsLeft": "{count} items left",
-    "allDone": "All items bought"
+    "allDone": "All items bought",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this list? This can't be undone."
   },
   "notif": {
     "title": "Notifications",
