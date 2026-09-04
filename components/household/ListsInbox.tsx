@@ -67,18 +67,22 @@ export function ListsInbox({ lists }: { lists: HouseholdList[] }) {
 }
 
 /**
- * A list row plus an always-visible delete button.
+ * A list row plus a delete control.
  *
  * Two earlier versions hid the delete button behind a swipe gesture — one
- * with hand-rolled pointer events, one with CSS scroll-snap — and on both,
- * taps on the revealed button reached the button (visually) but never
- * fired its onClick on-device (confirmed by window.confirm never
- * appearing). Both put the tap target inside an `overflow-x` scroll
- * container, which iOS WKWebView (this app runs standalone, installed to
- * the homescreen) is known to swallow clicks inside, especially right
- * after any scroll/snap motion. Rather than a third gesture variant this
- * can't be tested on-device, the button now lives outside any scrolling
- * container entirely, sidestepping that whole class of bug.
+ * with hand-rolled pointer events, one with CSS scroll-snap, both inside
+ * an `overflow-x` scroll container, which iOS WKWebView is known to
+ * swallow clicks inside. A third version moved the button outside any
+ * scroll container, which fixed that — but confirmed via window.confirm
+ * NEVER appearing on-device even so, this used window.confirm() to ask
+ * before deleting, exactly like every other destructive action in this
+ * app. That native dialog is mediated by the iOS shell's WKUIDelegate
+ * (ios/Machla/WebAppView.swift) rather than the web page itself, and on
+ * this exact screen it never appeared at all, with no error reaching
+ * either Vercel's or Supabase's logs to explain why. Rather than debug a
+ * native bridge blind, the confirmation step is now plain React state —
+ * tapping delete once reveals inline Cancel/Delete controls, no native
+ * dialog involved at any point.
  *
  * Deletion itself is `deleteListAction` (archive_list): the same
  * terminal, no-route-back state completing a list already reaches, not
@@ -93,11 +97,11 @@ function DeletableRow({
 }) {
   const { t } = useLocale();
   const router = useRouter();
+  const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<ListErrorCode | null>(null);
 
-  async function handleDelete() {
-    if (!window.confirm(t("hlists.deleteConfirm"))) return;
+  async function handleConfirmedDelete() {
     setDeleting(true);
     setError(null);
     const result = await deleteListAction(list.id);
@@ -106,6 +110,7 @@ function DeletableRow({
       router.refresh();
     } else {
       setDeleting(false);
+      setConfirming(false);
       setError(result.code);
     }
   }
@@ -116,16 +121,39 @@ function DeletableRow({
         <div className="min-w-0 flex-1">
           <ListRow list={list} />
         </div>
-        <button
-          type="button"
-          onClick={handleDelete}
-          disabled={deleting}
-          aria-label={t("hlists.delete")}
-          className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-xl text-danger active:bg-surface-2 disabled:opacity-60"
-        >
-          <span aria-hidden>🗑️</span>
-        </button>
+        {confirming ? (
+          <div className="flex shrink-0 flex-col gap-1">
+            <button
+              type="button"
+              onClick={handleConfirmedDelete}
+              disabled={deleting}
+              className="hl-caption flex-1 rounded-lg bg-danger px-3 py-1 text-on-primary disabled:opacity-60"
+            >
+              {t("hlists.delete")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirming(false)}
+              disabled={deleting}
+              className="hl-caption flex-1 rounded-lg border border-line bg-surface px-3 py-1 text-ink-muted disabled:opacity-60"
+            >
+              {t("common.cancel")}
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirming(true)}
+            aria-label={t("hlists.delete")}
+            className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-xl text-danger active:bg-surface-2"
+          >
+            <span aria-hidden>🗑️</span>
+          </button>
+        )}
       </div>
+      {confirming ? (
+        <p className="hl-caption text-ink-muted">{t("hlists.deleteConfirm")}</p>
+      ) : null}
       {error ? (
         <ErrorText>{t(DELETE_ERROR_KEYS[error] ?? "errors.generic")}</ErrorText>
       ) : null}
