@@ -96,7 +96,10 @@
     "deletingAccount": "Deleting…",
     "deleteAccountConfirm": "This will permanently delete your account. This can't be undone.",
     "deleteAccountConfirmOwner": "You own this home. Deleting your account will permanently delete this home for everyone — its lists, its members, everything. This can't be undone.",
-    "support": "Support"
+    "support": "Support",
+    "subscription": "Subscription",
+    "subscriptionActive": "Active",
+    "manageSubscription": "Manage"
   },
   "members": {
     "title": "People",
@@ -275,5 +278,27 @@
   "support": {
     "title": "Need Help?",
     "body": "If you run into a problem or have a question about {name}, email us and we'll get back to you."
+  },
+  "paywall": {
+    "title": "Subscribe to Machla",
+    "subtitle": "One subscription covers your whole household.",
+    "trialDaysLeft": "{days} days left in your free trial",
+    "trialExpired": "Your free trial has ended",
+    "subscriptionExpired": "Your subscription has ended",
+    "priceLine": "{price} per year",
+    "benefitLists": "Unlimited shopping lists",
+    "benefitHousehold": "Everyone in your household, one subscription",
+    "benefitNotifications": "Notifications when a list is sent or finished",
+    "subscribe": "Subscribe",
+    "purchasing": "Subscribing…",
+    "restore": "Restore purchase",
+    "restoring": "Restoring…",
+    "iosOnly": "Subscribing is only available in the Machla iPhone app right now. Ask someone in your household with an iPhone to subscribe — it covers everyone.",
+    "cancelled": "Purchase cancelled",
+    "pending": "Purchase pending approval",
+    "failed": "Something went wrong. Please try again.",
+    "restoreNotFound": "No previous purchase found",
+    "success": "You're all set! Thanks for subscribing.",
+    "continue": "Continue"
   }
 }

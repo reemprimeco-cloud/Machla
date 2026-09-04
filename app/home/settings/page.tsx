@@ -4,6 +4,7 @@ import { SettingsScreen } from "@/components/household/SettingsScreen";
 import { getServerUserProfile } from "@/lib/auth/session";
 import { requireHouseholdAccess } from "@/lib/household/guard";
 import { getHouseholdMembers } from "@/lib/household/queries";
+import { computeTrialState, getHouseholdSubscription, hasAccess } from "@/lib/subscription/queries";
 
 /**
  * Account-level settings (who you are, language, sign out) plus the
@@ -18,7 +19,12 @@ export default async function SettingsPage() {
   if (!profile) redirect("/login");
 
   const membership = await requireHouseholdAccess();
-  const members = await getHouseholdMembers(membership.householdId);
+  const [members, subscription] = await Promise.all([
+    getHouseholdMembers(membership.householdId),
+    getHouseholdSubscription(membership.householdId),
+  ]);
+
+  const trial = subscription ? computeTrialState(subscription) : { active: false, daysLeft: 0 };
 
   return (
     <SettingsScreen
@@ -26,6 +32,10 @@ export default async function SettingsPage() {
       displayName={profile.display_name}
       role={membership.role}
       memberCount={members.length}
+      subscriptionStatus={subscription?.status ?? null}
+      subscriptionHasAccess={subscription ? hasAccess(subscription) : false}
+      trialActive={trial.active}
+      trialDaysLeft={trial.daysLeft}
     />
   );
 }

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { SentConfirmation } from "@/components/worker/SentConfirmation";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getListById } from "@/lib/list/queries";
 
 /** Mirrors app/worker/sent/[id]/page.tsx — see app/home/shop/page.tsx for
@@ -9,6 +9,7 @@ import { getListById } from "@/lib/list/queries";
 export default async function ShopSentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const list = await getListById(id);
   if (!list) notFound();

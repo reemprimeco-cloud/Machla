@@ -59,7 +59,32 @@ export type NativePushStatus = "unsupported" | "off" | "granted" | "denied";
 export type NativeRequest =
   | { type: "push:status" }
   | { type: "push:enable" }
-  | { type: "push:disable" };
+  | { type: "push:disable" }
+  | { type: "iap:status" }
+  | { type: "iap:purchase" }
+  | { type: "iap:restore" };
+
+/** What StoreKit knows about the one subscription this app sells,
+ * formatted for display — `priceDisplay` is already localized to the
+ * storefront the device is signed into (App Store Connect's own price
+ * tiers, not anything this app computes). There is no Apple-side
+ * introductory offer: the free trial is the household's own 14 days
+ * from creation (20260904160000_household_subscriptions.sql), one
+ * mechanism rather than two that could disagree about when it ends. */
+export interface IapProductInfo {
+  priceDisplay: string;
+}
+
+/**
+ * The outcome of a purchase or restore attempt. `originalTransactionId`
+ * is Apple's own identifier for the subscription — stable across every
+ * renewal — and is all the web side needs to ask
+ * `syncAppleSubscriptionAction` to confirm it with Apple's servers and
+ * record it against the caller's household.
+ */
+export type IapPurchaseResult =
+  | { ok: true; originalTransactionId: string }
+  | { ok: false; reason: "cancelled" | "pending" | "failed" | "not_found" };
 
 interface MessageHandler {
   postMessage: (body: unknown) => void;
@@ -72,6 +97,8 @@ declare global {
     machla?: {
       onPushToken: (token: string) => void;
       onPushStatus: (status: NativePushStatus) => void;
+      onIapProduct: (info: IapProductInfo) => void;
+      onIapResult: (result: IapPurchaseResult) => void;
     };
   }
 }
@@ -156,4 +183,54 @@ export function setNativeDeviceToken(token: string | null): void {
  * spelled out at each call site. */
 export function apnsEndpoint(token: string): string {
   return `apns://${token}`;
+}
+
+// ---------------------------------------------------------------------
+// In-app purchase (the household subscription)
+// ---------------------------------------------------------------------
+//
+// One-shot requests with a one-shot answer, unlike push's persistent
+// status — nothing here needs to be remembered between mounts, so this
+// is a plain pub/sub rather than a store with a "current value". The
+// paywall screen is the only subscriber in practice, but it can be
+// interrupted by navigation mid-purchase, so listeners are a Set rather
+// than a single callback slot.
+
+const iapProductListeners = new Set<(info: IapProductInfo) => void>();
+const iapResultListeners = new Set<(result: IapPurchaseResult) => void>();
+
+export function onNativeIapProduct(listener: (info: IapProductInfo) => void): () => void {
+  iapProductListeners.add(listener);
+  return () => {
+    iapProductListeners.delete(listener);
+  };
+}
+
+export function onNativeIapResult(listener: (result: IapPurchaseResult) => void): () => void {
+  iapResultListeners.add(listener);
+  return () => {
+    iapResultListeners.delete(listener);
+  };
+}
+
+/** Called only from NativeBridge.tsx's window.machla handlers — nothing
+ * else should ever construct these events itself. */
+export function emitNativeIapProduct(info: IapProductInfo): void {
+  for (const listener of iapProductListeners) listener(info);
+}
+
+export function emitNativeIapResult(result: IapPurchaseResult): void {
+  for (const listener of iapResultListeners) listener(result);
+}
+
+export function requestIapProduct(): void {
+  postToNative({ type: "iap:status" });
+}
+
+export function purchaseSubscription(): void {
+  postToNative({ type: "iap:purchase" });
+}
+
+export function restorePurchases(): void {
+  postToNative({ type: "iap:restore" });
 }

@@ -1,5 +1,5 @@
 import { ListsInbox } from "@/components/household/ListsInbox";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getHouseholdLists } from "@/lib/list/household";
 
 /** Everything the household has received, newest first. Drafts are
@@ -7,6 +7,7 @@ import { getHouseholdLists } from "@/lib/list/household";
  * household's business, whoever is asking. */
 export default async function ListsPage() {
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
   const lists = await getHouseholdLists(membership.householdId);
 
   return <ListsInbox lists={lists} />;

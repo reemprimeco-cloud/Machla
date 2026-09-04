@@ -3,6 +3,7 @@ import "server-only";
 import { redirect } from "next/navigation";
 
 import { getServerUserProfile } from "@/lib/auth/session";
+import { getHouseholdSubscription, hasAccess } from "@/lib/subscription/queries";
 import { getSelectedHouseholdId } from "./currentHousehold";
 import type { Membership } from "./queries";
 import { getActiveMemberships, getPrimaryMembership } from "./queries";
@@ -50,6 +51,22 @@ export async function requireHouseholdAccess(): Promise<Membership> {
 
   const selectedId = await getSelectedHouseholdId();
   return homes.find((home) => home.householdId === selectedId) ?? homes[0];
+}
+
+/**
+ * Gates the actual shopping-list experience (dashboard, browsing, a
+ * list's own checklist) behind the household's subscription — a free
+ * trial from creation, then an Apple subscription
+ * (20260904160000_household_subscriptions.sql). Called after
+ * requireHouseholdAccess() by the pages that do real work, never by
+ * Settings or /home/paywall itself: those two must stay reachable
+ * however the subscription looks, or a lapsed household would have no
+ * way to see its own status or get to "Subscribe".
+ */
+export async function requireActiveSubscription(membership: Membership): Promise<void> {
+  const subscription = await getHouseholdSubscription(membership.householdId);
+  if (subscription && hasAccess(subscription)) return;
+  redirect("/home/paywall");
 }
 
 /** Requires the owner specifically — the household-management actions

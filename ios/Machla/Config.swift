@@ -33,4 +33,10 @@ enum Config {
     /// Settings > Notifications inside Machla, and without somewhere to
     /// record that the toggle would spring straight back on.
     static let wantsPushKey = "machla.wantsPush"
+
+    /// The one thing this app sells: an annual, per-household
+    /// subscription. Must match the product id created for it in App
+    /// Store Connect exactly — StoreKit returns an empty product list
+    /// for anything else, silently, with no error to tell them apart.
+    static let subscriptionProductId = "app.reemora.machla.subscription.annual"
 }

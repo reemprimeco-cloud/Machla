@@ -96,7 +96,10 @@
     "deletingAccount": "Suppression…",
     "deleteAccountConfirm": "Cela supprimera définitivement votre compte. Cette action est irréversible.",
     "deleteAccountConfirmOwner": "Vous êtes propriétaire de cette maison. Supprimer votre compte supprimera définitivement cette maison pour tout le monde — ses listes, ses membres, tout. Cette action est irréversible.",
-    "support": "Assistance"
+    "support": "Assistance",
+    "subscription": "Abonnement",
+    "subscriptionActive": "Actif",
+    "manageSubscription": "Gérer"
   },
   "members": {
     "title": "Personnes",
@@ -275,5 +278,27 @@
   "support": {
     "title": "Besoin d'aide ?",
     "body": "Si vous rencontrez un problème ou avez une question sur {name}, écrivez-nous et nous vous répondrons."
+  },
+  "paywall": {
+    "title": "Abonnez-vous à Machla",
+    "subtitle": "Un seul abonnement pour tout votre foyer.",
+    "trialDaysLeft": "Il vous reste {days} jours d'essai gratuit",
+    "trialExpired": "Votre essai gratuit est terminé",
+    "subscriptionExpired": "Votre abonnement est terminé",
+    "priceLine": "{price} par an",
+    "benefitLists": "Listes de courses illimitées",
+    "benefitHousehold": "Tout votre foyer, un seul abonnement",
+    "benefitNotifications": "Notifications à l'envoi ou à la fin d'une liste",
+    "subscribe": "S'abonner",
+    "purchasing": "Abonnement en cours…",
+    "restore": "Restaurer l'achat",
+    "restoring": "Restauration…",
+    "iosOnly": "L'abonnement n'est disponible que sur l'application Machla pour iPhone pour l'instant. Demandez à un membre de votre foyer possédant un iPhone de s'abonner — cela couvre tout le monde.",
+    "cancelled": "Achat annulé",
+    "pending": "Achat en attente d'approbation",
+    "failed": "Une erreur s'est produite. Veuillez réessayer.",
+    "restoreNotFound": "Aucun achat précédent trouvé",
+    "success": "C'est fait ! Merci pour votre abonnement.",
+    "continue": "Continuer"
   }
 }

@@ -96,7 +96,10 @@
     "deletingAccount": "Menghapus…",
     "deleteAccountConfirm": "Ini akan menghapus akun Anda secara permanen. Tindakan ini tidak dapat dibatalkan.",
     "deleteAccountConfirmOwner": "Anda adalah pemilik rumah ini. Menghapus akun Anda akan menghapus rumah ini secara permanen untuk semua orang — daftarnya, anggotanya, semuanya. Tindakan ini tidak dapat dibatalkan.",
-    "support": "Dukungan"
+    "support": "Dukungan",
+    "subscription": "Langganan",
+    "subscriptionActive": "Aktif",
+    "manageSubscription": "Kelola"
   },
   "members": {
     "title": "Orang",
@@ -275,5 +278,27 @@
   "support": {
     "title": "Butuh bantuan?",
     "body": "Jika Anda mengalami masalah atau punya pertanyaan tentang {name}, kirim email kepada kami dan kami akan membalasnya."
+  },
+  "paywall": {
+    "title": "Berlangganan Machla",
+    "subtitle": "Satu langganan untuk seluruh rumah tangga Anda.",
+    "trialDaysLeft": "Sisa {days} hari masa uji coba gratis Anda",
+    "trialExpired": "Masa uji coba gratis Anda telah berakhir",
+    "subscriptionExpired": "Langganan Anda telah berakhir",
+    "priceLine": "{price} per tahun",
+    "benefitLists": "Daftar belanja tanpa batas",
+    "benefitHousehold": "Semua anggota rumah tangga, satu langganan",
+    "benefitNotifications": "Notifikasi saat daftar dikirim atau selesai",
+    "subscribe": "Berlangganan",
+    "purchasing": "Sedang berlangganan…",
+    "restore": "Pulihkan pembelian",
+    "restoring": "Memulihkan…",
+    "iosOnly": "Berlangganan saat ini hanya tersedia di aplikasi Machla untuk iPhone. Minta anggota rumah tangga yang punya iPhone untuk berlangganan — ini berlaku untuk semua orang.",
+    "cancelled": "Pembelian dibatalkan",
+    "pending": "Pembelian menunggu persetujuan",
+    "failed": "Terjadi kesalahan. Silakan coba lagi.",
+    "restoreNotFound": "Tidak ada pembelian sebelumnya yang ditemukan",
+    "success": "Selesai! Terima kasih telah berlangganan.",
+    "continue": "Lanjutkan"
   }
 }

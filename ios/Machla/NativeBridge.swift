@@ -1,4 +1,5 @@
 import Foundation
+import StoreKit
 import UIKit
 import UserNotifications
 import WebKit
@@ -7,8 +8,9 @@ import WebKit
 ///
 /// It is small on purpose. Everything Machla does — lists, products,
 /// languages, authentication — is the web app's job and stays there. The
-/// only thing the shell can do that a browser cannot is receive Apple
-/// push notifications, so that is the only thing it offers.
+/// only things the shell can do that a browser cannot are receive Apple
+/// push notifications and sell the household subscription through
+/// StoreKit, so that is what it offers.
 ///
 /// The channel avoids injected JavaScript entirely. The site serves a
 /// strict `script-src 'self' 'nonce-…' 'strict-dynamic'` (proxy.ts), and
@@ -35,12 +37,20 @@ final class NativeBridge: NSObject {
     /// tapping "list finished" opens that list rather than the dashboard.
     private var launchPath: String?
 
+    /// Apple's own recommended pattern: a long-lived listener catches a
+    /// transaction that finishes outside the direct purchase flow — Ask
+    /// to Buy approval, a purchase restored from another device, one
+    /// StoreKit re-delivers after a dropped connection. Started once,
+    /// for the life of the process, same as `Transaction.updates` itself.
+    private var transactionUpdatesTask: Task<Void, Never>?
+
     private override init() {}
 
     // MARK: - Wiring
 
     func attach(_ webView: WKWebView) {
         self.webView = webView
+        startObservingTransactionUpdates()
     }
 
     /// The URL the web view should open now: a notification's
@@ -76,6 +86,15 @@ final class NativeBridge: NSObject {
             UserDefaults.standard.set(false, forKey: Config.wantsPushKey)
             UIApplication.shared.unregisterForRemoteNotifications()
             reportStatus(includingToken: false)
+
+        case "iap:status":
+            reportSubscriptionProduct()
+
+        case "iap:purchase":
+            purchaseSubscription()
+
+        case "iap:restore":
+            restorePurchases()
 
         default:
             break
@@ -142,11 +161,14 @@ final class NativeBridge: NSObject {
     /// existing: the web view can be showing an error page, a cold load,
     /// or a route that has not hydrated yet, and a missing callback is a
     /// normal moment rather than a failure.
-    private func send(_ callback: String, argument: String) {
-        // JSONSerialization rather than string interpolation: the values
-        // here are a hex token and a fixed word today, but a bridge that
-        // pastes text into JavaScript is a bridge that will eventually
-        // paste something that closes the quote.
+    ///
+    /// `argument` is `Any` rather than `String` so the same function
+    /// serves both a bare value (a push status word, a device token) and
+    /// a `[String: Any]` object (`onIapProduct`, `onIapResult`) —
+    /// JSONSerialization treats an array holding either the same way,
+    /// and a bridge that pastes text into JavaScript by hand is a bridge
+    /// that will eventually paste something that closes the quote.
+    private func send(_ callback: String, argument: Any) {
         guard let data = try? JSONSerialization.data(withJSONObject: [argument]),
               let json = String(data: data, encoding: .utf8)
         else { return }
@@ -154,6 +176,127 @@ final class NativeBridge: NSObject {
         let script = "window.machla && window.machla.\(callback).apply(null, \(json));"
         DispatchQueue.main.async { [weak self] in
             self?.webView?.evaluateJavaScript(script)
+        }
+    }
+
+    // MARK: - In-app purchase (the household subscription)
+    //
+    // One product, one subscription group, sold once per household —
+    // see Config.subscriptionProductId and docs/architecture (App Store
+    // Connect setup). The free trial is the household's own 14 days
+    // from creation on the server, not a StoreKit introductory offer:
+    // one mechanism rather than two that could disagree about when it
+    // ends, so this product is a plain paid subscription with nothing
+    // configured on the "free trial" tab in App Store Connect.
+    //
+    // A purchase or restore here only ever reports a verified
+    // originalTransactionId back to the page — it never decides the
+    // subscription is active itself. `syncAppleSubscriptionAction`
+    // (lib/subscription/actions.ts) looks the transaction up with
+    // Apple's own servers before writing anything to this household's
+    // row, on the principle that "StoreKit verified this JWS" and "this
+    // subscription is currently active" are two different questions,
+    // and only Apple's servers can answer the second one right now.
+
+    private func fetchSubscriptionProduct() async -> Product? {
+        (try? await Product.products(for: [Config.subscriptionProductId]))?.first
+    }
+
+    private func reportSubscriptionProduct() {
+        Task {
+            guard let product = await fetchSubscriptionProduct() else { return }
+            send("onIapProduct", argument: ["priceDisplay": product.displayPrice])
+        }
+    }
+
+    private func purchaseSubscription() {
+        Task {
+            guard let product = await fetchSubscriptionProduct() else {
+                send("onIapResult", argument: ["ok": false, "reason": "failed"])
+                return
+            }
+
+            do {
+                let result = try await product.purchase()
+                switch result {
+                case .success(let verification):
+                    reportPurchaseVerification(verification)
+                case .userCancelled:
+                    send("onIapResult", argument: ["ok": false, "reason": "cancelled"])
+                case .pending:
+                    // Ask to Buy, or a payment method needing action —
+                    // resolved later, outside this app, and picked up by
+                    // startObservingTransactionUpdates() when it is.
+                    send("onIapResult", argument: ["ok": false, "reason": "pending"])
+                @unknown default:
+                    send("onIapResult", argument: ["ok": false, "reason": "failed"])
+                }
+            } catch {
+                send("onIapResult", argument: ["ok": false, "reason": "failed"])
+            }
+        }
+    }
+
+    /// Re-checks this device's own purchase history rather than trusting
+    /// anything cached locally — the documented way to let someone who
+    /// reinstalled, or is on a new device signed into the same Apple
+    /// ID, get back into a household they (or another member) already
+    /// paid for.
+    private func restorePurchases() {
+        Task {
+            try? await AppStore.sync()
+
+            for await result in Transaction.currentEntitlements {
+                guard case .verified(let transaction) = result,
+                      transaction.productID == Config.subscriptionProductId
+                else { continue }
+
+                await transaction.finish()
+                send("onIapResult", argument: [
+                    "ok": true,
+                    "originalTransactionId": String(transaction.originalID),
+                ])
+                return
+            }
+
+            send("onIapResult", argument: ["ok": false, "reason": "not_found"])
+        }
+    }
+
+    private func reportPurchaseVerification(_ verification: VerificationResult<Transaction>) {
+        switch verification {
+        case .verified(let transaction):
+            Task { await transaction.finish() }
+            send("onIapResult", argument: [
+                "ok": true,
+                "originalTransactionId": String(transaction.originalID),
+            ])
+        case .unverified:
+            // StoreKit itself could not validate this transaction's JWS —
+            // treated as a plain failure rather than forwarded anywhere,
+            // since there is nothing genuine here for the server to
+            // re-check with Apple.
+            send("onIapResult", argument: ["ok": false, "reason": "failed"])
+        }
+    }
+
+    /// Started once, in `attach(_:)`, and never cancelled — the same
+    /// lifetime as the process itself, per Apple's own guidance for
+    /// `Transaction.updates`.
+    private func startObservingTransactionUpdates() {
+        guard transactionUpdatesTask == nil else { return }
+        transactionUpdatesTask = Task {
+            for await result in Transaction.updates {
+                guard case .verified(let transaction) = result,
+                      transaction.productID == Config.subscriptionProductId
+                else { continue }
+
+                await transaction.finish()
+                send("onIapResult", argument: [
+                    "ok": true,
+                    "originalTransactionId": String(transaction.originalID),
+                ])
+            }
         }
     }
 

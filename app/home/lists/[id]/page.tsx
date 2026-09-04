@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { ListChecklist } from "@/components/household/ListChecklist";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { markListViewedAction } from "@/lib/list/actions";
 import { getHouseholdListDetail } from "@/lib/list/household";
 
@@ -22,6 +22,7 @@ export default async function ListDetailPage({
   const { id } = await params;
   const { from } = await searchParams;
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const detail = await getHouseholdListDetail(membership.householdId, id);
   if (!detail) notFound();

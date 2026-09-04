@@ -96,7 +96,10 @@
     "deletingAccount": "Binuburang…",
     "deleteAccountConfirm": "Permanenteng mabubura ang iyong account. Hindi na ito maibabalik.",
     "deleteAccountConfirmOwner": "Ikaw ang may-ari ng tahanang ito. Ang pagbura ng iyong account ay permanenteng magbubura ng tahanang ito para sa lahat — ang mga listahan nito, mga miyembro nito, lahat. Hindi na ito maibabalik.",
-    "support": "Suporta"
+    "support": "Suporta",
+    "subscription": "Subscription",
+    "subscriptionActive": "Aktibo",
+    "manageSubscription": "Pamahalaan"
   },
   "members": {
     "title": "Mga tao",
@@ -275,5 +278,27 @@
   "support": {
     "title": "Kailangan ng tulong?",
     "body": "Kung may problema ka o may tanong tungkol sa {name}, mag-email sa amin at sasagutin ka namin."
+  },
+  "paywall": {
+    "title": "Mag-subscribe sa Machla",
+    "subtitle": "Isang subscription para sa buong sambahayan mo.",
+    "trialDaysLeft": "{days} araw na lang ang natitira sa libreng pagsubok",
+    "trialExpired": "Natapos na ang iyong libreng pagsubok",
+    "subscriptionExpired": "Natapos na ang iyong subscription",
+    "priceLine": "{price} kada taon",
+    "benefitLists": "Walang limitasyong listahan ng pamimili",
+    "benefitHousehold": "Lahat sa iyong sambahayan, isang subscription lang",
+    "benefitNotifications": "Abiso kapag may listahang ipinadala o natapos",
+    "subscribe": "Mag-subscribe",
+    "purchasing": "Nagsu-subscribe…",
+    "restore": "Ibalik ang bili",
+    "restoring": "Ibinabalik…",
+    "iosOnly": "Ang pag-subscribe ay available lang sa Machla app sa iPhone sa ngayon. Hilingin sa may iPhone sa inyong sambahayan na mag-subscribe — sasaklaw nito ang lahat.",
+    "cancelled": "Nakansela ang pagbili",
+    "pending": "Naghihintay ng approval ang pagbili",
+    "failed": "May nangyaring mali. Subukan ulit.",
+    "restoreNotFound": "Walang nakitang nakaraang bili",
+    "success": "Tapos na! Salamat sa pag-subscribe.",
+    "continue": "Magpatuloy"
   }
 }

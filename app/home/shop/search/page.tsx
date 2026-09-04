@@ -1,6 +1,6 @@
 import { SearchResults } from "@/components/worker/SearchResults";
 import { getCategories, searchProducts } from "@/lib/catalog/queries";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -14,6 +14,7 @@ export default async function ShopSearchPage({
   const { q } = await searchParams;
   const query = (q ?? "").trim();
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const [products, categories, draft, unreadCount] = await Promise.all([
     searchProducts(query),

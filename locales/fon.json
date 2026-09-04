@@ -96,7 +96,10 @@
     "deletingAccount": "É ɖò didé jí…",
     "deleteAccountConfirm": "Enɛ ná ɖe hwɛ ce nú kaka. É sixu ma lɛ́ kɔ ǎ.",
     "deleteAccountConfirmOwner": "Xwé elɔ towe wɛ. Ðíde hwɛ towe ná ɖe xwé elɔ nú mɛbǐ kaka — távo tɔn lɛ́, mɛ e ɖò xwé ɔ mɛ lɛ́, nǔbǐ. É sixu ma lɛ́ kɔ ǎ.",
-    "support": "Alɔdo"
+    "support": "Alɔdo",
+    "subscription": "Abonema",
+    "subscriptionActive": "É ɖò azɔ̌ wa wɛ",
+    "manageSubscription": "Ðo tɛn"
   },
   "members": {
     "title": "Mɛ lɛ́",
@@ -275,5 +278,27 @@
   "support": {
     "title": "A byɔ alɔdo?",
     "body": "Enyi nùɖé ma yì ganji nú we alǒ a ɖó nùkanbyɔ dó {name} wu ɔ, sɛ́n imeli nú mǐ, mǐ na yí gbè nú we."
+  },
+  "paywall": {
+    "title": "Bló abonema Machla tɔn",
+    "subtitle": "Abonema ɖokpo wɛ nyí xwé towe bǐ tɔn.",
+    "trialDaysLeft": "Azán {days} kpò ɖò tɛnkpɔn ɖéjέjí towe mɛ",
+    "trialExpired": "Tɛnkpɔn ɖéjέjí towe fó",
+    "subscriptionExpired": "Abonema towe fó",
+    "priceLine": "{price} xwe ɖokpo ɖokpo",
+    "benefitLists": "Távo azɔ̌watɔ́ tɔn e ɖé kpò ǎ",
+    "benefitHousehold": "Mɛ e ɖò xwé towe mɛ lɛ́ bǐ, abonema ɖokpo géé",
+    "benefitNotifications": "Wɛnjlɛ ɖò táwo e sɛ́n alǒ fó lɛ́ jí",
+    "subscribe": "Bló abonema",
+    "purchasing": "É ɖò bló wɛ…",
+    "restore": "Lɛ́ mɔ nǔ e xɔ ɔ́",
+    "restoring": "É ɖò lɛ́ mɔ wɛ…",
+    "iosOnly": "Bló abonema sixu jɛ ɖò Machla app e ɖò iPhone jí ɔ́ kɛɖɛ hǔn. Byɔ mɛ ɖé ɖò xwé towe mɛ e ɖó iPhone ɔ́ ni bló abonema ɔ́ — é ná dó nǔ mɛ bǐ.",
+    "cancelled": "É glɔ́n nǔxɔxɔ ɔ́",
+    "pending": "Nǔxɔxɔ ɔ́ ɖò nukún ɖó wɛ",
+    "failed": "Nǔ ɖé gblé. Lɛ́ tɛnkpɔn.",
+    "restoreNotFound": "Nǔxɔxɔ ɖěvo kú ɖò fí ǎ",
+    "success": "É fó! Mǐ dó gbè nú we ɖó a bló abonema ɔ́.",
+    "continue": "Yì nukɔn"
   }
 }

@@ -96,7 +96,10 @@
     "deletingAccount": "በመሰረዝ ላይ…",
     "deleteAccountConfirm": "ይህ መለያዎን በቋሚነት ይሰርዛል። ይህ ወደ ኋላ ሊመለስ አይችልም።",
     "deleteAccountConfirmOwner": "ይህ ቤት የእርስዎ ነው። መለያዎን መሰረዝ ይህን ቤት ለሁሉም ሰው በቋሚነት ይሰርዛል — ዝርዝሮቹን፣ አባላቱን፣ ሁሉንም ነገር። ይህ ወደ ኋላ ሊመለስ አይችልም።",
-    "support": "ድጋፍ"
+    "support": "ድጋፍ",
+    "subscription": "ምዝገባ",
+    "subscriptionActive": "ንቁ",
+    "manageSubscription": "አስተዳድር"
   },
   "members": {
     "title": "ሰዎች",
@@ -275,5 +278,27 @@
   "support": {
     "title": "እርዳታ ይፈልጋሉ?",
     "body": "ችግር ካጋጠመዎት ወይም ስለ {name} ጥያቄ ካለዎት፣ ኢሜይል ይላኩልን፣ እንመልስልዎታለን።"
+  },
+  "paywall": {
+    "title": "ወደ Machla ይመዝገቡ",
+    "subtitle": "አንድ ምዝገባ ለመላው ቤተሰብዎ ይበቃል።",
+    "trialDaysLeft": "በነጻ ሙከራዎ {days} ቀናት ቀርተዋል",
+    "trialExpired": "የነጻ ሙከራ ጊዜዎ አልቋል",
+    "subscriptionExpired": "ምዝገባዎ አልቋል",
+    "priceLine": "{price} በዓመት",
+    "benefitLists": "ያልተገደበ የግዢ ዝርዝሮች",
+    "benefitHousehold": "በቤትዎ ውስጥ ላሉ ሁሉም፣ በአንድ ምዝገባ",
+    "benefitNotifications": "ዝርዝር ሲላክ ወይም ሲጠናቀቅ ማሳወቂያዎች",
+    "subscribe": "ይመዝገቡ",
+    "purchasing": "በመመዝገብ ላይ…",
+    "restore": "ግዢ መልስ አምጣ",
+    "restoring": "በመመለስ ላይ…",
+    "iosOnly": "ምዝገባ አሁን የሚገኘው በ Machla አይፎን መተግበሪያ ብቻ ነው። በቤትዎ ውስጥ አይፎን ያለው ሰው እንዲመዘገብ ይጠይቁ — ለሁሉም ይሰራል።",
+    "cancelled": "ግዢው ተሰርዟል",
+    "pending": "ግዢው ማጽደቅ በመጠበቅ ላይ ነው",
+    "failed": "የሆነ ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።",
+    "restoreNotFound": "ምንም ቀዳሚ ግዢ አልተገኘም",
+    "success": "ተከናውኗል! ስለተመዘገቡ እናመሰግናለን።",
+    "continue": "ቀጥል"
   }
 }

@@ -2,7 +2,7 @@ import { HouseholdDashboard } from "@/components/household/HouseholdDashboard";
 import { getServerUserProfile } from "@/lib/auth/session";
 import { getCategories } from "@/lib/catalog/queries";
 import { greetingKeyForNow } from "@/lib/household/greeting";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getHouseholdMembers } from "@/lib/household/queries";
 import { getHouseholdLists, isOpen } from "@/lib/list/household";
 import { getUnreadCount } from "@/lib/notifications/queries";
@@ -12,6 +12,7 @@ import { getUnreadCount } from "@/lib/notifications/queries";
  * and invitations live in Settings (app/home/settings/page.tsx). */
 export default async function DashboardPage() {
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const [members, lists, unreadCount, categories, profile] = await Promise.all([
     getHouseholdMembers(membership.householdId),

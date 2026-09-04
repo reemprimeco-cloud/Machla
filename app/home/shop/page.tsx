@@ -1,6 +1,6 @@
 import { WorkerHome } from "@/components/worker/WorkerHome";
 import { getCategories } from "@/lib/catalog/queries";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getDraftList } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -16,6 +16,7 @@ import { getUnreadCount } from "@/lib/notifications/queries";
  */
 export default async function ShopPage() {
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const [categories, draft, unreadCount] = await Promise.all([
     getCategories(),

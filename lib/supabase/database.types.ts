@@ -17,6 +17,10 @@ export type InvitationStatus = "pending" | "accepted" | "revoked" | "expired";
 export type ShoppingListStatus = "draft" | "sent" | "viewed" | "completed" | "archived";
 export type PurchaseStatus = "pending" | "purchased" | "unavailable";
 export type NotificationType = "list_sent" | "list_viewed" | "list_completed";
+/** 'none' = never subscribed (still on the free trial, or trial expired).
+ * Everything else mirrors Apple's own App Store Server API status field
+ * (20260904160000_household_subscriptions.sql). */
+export type SubscriptionStatus = "none" | "active" | "grace_period" | "expired" | "revoked";
 /** Which push transport a push_subscriptions row addresses — a browser
  * (including an installed PWA) over Web Push, or an App Store build over
  * APNs. Not a Postgres enum: it is a text column with a CHECK, like the
@@ -55,6 +59,10 @@ export interface Database {
           owner_user_id: string;
           created_at: string;
           updated_at: string;
+          trial_ends_at: string;
+          subscription_status: SubscriptionStatus;
+          subscription_period_end: string | null;
+          apple_original_transaction_id: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["households"]["Row"]> & {
           name: string;
@@ -415,6 +423,19 @@ export interface Database {
       clear_notifications: {
         Args: Record<string, never>;
         Returns: number;
+      };
+      household_has_access: {
+        Args: { p_household_id: string };
+        Returns: boolean;
+      };
+      link_apple_subscription: {
+        Args: {
+          p_household_id: string;
+          p_original_transaction_id: string;
+          p_status: SubscriptionStatus;
+          p_period_end: string | null;
+        };
+        Returns: void;
       };
       set_notification_preference: {
         Args: { p_type: NotificationType; p_enabled: boolean };

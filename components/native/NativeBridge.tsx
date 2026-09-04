@@ -3,10 +3,14 @@
 import { useEffect } from "react";
 
 import {
+  emitNativeIapProduct,
+  emitNativeIapResult,
   isNativeApp,
   postToNative,
   setNativeDeviceToken,
   setNativePushStatus,
+  type IapProductInfo,
+  type IapPurchaseResult,
   type NativePushStatus,
 } from "@/lib/native/bridge";
 import { saveApnsTokenAction } from "@/lib/push/actions";
@@ -39,6 +43,12 @@ export function NativeBridge() {
       },
       onPushStatus(status: NativePushStatus) {
         setNativePushStatus(status);
+      },
+      onIapProduct(info: IapProductInfo) {
+        emitNativeIapProduct(info);
+      },
+      onIapResult(result: IapPurchaseResult) {
+        emitNativeIapResult(result);
       },
     };
 

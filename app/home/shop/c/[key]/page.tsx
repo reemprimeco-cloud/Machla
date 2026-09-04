@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { CategoryBrowser } from "@/components/worker/CategoryBrowser";
 import { getCategories, getCategoryByKey, getProductsInCategory } from "@/lib/catalog/queries";
-import { requireHouseholdAccess } from "@/lib/household/guard";
+import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -11,6 +11,7 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function ShopCategoryPage({ params }: { params: Promise<{ key: string }> }) {
   const { key } = await params;
   const membership = await requireHouseholdAccess();
+  await requireActiveSubscription(membership);
 
   const category = await getCategoryByKey(key);
   if (!category) notFound();
