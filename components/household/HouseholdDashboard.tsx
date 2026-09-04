@@ -11,8 +11,6 @@ import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
-import { Progress } from "./ListsInbox";
-
 /** `unreadCount` is currently unused here — the bottom tab bar's own
  * Notifications tab carries the badge instead of this screen's header —
  * kept as a prop so the caller (app/home/dashboard/page.tsx) doesn't need
@@ -124,51 +122,21 @@ export function HouseholdDashboard({
         <span>{t("home.myOwnList")}</span>
       </Link>
 
-      <section className="space-y-2">
-        <div className="flex items-center justify-between">
-          <h2 className="hl-label text-ink-muted">{t("hlists.lists")}</h2>
-          {openCount > 0 ? (
-            <span className="hl-caption rounded-pill bg-primary-tint px-2 py-0.5 text-primary">
-              {t("hlists.openLists", { count: openCount })}
-            </span>
-          ) : null}
-        </div>
-
-        {recentLists.length === 0 ? (
-          <Card>
-            <p className="hl-heading text-ink">{t("hlists.noLists")}</p>
-            <p className="hl-caption mt-1">{t("hlists.noListsHint")}</p>
-          </Card>
-        ) : (
-          <ul className="flex flex-col gap-3">
-            {recentLists.map((list) => {
-              const total = Number(list.total_items);
-              const purchased = Number(list.purchased_items);
-              return (
-                <li key={list.id}>
-                  <Link
-                    href={`/home/lists/${list.id}`}
-                    className={`flex flex-col gap-2 rounded-lg border bg-surface p-4 shadow-sm active:bg-surface-2 ${
-                      list.status === "sent" ? "border-primary" : "border-line"
-                    }`}
-                  >
-                    <span className="hl-heading min-w-0 truncate text-ink">
-                      {t("hlists.from", {
-                        name: list.created_by_name ?? t("hlists.someone"),
-                      })}
-                    </span>
-                    <Progress
-                      purchased={purchased}
-                      total={total}
-                      percent={total ? Math.round((purchased / total) * 100) : 0}
-                    />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
+      {/* The full list inbox lives at /home/lists (ListsInbox.tsx) —
+          repeating it here duplicated that screen exactly, so this
+          screen keeps only the one actionable list up top (heroList)
+          and links out via "My Lists" / the bottom tab instead. */}
+      {openCount > 0 ? (
+        <Link
+          href="/home/lists"
+          className="flex items-center justify-between rounded-lg border border-line bg-surface px-5 py-4 shadow-sm active:bg-surface-2"
+        >
+          <span className="hl-label text-ink-muted">{t("hlists.lists")}</span>
+          <span className="hl-caption rounded-pill bg-primary-tint px-2 py-0.5 text-primary">
+            {t("hlists.openLists", { count: openCount })}
+          </span>
+        </Link>
+      ) : null}
     </Screen>
   );
 }
