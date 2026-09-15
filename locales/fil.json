@@ -207,6 +207,7 @@
     "none": "Walang bago",
     "noneHint": "Makikita mo dito kapag may naipadala, nabuksan o natapos na listahan.",
     "listSent": "Nagpadala ng listahan si {name}",
+    "listSentReminder": "Paalala: hindi pa nabubuksan ang listahan ni {name}",
     "listViewed": "Binuksan ni {name} ang listahan mo",
     "clear": "Burahin lahat",
     "clearConfirm": "Burahin ang lahat ng abiso? Hindi na ito maibabalik.",

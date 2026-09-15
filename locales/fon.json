@@ -207,6 +207,7 @@
     "none": "Nǔ yɔyɔ ɖebǔ kú ó",
     "noneHint": "A ná mɔ nǔ fí ee távo ɖé sɛ́n, hun, alɔ fó ɔ.",
     "listSent": "{name} sɛ́n távo ɖé",
+    "listSentReminder": "Flín: távo {name} tɔn ka hun ǎ",
     "listViewed": "{name} hun távo towe",
     "clear": "Súnsún bǐ",
     "clearConfirm": "Á jló ná súnsún wɛnsagbè lɛ́ bǐ à? È sixu lɛ́ vɔ́ ɖó te ǎ.",

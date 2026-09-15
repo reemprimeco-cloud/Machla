@@ -207,6 +207,7 @@
     "none": "Nothing new",
     "noneHint": "You'll see here when a list is sent, opened or finished.",
     "listSent": "{name} sent a list",
+    "listSentReminder": "Reminder: {name}'s list is still waiting",
     "listViewed": "{name} opened your list",
     "clear": "Clear all",
     "clearConfirm": "Clear all notifications? This can't be undone.",

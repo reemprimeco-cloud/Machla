@@ -258,6 +258,9 @@ export interface Database {
           // 20260812140000_push_notifications.sql — when a push was
           // dispatched for this row, set by mark_pushes_sent.
           pushed_at: string | null;
+          // 20260915000000_list_sent_reminder_push.sql — when the one-time
+          // follow-up push was attempted, set by sendListSentReminders.
+          reminder_sent_at: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["notifications"]["Row"]> & {
           user_id: string;

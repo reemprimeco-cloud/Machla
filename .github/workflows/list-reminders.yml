@@ -1,0 +1,31 @@
+name: List reminder pushes
+
+# WHY THIS EXISTS: app/api/cron/list-reminders/route.ts needs to run on a
+# schedule, and this project's Vercel Hobby plan only fires Vercel Cron
+# once a day — far too coarse to nudge someone a few minutes after an
+# unopened "list sent" push (see keep-warm.yml, which hit the same
+# limitation for a different reason). A repo-native scheduled workflow
+# fires the route instead.
+#
+# Scheduled workflows only ever run the copy of this file that lives on
+# the repository's default branch, regardless of what other branches
+# contain — keep that in mind if this ever needs editing from elsewhere.
+#
+# Requires a repo secret CRON_SECRET matching the Vercel project's
+# CRON_SECRET env var, and LIST_REMINDER_DELAY_MINUTES (optional,
+# defaults to 15) to control how long a push waits before the reminder.
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger reminder sweep
+        run: |
+          curl --fail --silent --show-error --max-time 30 \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            https://machla.reemora.app/api/cron/list-reminders

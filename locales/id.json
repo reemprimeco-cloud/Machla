@@ -207,6 +207,7 @@
     "none": "Tidak ada yang baru",
     "noneHint": "Anda akan melihat di sini saat daftar dikirim, dibuka atau selesai.",
     "listSent": "{name} mengirim daftar",
+    "listSentReminder": "Pengingat: daftar dari {name} belum dibuka",
     "listViewed": "{name} membuka daftar Anda",
     "clear": "Hapus semua",
     "clearConfirm": "Hapus semua notifikasi? Tindakan ini tidak dapat dibatalkan.",

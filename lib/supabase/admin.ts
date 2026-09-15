@@ -11,14 +11,21 @@ import type { Database } from "./database.types";
  * `lib/supabase/server.ts`) uses only the public anon key — RLS is what
  * authorizes them, not their own privilege (docs/architecture/10-security-model.md).
  *
- * This one exists for exactly one job that genuinely cannot be done any
- * other way: deleting a user's own `auth.users` row
- * (`lib/auth/deleteAccount.ts`). There is no self-service "delete my own
- * auth account" method — only `auth.admin.deleteUser`, which only the
- * service role may call. Nothing else in this codebase should reach for
- * this client; if a feature seems to need it, that is a sign to look for
- * the RLS policy or SECURITY DEFINER RPC that should be doing the job
- * instead.
+ * Two jobs reach for it, both because they genuinely cannot be done any
+ * other way:
+ *
+ *   - Deleting a user's own `auth.users` row (`lib/auth/deleteAccount.ts`).
+ *     There is no self-service "delete my own auth account" method — only
+ *     `auth.admin.deleteUser`, which only the service role may call.
+ *   - The list-reminder sweep (`lib/push/send.ts` sendListSentReminders,
+ *     `app/api/cron/list-reminders/route.ts`). It runs from a schedule,
+ *     not a signed-in caller, so there is no `auth.uid()` an RLS policy or
+ *     a SECURITY DEFINER RPC could scope it to — unlike every other push
+ *     path, which reads back the CALLER's own action.
+ *
+ * Nothing else in this codebase should reach for this client; if a
+ * feature seems to need it, that is a sign to look for the RLS policy or
+ * SECURITY DEFINER RPC that should be doing the job instead.
  *
  * `SUPABASE_SERVICE_ROLE_KEY` lives in the server-side environment only:
  * never `NEXT_PUBLIC_*`, never in the repository, never pasted into a

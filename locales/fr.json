@@ -207,6 +207,7 @@
     "none": "Rien de nouveau",
     "noneHint": "Vous verrez ici quand une liste est envoyée, ouverte ou terminée.",
     "listSent": "{name} a envoyé une liste",
+    "listSentReminder": "Rappel : la liste de {name} attend toujours",
     "listViewed": "{name} a ouvert votre liste",
     "clear": "Tout effacer",
     "clearConfirm": "Effacer toutes les notifications ? Cette action est irréversible.",

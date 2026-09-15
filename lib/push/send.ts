@@ -5,6 +5,7 @@ import webpush from "web-push";
 import { branding } from "@/lib/branding";
 import { getMessage, getMessages } from "@/lib/i18n/messages";
 import type { MessageKey } from "@/lib/i18n/messages";
+import { createAdminClient } from "@/lib/supabase/admin";
 import type { NotificationType } from "@/lib/supabase/database.types";
 import { createClient } from "@/lib/supabase/server";
 
@@ -185,6 +186,154 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
     // The HTTP/2 session outlives the sends unless it is closed, and a
     // serverless invocation that never becomes idle is one that gets
     // killed mid-flight rather than frozen for reuse.
+    apns?.close();
+  }
+}
+
+export interface ReminderSweepResult {
+  candidates: number;
+  sent: number;
+}
+
+/**
+ * One-time follow-up push for a `list_sent` notification nobody has
+ * opened yet — see 20260915000000_list_sent_reminder_push.sql for why
+ * this reuses that type instead of minting a new one, and why it needs
+ * the service-role client rather than get_pending_pushes: unlike
+ * sendPendingPushes, there is no signed-in caller here to scope an RPC
+ * to — this runs from app/api/cron/list-reminders/route.ts, on a
+ * schedule, across every household at once.
+ *
+ * `reminder_sent_at` is stamped on every candidate row this sweep looks
+ * at, whether or not a push actually went out — a recipient who never
+ * enabled push, or whose only subscription is stale, must not be
+ * rescanned (and logged as a candidate) on every future run. That is a
+ * deliberate difference from `pushed_at`, which is only set on an
+ * actually-successful send.
+ */
+export async function sendListSentReminders(delayMinutes: number): Promise<ReminderSweepResult> {
+  const web = isPushConfigured() && ensureVapid();
+  const apns = createApnsSender();
+  if (!web && !apns) {
+    console.error("[push] reminders: not configured");
+    return { candidates: 0, sent: 0 };
+  }
+
+  const admin = createAdminClient();
+  if (!admin) {
+    console.error("[push] reminders: admin client not configured");
+    return { candidates: 0, sent: 0 };
+  }
+
+  try {
+    const cutoff = new Date(Date.now() - delayMinutes * 60_000).toISOString();
+
+    // Capped per run: a household inbox this backed up needs attention
+    // beyond a push reminder, and an unbounded sweep sharing one APNs
+    // connection is exactly the kind of long tail that should stay off
+    // this function's critical path.
+    const { data: stale, error } = await admin
+      .from("notifications")
+      .select("id, user_id, list_id, actor_name")
+      .eq("type", "list_sent")
+      .is("read_at", null)
+      .is("reminder_sent_at", null)
+      .not("pushed_at", "is", null)
+      .lt("pushed_at", cutoff)
+      .limit(200);
+
+    if (error) {
+      console.error("[push] reminders: query error:", error.message);
+      return { candidates: 0, sent: 0 };
+    }
+    if (!stale || stale.length === 0) return { candidates: 0, sent: 0 };
+
+    const userIds = [...new Set(stale.map((row) => row.user_id))];
+    const [{ data: users }, { data: subs }] = await Promise.all([
+      admin.from("users").select("id, preferred_language").in("id", userIds),
+      admin
+        .from("push_subscriptions")
+        .select("user_id, endpoint, p256dh, auth_key, platform")
+        .in("user_id", userIds),
+    ]);
+
+    const languageByUser = new Map((users ?? []).map((u) => [u.id, u.preferred_language]));
+    const subsByUser = new Map<string, NonNullable<typeof subs>>();
+    for (const sub of subs ?? []) {
+      const list = subsByUser.get(sub.user_id);
+      if (list) list.push(sub);
+      else subsByUser.set(sub.user_id, [sub]);
+    }
+
+    const staleEndpoints: string[] = [];
+    let sentCount = 0;
+
+    await Promise.all(
+      stale.map(async (row) => {
+        const recipientSubs = subsByUser.get(row.user_id) ?? [];
+        if (recipientSubs.length === 0) return;
+
+        const messages = getMessages(languageByUser.get(row.user_id) ?? "en");
+        const body = getMessage(messages, "notif.listSentReminder", {
+          name: row.actor_name ?? getMessage(messages, "hlists.someone"),
+        });
+        const title = branding.name;
+        const threadId = `list-${row.list_id}-list_sent`;
+        const url = `/home/lists/${row.list_id}`;
+
+        let delivered = false;
+
+        await Promise.all(
+          recipientSubs.map(async (sub) => {
+            if (sub.platform === "ios") {
+              if (!apns) return;
+              const result = await apns.send(sub.endpoint.slice(APNS_PREFIX.length), {
+                title,
+                body,
+                threadId,
+                url,
+              });
+              if (result.ok) delivered = true;
+              else if (result.gone) staleEndpoints.push(sub.endpoint);
+              return;
+            }
+
+            if (!web || !sub.p256dh || !sub.auth_key) return;
+
+            try {
+              await webpush.sendNotification(
+                { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth_key } },
+                JSON.stringify({ title, body, tag: threadId, url }),
+              );
+              delivered = true;
+            } catch (err) {
+              const statusCode = (err as { statusCode?: number }).statusCode;
+              if (statusCode === 404 || statusCode === 410) staleEndpoints.push(sub.endpoint);
+            }
+          }),
+        );
+
+        if (delivered) sentCount++;
+      }),
+    );
+
+    await admin
+      .from("notifications")
+      .update({ reminder_sent_at: new Date().toISOString() })
+      .in(
+        "id",
+        stale.map((row) => row.id),
+      );
+
+    if (staleEndpoints.length > 0) {
+      await admin.from("push_subscriptions").delete().in("endpoint", staleEndpoints);
+    }
+
+    return { candidates: stale.length, sent: sentCount };
+  } catch (err) {
+    console.error("[push] sendListSentReminders threw:", err);
+    return { candidates: 0, sent: 0 };
+  } finally {
     apns?.close();
   }
 }
