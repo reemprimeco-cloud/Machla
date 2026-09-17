@@ -4,11 +4,12 @@ name: Build Android app (TWA)
 # Trusted Web Activity — the store listing for the app, not a rewrite of
 # it; the TWA just shows the live site in Chrome full-screen.
 #
-# WHY THIS RUNS IN CI, NOT LOCALLY: Bubblewrap needs to download the
+# WHY THIS RUNS IN CI, NOT LOCALLY: Bubblewrap normally downloads the
 # Android SDK/build tools from Google's servers, which a sandboxed dev
 # environment may not have network access to. A GitHub-hosted runner
-# does, and already has a JDK — so this is the path that actually
-# produces a buildable .aab without needing a local Android Studio setup.
+# does, and already ships a JDK and Android SDK — so this is the path
+# that actually produces a buildable .aab without a local Android
+# Studio setup.
 #
 # Required repo secrets (Settings -> Secrets and variables -> Actions),
 # see android-twa/README.md for how to create them:
@@ -42,9 +43,17 @@ jobs:
       - name: Install Bubblewrap
         run: npm install --no-save @bubblewrap/cli
 
-      # `bubblewrap build` reads twa-manifest.json in this directory,
-      # downloads the Android SDK on first run, and produces
-      # app-release-signed.aab + app-release-signed.apk.
+      # Without this, `bubblewrap build` asks two interactive
+      # yes/no questions ("install the JDK?" / "install the Android
+      # SDK?") on first run, which hangs forever on a non-interactive
+      # CI runner. Pointing it at the JDK actions/setup-java just
+      # installed and the Android SDK GitHub's ubuntu-latest image
+      # already ships at $ANDROID_HOME skips both prompts.
+      - name: Point Bubblewrap at the runner's existing JDK and Android SDK
+        run: npx bubblewrap updateConfig --jdkPath "$JAVA_HOME" --androidSdkPath "$ANDROID_HOME"
+
+      # `bubblewrap build` reads twa-manifest.json in this directory
+      # and produces app-release-signed.aab + app-release-signed.apk.
       - name: Build signed app bundle
         run: |
           npx bubblewrap build \
