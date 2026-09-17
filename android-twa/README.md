@@ -17,14 +17,15 @@ inside it unmodified. No UI rewrite, no separate codebase to maintain.
 - `.github/workflows/android-twa-build.yml` — builds the signed `.aab`
   in CI (see "Why CI, not local" below).
 
-## ⚠️ Before you do anything else: the signing key
+## ⚠️ The signing key
 
-`assetlinks.json` currently contains a **demo** certificate fingerprint,
-generated in this session to validate the setup end to end. Its
-passphrase is not secret — it was typed in a chat transcript — so:
-
-**Do not use it for your real Play Store submission.** Generate your
-own before wiring up CI:
+A real production keystore has been generated (`machla-release.keystore`,
+alias `machla`) and its SHA-256 fingerprint is committed in
+`../public/.well-known/assetlinks.json`. The keystore file and its
+password were handed to the app owner directly — **the file itself is
+never committed to this repository** and does not exist anywhere in git
+history. If you need to regenerate it (e.g. it was lost with no Play App
+Signing enrollment to fall back on), use:
 
 ```bash
 keytool -genkeypair -v \
@@ -34,13 +35,15 @@ keytool -genkeypair -v \
   -dname "CN=Machla, OU=Reemora, O=Reemora, L=Kuwait City, ST=Kuwait, C=KW"
 ```
 
-Keytool will prompt for a keystore password and a key password — pick
-strong ones and store them in a password manager. **If you lose this
-key later, you cannot publish an update to an already-published app**
-under the old model — which is exactly why the next step matters.
+Modern `keytool` forces the key password to match the store password for
+PKCS12 keystores (the default type) — so `ANDROID_KEYSTORE_PASSWORD` and
+`ANDROID_KEY_PASSWORD` below are the same value. Store it in a password
+manager. **If you lose this key later, you cannot publish an update to an
+already-published app** under the old model — which is exactly why the
+next step matters.
 
 Then get its fingerprint and put it in `../public/.well-known/assetlinks.json`,
-replacing the demo one:
+replacing the one already there:
 
 ```bash
 keytool -list -v -keystore machla-release.keystore -alias machla | grep SHA256
@@ -71,16 +74,18 @@ have normal internet access.
 
 ## Finishing the build
 
-1. Regenerate the keystore (above) and update `assetlinks.json`'s
-   fingerprint, then deploy that change (it needs to be live on
-   `machla.reemora.app` for Google to verify ownership).
+1. ✅ Done — the real keystore is generated and `assetlinks.json`'s
+   fingerprint is committed. **Merge/deploy this branch** so the updated
+   `assetlinks.json` is live on `machla.reemora.app` — Google verifies
+   ownership by fetching it from the live host, not from git.
 2. Add these as GitHub repo secrets (Settings → Secrets and variables →
-   Actions):
+   Actions) — the keystore file and password were sent to you directly,
+   not committed here:
    - `ANDROID_KEYSTORE_BASE64` — `base64 -w0 machla-release.keystore`
    - `ANDROID_KEYSTORE_PASSWORD`
-   - `ANDROID_KEY_ALIAS` — `machla`, unless you changed it in
-     `twa-manifest.json`
-   - `ANDROID_KEY_PASSWORD`
+   - `ANDROID_KEY_ALIAS` — `machla`
+   - `ANDROID_KEY_PASSWORD` — same value as `ANDROID_KEYSTORE_PASSWORD`
+     (PKCS12 keystores require the two to match)
 3. Run the "Build Android app (TWA)" workflow from the Actions tab
    (`workflow_dispatch` — manual trigger). Download the `.aab` from the
    run's artifacts.

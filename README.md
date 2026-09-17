@@ -39,6 +39,8 @@ supabase/migrations/        schema, RLS policies and every write RPC
 supabase/tests/             295 SQL assertions, run as `authenticated`
 catalog-import/             catalogue data + importer (run from a laptop)
 docs/architecture/          20 documents; start at 00-index.md
+ios/                        native Swift shell wrapping the PWA, App Store
+android-twa/                Trusted Web Activity wrapper, Play Store
 ```
 
 The Next.js app sits at the repository root deliberately: it means Vercel
