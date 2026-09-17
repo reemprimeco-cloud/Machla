@@ -77,18 +77,27 @@ jobs:
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}' "$JAVA_HOME" "$ANDROID_HOME" \
             > ~/.bubblewrap/config.json
 
+      # `bubblewrap build` prompts a third time — "no checksum file was
+      # found for twa-manifest.json, regenerate the project?" — unless a
+      # manifest-checksum.txt already matches the manifest. Bubblewrap
+      # computes that checksum as a plain sha1 of the manifest's raw
+      # bytes (lib/cmds/shared.js's computeChecksum), so writing it
+      # ourselves here is equivalent to having run `bubblewrap update`
+      # already, and skips the prompt.
+      - name: Pre-seed the manifest checksum Bubblewrap expects
+        run: sha1sum twa-manifest.json | cut -d' ' -f1 | tr -d '\n' > manifest-checksum.txt
+
       # `bubblewrap build` reads twa-manifest.json in this directory
       # and produces app-release-signed.aab + app-release-signed.apk.
+      # Passwords must go through BUBBLEWRAP_KEYSTORE_PASSWORD/
+      # BUBBLEWRAP_KEY_PASSWORD — the CLI has no --password/--keyPassword
+      # flags for `build` (those are silently ignored; only `getPasswords()`
+      # reading these two env vars avoids its own interactive prompt).
       - name: Build signed app bundle
-        run: |
-          npx bubblewrap build \
-            --skipPwaValidation \
-            --password="$ANDROID_KEYSTORE_PASSWORD" \
-            --keyPassword="$ANDROID_KEY_PASSWORD"
+        run: npx bubblewrap build --skipPwaValidation
         env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
       - uses: actions/upload-artifact@v4
         with:
