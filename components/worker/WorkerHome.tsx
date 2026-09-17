@@ -52,15 +52,19 @@ export function WorkerHome({
         <CategoryGrid categories={categories} basePath={basePath} />
       </section>
 
-      <Link
-        // The worker's own sent lists live at /worker/lists; a household
-        // member's (basePath="/home/shop") live alongside everyone
-        // else's at /home/lists, not /home/shop/lists.
-        href={isWorker ? "/worker/lists" : "/home/lists"}
-        className="flex min-h-14 items-center rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
-      >
-        <span className="hl-heading text-ink">{t("notif.myLists")}</span>
-      </Link>
+      {/* A worker now reaches their sent-list history through
+          WorkerTabBar's own "My Lists" tab (app/worker/layout.tsx) —
+          this in-page link stayed only for the household side
+          (basePath="/home/shop"), which has no such tab and still needs
+          a way to /home/lists from here. */}
+      {isWorker ? null : (
+        <Link
+          href="/home/lists"
+          className="flex min-h-14 items-center rounded-lg border border-line bg-surface px-5 shadow-sm active:bg-surface-2"
+        >
+          <span className="hl-heading text-ink">{t("notif.myLists")}</span>
+        </Link>
+      )}
 
       {isWorker ? <AccountActions /> : null}
     </Screen>

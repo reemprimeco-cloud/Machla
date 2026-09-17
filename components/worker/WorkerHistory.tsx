@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import { Card, Screen } from "@/components/ui/Primitives";
 import { Progress } from "@/components/household/ListsInbox";
 import type { HouseholdList } from "@/lib/list/household";
@@ -59,13 +57,6 @@ export function WorkerHistory({ lists }: { lists: HouseholdList[] }) {
           })}
         </ul>
       )}
-
-      <Link
-        href="/worker"
-        className="hl-label text-center text-primary underline"
-      >
-        {t("common.back")}
-      </Link>
     </Screen>
   );
 }

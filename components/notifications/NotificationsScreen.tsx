@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 
 import { HomeTabBar } from "@/components/household/HomeTabBar";
 import { Card, Screen } from "@/components/ui/Primitives";
+import { WorkerTabBar } from "@/components/worker/WorkerTabBar";
 import {
   clearNotificationsAction,
   setNotificationPreferenceAction,
@@ -51,11 +52,10 @@ export function NotificationsScreen({
 }: {
   notifications: Notification[];
   preferences: NotificationPreferences;
-  /** A worker has no tab bar of their own (WorkerBar's back arrow is the
-   * only way here), so that variant keeps the explicit "Back" link. An
-   * owner/member already has the household tab bar's own Notifications
-   * tab as "you are here" — this variant renders that bar instead,
-   * rather than a redundant link back to a page also reachable by tab. */
+  /** Both tracks now have their own persistent tab bar with a
+   * Notifications tab, so this screen renders whichever one matches the
+   * caller instead of a plain "Back" link — "you are here" is what the
+   * active tab already says, not a second way back. */
   variant: "household" | "worker";
 }) {
   const { t, locale } = useLocale();
@@ -133,20 +133,12 @@ export function NotificationsScreen({
         </Card>
       </section>
 
-      {variant === "worker" ? (
-        <Link
-          href="/worker"
-          className="hl-label text-center text-primary underline"
-        >
-          {t("common.back")}
-        </Link>
-      ) : (
-        // Reserves the same space a fixed HomeTabBar needs everywhere
-        // else under /home — this page sits outside that layout (see the
-        // prop comment above), so it has to add the padding itself.
-        <div className="pb-16" aria-hidden />
-      )}
-      {variant === "household" ? <HomeTabBar /> : null}
+      {/* Reserves the space each track's fixed tab bar needs everywhere
+          else under /home or /worker — this page sits outside both
+          layouts (it's the shared top-level /notifications route), so
+          it has to add the padding itself. */}
+      <div className="pb-16" aria-hidden />
+      {variant === "household" ? <HomeTabBar /> : <WorkerTabBar />}
     </Screen>
   );
 }

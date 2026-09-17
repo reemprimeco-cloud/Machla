@@ -12,7 +12,10 @@ type Tab = "homes" | "notifications" | "settings";
  * (stroke width 1.9, round joins), which renders identically across
  * platforms and languages; an emoji glyph varies by OS font and some
  * (⚙️) render inconsistently in RTL browsers. */
-function HomeGlyph() {
+/** Exported so components/worker/WorkerTabBar.tsx can render the same
+ * glyphs for its "Home" and "Notifications" tabs — one icon per meaning,
+ * not a redrawn lookalike per track. */
+export function HomeGlyph() {
   return (
     <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
       <path
@@ -25,7 +28,7 @@ function HomeGlyph() {
   );
 }
 
-function BellGlyph() {
+export function BellGlyph() {
   return (
     <svg width="23" height="23" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
       <path
