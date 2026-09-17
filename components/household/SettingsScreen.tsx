@@ -18,7 +18,15 @@ import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
  * card-per-action pattern the household dashboard uses — this screen is
  * a flat list of account facts and destinations, not a set of cards to
  * browse. People/Invitations moved here from the dashboard (2026-08
- * feedback) so the dashboard stays focused on the lists themselves. */
+ * feedback) so the dashboard stays focused on the lists themselves.
+ *
+ * Three named groups (البيت / عام / الحساب — reusing home.title and
+ * settings.general rather than minting redundant headings) replace what
+ * used to be eight same-weight sections stacked flat (2026-09 request:
+ * the screen had grown into an unstructured scroll — Profile,
+ * Subscription, General, Push, People/Invitations, Admin, Logout, Danger
+ * Zone, each its own heading). Grouping is presentation only: every
+ * link, action and RPC underneath is unchanged. */
 export function SettingsScreen({
   phoneNumber,
   displayName,
@@ -100,30 +108,44 @@ export function SettingsScreen({
         </Card>
       </section>
 
+      {/* البيت — the household this account belongs to. */}
       <section className="space-y-2">
-        <h2 className="hl-label text-ink-muted">{t("settings.subscription")}</h2>
-        <Link
-          href="/home/paywall"
-          className="flex items-center justify-between rounded-lg border border-line bg-surface px-5 py-4 shadow-sm active:bg-surface-2"
-        >
-          <span className="hl-body text-ink">
-            {subscriptionStatus === "active" || subscriptionStatus === "grace_period"
-              ? t("settings.subscriptionActive")
-              : trialActive
-                ? t("paywall.trialDaysLeft", { days: trialDaysLeft })
-                : subscriptionStatus === "none"
-                  ? t("paywall.trialExpired")
-                  : t("paywall.subscriptionExpired")}
-          </span>
-          <span className="hl-caption flex items-center gap-2 text-primary">
-            {subscriptionHasAccess ? t("settings.manageSubscription") : t("paywall.subscribe")}
-            <span aria-hidden className="rtl:-scale-x-100">
-              ›
+        <h2 className="hl-label text-ink-muted">{t("home.title")}</h2>
+        <Card className="overflow-hidden !p-0">
+          <Link
+            href="/home/members"
+            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+          >
+            <span className="hl-body text-ink">{t("home.people")}</span>
+            <span className="hl-caption flex items-center gap-2 text-ink-muted">
+              {t("home.peopleCount", { count: memberCount })}
+              <span aria-hidden className="rtl:-scale-x-100">
+                ›
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
+          {/* Invitation management is owner-only — the route itself also
+              redirects a non-owner, and the RPCs refuse them regardless
+              (docs/architecture/04-roles-permission-matrix.md). */}
+          {role === "owner" ? (
+            <Link
+              href="/home/invitations"
+              className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+            >
+              <span className="hl-body text-ink">{t("home.invitations")}</span>
+              <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
+                ›
+              </span>
+            </Link>
+          ) : null}
+        </Card>
       </section>
 
+      {/* عام — language, notifications, and the static info pages.
+          PushToggle keeps its own Card (it can render nothing at all on
+          an unsupported platform, so it can't be a row inside one list
+          without leaving a dangling border) but still sits under this
+          same heading. */}
       <section className="space-y-2">
         <h2 className="hl-label text-ink-muted">{t("settings.general")}</h2>
         <Card className="overflow-hidden !p-0">
@@ -175,73 +197,65 @@ export function SettingsScreen({
             </span>
           </Link>
         </Card>
-      </section>
-
-      <section className="space-y-2">
         <PushToggle />
       </section>
 
+      {/* الحساب — billing, operator access, and leaving. Subscription
+          and Admin used to be their own full-width bordered links; they
+          become rows in one list here, same destinations and copy. */}
       <section className="space-y-2">
-        <h2 className="hl-label text-ink-muted">{t("home.title")}</h2>
+        <h2 className="hl-label text-ink-muted">{t("settings.groupAccount")}</h2>
         <Card className="overflow-hidden !p-0">
           <Link
-            href="/home/members"
+            href="/home/paywall"
             className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
           >
-            <span className="hl-body text-ink">{t("home.people")}</span>
-            <span className="hl-caption flex items-center gap-2 text-ink-muted">
-              {t("home.peopleCount", { count: memberCount })}
+            <span className="hl-body text-ink">
+              {subscriptionStatus === "active" || subscriptionStatus === "grace_period"
+                ? t("settings.subscriptionActive")
+                : trialActive
+                  ? t("paywall.trialDaysLeft", { days: trialDaysLeft })
+                  : subscriptionStatus === "none"
+                    ? t("paywall.trialExpired")
+                    : t("paywall.subscriptionExpired")}
+            </span>
+            <span className="hl-caption flex items-center gap-2 text-primary">
+              {subscriptionHasAccess ? t("settings.manageSubscription") : t("paywall.subscribe")}
               <span aria-hidden className="rtl:-scale-x-100">
                 ›
               </span>
             </span>
           </Link>
-          {/* Invitation management is owner-only — the route itself also
-              redirects a non-owner, and the RPCs refuse them regardless
-              (docs/architecture/04-roles-permission-matrix.md). */}
-          {role === "owner" ? (
+          {/* Visible only to the one operator account (lib/admin/guard.ts)
+              — the route has no other way in: no address bar inside the
+              native shell, and deliberately no link anyone else would
+              see. */}
+          {isAdmin ? (
             <Link
-              href="/home/invitations"
+              href="/admin"
               className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
             >
-              <span className="hl-body text-ink">{t("home.invitations")}</span>
+              <span className="hl-body text-ink">{t("settings.admin")}</span>
               <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
                 ›
               </span>
             </Link>
           ) : null}
         </Card>
-      </section>
 
-      {/* Visible only to the one operator account (lib/admin/guard.ts) —
-          the route has no other way in: no address bar inside the
-          native shell, and deliberately no link anyone else would see. */}
-      {isAdmin ? (
-        <section className="space-y-2">
-          <h2 className="hl-label text-ink-muted">{t("settings.admin")}</h2>
-          <Link
-            href="/admin"
-            className="flex min-h-14 items-center justify-between rounded-lg border border-line bg-surface px-4 shadow-sm active:bg-surface-2"
-          >
-            <span className="hl-body text-ink">{t("settings.admin")}</span>
-            <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
-              ›
-            </span>
-          </Link>
-        </section>
-      ) : null}
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={signingOut}
+          className="hl-label min-h-12 w-full rounded-lg border border-danger px-4 text-danger disabled:opacity-60"
+        >
+          {t("common.logout")}
+        </button>
 
-      <button
-        type="button"
-        onClick={handleLogout}
-        disabled={signingOut}
-        className="hl-label min-h-12 rounded-lg border border-danger px-4 text-danger disabled:opacity-60"
-      >
-        {t("common.logout")}
-      </button>
-
-      <section className="space-y-2">
-        <h2 className="hl-label text-ink-muted">{t("settings.dangerZone")}</h2>
+        {/* Kept as its own labeled zone even inside this group — folding
+            a destructive, irreversible action into an unmarked row
+            would read as no different from Logout above it. */}
+        <p className="hl-caption pt-2 text-ink-faint">{t("settings.dangerZone")}</p>
         <ErrorText>{deleteError}</ErrorText>
         <button
           type="button"

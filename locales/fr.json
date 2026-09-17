@@ -101,7 +101,8 @@
     "subscriptionActive": "Actif",
     "manageSubscription": "Gérer",
     "guide": "Mode d'emploi",
-    "admin": "Administration"
+    "admin": "Administration",
+    "groupAccount": "Compte"
   },
   "members": {
     "title": "Personnes",

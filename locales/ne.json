@@ -101,7 +101,8 @@
     "subscriptionActive": "सक्रिय",
     "manageSubscription": "व्यवस्थापन गर्नुहोस्",
     "guide": "प्रयोग गर्ने तरिका",
-    "admin": "एडमिन"
+    "admin": "एडमिन",
+    "groupAccount": "खाता"
   },
   "members": {
     "title": "मानिसहरू",

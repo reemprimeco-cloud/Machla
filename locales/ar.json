@@ -101,7 +101,8 @@
     "subscriptionActive": "نشط",
     "manageSubscription": "إدارة",
     "guide": "طريقة الاستخدام",
-    "admin": "لوحة التحكم"
+    "admin": "لوحة التحكم",
+    "groupAccount": "الحساب"
   },
   "members": {
     "title": "الأشخاص",

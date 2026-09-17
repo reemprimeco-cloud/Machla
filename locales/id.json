@@ -101,7 +101,8 @@
     "subscriptionActive": "Aktif",
     "manageSubscription": "Kelola",
     "guide": "Cara Penggunaan",
-    "admin": "Admin"
+    "admin": "Admin",
+    "groupAccount": "Akun"
   },
   "members": {
     "title": "Orang",

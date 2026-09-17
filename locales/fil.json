@@ -101,7 +101,8 @@
     "subscriptionActive": "Aktibo",
     "manageSubscription": "Pamahalaan",
     "guide": "Paano Gamitin",
-    "admin": "Admin"
+    "admin": "Admin",
+    "groupAccount": "Account"
   },
   "members": {
     "title": "Mga tao",
