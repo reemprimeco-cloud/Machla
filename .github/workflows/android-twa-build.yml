@@ -77,15 +77,19 @@ jobs:
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}' "$JAVA_HOME" "$ANDROID_HOME" \
             > ~/.bubblewrap/config.json
 
-      # `bubblewrap build` prompts a third time — "no checksum file was
-      # found for twa-manifest.json, regenerate the project?" — unless a
-      # manifest-checksum.txt already matches the manifest. Bubblewrap
-      # computes that checksum as a plain sha1 of the manifest's raw
-      # bytes (lib/cmds/shared.js's computeChecksum), so writing it
-      # ourselves here is equivalent to having run `bubblewrap update`
-      # already, and skips the prompt.
-      - name: Pre-seed the manifest checksum Bubblewrap expects
-        run: sha1sum twa-manifest.json | cut -d' ' -f1 | tr -d '\n' > manifest-checksum.txt
+      # This repo only ever committed twa-manifest.json, never the
+      # generated Android Studio/Gradle project (gradlew, app/, etc.) —
+      # `bubblewrap build` doesn't generate that project itself, it just
+      # runs ./gradlew, so a bare checkout has no gradlew to run
+      # ("./gradlew: not found"). `bubblewrap update` is what generates
+      # the project from twa-manifest.json (the same step `init` runs
+      # after asking its questions), and also writes the
+      # manifest-checksum.txt that `build` checks for, so `build` sees a
+      # match and doesn't prompt to regenerate again right after.
+      # --skipVersionUpgrade avoids a separate interactive prompt for a
+      # new appVersionName (twa-manifest.json's version stays as committed).
+      - name: Generate the Android project from twa-manifest.json
+        run: npx bubblewrap update --skipVersionUpgrade
 
       # `bubblewrap build` reads twa-manifest.json in this directory
       # and produces app-release-signed.aab + app-release-signed.apk.
