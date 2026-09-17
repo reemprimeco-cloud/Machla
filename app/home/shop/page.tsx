@@ -31,6 +31,7 @@ export default async function ShopPage() {
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
       basePath="/home/shop"
+      backHref="/home/dashboard"
     />
   );
 }

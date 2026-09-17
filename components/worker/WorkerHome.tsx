@@ -17,6 +17,7 @@ export function WorkerHome({
   itemCount,
   unreadCount,
   basePath = "/worker",
+  backHref,
 }: {
   householdName: string;
   categories: Category[];
@@ -28,6 +29,12 @@ export function WorkerHome({
    * chrome) are skipped in that case: those live in the Settings tab on
    * the household side, so showing them here would be redundant. */
   basePath?: string;
+  /** Unset for the worker's own `/worker` root — it IS their home
+   * screen, so a "back" link would go nowhere meaningful. The household
+   * side passes "/home/dashboard": this screen is one stop on the
+   * owner's shopping flow, not a home screen of its own, and needed an
+   * explicit way back beyond the bottom tab bar (2026-09 feedback). */
+  backHref?: string;
 }) {
   const { t } = useLocale();
   const isWorker = basePath === "/worker";
@@ -36,6 +43,7 @@ export function WorkerHome({
     <Screen>
       <WorkerBar
         title={householdName}
+        backHref={backHref}
         itemCount={itemCount}
         unreadCount={unreadCount}
         basePath={basePath}
