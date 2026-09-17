@@ -43,14 +43,21 @@ jobs:
       - name: Install Bubblewrap
         run: npm install --no-save @bubblewrap/cli
 
-      # Without this, `bubblewrap build` asks two interactive
-      # yes/no questions ("install the JDK?" / "install the Android
-      # SDK?") on first run, which hangs forever on a non-interactive
-      # CI runner. Pointing it at the JDK actions/setup-java just
-      # installed and the Android SDK GitHub's ubuntu-latest image
-      # already ships at $ANDROID_HOME skips both prompts.
+      # Without this, `bubblewrap build` asks two interactive yes/no
+      # questions ("install the JDK?" / "install the Android SDK?") the
+      # first time it runs, which hangs forever on a non-interactive CI
+      # runner — `bubblewrap updateConfig` doesn't avoid this, since it
+      # also loads/creates the config (and so still prompts) before
+      # applying its own arguments. Writing ~/.bubblewrap/config.json
+      # directly, in the trivial shape @bubblewrap/core's Config class
+      # reads, points it at the JDK actions/setup-java just installed
+      # and the Android SDK GitHub's ubuntu-latest image already ships
+      # at $ANDROID_HOME, so neither prompt is ever reached.
       - name: Point Bubblewrap at the runner's existing JDK and Android SDK
-        run: npx bubblewrap updateConfig --jdkPath "$JAVA_HOME" --androidSdkPath "$ANDROID_HOME"
+        run: |
+          mkdir -p ~/.bubblewrap
+          printf '{"jdkPath":"%s","androidSdkPath":"%s"}' "$JAVA_HOME" "$ANDROID_HOME" \
+            > ~/.bubblewrap/config.json
 
       # `bubblewrap build` reads twa-manifest.json in this directory
       # and produces app-release-signed.aab + app-release-signed.apk.
