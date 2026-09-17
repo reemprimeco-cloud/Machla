@@ -195,6 +195,7 @@
     "statusViewed": "مفتوحة",
     "statusCompleted": "مكتملة",
     "markDone": "وضع علامة مكتملة",
+    "completedConfirm": "✓ تم إنهاء هذي القائمة",
     "reopen": "إعادة فتح",
     "purchased": "تم الشراء",
     "unavailable": "غير متوفر",

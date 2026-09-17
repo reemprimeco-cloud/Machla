@@ -195,6 +195,7 @@
     "statusViewed": "Opened",
     "statusCompleted": "Done",
     "markDone": "Mark as done",
+    "completedConfirm": "✓ This list is done",
     "reopen": "Reopen",
     "purchased": "Bought",
     "unavailable": "Not available",

@@ -195,6 +195,7 @@
     "statusViewed": "Ouverte",
     "statusCompleted": "Terminée",
     "markDone": "Marquer comme terminée",
+    "completedConfirm": "✓ Cette liste est terminée",
     "reopen": "Rouvrir",
     "purchased": "Acheté",
     "unavailable": "Pas disponible",

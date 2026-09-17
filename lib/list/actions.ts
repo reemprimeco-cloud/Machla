@@ -346,7 +346,17 @@ export async function setListCompletedAction(
     await sendPendingPushes(listId, "list_completed");
   }
 
-  revalidatePath("/home", "layout");
+  // Deliberately NOT `revalidatePath("/home", "layout")`: that revalidates
+  // every route sharing the /home layout, this dynamic list-detail page
+  // included — which the caller (ListChecklist.tsx) may still be sitting
+  // on right when this resolves. An archived list is invisible to
+  // getHouseholdListDetail, so a forced refetch of THIS page would 404 the
+  // person mid-checklist. Naming the two places that actually need fresh
+  // data — the dashboard's hero card and the list inbox — updates
+  // everywhere reachable *from* this screen without touching the screen
+  // itself; ListChecklist shows its own in-place confirmation instead.
+  revalidatePath("/home/dashboard");
+  revalidatePath("/home/lists");
   return { ok: true, value: undefined };
 }
 

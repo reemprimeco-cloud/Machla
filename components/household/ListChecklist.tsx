@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useOptimistic, useState, useTransition } from "react";
 
 import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
@@ -57,9 +56,9 @@ export function ListChecklist({
   backHref: string;
 }) {
   const { t, locale } = useLocale();
-  const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<ListErrorCode | null>(null);
+  const [completed, setCompleted] = useState(false);
 
   const total = Number(summary.total_items);
   const [purchased, setPurchased] = useOptimistic(
@@ -69,12 +68,14 @@ export function ListChecklist({
 
   // Completing a list archives it server-side (set_list_completed,
   // 20260812160000_archive_completed_lists.sql) — it stops being
-  // reachable at all, from either side, the moment this succeeds. So
-  // there is no "reopen" state to render here any more: this screen can
-  // only ever show a list that is still open. Navigate away immediately
-  // rather than let the automatic post-action refresh land the user on
-  // this same URL's not-found page (getHouseholdListDetail now finds
-  // nothing for an archived id).
+  // reachable at all, from either side, the moment this succeeds, so
+  // there is no "reopen" state to render here any more. Staying on this
+  // screen afterward (2026-09 request: don't bounce back to the
+  // dashboard or the list inbox) only works because
+  // setListCompletedAction deliberately does NOT revalidate this exact
+  // page — see that action's own comment. `completed` here switches the
+  // JSX below to a static confirmation instead of trying to re-fetch a
+  // list that Postgres would now refuse to return.
   function markDone() {
     setError(null);
     startTransition(async () => {
@@ -83,7 +84,7 @@ export function ListChecklist({
         setError(result.code);
         return;
       }
-      router.push(backHref);
+      setCompleted(true);
     });
   }
 
@@ -159,6 +160,7 @@ export function ListChecklist({
                       setPurchased(purchased - 1);
                   }}
                   onError={setError}
+                  readOnly={completed}
                 />
               ))}
             </ul>
@@ -170,7 +172,11 @@ export function ListChecklist({
         {error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}
       </ErrorText>
 
-      {groups.length > 0 ? (
+      {completed ? (
+        <p className="hl-label rounded-lg bg-success-tint px-4 py-3 text-center text-success">
+          {t("hlists.completedConfirm")}
+        </p>
+      ) : groups.length > 0 ? (
         // Deliberately not gated on every item being checked: a shop can
         // finish with something unavailable, and refusing to close the
         // list would only teach people to fake the boxes.
@@ -202,6 +208,7 @@ function ChecklistRow({
   status,
   onChanged,
   onError,
+  readOnly = false,
 }: {
   itemId: string;
   name: string;
@@ -215,12 +222,19 @@ function ChecklistRow({
   status: PurchaseStatus;
   onChanged: (before: PurchaseStatus, after: PurchaseStatus) => void;
   onError: (code: ListErrorCode) => void;
+  /** True once the list itself has been marked done — Postgres refuses
+   * any further purchase-status write against an archived list
+   * (assert_can_work_list), so without this a tap here would flip the
+   * checkbox optimistically and then silently revert on the error that
+   * follows. Disabling the row instead of letting that race play out. */
+  readOnly?: boolean;
 }) {
   const { t } = useLocale();
   const [, startTransition] = useTransition();
   const [optimisticStatus, setOptimisticStatus] = useOptimistic(status);
 
   function change(next: PurchaseStatus) {
+    if (readOnly) return;
     const before = optimisticStatus;
     startTransition(async () => {
       setOptimisticStatus(next);
@@ -244,9 +258,10 @@ function ChecklistRow({
         <button
           type="button"
           onClick={() => change(isPurchased ? "pending" : "purchased")}
+          disabled={readOnly}
           aria-pressed={isPurchased}
           aria-label={`${t("hlists.purchased")} — ${name}`}
-          className="flex min-h-12 shrink-0 items-center"
+          className="flex min-h-12 shrink-0 items-center disabled:opacity-70"
         >
           <span
             aria-hidden
@@ -276,9 +291,10 @@ function ChecklistRow({
         <button
           type="button"
           onClick={() => change(isPurchased ? "pending" : "purchased")}
+          disabled={readOnly}
           aria-pressed={isPurchased}
           aria-label={`${t("hlists.purchased")} — ${name}`}
-          className="flex min-h-12 flex-1 items-center gap-3 text-start"
+          className="flex min-h-12 flex-1 items-center gap-3 text-start disabled:opacity-70"
         >
           <span className="min-w-0 flex-1">
             <span
@@ -304,9 +320,10 @@ function ChecklistRow({
         <button
           type="button"
           onClick={() => change(isUnavailable ? "pending" : "unavailable")}
+          disabled={readOnly}
           aria-pressed={isUnavailable}
           aria-label={`${t("hlists.unavailable")} — ${name}`}
-          className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg ${
+          className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg disabled:opacity-70 ${
             isUnavailable
               ? "border-warning bg-warning text-white"
               : "border-line bg-surface"

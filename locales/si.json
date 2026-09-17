@@ -195,6 +195,7 @@
     "statusViewed": "විවෘත කළා",
     "statusCompleted": "අවසන්",
     "markDone": "අවසන් ලෙස සලකුණු කරන්න",
+    "completedConfirm": "✓ මෙම ලැයිස්තුව අවසන්",
     "reopen": "නැවත විවෘත කරන්න",
     "purchased": "ගත්තා",
     "unavailable": "නොමැත",

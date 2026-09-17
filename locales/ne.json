@@ -195,6 +195,7 @@
     "statusViewed": "खोलिएको",
     "statusCompleted": "सम्पन्न",
     "markDone": "सम्पन्न चिन्ह लगाउनुहोस्",
+    "completedConfirm": "✓ यो सूची पूरा भयो",
     "reopen": "पुनः खोल्नुहोस्",
     "purchased": "किनियो",
     "unavailable": "उपलब्ध छैन",
