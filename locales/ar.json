@@ -73,12 +73,13 @@
     "tabSettings": "الإعدادات",
     "tabBarLabel": "الرئيسية",
     "myOwnList": "قائمتي الخاصة",
+    "receivedLabel": "طلب وصلك من {name}",
+    "ownListLabel": "تسوّقك انتي",
+    "ownListHint": "ابدئي التسوق من هنا",
     "greetingMorning": "صباح الخير، {name}",
     "greetingAfternoon": "طاب يومك، {name}",
     "greetingEvening": "مساء الخير، {name}",
     "overview": "{openCount} قائمة مفتوحة · {memberCount} أفراد",
-    "categories": "الفئات",
-    "seeAll": "عرض الكل",
     "selecting": "جارٍ الفتح…"
   },
   "settings": {

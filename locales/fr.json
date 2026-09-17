@@ -73,12 +73,13 @@
     "tabSettings": "Réglages",
     "tabBarLabel": "Principal",
     "myOwnList": "Ma propre liste",
+    "receivedLabel": "Une demande de {name}",
+    "ownListLabel": "Vos propres courses",
+    "ownListHint": "Commencez vos courses ici",
     "greetingMorning": "Bonjour, {name}",
     "greetingAfternoon": "Bon après-midi, {name}",
     "greetingEvening": "Bonsoir, {name}",
     "overview": "{openCount} listes ouvertes · {memberCount} membres",
-    "categories": "Catégories",
-    "seeAll": "Tout voir",
     "selecting": "Ouverture…"
   },
   "settings": {

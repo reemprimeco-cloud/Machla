@@ -73,12 +73,13 @@
     "tabSettings": "सेटिंग्स",
     "tabBarLabel": "मुख्य",
     "myOwnList": "मेरी अपनी सूची",
+    "receivedLabel": "{name} की तरफ से एक अनुरोध",
+    "ownListLabel": "आपकी अपनी खरीदारी",
+    "ownListHint": "यहाँ से खरीदारी शुरू करें",
     "greetingMorning": "सुप्रभात, {name}",
     "greetingAfternoon": "शुभ दोपहर, {name}",
     "greetingEvening": "शुभ संध्या, {name}",
     "overview": "{openCount} सूचियाँ खुली हैं · {memberCount} सदस्य",
-    "categories": "श्रेणियाँ",
-    "seeAll": "सभी देखें",
     "selecting": "खोला जा रहा है…"
   },
   "settings": {

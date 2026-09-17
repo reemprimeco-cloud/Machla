@@ -73,12 +73,13 @@
     "tabSettings": "Ayidonu lɛ́",
     "tabBarLabel": "Nukɔntɔn",
     "myOwnList": "Wema ce ɖokponɔ",
+    "receivedLabel": "Biɔsin sín {name} gɔ́n",
+    "ownListLabel": "Nǔxɔxɔ towe ɖokponɔ",
+    "ownListHint": "Bɛ́ nǔxɔxɔ sín fí",
     "greetingMorning": "Ata wǒ zǎnzǎn, {name}",
     "greetingAfternoon": "Ata wǒ hwenu-adogbo, {name}",
     "greetingEvening": "Ata wǒ zǎn, {name}",
     "overview": "Távo {openCount} lɛ́ hun · Mɛ {memberCount}",
-    "categories": "Akpáxwé lɛ́",
-    "seeAll": "Kpɔ́n bǐ",
     "selecting": "É ɖò hunhun jí…"
   },
   "settings": {

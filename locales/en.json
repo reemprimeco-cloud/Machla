@@ -73,12 +73,13 @@
     "tabSettings": "Settings",
     "tabBarLabel": "Main",
     "myOwnList": "My own list",
+    "receivedLabel": "A request from {name}",
+    "ownListLabel": "Your own shopping",
+    "ownListHint": "Start shopping from here",
     "greetingMorning": "Good morning, {name}",
     "greetingAfternoon": "Good afternoon, {name}",
     "greetingEvening": "Good evening, {name}",
     "overview": "{openCount} lists open · {memberCount} people",
-    "categories": "Categories",
-    "seeAll": "See all",
     "selecting": "Opening…"
   },
   "settings": {

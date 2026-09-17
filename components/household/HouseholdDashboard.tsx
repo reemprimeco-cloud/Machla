@@ -6,8 +6,6 @@ import { MachlaLockup } from "@/components/brand/MachlaIcon";
 import { QuickInviteWorker } from "@/components/household/QuickInviteWorker";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Card, Screen } from "@/components/ui/Primitives";
-import type { Category } from "@/lib/catalog/queries";
-import { localizedName } from "@/lib/catalog/localized";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -17,10 +15,6 @@ import type { MessageKey } from "@/lib/i18n/messages";
  * kept as a prop so the caller (app/home/dashboard/page.tsx) doesn't need
  * to change its data fetching if a header badge comes back later.
  *
- * Home-screen layout follows the Machla UI Kit's home screen (greeting,
- * hero progress card, category grid, "Your lists") with one deliberate
- * subtraction: no prices, no cart, no checkout — this app was never
- * repriced, only reskinned (docs/design/BRAND.md, 2026-08 renovation).
  * People/Invitations live in Settings now, not here (2026-08 feedback)
  * — see components/household/SettingsScreen.tsx — with one exception:
  * QuickInviteWorker, right under the greeting, is a one-tap shortcut to
@@ -31,7 +25,18 @@ import type { MessageKey } from "@/lib/i18n/messages";
  * lands). It disappears once the household has a worker (`hasWorker`) —
  * at that point it would just be clutter above the list the household
  * actually came here to look at; inviting a second helper is a rarer
- * enough need that Settings → Invitations is fine for it. */
+ * enough need that Settings → Invitations is fine for it.
+ *
+ * Two lists, one screen, and they used to be easy to mix up: the
+ * gradient hero card (what a helper sent, needing this person's review)
+ * sat right above a flat "My own list" button (this person's own
+ * errand, unrelated to the helper) with nothing telling them apart but
+ * shape and color. Each now sits under its own plain-language label —
+ * "A request from {name}" / "Your own shopping" — so which is which
+ * reads before either card does (2026-09 feedback). The category grid
+ * that used to sit between them is gone entirely: it only ever
+ * previewed the same categories "My own list" opens onto, so it was a
+ * second path to the same screen, not a second capability. */
 export function HouseholdDashboard({
   householdId,
   householdName,
@@ -39,7 +44,6 @@ export function HouseholdDashboard({
   memberCount,
   recentLists,
   openCount,
-  categories,
   displayName,
   greetingKey,
 }: {
@@ -50,15 +54,15 @@ export function HouseholdDashboard({
   recentLists: HouseholdList[];
   openCount: number;
   unreadCount: number;
-  categories: Category[];
   displayName: string | null;
   greetingKey: MessageKey;
 }) {
-  const { t, locale } = useLocale();
+  const { t } = useLocale();
 
   // The freshest list still worth acting on — sent or opened, not yet
-  // completed. Shown large up top; "Your lists" below still lists it
-  // again alongside the rest, same as the kit's own home screen does.
+  // completed. Shown large up top; "Lists" below links out to the rest
+  // when there ARE any — with only one open list, that one IS this hero
+  // card, so the row would just repeat it.
   const heroList = recentLists.find((list) => list.status !== "completed");
 
   return (
@@ -94,55 +98,49 @@ export function HouseholdDashboard({
 
       <InstallGuide />
 
-      {heroList ? <HeroListCard list={heroList} /> : <EmptyHero />}
-
-      <section className="space-y-2">
-        <div className="flex items-center justify-between">
-          <h2 className="hl-label text-ink-muted">{t("home.categories")}</h2>
-          <Link href="/home/shop" className="hl-caption text-primary">
-            {t("home.seeAll")}
-          </Link>
+      {heroList ? (
+        <div className="space-y-2">
+          <p className="hl-caption text-ink-muted">
+            {t("home.receivedLabel", { name: heroList.created_by_name ?? t("hlists.someone") })}
+          </p>
+          <HeroListCard list={heroList} />
         </div>
-        <ul className="grid grid-cols-3 gap-3">
-          {categories.slice(0, 6).map((category) => (
-            <li key={category.id}>
-              <Link
-                href={
-                  category.is_capture
-                    ? "/home/shop/photo"
-                    : `/home/shop/c/${category.key}`
-                }
-                className="flex min-h-20 flex-col items-center justify-center gap-1.5 rounded-lg border border-line bg-surface px-2 py-3 text-center shadow-sm active:bg-surface-2"
-              >
-                <span aria-hidden className="text-2xl leading-none">
-                  {category.icon ?? "📦"}
-                </span>
-                <span className="hl-caption w-full min-w-0 truncate text-ink">
-                  {localizedName(category, locale)}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      ) : (
+        <EmptyHero />
+      )}
 
       {/* Same mechanism a helper uses to build and send a list
           (app/home/shop/*, a `basePath`-scoped reuse of the worker
           screens) — for the things the owner/member wants to buy
-          themselves, not through a helper. */}
-      <Link
-        href="/home/shop"
-        className="hl-label flex min-h-14 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-on-primary shadow-sm active:bg-primary-hover"
-      >
-        <span aria-hidden>🧺</span>
-        <span>{t("home.myOwnList")}</span>
-      </Link>
+          themselves, not through a helper. Styled as a sibling of
+          HeroListCard (same shape, neutral instead of gradient — the
+          gradient CTA slot above is already spent) rather than a flat
+          button, so the two read as one family: "here's a list", twice,
+          each labeled with whose it is. */}
+      <div className="space-y-2">
+        <p className="hl-caption text-ink-muted">{t("home.ownListLabel")}</p>
+        <Link
+          href="/home/shop"
+          className="flex items-center justify-between gap-4 rounded-lg border border-line bg-surface p-5 shadow-sm active:bg-surface-2"
+        >
+          <div className="min-w-0">
+            <p className="hl-heading text-ink">{t("home.myOwnList")}</p>
+            <p className="hl-caption mt-1">{t("home.ownListHint")}</p>
+          </div>
+          <span
+            aria-hidden
+            className="flex size-11 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-xl"
+          >
+            🧺
+          </span>
+        </Link>
+      </div>
 
-      {/* The full list inbox lives at /home/lists (ListsInbox.tsx) —
-          repeating it here duplicated that screen exactly, so this
-          screen keeps only the one actionable list up top (heroList)
-          and links out via "My Lists" / the bottom tab instead. */}
-      {openCount > 0 ? (
+      {/* The full list inbox lives at /home/lists (ListsInbox.tsx).
+          Shown only past one open list: with zero or one, heroList above
+          already covers it, and this row would just repeat the same
+          list under a second link. */}
+      {openCount > 1 ? (
         <Link
           href="/home/lists"
           className="flex items-center justify-between rounded-lg border border-line bg-surface px-5 py-4 shadow-sm active:bg-surface-2"
@@ -161,7 +159,11 @@ export function HouseholdDashboard({
  * allowed (app/globals.css: "the mark, hero panels, the single gradient
  * CTA per screen"). A ring rather than a bar here, matching the kit's
  * home screen; the checklist itself (ListDetail) keeps the bar, where a
- * long list makes a ring harder to read at a glance. */
+ * long list makes a ring harder to read at a glance.
+ *
+ * No "from {name}" line inside the card anymore — the caller already
+ * puts that above it as this whole area's label (home.receivedLabel),
+ * so repeating the name in here would say it twice. */
 function HeroListCard({ list }: { list: HouseholdList }) {
   const { t } = useLocale();
 
@@ -179,10 +181,7 @@ function HeroListCard({ list }: { list: HouseholdList }) {
       className="hl-gradient-cta relative flex items-center justify-between gap-4 overflow-hidden rounded-lg p-5"
     >
       <div className="min-w-0">
-        <p className="hl-caption text-on-primary/80 uppercase tracking-wide">
-          {t("hlists.from", { name: list.created_by_name ?? t("hlists.someone") })}
-        </p>
-        <p className="hl-title mt-1 text-on-primary">
+        <p className="hl-title text-on-primary">
           {remaining > 0
             ? t("hlists.itemsLeft", { count: remaining })
             : t("hlists.allDone")}

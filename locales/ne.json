@@ -73,12 +73,13 @@
     "tabSettings": "सेटिङहरू",
     "tabBarLabel": "मुख्य",
     "myOwnList": "मेरो आफ्नै सूची",
+    "receivedLabel": "{name} बाट अनुरोध",
+    "ownListLabel": "तपाईंको आफ्नै किनमेल",
+    "ownListHint": "यहाँबाट किनमेल सुरु गर्नुहोस्",
     "greetingMorning": "शुभ प्रभात, {name}",
     "greetingAfternoon": "शुभ दिउँसो, {name}",
     "greetingEvening": "शुभ साँझ, {name}",
     "overview": "{openCount} सूचीहरू खुला छन् · {memberCount} सदस्यहरू",
-    "categories": "श्रेणीहरू",
-    "seeAll": "सबै हेर्नुहोस्",
     "selecting": "खोलिँदैछ…"
   },
   "settings": {

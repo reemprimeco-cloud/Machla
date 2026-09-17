@@ -73,12 +73,13 @@
     "tabSettings": "ترتیبات",
     "tabBarLabel": "مرکزی",
     "myOwnList": "میری اپنی فہرست",
+    "receivedLabel": "{name} کی طرف سے درخواست",
+    "ownListLabel": "آپ کی اپنی خریداری",
+    "ownListHint": "یہاں سے خریداری شروع کریں",
     "greetingMorning": "صبح بخیر، {name}",
     "greetingAfternoon": "دوپہر بخیر، {name}",
     "greetingEvening": "شام بخیر، {name}",
     "overview": "{openCount} فہرستیں کھلی ہیں · {memberCount} افراد",
-    "categories": "زمرہ جات",
-    "seeAll": "سب دیکھیں",
     "selecting": "کھولا جا رہا ہے…"
   },
   "settings": {

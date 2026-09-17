@@ -73,12 +73,13 @@
     "tabSettings": "ቅንብሮች",
     "tabBarLabel": "ዋና",
     "myOwnList": "የራሴ ዝርዝር",
+    "receivedLabel": "ከ{name} የቀረበ ጥያቄ",
+    "ownListLabel": "የራስዎ ግብይት",
+    "ownListHint": "ከዚህ ግብይት ይጀምሩ",
     "greetingMorning": "እንደምን አደሩ፣ {name}",
     "greetingAfternoon": "እንደምን ዋሉ፣ {name}",
     "greetingEvening": "እንደምን አመሹ፣ {name}",
     "overview": "{openCount} ዝርዝሮች ክፍት ናቸው · {memberCount} አባላት",
-    "categories": "ምድቦች",
-    "seeAll": "ሁሉንም ይመልከቱ",
     "selecting": "በመክፈት ላይ…"
   },
   "settings": {

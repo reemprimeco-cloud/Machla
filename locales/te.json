@@ -73,12 +73,13 @@
     "tabSettings": "సెట్టింగ్‌లు",
     "tabBarLabel": "ప్రధాన",
     "myOwnList": "నా సొంత జాబితా",
+    "receivedLabel": "{name} నుండి అభ్యర్థన",
+    "ownListLabel": "మీ సొంత షాపింగ్",
+    "ownListHint": "ఇక్కడ నుండి షాపింగ్ ప్రారంభించండి",
     "greetingMorning": "శుభోదయం, {name}",
     "greetingAfternoon": "శుభ మధ్యాహ్నం, {name}",
     "greetingEvening": "శుభ సాయంత్రం, {name}",
     "overview": "{openCount} జాబితాలు తెరిచి ఉన్నాయి · {memberCount} మంది సభ్యులు",
-    "categories": "వర్గాలు",
-    "seeAll": "అన్నీ చూడండి",
     "selecting": "తెరుస్తోంది…"
   },
   "settings": {

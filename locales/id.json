@@ -73,12 +73,13 @@
     "tabSettings": "Pengaturan",
     "tabBarLabel": "Utama",
     "myOwnList": "Daftar saya sendiri",
+    "receivedLabel": "Permintaan dari {name}",
+    "ownListLabel": "Belanja Anda sendiri",
+    "ownListHint": "Mulai belanja dari sini",
     "greetingMorning": "Selamat pagi, {name}",
     "greetingAfternoon": "Selamat siang, {name}",
     "greetingEvening": "Selamat malam, {name}",
     "overview": "{openCount} daftar terbuka · {memberCount} anggota",
-    "categories": "Kategori",
-    "seeAll": "Lihat semua",
     "selecting": "Membuka…"
   },
   "settings": {

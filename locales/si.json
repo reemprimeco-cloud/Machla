@@ -73,12 +73,13 @@
     "tabSettings": "සැකසුම්",
     "tabBarLabel": "ප්‍රධාන",
     "myOwnList": "මගේම ලැයිස්තුව",
+    "receivedLabel": "{name} වෙතින් ඉල්ලීමක්",
+    "ownListLabel": "ඔබේම සාප්පු සවාරිය",
+    "ownListHint": "මෙතැනින් සාප්පු යාම ආරම්භ කරන්න",
     "greetingMorning": "සුභ උදෑසනක්, {name}",
     "greetingAfternoon": "සුභ දහවලක්, {name}",
     "greetingEvening": "සුභ සැන්දෑවක්, {name}",
     "overview": "{openCount} ලැයිස්තු විවෘතයි · සාමාජිකයින් {memberCount}",
-    "categories": "කාණ්ඩ",
-    "seeAll": "සියල්ල බලන්න",
     "selecting": "විවෘත කරමින්…"
   },
   "settings": {
