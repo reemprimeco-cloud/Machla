@@ -76,6 +76,7 @@
     "receivedLabel": "Permintaan dari {name}",
     "ownListLabel": "Belanja Anda sendiri",
     "ownListHint": "Mulai belanja dari sini",
+    "ownListContinue": "{count} item menunggu",
     "greetingMorning": "Selamat pagi, {name}",
     "greetingAfternoon": "Selamat siang, {name}",
     "greetingEvening": "Selamat malam, {name}",

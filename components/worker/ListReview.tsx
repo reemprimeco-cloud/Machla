@@ -36,12 +36,21 @@ export function ListReview({
   groups,
   itemCount,
   basePath = "/worker",
+  backHref = basePath,
 }: {
   householdId: string;
   listId: string | null;
   groups: ListGroup[];
   itemCount: number;
   basePath?: string;
+  /** Where the top bar's Back link goes — defaults to `basePath` (a
+   * worker's own list backs out to their category grid, same as
+   * always). The household side overrides this to `/home/dashboard`
+   * (app/home/shop/list/page.tsx): once "My own list" opens straight
+   * into this review screen for an existing draft (HouseholdDashboard's
+   * own conditional link), Back has to return to the dashboard, not to
+   * a categories grid this visit never passed through. */
+  backHref?: string;
 }) {
   const { t, locale } = useLocale();
   const router = useRouter();
@@ -62,7 +71,7 @@ export function ListReview({
     <Screen>
       <WorkerBar
         title={t("worker.myList")}
-        backHref={basePath}
+        backHref={backHref}
         itemCount={itemCount}
         basePath={basePath}
       />

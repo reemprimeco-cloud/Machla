@@ -44,6 +44,7 @@ export function HouseholdDashboard({
   memberCount,
   recentLists,
   openCount,
+  ownListItemCount,
   displayName,
   greetingKey,
 }: {
@@ -54,6 +55,13 @@ export function HouseholdDashboard({
   recentLists: HouseholdList[];
   openCount: number;
   unreadCount: number;
+  /** Items already on the caller's own draft (app/home/dashboard/page.tsx
+   * — getDraftList). Decides where "My own list" points: straight into
+   * the review screen when there's something to review, the categories
+   * grid to start one when there isn't (2026-09 feedback: landing back
+   * on categories every time forces a detour once you're already
+   * shopping). */
+  ownListItemCount: number;
   displayName: string | null;
   greetingKey: MessageKey;
 }) {
@@ -116,16 +124,24 @@ export function HouseholdDashboard({
           HeroListCard (same shape, neutral instead of gradient — the
           gradient CTA slot above is already spent) rather than a flat
           button, so the two read as one family: "here's a list", twice,
-          each labeled with whose it is. */}
+          each labeled with whose it is.
+          Skips the categories grid straight to the review screen once
+          there's already something on the draft — that screen's own
+          Back link (app/home/shop/list/page.tsx) returns here, one step,
+          not to a categories grid this visit never passed through. */}
       <div className="space-y-2">
         <p className="hl-caption text-ink-muted">{t("home.ownListLabel")}</p>
         <Link
-          href="/home/shop"
+          href={ownListItemCount > 0 ? "/home/shop/list" : "/home/shop"}
           className="flex items-center justify-between gap-4 rounded-lg border border-line bg-surface p-5 shadow-sm active:bg-surface-2"
         >
           <div className="min-w-0">
             <p className="hl-heading text-ink">{t("home.myOwnList")}</p>
-            <p className="hl-caption mt-1">{t("home.ownListHint")}</p>
+            <p className="hl-caption mt-1">
+              {ownListItemCount > 0
+                ? t("home.ownListContinue", { count: ownListItemCount })
+                : t("home.ownListHint")}
+            </p>
           </div>
           <span
             aria-hidden

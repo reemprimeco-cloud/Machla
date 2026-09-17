@@ -76,6 +76,7 @@
     "receivedLabel": "طلب وصلك من {name}",
     "ownListLabel": "تسوّقك انتي",
     "ownListHint": "ابدئي التسوق من هنا",
+    "ownListContinue": "{count} عنصر بانتظارك",
     "greetingMorning": "صباح الخير، {name}",
     "greetingAfternoon": "طاب يومك، {name}",
     "greetingEvening": "مساء الخير، {name}",

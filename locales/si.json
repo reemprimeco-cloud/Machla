@@ -76,6 +76,7 @@
     "receivedLabel": "{name} වෙතින් ඉල්ලීමක්",
     "ownListLabel": "ඔබේම සාප්පු සවාරිය",
     "ownListHint": "මෙතැනින් සාප්පු යාම ආරම්භ කරන්න",
+    "ownListContinue": "අයිතම {count} ක් ඉතිරිව ඇත",
     "greetingMorning": "සුභ උදෑසනක්, {name}",
     "greetingAfternoon": "සුභ දහවලක්, {name}",
     "greetingEvening": "සුභ සැන්දෑවක්, {name}",

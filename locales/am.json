@@ -76,6 +76,7 @@
     "receivedLabel": "ከ{name} የቀረበ ጥያቄ",
     "ownListLabel": "የራስዎ ግብይት",
     "ownListHint": "ከዚህ ግብይት ይጀምሩ",
+    "ownListContinue": "{count} ዕቃዎች በመጠባበቅ ላይ",
     "greetingMorning": "እንደምን አደሩ፣ {name}",
     "greetingAfternoon": "እንደምን ዋሉ፣ {name}",
     "greetingEvening": "እንደምን አመሹ፣ {name}",

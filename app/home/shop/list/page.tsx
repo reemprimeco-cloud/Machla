@@ -16,6 +16,7 @@ export default async function ShopListPage() {
       groups={draft?.groups ?? []}
       itemCount={draft?.itemCount ?? 0}
       basePath="/home/shop"
+      backHref="/home/dashboard"
     />
   );
 }

@@ -76,6 +76,7 @@
     "receivedLabel": "Une demande de {name}",
     "ownListLabel": "Vos propres courses",
     "ownListHint": "Commencez vos courses ici",
+    "ownListContinue": "{count} articles en attente",
     "greetingMorning": "Bonjour, {name}",
     "greetingAfternoon": "Bon après-midi, {name}",
     "greetingEvening": "Bonsoir, {name}",

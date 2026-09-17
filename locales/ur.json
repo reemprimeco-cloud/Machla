@@ -76,6 +76,7 @@
     "receivedLabel": "{name} کی طرف سے درخواست",
     "ownListLabel": "آپ کی اپنی خریداری",
     "ownListHint": "یہاں سے خریداری شروع کریں",
+    "ownListContinue": "{count} اشیاء باقی ہیں",
     "greetingMorning": "صبح بخیر، {name}",
     "greetingAfternoon": "دوپہر بخیر، {name}",
     "greetingEvening": "شام بخیر، {name}",

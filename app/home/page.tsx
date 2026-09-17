@@ -14,6 +14,15 @@ import { getActiveMemberships } from "@/lib/household/queries";
  * `requireHouseholdAccess` would: to `/worker` if they have a worker
  * membership instead, to `/onboarding` if they have none at all. This
  * page has nothing to switch between in either case.
+ *
+ * Exactly one household is the common case, and there was nothing to
+ * choose there either — the bottom tab bar's "Homes" tab always points
+ * here (HomeTabBar.tsx), so every tap on it cost an extra "pick your one
+ * household" screen before landing on the dashboard it always resolves
+ * to anyway (`requireHouseholdAccess` already defaults to `homes[0]`
+ * with no cookie set — 2026-09 feedback: "this back is quite wrong").
+ * Skipping straight to the dashboard needs no `selectHouseholdAction`
+ * call: there being only one home means there is nothing to select.
  */
 export default async function HomesPage() {
   const profile = await getServerUserProfile();
@@ -26,6 +35,7 @@ export default async function HomesPage() {
     if (memberships.length === 0) redirect("/onboarding");
     redirect("/worker");
   }
+  if (homes.length === 1) redirect("/home/dashboard");
 
   return <HomesSwitcher homes={homes} />;
 }

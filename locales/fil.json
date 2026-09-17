@@ -76,6 +76,7 @@
     "receivedLabel": "Isang kahilingan mula kay {name}",
     "ownListLabel": "Sarili mong pamimili",
     "ownListHint": "Magsimulang mamili mula dito",
+    "ownListContinue": "{count} item ang naghihintay",
     "greetingMorning": "Magandang umaga, {name}",
     "greetingAfternoon": "Magandang hapon, {name}",
     "greetingEvening": "Magandang gabi, {name}",

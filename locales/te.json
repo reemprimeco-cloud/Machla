@@ -76,6 +76,7 @@
     "receivedLabel": "{name} నుండి అభ్యర్థన",
     "ownListLabel": "మీ సొంత షాపింగ్",
     "ownListHint": "ఇక్కడ నుండి షాపింగ్ ప్రారంభించండి",
+    "ownListContinue": "{count} వస్తువులు వేచి ఉన్నాయి",
     "greetingMorning": "శుభోదయం, {name}",
     "greetingAfternoon": "శుభ మధ్యాహ్నం, {name}",
     "greetingEvening": "శుభ సాయంత్రం, {name}",
