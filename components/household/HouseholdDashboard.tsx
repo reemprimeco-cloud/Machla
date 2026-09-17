@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { MachlaLockup } from "@/components/brand/MachlaIcon";
+import { QuickInviteWorker } from "@/components/household/QuickInviteWorker";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Card, Screen } from "@/components/ui/Primitives";
 import type { Category } from "@/lib/catalog/queries";
@@ -21,8 +22,15 @@ import type { MessageKey } from "@/lib/i18n/messages";
  * subtraction: no prices, no cart, no checkout — this app was never
  * repriced, only reskinned (docs/design/BRAND.md, 2026-08 renovation).
  * People/Invitations live in Settings now, not here (2026-08 feedback)
- * — see components/household/SettingsScreen.tsx. */
+ * — see components/household/SettingsScreen.tsx — with one exception:
+ * QuickInviteWorker, right under the greeting, is a one-tap shortcut to
+ * create-and-share a helper invite without leaving the dashboard.
+ * Managing existing invitations is still Settings' job; this is only
+ * ever the fast path to a first (or another) one (2026-09 request: make
+ * adding a helper easier and faster, right where a brand-new owner
+ * lands). */
 export function HouseholdDashboard({
+  householdId,
   householdName,
   memberCount,
   recentLists,
@@ -31,6 +39,7 @@ export function HouseholdDashboard({
   displayName,
   greetingKey,
 }: {
+  householdId: string;
   householdName: string;
   memberCount: number;
   recentLists: HouseholdList[];
@@ -75,6 +84,8 @@ export function HouseholdDashboard({
           {t("home.overview", { openCount, memberCount })} · {householdName}
         </p>
       </div>
+
+      <QuickInviteWorker householdId={householdId} />
 
       <InstallGuide />
 

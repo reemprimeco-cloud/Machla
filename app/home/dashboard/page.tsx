@@ -24,6 +24,7 @@ export default async function DashboardPage() {
 
   return (
     <HouseholdDashboard
+      householdId={membership.householdId}
       householdName={membership.householdName}
       memberCount={members.length}
       recentLists={lists.slice(0, 3)}
