@@ -53,8 +53,26 @@ jobs:
       # reads, points it at the JDK actions/setup-java just installed
       # and the Android SDK GitHub's ubuntu-latest image already ships
       # at $ANDROID_HOME, so neither prompt is ever reached.
+      #
+      # Separately, Bubblewrap only recognizes an Android SDK root that
+      # has `sdkmanager` directly under `tools/bin` or `bin` (that's the
+      # layout it uses when it installs the SDK itself). GitHub's runner
+      # image nests it under `cmdline-tools/<version>/bin` instead, so
+      # `bin` doesn't exist at $ANDROID_HOME and Bubblewrap rejects the
+      # path outright ("The provided androidSdk isn't correct"). A
+      # symlink from $ANDROID_HOME/bin to that cmdline-tools bin
+      # directory satisfies Bubblewrap's check without moving or
+      # duplicating anything the runner already installed.
       - name: Point Bubblewrap at the runner's existing JDK and Android SDK
         run: |
+          CMDLINE_TOOLS_BIN=$(dirname "$(find "$ANDROID_HOME/cmdline-tools" -maxdepth 3 -name sdkmanager -print -quit)")
+          if [ ! -f "$CMDLINE_TOOLS_BIN/sdkmanager" ]; then
+            echo "::error::Could not find sdkmanager under \$ANDROID_HOME/cmdline-tools ($ANDROID_HOME)"
+            ls -la "$ANDROID_HOME" || true
+            exit 1
+          fi
+          ln -sfn "$CMDLINE_TOOLS_BIN" "$ANDROID_HOME/bin"
+
           mkdir -p ~/.bubblewrap
           printf '{"jdkPath":"%s","androidSdkPath":"%s"}' "$JAVA_HOME" "$ANDROID_HOME" \
             > ~/.bubblewrap/config.json
