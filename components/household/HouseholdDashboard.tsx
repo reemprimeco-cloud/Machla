@@ -28,10 +28,14 @@ import type { MessageKey } from "@/lib/i18n/messages";
  * Managing existing invitations is still Settings' job; this is only
  * ever the fast path to a first (or another) one (2026-09 request: make
  * adding a helper easier and faster, right where a brand-new owner
- * lands). */
+ * lands). It disappears once the household has a worker (`hasWorker`) —
+ * at that point it would just be clutter above the list the household
+ * actually came here to look at; inviting a second helper is a rarer
+ * enough need that Settings → Invitations is fine for it. */
 export function HouseholdDashboard({
   householdId,
   householdName,
+  hasWorker,
   memberCount,
   recentLists,
   openCount,
@@ -41,6 +45,7 @@ export function HouseholdDashboard({
 }: {
   householdId: string;
   householdName: string;
+  hasWorker: boolean;
   memberCount: number;
   recentLists: HouseholdList[];
   openCount: number;
@@ -85,7 +90,7 @@ export function HouseholdDashboard({
         </p>
       </div>
 
-      <QuickInviteWorker householdId={householdId} />
+      {hasWorker ? null : <QuickInviteWorker householdId={householdId} />}
 
       <InstallGuide />
 

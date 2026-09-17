@@ -26,6 +26,7 @@ export default async function DashboardPage() {
     <HouseholdDashboard
       householdId={membership.householdId}
       householdName={membership.householdName}
+      hasWorker={members.some((member) => member.role === "worker")}
       memberCount={members.length}
       recentLists={lists.slice(0, 3)}
       openCount={lists.filter(isOpen).length}
