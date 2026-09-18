@@ -40,10 +40,19 @@ export const branding = {
   shortName: "Machla",
   description:
     "A simple visual shopping list that connects households with domestic workers, in any language.",
+  /** Not rendered anywhere as of 2026-09 — SupportScreen switched to
+   * Instagram DMs (see instagramUrl) as the one channel people actually
+   * use. Kept as the real address behind the account, in case anything
+   * outside this codebase (App Store Connect's own contact metadata,
+   * domain registration) still needs it named somewhere. */
+  supportEmail: "reemprimeco@gmail.com",
   /** The one inbox anyone contacting this project reaches — App Store
    * Connect's Support URL field, /support, and everywhere else "contact
-   * us" needs an address. */
-  supportEmail: "reemprimeco@gmail.com",
+   * us" needs an address. A profile link, not a raw handle, so it opens
+   * directly instead of requiring the visitor to already have Instagram
+   * installed and search for it themselves. */
+  instagramUrl: "https://www.instagram.com/reemora.app?stkn=NDBmcTFkYWs3aXU5&utm_source=qr",
+  instagramHandle: "@reemora.app",
   themeColor: "#E01B6A",
   backgroundColor: "#F7F8FA",
   alternateNames: [

@@ -11,7 +11,10 @@ import { useLocale } from "@/lib/i18n/LocaleProvider";
  * Support URL field must be a real http(s) link a reviewer can open
  * without an account — a mailto: link isn't accepted there, and the
  * Privacy Policy page isn't the right destination for a general support
- * question (Apple flagged exactly that mismatch once already).
+ * question (Apple flagged exactly that mismatch once already). That
+ * requirement is about this /support page itself, not what it links to —
+ * an Instagram DM link satisfies it exactly as well as the mailto: it
+ * replaced (2026-09: DMs are the channel people actually use, not email).
  *
  * Reached two ways, same pattern as /privacy: from Settings (signed in)
  * and directly at /support (signed out). Both render this component;
@@ -25,10 +28,12 @@ export function SupportScreen({ backHref }: { backHref: string }) {
       <Card>
         <p className="hl-body text-ink">{t("support.body", { name: branding.name })}</p>
         <a
-          href={`mailto:${branding.supportEmail}`}
+          href={branding.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hl-label mt-4 block text-primary underline underline-offset-4"
         >
-          <bdi dir="ltr">{branding.supportEmail}</bdi>
+          <bdi dir="ltr">{branding.instagramHandle}</bdi>
         </a>
       </Card>
 
