@@ -48,10 +48,11 @@ export const branding = {
   supportEmail: "reemprimeco@gmail.com",
   /** The one inbox anyone contacting this project reaches — App Store
    * Connect's Support URL field, /support, and everywhere else "contact
-   * us" needs an address. A profile link, not a raw handle, so it opens
-   * directly instead of requiring the visitor to already have Instagram
-   * installed and search for it themselves. */
-  instagramUrl: "https://www.instagram.com/reemora.app?stkn=NDBmcTFkYWs3aXU5&utm_source=qr",
+   * us" needs an address. ig.me/m/ is Instagram's own direct-message deep
+   * link: it opens the DM composer with this account immediately, inside
+   * the Instagram app when installed, rather than landing on the profile
+   * page and making the visitor find and tap "Message" themselves. */
+  instagramUrl: "https://ig.me/m/reemora.app",
   instagramHandle: "@reemora.app",
   themeColor: "#E01B6A",
   backgroundColor: "#F7F8FA",
