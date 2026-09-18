@@ -12,8 +12,10 @@ name: List reminder pushes
 # contain — keep that in mind if this ever needs editing from elsewhere.
 #
 # Requires a repo secret CRON_SECRET matching the Vercel project's
-# CRON_SECRET env var, and LIST_REMINDER_DELAY_MINUTES (optional,
-# defaults to 15) to control how long a push waits before the reminder.
+# CRON_SECRET env var (both configured 2026-09-18 — runs #1-4 failed
+# with a 401 until then, since neither existed), and
+# LIST_REMINDER_DELAY_MINUTES (optional, defaults to 15) to control how
+# long a push waits before the reminder.
 
 on:
   schedule:
