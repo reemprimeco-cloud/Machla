@@ -22,6 +22,12 @@ import type { Database } from "./database.types";
  *     not a signed-in caller, so there is no `auth.uid()` an RLS policy or
  *     a SECURITY DEFINER RPC could scope it to — unlike every other push
  *     path, which reads back the CALLER's own action.
+ *   - Setting a password and confirming an email on the CALLER's own
+ *     account (`lib/auth/completeAccount.ts`). `auth.admin.updateUserById`
+ *     is the only way to do either without Supabase Auth mailing out (and
+ *     waiting on) a real confirmation link — the account is still the
+ *     caller's own, verified via their session before this is ever
+ *     reached, same discipline as account deletion above.
  *
  * Nothing else in this codebase should reach for this client; if a
  * feature seems to need it, that is a sign to look for the RLS policy or

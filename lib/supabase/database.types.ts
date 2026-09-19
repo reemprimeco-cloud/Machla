@@ -44,6 +44,16 @@ export interface Database {
           notification_preferences: NotificationPreferences;
           created_at: string;
           updated_at: string;
+          /** Real address, or a synthetic <username>@workers.machla.internal
+           * placeholder — see is_synthetic_email. Null until the account
+           * completes the email/username + password step (Phase 1 of the
+           * OTP-removal migration, 20260919120000_email_password_identity.sql). */
+          email: string | null;
+          /** Set only for accounts that chose a username instead of a real
+           * email (typically workers). Null otherwise. */
+          username: string | null;
+          is_synthetic_email: boolean;
+          account_completed_at: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["users"]["Row"]> & {
           id: string;

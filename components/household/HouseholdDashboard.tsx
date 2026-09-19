@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { MachlaLockup } from "@/components/brand/MachlaIcon";
+import { CompleteAccountBanner } from "@/components/auth/CompleteAccountBanner";
 import { QuickInviteWorker } from "@/components/household/QuickInviteWorker";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Card, Screen } from "@/components/ui/Primitives";
@@ -47,6 +48,7 @@ export function HouseholdDashboard({
   ownListItemCount,
   displayName,
   greetingKey,
+  accountCompleted,
 }: {
   householdId: string;
   householdName: string;
@@ -64,6 +66,9 @@ export function HouseholdDashboard({
   ownListItemCount: number;
   displayName: string | null;
   greetingKey: MessageKey;
+  /** Whether this account has added an email/username + password yet
+   * (users.account_completed_at) — see CompleteAccountBanner. */
+  accountCompleted: boolean;
 }) {
   const { t } = useLocale();
 
@@ -101,6 +106,8 @@ export function HouseholdDashboard({
           {t("home.overview", { openCount, memberCount })} · {householdName}
         </p>
       </div>
+
+      {accountCompleted ? null : <CompleteAccountBanner />}
 
       {hasWorker ? null : <QuickInviteWorker householdId={householdId} />}
 

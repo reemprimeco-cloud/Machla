@@ -28,7 +28,27 @@
     "invalidPhone": "Masukkan nomor telepon yang valid.",
     "invalidCode": "Kode itu tidak berhasil. Coba lagi.",
     "genericError": "Terjadi kesalahan. Silakan coba lagi.",
-    "codeResent": "Kode telah dikirim ulang."
+    "codeResent": "Kode telah dikirim ulang.",
+    "completeAccount": {
+      "title": "Tambahkan cara masuk lain",
+      "hint": "Tambahkan email atau nama pengguna serta kata sandi, agar Anda juga bisa masuk tanpa WhatsApp.",
+      "hintUpdate": "Perbarui email atau nama pengguna dan kata sandi Anda.",
+      "emailTab": "Email",
+      "usernameTab": "Nama pengguna",
+      "emailLabel": "Alamat email",
+      "usernameLabel": "Nama pengguna",
+      "passwordLabel": "Kata sandi",
+      "confirmPasswordLabel": "Konfirmasi kata sandi",
+      "save": "Simpan",
+      "saving": "Menyimpan…",
+      "later": "Nanti saja",
+      "passwordMismatch": "Kata sandi tidak cocok.",
+      "invalidEmail": "Masukkan alamat email yang valid.",
+      "invalidUsername": "Nama pengguna harus 3-24 karakter: huruf, angka, titik, garis bawah, atau tanda hubung.",
+      "invalidPassword": "Kata sandi harus minimal 8 karakter.",
+      "emailTaken": "Email itu sudah digunakan.",
+      "usernameTaken": "Nama pengguna itu sudah dipakai."
+    }
   },
   "roles": {
     "owner": "Pemilik rumah",

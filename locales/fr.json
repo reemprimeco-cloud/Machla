@@ -28,7 +28,27 @@
     "invalidPhone": "Entrez un numéro de téléphone valide.",
     "invalidCode": "Ce code n'a pas fonctionné. Réessayez.",
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
-    "codeResent": "Code renvoyé."
+    "codeResent": "Code renvoyé.",
+    "completeAccount": {
+      "title": "Ajouter un moyen de connexion",
+      "hint": "Ajoutez un e-mail ou un nom d'utilisateur et un mot de passe, pour pouvoir vous connecter aussi sans WhatsApp.",
+      "hintUpdate": "Mettez à jour votre e-mail ou nom d'utilisateur et votre mot de passe.",
+      "emailTab": "E-mail",
+      "usernameTab": "Nom d'utilisateur",
+      "emailLabel": "Adresse e-mail",
+      "usernameLabel": "Nom d'utilisateur",
+      "passwordLabel": "Mot de passe",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "later": "Plus tard",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "invalidEmail": "Entrez une adresse e-mail valide.",
+      "invalidUsername": "Le nom d'utilisateur doit comporter 3 à 24 caractères : lettres, chiffres, points, tirets bas ou tirets.",
+      "invalidPassword": "Le mot de passe doit contenir au moins 8 caractères.",
+      "emailTaken": "Cet e-mail est déjà utilisé.",
+      "usernameTaken": "Ce nom d'utilisateur est déjà pris."
+    }
   },
   "roles": {
     "owner": "Chef de famille",

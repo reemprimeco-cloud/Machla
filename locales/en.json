@@ -28,7 +28,27 @@
     "invalidPhone": "Enter a valid phone number.",
     "invalidCode": "That code didn't work. Try again.",
     "genericError": "Something went wrong. Please try again.",
-    "codeResent": "Code resent."
+    "codeResent": "Code resent.",
+    "completeAccount": {
+      "title": "Add a login for your account",
+      "hint": "Add an email or username and password, so you can sign in without WhatsApp too.",
+      "hintUpdate": "Update your email or username and password.",
+      "emailTab": "Email",
+      "usernameTab": "Username",
+      "emailLabel": "Email address",
+      "usernameLabel": "Username",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm password",
+      "save": "Save",
+      "saving": "Saving…",
+      "later": "Maybe later",
+      "passwordMismatch": "Passwords don't match.",
+      "invalidEmail": "Enter a valid email address.",
+      "invalidUsername": "Username must be 3-24 characters: letters, numbers, dots, underscores, or hyphens.",
+      "invalidPassword": "Password must be at least 8 characters.",
+      "emailTaken": "That email is already in use.",
+      "usernameTaken": "That username is already taken."
+    }
   },
   "roles": {
     "owner": "Home owner",

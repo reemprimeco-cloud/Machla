@@ -28,7 +28,27 @@
     "invalidPhone": "Wlan nabla telefɔnu ɖé e sɔgbe.",
     "invalidCode": "Code enɛ ma sɔgbe ó. Lɛ́ tɛnkpɔ́n.",
     "genericError": "Nǔ ɖé ma yì ganji ó. Kudo lɛ́ tɛnkpɔ́n.",
-    "codeResent": "É lɛ́ sɛ́n code ɔ."
+    "codeResent": "É lɛ́ sɛ́n code ɔ.",
+    "completeAccount": {
+      "title": "Bló ali ɖevo bo yí byɔ",
+      "hint": "Bló email alo username kpo password kpo, bo na yí byɔ ilé enɛ ɖí WhatsApp ǎ.",
+      "hintUpdate": "Hɛn email alo username towe kpo password towe kpo yì ayihɔngbe.",
+      "emailTab": "Email",
+      "usernameTab": "Username",
+      "emailLabel": "Email adrɛsi",
+      "usernameLabel": "Username",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Kpɔ́n ɖɔ password ɔ sɔgbe",
+      "save": "Yí dó",
+      "saving": "É ɖò yiyi dó jí…",
+      "later": "Gudo",
+      "passwordMismatch": "Password lɛ ma sɔgbe ó.",
+      "invalidEmail": "Wlan email adrɛsi ɖé e sɔgbe.",
+      "invalidUsername": "Username ɔ ɖó na ɖò nabla 3 kaka bó yì 24: wɛnsɛ́n, nabla, tɛn, alo dasin.",
+      "invalidPassword": "Password ɔ ɖó na ɖò nabla 8 nukɔn.",
+      "emailTaken": "Email enɛ ko ɖò zinzan mɛ xóxó.",
+      "usernameTaken": "Username enɛ ko ɖò zinzan mɛ xóxó."
+    }
   },
   "roles": {
     "owner": "Xwégán",

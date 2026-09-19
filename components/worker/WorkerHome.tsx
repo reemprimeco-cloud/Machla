@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { CompleteAccountBanner } from "@/components/auth/CompleteAccountBanner";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
 import { Screen } from "@/components/ui/Primitives";
 import type { Category } from "@/lib/catalog/queries";
@@ -18,6 +19,7 @@ export function WorkerHome({
   unreadCount,
   basePath = "/worker",
   backHref,
+  accountCompleted = true,
 }: {
   householdName: string;
   categories: Category[];
@@ -35,6 +37,13 @@ export function WorkerHome({
    * owner's shopping flow, not a home screen of its own, and needed an
    * explicit way back beyond the bottom tab bar (2026-09 feedback). */
   backHref?: string;
+  /** Whether this account has added an email/username + password yet
+   * (users.account_completed_at) — see CompleteAccountBanner. Only
+   * meaningful (and passed) on the worker's own `/worker` root: the
+   * owner/member side has its own copy of this banner on the dashboard
+   * already, so showing it again here (basePath="/home/shop") would be
+   * redundant. Defaults to true (hidden) for that reason. */
+  accountCompleted?: boolean;
 }) {
   const { t } = useLocale();
   const isWorker = basePath === "/worker";
@@ -48,6 +57,8 @@ export function WorkerHome({
         unreadCount={unreadCount}
         basePath={basePath}
       />
+
+      {isWorker && !accountCompleted ? <CompleteAccountBanner /> : null}
 
       <p className="hl-title text-ink">{t("worker.browse")}</p>
 

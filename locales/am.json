@@ -28,7 +28,27 @@
     "invalidPhone": "ትክክለኛ ስልክ ቁጥር ያስገቡ።",
     "invalidCode": "ይህ ኮድ አልሰራም። እንደገና ይሞክሩ።",
     "genericError": "የሆነ ስህተት ተከስቷል። እባክዎ እንደገና ይሞክሩ።",
-    "codeResent": "ኮድ እንደገና ተልኳል።"
+    "codeResent": "ኮድ እንደገና ተልኳል።",
+    "completeAccount": {
+      "title": "ሌላ የመግቢያ መንገድ ያክሉ",
+      "hint": "ያለ WhatsApp እንኳ መግባት እንዲችሉ ኢሜይል ወይም የተጠቃሚ ስም እና የይለፍ ቃል ያክሉ።",
+      "hintUpdate": "ኢሜይልዎን ወይም የተጠቃሚ ስምዎን እና የይለፍ ቃልዎን ያዘምኑ።",
+      "emailTab": "ኢሜይል",
+      "usernameTab": "የተጠቃሚ ስም",
+      "emailLabel": "የኢሜይል አድራሻ",
+      "usernameLabel": "የተጠቃሚ ስም",
+      "passwordLabel": "የይለፍ ቃል",
+      "confirmPasswordLabel": "የይለፍ ቃል ያረጋግጡ",
+      "save": "አስቀምጥ",
+      "saving": "በማስቀመጥ ላይ…",
+      "later": "በኋላ",
+      "passwordMismatch": "የይለፍ ቃላት አይመሳሰሉም።",
+      "invalidEmail": "ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
+      "invalidUsername": "የተጠቃሚ ስም ከ3-24 ፊደላት መሆን አለበት፦ ፊደላት፣ ቁጥሮች፣ ነጥቦች፣ underscore ወይም hyphen።",
+      "invalidPassword": "የይለፍ ቃል ቢያንስ 8 ፊደላት መሆን አለበት።",
+      "emailTaken": "ያ ኢሜይል አስቀድሞ ጥቅም ላይ ውሏል።",
+      "usernameTaken": "ያ የተጠቃሚ ስም አስቀድሞ ተይዟል።"
+    }
   },
   "roles": {
     "owner": "የቤት ባለቤት",

@@ -1,4 +1,5 @@
 import { WorkerHome } from "@/components/worker/WorkerHome";
+import { getServerUserProfile } from "@/lib/auth/session";
 import { getCategories } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
 import { getDraftList } from "@/lib/list/queries";
@@ -14,10 +15,11 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function WorkerPage() {
   const membership = await requireWorkerAccess();
 
-  const [categories, draft, unreadCount] = await Promise.all([
+  const [categories, draft, unreadCount, profile] = await Promise.all([
     getCategories(),
     getDraftList(membership.householdId),
     getUnreadCount(),
+    getServerUserProfile(),
   ]);
 
   return (
@@ -26,6 +28,7 @@ export default async function WorkerPage() {
       categories={categories}
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
+      accountCompleted={Boolean(profile?.account_completed_at)}
     />
   );
 }

@@ -44,6 +44,7 @@ export default async function DashboardPage() {
       ownListItemCount={draft?.itemCount ?? 0}
       displayName={profile?.display_name ?? null}
       greetingKey={greetingKeyForNow()}
+      accountCompleted={Boolean(profile?.account_completed_at)}
     />
   );
 }

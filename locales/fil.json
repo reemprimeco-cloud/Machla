@@ -28,7 +28,27 @@
     "invalidPhone": "Maglagay ng wastong numero ng telepono.",
     "invalidCode": "Hindi gumana ang code na iyon. Subukan ulit.",
     "genericError": "May nagkamali. Pakisubukan ulit.",
-    "codeResent": "Naipadala ulit ang code."
+    "codeResent": "Naipadala ulit ang code.",
+    "completeAccount": {
+      "title": "Magdagdag ng paraan ng pag-login",
+      "hint": "Magdagdag ng email o username at password, para makapag-sign in ka rin kahit walang WhatsApp.",
+      "hintUpdate": "I-update ang iyong email o username at password.",
+      "emailTab": "Email",
+      "usernameTab": "Username",
+      "emailLabel": "Email address",
+      "usernameLabel": "Username",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Kumpirmahin ang password",
+      "save": "I-save",
+      "saving": "Sine-save…",
+      "later": "Mamaya na lang",
+      "passwordMismatch": "Hindi magkatugma ang mga password.",
+      "invalidEmail": "Maglagay ng wastong email address.",
+      "invalidUsername": "Ang username ay dapat 3-24 na character: mga letra, numero, tuldok, underscore, o gitling.",
+      "invalidPassword": "Ang password ay dapat hindi bababa sa 8 character.",
+      "emailTaken": "Nagamit na ang email na iyon.",
+      "usernameTaken": "Nakuha na ang username na iyon."
+    }
   },
   "roles": {
     "owner": "May-ari ng tahanan",
