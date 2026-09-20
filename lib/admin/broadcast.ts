@@ -4,11 +4,47 @@ import { requireAdminAccess } from "@/lib/admin/guard";
 import { createApnsSender } from "@/lib/push/apns";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+export type AdminBroadcastAudience = "all" | "trial_lapsed";
+
 export type AdminBroadcastResult =
   | { ok: true; sent: number; total: number }
   | { ok: false; code: "NOT_CONFIGURED" | "NO_DEVICES" | "INVALID_INPUT" };
 
 const APNS_PREFIX = "apns://";
+
+type AdminSupabase = NonNullable<ReturnType<typeof createAdminClient>>;
+
+/** Which iOS device tokens a given audience resolves to. "all" is every
+ * registered device; "trial_lapsed" is the OWNER of each household whose
+ * free trial ended without ever subscribing — the same set
+ * admin_get_stats() counts as subscriptions_lapsed (owners are who
+ * subscription_status/trial_ends_at describes, and who Settings →
+ * Subscription lets act on it; members/workers have no billing role to
+ * nudge here). */
+async function resolveTargetEndpoints(
+  admin: AdminSupabase,
+  audience: AdminBroadcastAudience,
+): Promise<string[]> {
+  if (audience === "all") {
+    const { data } = await admin.from("push_subscriptions").select("endpoint").eq("platform", "ios");
+    return (data ?? []).map((row) => row.endpoint);
+  }
+
+  const { data: lapsedHouseholds } = await admin
+    .from("households")
+    .select("owner_user_id")
+    .eq("subscription_status", "none")
+    .lt("trial_ends_at", new Date().toISOString());
+  const ownerIds = [...new Set((lapsedHouseholds ?? []).map((row) => row.owner_user_id))];
+  if (ownerIds.length === 0) return [];
+
+  const { data: subs } = await admin
+    .from("push_subscriptions")
+    .select("endpoint")
+    .eq("platform", "ios")
+    .in("user_id", ownerIds);
+  return (subs ?? []).map((row) => row.endpoint);
+}
 
 /**
  * The admin page's "communication" section: a manual push to every
@@ -26,6 +62,7 @@ const APNS_PREFIX = "apns://";
 export async function sendAdminBroadcastAction(
   title: string,
   body: string,
+  audience: AdminBroadcastAudience = "all",
 ): Promise<AdminBroadcastResult> {
   await requireAdminAccess();
 
@@ -40,25 +77,22 @@ export async function sendAdminBroadcastAction(
   if (!apns) return { ok: false, code: "NOT_CONFIGURED" };
 
   try {
-    const { data: devices, error } = await admin
-      .from("push_subscriptions")
-      .select("endpoint")
-      .eq("platform", "ios");
-    if (error || !devices || devices.length === 0) return { ok: false, code: "NO_DEVICES" };
+    const endpoints = await resolveTargetEndpoints(admin, audience);
+    if (endpoints.length === 0) return { ok: false, code: "NO_DEVICES" };
 
     const staleEndpoints: string[] = [];
     let sent = 0;
 
     await Promise.all(
-      devices.map(async (device) => {
-        const result = await apns.send(device.endpoint.slice(APNS_PREFIX.length), {
+      endpoints.map(async (endpoint) => {
+        const result = await apns.send(endpoint.slice(APNS_PREFIX.length), {
           title: trimmedTitle,
           body: trimmedBody,
           threadId: "admin-broadcast",
           url: "/",
         });
         if (result.ok) sent++;
-        else if (result.gone) staleEndpoints.push(device.endpoint);
+        else if (result.gone) staleEndpoints.push(endpoint);
       }),
     );
 
@@ -66,7 +100,7 @@ export async function sendAdminBroadcastAction(
       await admin.from("push_subscriptions").delete().in("endpoint", staleEndpoints);
     }
 
-    return { ok: true, sent, total: devices.length };
+    return { ok: true, sent, total: endpoints.length };
   } finally {
     apns.close();
   }

@@ -147,7 +147,10 @@ export function AdminDashboard({
 
       <section className="space-y-2">
         <h2 className="hl-label text-ink-muted">التواصل</h2>
-        <AdminBroadcastForm iosDeviceCount={stats.iosDeviceCount} />
+        <AdminBroadcastForm
+          iosDeviceCount={stats.iosDeviceCount}
+          lapsedHouseholdCount={stats.subscriptionsLapsed}
+        />
       </section>
 
       <section className="space-y-2">
