@@ -1,5 +1,10 @@
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
-import { getAdminRecentSubscriptions, getAdminRecentUsers, getAdminStats } from "@/lib/admin/queries";
+import {
+  getAdminRecentSubscriptions,
+  getAdminRecentUsers,
+  getAdminStats,
+  getAdminTodaySignups,
+} from "@/lib/admin/queries";
 import { requireAdminAccess } from "@/lib/admin/guard";
 
 /**
@@ -9,10 +14,11 @@ import { requireAdminAccess } from "@/lib/admin/guard";
  */
 export default async function AdminPage() {
   await requireAdminAccess();
-  const [stats, subscriptions, users] = await Promise.all([
+  const [stats, subscriptions, users, todaySignups] = await Promise.all([
     getAdminStats(),
     getAdminRecentSubscriptions(),
     getAdminRecentUsers(),
+    getAdminTodaySignups(),
   ]);
 
   if (!stats) {
@@ -23,5 +29,12 @@ export default async function AdminPage() {
     );
   }
 
-  return <AdminDashboard stats={stats} subscriptions={subscriptions} users={users} />;
+  return (
+    <AdminDashboard
+      stats={stats}
+      subscriptions={subscriptions}
+      users={users}
+      todaySignups={todaySignups}
+    />
+  );
 }

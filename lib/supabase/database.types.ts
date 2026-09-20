@@ -576,6 +576,8 @@ export interface Database {
           lists_completed: number;
           lists_archived: number;
           new_users_7d: number;
+          new_users_today: number;
+          ios_device_count: number;
           subscriptions_paid: number;
           subscriptions_comped: number;
           subscriptions_trialing: number;
@@ -598,6 +600,15 @@ export interface Database {
       };
       admin_list_recent_users: {
         Args: { p_limit?: number };
+        Returns: {
+          id: string;
+          display_name: string | null;
+          phone_number: string;
+          created_at: string;
+        }[];
+      };
+      admin_list_today_signups: {
+        Args: Record<string, never>;
         Returns: {
           id: string;
           display_name: string | null;

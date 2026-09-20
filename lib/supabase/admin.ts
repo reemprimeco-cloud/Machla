@@ -28,6 +28,12 @@ import type { Database } from "./database.types";
  *     waiting on) a real confirmation link — the account is still the
  *     caller's own, verified via their session before this is ever
  *     reached, same discipline as account deletion above.
+ *   - The admin page's manual push broadcast (`lib/admin/broadcast.ts`).
+ *     Reading every push_subscriptions row in the project genuinely has
+ *     no `auth.uid()` to scope an RLS-respecting query to — the whole
+ *     point is reaching people other than the caller — gated by
+ *     `requireAdminAccess()` before this is ever reached, same as every
+ *     other admin-page query.
  *
  * Nothing else in this codebase should reach for this client; if a
  * feature seems to need it, that is a sign to look for the RLS policy or

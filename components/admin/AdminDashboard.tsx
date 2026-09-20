@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { AdminBroadcastForm } from "@/components/admin/AdminBroadcastForm";
 import type { AdminStats, AdminSubscriptionRow, AdminUserRow } from "@/lib/admin/queries";
 import type { SubscriptionStatus } from "@/lib/supabase/database.types";
 
@@ -59,10 +60,12 @@ export function AdminDashboard({
   stats,
   subscriptions,
   users,
+  todaySignups,
 }: {
   stats: AdminStats;
   subscriptions: AdminSubscriptionRow[];
   users: AdminUserRow[];
+  todaySignups: AdminUserRow[];
 }) {
   const activeUsers = stats.ownersAndMembers + stats.workers;
   const estimatedRevenue = stats.subscriptionsPaid * ANNUAL_PRICE_USD;
@@ -99,6 +102,52 @@ export function AdminDashboard({
           <StatCard label="انتهت التجربة بدون اشتراك" value={stats.subscriptionsLapsed} />
           <StatCard label="اشتراك منتهي أو ملغى" value={stats.subscriptionsExpiredOrRevoked} />
         </div>
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="hl-label text-ink-muted">التسجيلات</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <StatCard label="سجّلوا اليوم" value={stats.newUsersToday} tone="primary" />
+          <StatCard label="سجّلوا آخر 7 أيام" value={stats.newUsers7d} />
+        </div>
+        {todaySignups.length > 0 ? (
+          <div className="overflow-x-auto rounded-lg border border-line bg-surface shadow-sm">
+            <table className="w-full text-right">
+              <thead>
+                <tr className="hl-caption border-b border-line text-ink-muted">
+                  <th className="p-3 font-normal">الاسم</th>
+                  <th className="p-3 font-normal">الجوال</th>
+                  <th className="p-3 font-normal">الوقت</th>
+                </tr>
+              </thead>
+              <tbody>
+                {todaySignups.map((user) => (
+                  <tr key={user.id} className="hl-body border-b border-line last:border-0">
+                    <td className="p-3 text-ink">{user.displayName ?? "—"}</td>
+                    <td className="p-3">
+                      <bdi dir="ltr" className="text-ink-muted">
+                        {user.phoneNumber}
+                      </bdi>
+                    </td>
+                    <td className="p-3 text-ink-muted">
+                      {new Date(user.createdAt).toLocaleTimeString("ar", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="hl-caption text-ink-muted">محد سجّل اليوم لين الحين.</p>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="hl-label text-ink-muted">التواصل</h2>
+        <AdminBroadcastForm iosDeviceCount={stats.iosDeviceCount} />
       </section>
 
       <section className="space-y-2">

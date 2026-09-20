@@ -15,6 +15,8 @@ export type AdminStats = {
   listsCompleted: number;
   listsArchived: number;
   newUsers7d: number;
+  newUsersToday: number;
+  iosDeviceCount: number;
   subscriptionsPaid: number;
   subscriptionsComped: number;
   subscriptionsTrialing: number;
@@ -65,6 +67,8 @@ export async function getAdminStats(): Promise<AdminStats | null> {
     listsCompleted: row.lists_completed,
     listsArchived: row.lists_archived,
     newUsers7d: row.new_users_7d,
+    newUsersToday: row.new_users_today,
+    iosDeviceCount: row.ios_device_count,
     subscriptionsPaid: row.subscriptions_paid,
     subscriptionsComped: row.subscriptions_comped,
     subscriptionsTrialing: row.subscriptions_trialing,
@@ -105,6 +109,26 @@ export async function getAdminRecentUsers(): Promise<AdminUserRow[]> {
 
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("admin_list_recent_users", { p_limit: 20 });
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    id: row.id,
+    displayName: row.display_name,
+    phoneNumber: row.phone_number,
+    createdAt: row.created_at,
+  }));
+}
+
+/** Everyone who signed up today (Asia/Kuwait calendar day — see
+ * admin_list_today_signups, 20260919130000_admin_today_signups_and_broadcast.sql),
+ * newest first. A dedicated query rather than filtering
+ * getAdminRecentUsers()'s 20-row page client-side, which would silently
+ * under-count past 20 sign-ups in a single day. */
+export async function getAdminTodaySignups(): Promise<AdminUserRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_list_today_signups");
   if (error || !data) return [];
 
   return data.map((row) => ({
