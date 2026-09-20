@@ -604,6 +604,7 @@ export interface Database {
           id: string;
           display_name: string | null;
           phone_number: string;
+          email: string | null;
           created_at: string;
         }[];
       };
@@ -613,7 +614,19 @@ export interface Database {
           id: string;
           display_name: string | null;
           phone_number: string;
+          email: string | null;
           created_at: string;
+        }[];
+      };
+      admin_list_lapsed_trials: {
+        Args: Record<string, never>;
+        Returns: {
+          household_id: string;
+          household_name: string;
+          owner_name: string | null;
+          owner_phone: string;
+          owner_email: string | null;
+          trial_ended_at: string;
         }[];
       };
     };

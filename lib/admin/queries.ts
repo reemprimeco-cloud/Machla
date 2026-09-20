@@ -39,7 +39,17 @@ export type AdminUserRow = {
   id: string;
   displayName: string | null;
   phoneNumber: string;
+  email: string | null;
   createdAt: string;
+};
+
+export type AdminLapsedTrialRow = {
+  householdId: string;
+  householdName: string;
+  ownerName: string | null;
+  ownerPhone: string;
+  ownerEmail: string | null;
+  trialEndedAt: string;
 };
 
 /** Calls admin_get_stats() — see that migration for why this can see
@@ -115,6 +125,7 @@ export async function getAdminRecentUsers(): Promise<AdminUserRow[]> {
     id: row.id,
     displayName: row.display_name,
     phoneNumber: row.phone_number,
+    email: row.email,
     createdAt: row.created_at,
   }));
 }
@@ -135,6 +146,29 @@ export async function getAdminTodaySignups(): Promise<AdminUserRow[]> {
     id: row.id,
     displayName: row.display_name,
     phoneNumber: row.phone_number,
+    email: row.email,
     createdAt: row.created_at,
+  }));
+}
+
+/** Every household whose free trial ended without ever subscribing —
+ * the actual names/phones behind AdminStats.subscriptionsLapsed, oldest
+ * lapse first (see admin_list_lapsed_trials,
+ * 20260920100000_admin_contact_and_lapsed_trials.sql). This is who the
+ * admin page's WhatsApp/email contact icons exist for. */
+export async function getAdminLapsedTrials(): Promise<AdminLapsedTrialRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_list_lapsed_trials");
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    householdId: row.household_id,
+    householdName: row.household_name,
+    ownerName: row.owner_name,
+    ownerPhone: row.owner_phone,
+    ownerEmail: row.owner_email,
+    trialEndedAt: row.trial_ended_at,
   }));
 }

@@ -1,7 +1,13 @@
 import Link from "next/link";
 
 import { AdminBroadcastForm } from "@/components/admin/AdminBroadcastForm";
-import type { AdminStats, AdminSubscriptionRow, AdminUserRow } from "@/lib/admin/queries";
+import { ContactIcons } from "@/components/admin/ContactIcons";
+import type {
+  AdminLapsedTrialRow,
+  AdminStats,
+  AdminSubscriptionRow,
+  AdminUserRow,
+} from "@/lib/admin/queries";
 import type { SubscriptionStatus } from "@/lib/supabase/database.types";
 
 /** The nominal annual price (App Store Connect) — not stored anywhere
@@ -61,11 +67,13 @@ export function AdminDashboard({
   subscriptions,
   users,
   todaySignups,
+  lapsedTrials,
 }: {
   stats: AdminStats;
   subscriptions: AdminSubscriptionRow[];
   users: AdminUserRow[];
   todaySignups: AdminUserRow[];
+  lapsedTrials: AdminLapsedTrialRow[];
 }) {
   const activeUsers = stats.ownersAndMembers + stats.workers;
   const estimatedRevenue = stats.subscriptionsPaid * ANNUAL_PRICE_USD;
@@ -118,6 +126,7 @@ export function AdminDashboard({
                   <th className="p-3 font-normal">الاسم</th>
                   <th className="p-3 font-normal">الجوال</th>
                   <th className="p-3 font-normal">الوقت</th>
+                  <th className="p-3 font-normal">تواصل</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,6 +144,9 @@ export function AdminDashboard({
                         minute: "2-digit",
                       })}
                     </td>
+                    <td className="p-3">
+                      <ContactIcons phone={user.phoneNumber} email={user.email} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -151,6 +163,46 @@ export function AdminDashboard({
           iosDeviceCount={stats.iosDeviceCount}
           lapsedHouseholdCount={stats.subscriptionsLapsed}
         />
+
+        {/* The actual names/phones behind the "انتهت تجربتهم" push
+            audience above and the "انتهت التجربة بدون اشتراك" stat card —
+            most have no push enabled (only one, as of this writing), so
+            WhatsApp/email are the real way to reach this list. */}
+        <p className="hl-caption mt-3 text-ink-muted">انتهت تجربتهم المجانية</p>
+        {lapsedTrials.length === 0 ? (
+          <p className="hl-caption text-ink-muted">محد انتهت تجربته بدون اشتراك حالياً.</p>
+        ) : (
+          <div className="overflow-x-auto rounded-lg border border-line bg-surface shadow-sm">
+            <table className="w-full text-right">
+              <thead>
+                <tr className="hl-caption border-b border-line text-ink-muted">
+                  <th className="p-3 font-normal">البيت</th>
+                  <th className="p-3 font-normal">المالك</th>
+                  <th className="p-3 font-normal">الجوال</th>
+                  <th className="p-3 font-normal">انتهت التجربة</th>
+                  <th className="p-3 font-normal">تواصل</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lapsedTrials.map((row) => (
+                  <tr key={row.householdId} className="hl-body border-b border-line last:border-0">
+                    <td className="p-3 text-ink">{row.householdName}</td>
+                    <td className="p-3 text-ink">{row.ownerName ?? "—"}</td>
+                    <td className="p-3">
+                      <bdi dir="ltr" className="text-ink-muted">
+                        {row.ownerPhone}
+                      </bdi>
+                    </td>
+                    <td className="p-3 text-ink-muted">{formatDate(row.trialEndedAt)}</td>
+                    <td className="p-3">
+                      <ContactIcons phone={row.ownerPhone} email={row.ownerEmail} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section className="space-y-2">
@@ -206,6 +258,7 @@ export function AdminDashboard({
                 <th className="p-3 font-normal">الاسم</th>
                 <th className="p-3 font-normal">الجوال</th>
                 <th className="p-3 font-normal">تاريخ التسجيل</th>
+                <th className="p-3 font-normal">تواصل</th>
               </tr>
             </thead>
             <tbody>
@@ -218,6 +271,9 @@ export function AdminDashboard({
                     </bdi>
                   </td>
                   <td className="p-3 text-ink-muted">{formatDate(user.createdAt)}</td>
+                  <td className="p-3">
+                    <ContactIcons phone={user.phoneNumber} email={user.email} />
+                  </td>
                 </tr>
               ))}
             </tbody>

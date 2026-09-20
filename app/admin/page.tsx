@@ -1,5 +1,6 @@
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
 import {
+  getAdminLapsedTrials,
   getAdminRecentSubscriptions,
   getAdminRecentUsers,
   getAdminStats,
@@ -14,11 +15,12 @@ import { requireAdminAccess } from "@/lib/admin/guard";
  */
 export default async function AdminPage() {
   await requireAdminAccess();
-  const [stats, subscriptions, users, todaySignups] = await Promise.all([
+  const [stats, subscriptions, users, todaySignups, lapsedTrials] = await Promise.all([
     getAdminStats(),
     getAdminRecentSubscriptions(),
     getAdminRecentUsers(),
     getAdminTodaySignups(),
+    getAdminLapsedTrials(),
   ]);
 
   if (!stats) {
@@ -35,6 +37,7 @@ export default async function AdminPage() {
       subscriptions={subscriptions}
       users={users}
       todaySignups={todaySignups}
+      lapsedTrials={lapsedTrials}
     />
   );
 }
