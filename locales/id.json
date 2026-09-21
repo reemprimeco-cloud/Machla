@@ -298,7 +298,7 @@
     "seeTitle": "Siapa yang bisa melihatnya",
     "seeBody": "Hanya orang-orang di rumah tangga Anda. Orang yang berbelanja untuk satu rumah tangga hanya melihat daftar rumah tangga itu, dan tidak ada dari rumah tangga lain. Ini diberlakukan oleh basis data itu sendiri, bukan hanya oleh apa yang ditampilkan di layar.",
     "photosTitle": "Foto dihapus",
-    "photosBody": "Foto suatu barang dihapus begitu barang itu dibeli, atau begitu daftarnya selesai — mana yang lebih dulu. Hanya rumah tangga Anda sendiri yang pernah melihatnya.",
+    "photosBody": "Foto suatu barang dihapus begitu daftar yang memuatnya selesai. Hanya rumah tangga Anda sendiri yang pernah melihatnya.",
     "finishedTitle": "Daftar yang selesai akan hilang",
     "finishedBody": "Saat daftar ditandai selesai, daftar itu hilang untuk semua orang di rumah tangga, dan tidak ada cara untuk kembali ke daftar tersebut.",
     "whereTitle": "Di mana data disimpan",

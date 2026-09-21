@@ -298,7 +298,7 @@
     "seeTitle": "Who can see it",
     "seeBody": "Only the people in your household. Someone who shops for a household sees that household's lists and nothing from any other household. This is enforced by the database itself, not only by what the screens choose to show.",
     "photosTitle": "Photographs are deleted",
-    "photosBody": "A photo of an item is deleted once that item is bought, or once the list is finished — whichever comes first. Only your own household ever sees it.",
+    "photosBody": "A photo of an item is deleted once the list it's on is finished. Only your own household ever sees it.",
     "finishedTitle": "Finished lists disappear",
     "finishedBody": "When a list is marked finished it disappears for everyone in the household, and there is no way back to it.",
     "whereTitle": "Where it is kept",

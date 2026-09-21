@@ -298,7 +298,7 @@
     "seeTitle": "Qui peut le voir",
     "seeBody": "Seulement les personnes de votre foyer. Une personne qui fait les courses pour un foyer voit les listes de ce foyer, et rien d'aucun autre foyer. Cela est appliqué par la base de données elle-même, pas seulement par ce que les écrans choisissent de montrer.",
     "photosTitle": "Les photos sont supprimées",
-    "photosBody": "La photo d'un article est supprimée dès qu'il est acheté, ou dès que la liste est terminée — selon ce qui arrive en premier. Seul votre propre foyer la voit jamais.",
+    "photosBody": "La photo d'un article est supprimée dès que la liste qui le contient est terminée. Seul votre propre foyer la voit jamais.",
     "finishedTitle": "Les listes terminées disparaissent",
     "finishedBody": "Lorsqu'une liste est marquée comme terminée, elle disparaît pour tout le monde dans le foyer, et il n'existe aucun moyen d'y revenir.",
     "whereTitle": "Où c'est conservé",

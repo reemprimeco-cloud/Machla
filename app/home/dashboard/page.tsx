@@ -2,7 +2,7 @@ import { HouseholdDashboard } from "@/components/household/HouseholdDashboard";
 import { getServerUserProfile } from "@/lib/auth/session";
 import { greetingKeyForNow } from "@/lib/household/greeting";
 import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
-import { getHouseholdMembers } from "@/lib/household/queries";
+import { getActiveMemberships, getHouseholdMembers } from "@/lib/household/queries";
 import { getHouseholdLists, isOpen } from "@/lib/list/household";
 import { getDraftList } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
@@ -24,12 +24,13 @@ export default async function DashboardPage() {
   const membership = await requireHouseholdAccess();
   await requireActiveSubscription(membership);
 
-  const [members, lists, unreadCount, profile, draft] = await Promise.all([
+  const [members, lists, unreadCount, profile, draft, memberships] = await Promise.all([
     getHouseholdMembers(membership.householdId),
     getHouseholdLists(membership.householdId),
     getUnreadCount(),
     getServerUserProfile(),
     getDraftList(membership.householdId),
+    getActiveMemberships(),
   ]);
 
   return (
@@ -45,6 +46,7 @@ export default async function DashboardPage() {
       displayName={profile?.display_name ?? null}
       greetingKey={greetingKeyForNow()}
       accountCompleted={Boolean(profile?.account_completed_at)}
+      multipleHomes={memberships.filter((entry) => entry.role !== "worker").length > 1}
     />
   );
 }

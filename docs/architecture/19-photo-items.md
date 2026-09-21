@@ -44,7 +44,7 @@ is public precisely because the catalogue is world-readable.
 | Public | yes | **no** |
 | Who reads | everyone | active members of one household |
 | Who writes | service role, offline | active members, from the browser |
-| Lifetime | permanent | until the item is purchased (§5) |
+| Lifetime | permanent | until the list is finished (§5) |
 
 **Authorization is the object path.** An object is
 `<household_id>/<list_id>/<uuid>.jpg`, and the storage policies read the
@@ -116,8 +116,11 @@ storage.objects`, so rolling back is the only clean way to run it.
 ## 5. Retention: the picture does not outlive its purpose
 
 **A photograph answers one question — "is this the thing you meant?" —
-and that question is settled when the item is ticked off.** The blob is
-deleted at that moment.
+and that question stays open for as long as the list itself is still
+being shopped from.** The blob is deleted once the list is finished:
+`setListCompletedAction` sweeps every photograph still on it
+(`purgePhotosForList`), and `deleteListAction`'s swipe-to-delete/archive
+path does the same.
 
 This reversed a decision made one migration earlier.
 `20260810140000_photo_items.sql` gave clients no DELETE policy, arguing
@@ -139,17 +142,22 @@ requires a photographed item to have one; `photo_deleted_at` marks that
 the object behind it is gone, and the UI renders a placeholder rather
 than a broken image.
 
-Two triggers, because one is not enough:
+**One trigger, not two (2026-09 revision).** An earlier version of this
+also purged the moment an item was ticked off as purchased
+(`setPurchaseStatusAction`), reasoning that purchase settles the
+question the photo exists to answer. It doesn't, quite: the checklist
+lets a purchase be toggled back to pending — a misclick, a second
+thought — and that left a still-active, still-unpurchased item with its
+identifying picture already gone for good, with nothing telling anyone
+why (reported directly: "the photo isn't showing"). Purging only on
+completion means an undo never loses anything; the photo is only ever
+one-way gone once the list itself is.
 
-1. **On purchase** — `setPurchaseStatusAction`, the normal path.
-2. **On completion** — `setListCompletedAction` sweeps whatever is left.
-   Without this, an item marked *unavailable*, or one whose purge failed
-   on a flaky connection, would keep its photograph forever.
-
-Both are best-effort: a failed purge must never make ticking an item off
-fail, because the checklist is what the person is actually doing. The
-sweep is the backstop, and `mark_photo_purged` is idempotent so the two
-paths can overlap safely.
+The sweep is still best-effort: a failed purge must never make
+completing the list fail, because that is what the person is actually
+doing. `mark_photo_purged` is idempotent, so a retry (or the swipe-to-
+delete path reaching an item the completion sweep already covered)
+overlaps safely.
 
 **Deletion cannot happen in Postgres.** Supabase blocks `delete from
 storage.objects` outright (`storage.protect_delete`), so no trigger can

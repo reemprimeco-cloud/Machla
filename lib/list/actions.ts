@@ -309,38 +309,17 @@ export async function setPurchaseStatusAction(
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
-  // A photograph exists to answer "is this the thing you meant?". Ticking
-  // the item off settles that, so the picture is purged now rather than
-  // lingering. Best-effort: a failed purge must not make the tick fail,
-  // because the checklist is what the person is actually doing. Anything
-  // missed is swept up when the list is completed.
-  if (status === "purchased") await purgePhotoFor(itemId);
-
+  // A photograph is kept until the list itself is finished
+  // (purgePhotosForList, called from setListCompletedAction/deleteListAction)
+  // rather than purged the moment an item is ticked off. Purging on
+  // purchase used to lose the picture for good the instant someone undid
+  // a tick — the checklist allows toggling purchased back to pending, and
+  // that left a still-active item with no way to identify what it was
+  // (2026-09 feedback). Keeping it until the list ends means an undo never
+  // loses anything; the photo still disappears once there is nothing left
+  // to identify it for.
   revalidatePath("/home", "layout");
   return { ok: true, value: undefined };
-}
-
-/**
- * Deletes the blob and stamps the row.
- *
- * The delete goes through the Storage API rather than SQL because
- * Supabase forbids `delete from storage.objects` outright; it runs with
- * the caller's session, so the storage policy authorizes it against the
- * same household membership as everything else.
- */
-async function purgePhotoFor(itemId: string): Promise<void> {
-  const supabase = await createClient();
-
-  const { data: item } = await supabase
-    .from("shopping_list_items")
-    .select("photo_path, photo_deleted_at")
-    .eq("id", itemId)
-    .maybeSingle();
-
-  if (!item?.photo_path || item.photo_deleted_at) return;
-
-  await supabase.storage.from("list-photos").remove([item.photo_path]);
-  await supabase.rpc("mark_photo_purged", { p_item_id: itemId });
 }
 
 /**
@@ -371,10 +350,10 @@ export async function setListCompletedAction(
 
   if (error) return { ok: false, code: toListErrorCode(error.message) };
 
-  // The sweep. Purging on purchase covers the normal path, but an item
-  // marked unavailable — or one whose purge failed on a flaky connection
-  // — would otherwise keep its photograph forever. Completing the list is
-  // the point at which no photograph on it has any remaining purpose.
+  // The only purge path (see setPurchaseStatusAction's own comment for
+  // why it no longer purges on tick). Completing the list is the point at
+  // which no photograph on it has any remaining purpose, whatever each
+  // item's final purchase_status ended up being.
   if (completed) {
     await purgePhotosForList(listId);
     await sendPendingPushes(listId, "list_completed");

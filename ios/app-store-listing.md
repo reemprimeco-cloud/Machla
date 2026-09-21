@@ -120,7 +120,7 @@ for Tracking**.
 |---|---|
 | Phone Number | Yes — sign-in |
 | Name | Yes — display name shown to household/helper |
-| Photos or Videos | Yes — photographed items not in the catalogue, deleted after purchase or when the list finishes |
+| Photos or Videos | Yes — photographed items not in the catalogue, deleted when the list finishes |
 | Other User Content | Yes — the shopping lists themselves |
 | Precise/Coarse Location | No |
 | Contacts | No |

@@ -49,6 +49,7 @@ export function HouseholdDashboard({
   displayName,
   greetingKey,
   accountCompleted,
+  multipleHomes,
 }: {
   householdId: string;
   householdName: string;
@@ -69,6 +70,17 @@ export function HouseholdDashboard({
   /** Whether this account has added an email/username + password yet
    * (users.account_completed_at) — see CompleteAccountBanner. */
   accountCompleted: boolean;
+  /** Whether the signed-in user has more than one owner/member household
+   * (app/home/dashboard/page.tsx — getActiveMemberships). The bottom tab
+   * bar's "Homes" tab already lands on `/home`, which shows the switcher
+   * for exactly this case (app/home/page.tsx) — but that tab reads as
+   * "active" on every /home/* route, including this one, so tapping it
+   * again from here isn't obvious. This link makes the same destination
+   * explicit and visible right where a multi-household owner actually
+   * needs it (2026-09 feedback, asked three times). Hidden entirely for
+   * the common one-household case, where `/home` would just bounce
+   * straight back to this same screen. */
+  multipleHomes: boolean;
 }) {
   const { t } = useLocale();
 
@@ -102,8 +114,15 @@ export function HouseholdDashboard({
         <h1 className="hl-title text-ink">
           {t(greetingKey, { name: displayName || t("members.unnamed") })}
         </h1>
-        <p className="hl-caption mt-1">
-          {t("home.overview", { openCount, memberCount })} · {householdName}
+        <p className="hl-caption mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+          <span>
+            {t("home.overview", { openCount, memberCount })} · {householdName}
+          </span>
+          {multipleHomes ? (
+            <Link href="/home" className="text-primary underline underline-offset-2">
+              {t("home.myHomes")}
+            </Link>
+          ) : null}
         </p>
       </div>
 
