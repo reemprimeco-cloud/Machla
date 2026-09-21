@@ -16,9 +16,9 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; listId?: string }>;
 }) {
-  const { q } = await searchParams;
+  const { q, listId } = await searchParams;
   const query = (q ?? "").trim();
   const membership = await requireWorkerAccess();
 
@@ -38,6 +38,7 @@ export default async function SearchPage({
       quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
+      targetListId={listId}
     />
   );
 }

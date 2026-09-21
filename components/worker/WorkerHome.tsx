@@ -20,6 +20,7 @@ export function WorkerHome({
   basePath = "/worker",
   backHref,
   accountCompleted = true,
+  targetListId,
 }: {
   householdName: string;
   categories: Category[];
@@ -44,6 +45,10 @@ export function WorkerHome({
    * already, so showing it again here (basePath="/home/shop") would be
    * redundant. Defaults to true (hidden) for that reason. */
   accountCompleted?: boolean;
+  /** Set only via SentConfirmation.tsx's "add more" link — everything
+   * added while this is set targets that already-sent list instead of
+   * building a new draft. See QuantityStepper.tsx's targetListId. */
+  targetListId?: string;
 }) {
   const { t } = useLocale();
   const isWorker = basePath === "/worker";
@@ -56,19 +61,26 @@ export function WorkerHome({
         itemCount={itemCount}
         unreadCount={unreadCount}
         basePath={basePath}
+        targetListId={targetListId}
       />
 
       {isWorker && !accountCompleted ? <CompleteAccountBanner /> : null}
 
+      {targetListId ? (
+        <p className="hl-caption rounded-lg border border-dashed border-primary bg-primary-tint px-4 py-3 text-ink">
+          {t("worker.addingToSentList")}
+        </p>
+      ) : null}
+
       <p className="hl-title text-ink">{t("worker.browse")}</p>
 
-      <SearchBox basePath={basePath} />
+      <SearchBox basePath={basePath} targetListId={targetListId} />
 
       <InstallGuide />
 
       <section className="space-y-3">
         <h2 className="hl-label text-ink-muted">{t("worker.categories")}</h2>
-        <CategoryGrid categories={categories} basePath={basePath} />
+        <CategoryGrid categories={categories} basePath={basePath} targetListId={targetListId} />
       </section>
 
       {/* A worker now reaches their sent-list history through

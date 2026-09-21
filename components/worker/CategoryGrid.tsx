@@ -17,9 +17,15 @@ import { useLocale } from "@/lib/i18n/LocaleProvider";
 export function CategoryGrid({
   categories,
   basePath = "/worker",
+  targetListId,
 }: {
   categories: Category[];
   basePath?: string;
+  /** Carried through to the category page as `?listId=`, so "add more to
+   * a sent list" (SentConfirmation.tsx) survives the category tap — see
+   * QuantityStepper.tsx's targetListId. Not offered for the photo tile:
+   * add_item_to_sent_list has no photo-item counterpart. */
+  targetListId?: string;
 }) {
   const { locale } = useLocale();
 
@@ -33,7 +39,9 @@ export function CategoryGrid({
             href={
               category.is_capture
                 ? `${basePath}/photo`
-                : `${basePath}/c/${category.key}`
+                : targetListId
+                  ? `${basePath}/c/${category.key}?listId=${targetListId}`
+                  : `${basePath}/c/${category.key}`
             }
             className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >

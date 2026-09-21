@@ -12,7 +12,12 @@ import { getUnreadCount } from "@/lib/notifications/queries";
  * first add, so merely opening the app leaves no trace
  * (lib/list/queries.ts).
  */
-export default async function WorkerPage() {
+export default async function WorkerPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ listId?: string }>;
+}) {
+  const { listId } = await searchParams;
   const membership = await requireWorkerAccess();
 
   const [categories, draft, unreadCount, profile] = await Promise.all([
@@ -29,6 +34,7 @@ export default async function WorkerPage() {
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
       accountCompleted={Boolean(profile?.account_completed_at)}
+      targetListId={listId}
     />
   );
 }

@@ -9,9 +9,9 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 export default async function ShopSearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; listId?: string }>;
 }) {
-  const { q } = await searchParams;
+  const { q, listId } = await searchParams;
   const query = (q ?? "").trim();
   const membership = await requireHouseholdAccess();
   await requireActiveSubscription(membership);
@@ -33,6 +33,7 @@ export default async function ShopSearchPage({
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
       basePath="/home/shop"
+      targetListId={listId}
     />
   );
 }

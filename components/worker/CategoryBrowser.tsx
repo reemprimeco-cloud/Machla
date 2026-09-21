@@ -17,6 +17,7 @@ export function CategoryBrowser({
   itemCount,
   unreadCount,
   basePath = "/worker",
+  targetListId,
 }: {
   category: Category;
   products: Product[];
@@ -26,6 +27,7 @@ export function CategoryBrowser({
   itemCount: number;
   unreadCount: number;
   basePath?: string;
+  targetListId?: string;
 }) {
   const { t, locale } = useLocale();
 
@@ -41,6 +43,7 @@ export function CategoryBrowser({
         itemCount={itemCount}
         unreadCount={unreadCount}
         basePath={basePath}
+        targetListId={targetListId}
       />
 
       {products.length === 0 ? (
@@ -53,6 +56,7 @@ export function CategoryBrowser({
           householdId={householdId}
           quantities={quantities}
           iconByCategoryId={iconByCategoryId}
+          targetListId={targetListId}
         />
       )}
     </Screen>

@@ -19,6 +19,7 @@ export default async function SentPage({ params }: { params: Promise<{ id: strin
       householdName={membership.householdName}
       groups={list.groups}
       itemCount={list.itemCount}
+      listId={id}
     />
   );
 }

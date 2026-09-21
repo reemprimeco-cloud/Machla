@@ -194,7 +194,9 @@
     "photoUnavailable": "Foto tidak tersedia",
     "photoView": "Lihat foto",
     "addNote": "Tambah catatan",
-    "noteHint": "cth. bebas laktosa"
+    "noteHint": "cth. bebas laktosa",
+    "addingToSentList": "Anda menambahkan ke daftar yang sudah Anda kirim.",
+    "addMoreToSentList": "Tambahkan lagi ke daftar ini"
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",
@@ -233,7 +235,9 @@
     "itemsLeft": "{count} barang tersisa",
     "allDone": "Semua barang telah dibeli",
     "delete": "Hapus",
-    "deleteConfirm": "Hapus daftar ini? Tindakan ini tidak dapat dibatalkan."
+    "deleteConfirm": "Hapus daftar ini? Tindakan ini tidak dapat dibatalkan.",
+    "addItem": "Tambahkan barang",
+    "addedAfterSend": "Ditambahkan setelah dikirim"
   },
   "notif": {
     "title": "Notifikasi",

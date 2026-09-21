@@ -21,6 +21,7 @@ export function WorkerBar({
   itemCount,
   unreadCount = 0,
   basePath = "/worker",
+  targetListId,
 }: {
   title: string;
   backHref?: string;
@@ -31,6 +32,10 @@ export function WorkerBar({
    * screen unchanged apart from where its links point. Defaults to the
    * worker experience these components were built for. */
   basePath?: string;
+  /** Set while adding to an already-sent list (QuantityStepper.tsx) —
+   * hides the "my list" basket button rather than pointing it at
+   * `${basePath}/list`, a draft this flow has nothing to do with. */
+  targetListId?: string;
 }) {
   const { t } = useLocale();
 
@@ -54,16 +59,18 @@ export function WorkerBar({
 
       <NotificationBell unreadCount={unreadCount} />
 
-      <Link
-        href={`${basePath}/list`}
-        className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-primary px-4 text-on-primary"
-      >
-        <span aria-hidden>🧺</span>
-        <span>{itemCount}</span>
-        <span className="sr-only">
-          {t("worker.myListWithCount", { count: itemCount })}
-        </span>
-      </Link>
+      {targetListId ? null : (
+        <Link
+          href={`${basePath}/list`}
+          className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-primary px-4 text-on-primary"
+        >
+          <span aria-hidden>🧺</span>
+          <span>{itemCount}</span>
+          <span className="sr-only">
+            {t("worker.myListWithCount", { count: itemCount })}
+          </span>
+        </Link>
+      )}
     </div>
   );
 }
@@ -75,9 +82,13 @@ export function WorkerBar({
 export function SearchBox({
   initialQuery = "",
   basePath = "/worker",
+  targetListId,
 }: {
   initialQuery?: string;
   basePath?: string;
+  /** Carried through to the search results page as `?listId=` — see
+   * QuantityStepper.tsx's targetListId. */
+  targetListId?: string;
 }) {
   const { t } = useLocale();
   const router = useRouter();
@@ -89,8 +100,10 @@ export function SearchBox({
       onSubmit={(event) => {
         event.preventDefault();
         const trimmed = query.trim();
-        if (trimmed)
-          router.push(`${basePath}/search?q=${encodeURIComponent(trimmed)}`);
+        if (!trimmed) return;
+        const params = new URLSearchParams({ q: trimmed });
+        if (targetListId) params.set("listId", targetListId);
+        router.push(`${basePath}/search?${params.toString()}`);
       }}
       className="flex gap-2"
     >

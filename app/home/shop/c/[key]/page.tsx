@@ -8,8 +8,15 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 
 /** Mirrors app/worker/c/[key]/page.tsx — see app/home/shop/page.tsx for
  * why this is a thin `basePath` variant rather than a separate build. */
-export default async function ShopCategoryPage({ params }: { params: Promise<{ key: string }> }) {
+export default async function ShopCategoryPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ key: string }>;
+  searchParams: Promise<{ listId?: string }>;
+}) {
   const { key } = await params;
+  const { listId } = await searchParams;
   const membership = await requireHouseholdAccess();
   await requireActiveSubscription(membership);
 
@@ -33,6 +40,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ k
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
       basePath="/home/shop"
+      targetListId={listId}
     />
   );
 }

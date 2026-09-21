@@ -213,6 +213,40 @@ export async function removePhotoItemAction(
   return { ok: true, value: undefined };
 }
 
+/**
+ * Appends a product to a list that has already been sent — either the
+ * worker who sent it, continuing to add more, or an owner/member adding
+ * something to a list a worker is already shopping from
+ * (20260921100000_add_item_after_send.sql). Deliberately separate from
+ * setProductQuantityAction: that action always resolves its target via
+ * get_or_create_draft_list, which only ever finds a 'draft', so it has no
+ * way to reach a list that has already moved past that status. Never
+ * touches an existing item's note — only a brand-new row, or more
+ * quantity of one already there.
+ */
+export async function addItemToSentListAction(
+  listId: string,
+  productId: string,
+  quantity: number,
+  note: string | null = null,
+): Promise<ListActionResult<string>> {
+  if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("add_item_to_sent_list", {
+    p_list_id: listId,
+    p_product_id: productId,
+    p_quantity: quantity,
+    p_note: note,
+  });
+
+  if (error || !data) return { ok: false, code: toListErrorCode(error?.message) };
+
+  revalidatePath("/worker", "layout");
+  revalidatePath("/home", "layout");
+  return { ok: true, value: data };
+}
+
 export async function sendListAction(
   listId: string,
 ): Promise<ListActionResult<string>> {

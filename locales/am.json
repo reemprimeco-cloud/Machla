@@ -194,7 +194,9 @@
     "photoUnavailable": "ፎቶ የለም",
     "photoView": "ፎቶ ይመልከቱ",
     "addNote": "ማስታወሻ ጨምር",
-    "noteHint": "ለምሳሌ: ላክቶስ የሌለው"
+    "noteHint": "ለምሳሌ: ላክቶስ የሌለው",
+    "addingToSentList": "ቀደም ሲል የላኩትን ዝርዝር ላይ እየጨመሩ ነው።",
+    "addMoreToSentList": "ወደዚህ ዝርዝር ተጨማሪ ያክሉ"
   },
   "errors": {
     "notOwner": "ይህን ማድረግ የሚችለው የቤቱ ባለቤት ብቻ ነው።",
@@ -233,7 +235,9 @@
     "itemsLeft": "{count} ዕቃዎች ቀርተዋል",
     "allDone": "ሁሉም ዕቃዎች ተገዝተዋል",
     "delete": "ሰርዝ",
-    "deleteConfirm": "ይህን ዝርዝር መሰረዝ ይፈልጋሉ? ይህ ወደ ኋላ አይመለስም።"
+    "deleteConfirm": "ይህን ዝርዝር መሰረዝ ይፈልጋሉ? ይህ ወደ ኋላ አይመለስም።",
+    "addItem": "አንድ ዕቃ ያክሉ",
+    "addedAfterSend": "ከተላከ በኋላ ታክሏል"
   },
   "notif": {
     "title": "ማሳወቂያዎች",

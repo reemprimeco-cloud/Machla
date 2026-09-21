@@ -20,11 +20,13 @@ export function SentConfirmation({
   householdName,
   groups,
   itemCount,
+  listId,
   basePath = "/worker",
 }: {
   householdName: string;
   groups: ListGroup[];
   itemCount: number;
+  listId: string;
   basePath?: string;
 }) {
   const { t, locale } = useLocale();
@@ -87,6 +89,17 @@ export function SentConfirmation({
           </ul>
         </section>
       ))}
+
+      {/* Appends to THIS already-sent list (add_item_to_sent_list,
+          20260921100000_add_item_after_send.sql) — for "forgot something"
+          right after sending, distinct from starting an unrelated new
+          list below. */}
+      <Link
+        href={`${basePath}?listId=${listId}`}
+        className="hl-label min-h-12 content-center rounded-lg border border-primary px-4 text-center text-primary shadow-sm"
+      >
+        {t("worker.addMoreToSentList")}
+      </Link>
 
       <Link
         href={basePath}

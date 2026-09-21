@@ -330,6 +330,11 @@ export interface Database {
           purchase_status: PurchaseStatus;
           purchased_at: string | null;
           purchased_by_user_id: string | null;
+          /** Set only when this item was appended via
+           * add_item_to_sent_list, after the list had already been sent —
+           * null means it was part of the original draft
+           * (20260921100000_add_item_after_send.sql). */
+          added_by_user_id: string | null;
           created_at: string;
           updated_at: string;
         };
@@ -429,6 +434,15 @@ export interface Database {
       remove_list_item: {
         Args: { p_list_id: string; p_product_id: string };
         Returns: boolean;
+      };
+      add_item_to_sent_list: {
+        Args: {
+          p_list_id: string;
+          p_product_id: string;
+          p_quantity?: number;
+          p_note?: string | null;
+        };
+        Returns: string;
       };
       send_list: {
         Args: { p_list_id: string };

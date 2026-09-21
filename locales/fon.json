@@ -194,7 +194,9 @@
     "photoUnavailable": "Fɔto ɔ kú ɖò fí ǎ",
     "photoView": "Kpɔ́n fɔto ɔ",
     "addNote": "Sɔ́ ɖó nùɖiɖɔ",
-    "noteHint": "ɖi: lactose kú ɖ'emɛ ǎ"
+    "noteHint": "ɖi: lactose kú ɖ'emɛ ǎ",
+    "addingToSentList": "A ɖò nǔ ɖě jó dó wema e a ko sɛ́n xóxó é jí.",
+    "addMoreToSentList": "Lɛ́ jó nǔ dó wema elɔ jí"
   },
   "errors": {
     "notOwner": "Xwégán ɔ kɛɖɛ wɛ sixu bló mɔ̌.",
@@ -233,7 +235,9 @@
     "itemsLeft": "Nǔ {count} kpò",
     "allDone": "Nǔ bǐ xɔ",
     "delete": "Súnsún",
-    "deleteConfirm": "Á jló ná súnsún távo elɔ? È sixu lɛ́ vɔ́ ɖó te ǎ."
+    "deleteConfirm": "Á jló ná súnsún távo elɔ? È sixu lɛ́ vɔ́ ɖó te ǎ.",
+    "addItem": "Jó nǔ ɖokpo",
+    "addedAfterSend": "È jó ɛ dó gudo hwenu e è sɛ́n gudo é"
   },
   "notif": {
     "title": "Wɛnsagbè lɛ́",

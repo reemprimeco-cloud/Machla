@@ -19,6 +19,7 @@ export default async function ShopSentPage({ params }: { params: Promise<{ id: s
       householdName={membership.householdName}
       groups={list.groups}
       itemCount={list.itemCount}
+      listId={id}
       basePath="/home/shop"
     />
   );

@@ -194,7 +194,9 @@
     "photoUnavailable": "Photo indisponible",
     "photoView": "Voir la photo",
     "addNote": "Ajouter une note",
-    "noteHint": "ex. sans lactose"
+    "noteHint": "ex. sans lactose",
+    "addingToSentList": "Vous ajoutez à une liste que vous avez déjà envoyée.",
+    "addMoreToSentList": "Ajouter plus à cette liste"
   },
   "errors": {
     "notOwner": "Seul le chef de famille peut faire cela.",
@@ -233,7 +235,9 @@
     "itemsLeft": "{count} articles restants",
     "allDone": "Tous les articles achetés",
     "delete": "Supprimer",
-    "deleteConfirm": "Supprimer cette liste ? Cette action est irréversible."
+    "deleteConfirm": "Supprimer cette liste ? Cette action est irréversible.",
+    "addItem": "Ajouter un article",
+    "addedAfterSend": "Ajouté après l'envoi"
   },
   "notif": {
     "title": "Notifications",

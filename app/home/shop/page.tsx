@@ -14,7 +14,12 @@ import { getUnreadCount } from "@/lib/notifications/queries";
  * `basePath="/home/shop"` is the only thing that differs from the worker
  * screens; see the comment on `WorkerHome`'s prop for what it changes.
  */
-export default async function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ listId?: string }>;
+}) {
+  const { listId } = await searchParams;
   const membership = await requireHouseholdAccess();
   await requireActiveSubscription(membership);
 
@@ -32,6 +37,7 @@ export default async function ShopPage() {
       unreadCount={unreadCount}
       basePath="/home/shop"
       backHref="/home/dashboard"
+      targetListId={listId}
     />
   );
 }

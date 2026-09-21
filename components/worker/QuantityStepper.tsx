@@ -7,6 +7,8 @@ import type { Product } from "@/lib/catalog/queries";
 import { setProductQuantityAction } from "@/lib/list/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
+import { QuickAddButton } from "./QuickAddButton";
+
 /**
  * The single control the whole shopping flow runs on.
  *
@@ -116,11 +118,17 @@ export function ProductCard({
   householdId,
   quantity,
   categoryIcon,
+  targetListId,
 }: {
   product: Product;
   householdId: string;
   quantity: number;
   categoryIcon: string | null;
+  /** Set only when browsing to add more to a list that was already sent
+   * (SentConfirmation.tsx's "add more" flow) — swaps the stepper for
+   * QuickAddButton, since that's the only thing add_item_to_sent_list
+   * supports. Absent everywhere else: the normal draft-building flow. */
+  targetListId?: string;
 }) {
   const { locale } = useLocale();
   const name = localizedName(product, locale);
@@ -156,12 +164,16 @@ export function ProductCard({
         {detail ? <p className="hl-caption">{detail}</p> : null}
       </div>
 
-      <QuantityStepper
-        householdId={householdId}
-        productId={product.id}
-        quantity={quantity}
-        label={name}
-      />
+      {targetListId ? (
+        <QuickAddButton listId={targetListId} productId={product.id} label={name} />
+      ) : (
+        <QuantityStepper
+          householdId={householdId}
+          productId={product.id}
+          quantity={quantity}
+          label={name}
+        />
+      )}
     </li>
   );
 }
@@ -171,11 +183,13 @@ export function ProductGrid({
   householdId,
   quantities,
   iconByCategoryId,
+  targetListId,
 }: {
   products: Product[];
   householdId: string;
   quantities: Record<string, number>;
   iconByCategoryId: Record<string, string | null>;
+  targetListId?: string;
 }) {
   return (
     <ul className="grid grid-cols-2 gap-3">
@@ -186,6 +200,7 @@ export function ProductGrid({
           householdId={householdId}
           quantity={quantities[product.id] ?? 0}
           categoryIcon={iconByCategoryId[product.category_id] ?? null}
+          targetListId={targetListId}
         />
       ))}
     </ul>

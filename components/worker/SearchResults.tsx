@@ -16,6 +16,7 @@ export function SearchResults({
   itemCount,
   unreadCount,
   basePath = "/worker",
+  targetListId,
 }: {
   query: string;
   products: Product[];
@@ -25,6 +26,7 @@ export function SearchResults({
   itemCount: number;
   unreadCount: number;
   basePath?: string;
+  targetListId?: string;
 }) {
   const { t } = useLocale();
 
@@ -40,9 +42,10 @@ export function SearchResults({
         itemCount={itemCount}
         unreadCount={unreadCount}
         basePath={basePath}
+        targetListId={targetListId}
       />
 
-      <SearchBox initialQuery={query} basePath={basePath} />
+      <SearchBox initialQuery={query} basePath={basePath} targetListId={targetListId} />
 
       {products.length === 0 ? (
         <Card>
@@ -54,6 +57,7 @@ export function SearchResults({
           householdId={householdId}
           quantities={quantities}
           iconByCategoryId={iconByCategoryId}
+          targetListId={targetListId}
         />
       )}
     </Screen>

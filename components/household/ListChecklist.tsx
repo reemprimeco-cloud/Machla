@@ -150,6 +150,7 @@ export function ListChecklist({
                   unit={item.unit}
                   note={item.note}
                   status={item.purchase_status}
+                  addedAfterSend={item.added_by_user_id !== null}
                   onChanged={(before, after) => {
                     // Keep the header count in step with the rows without
                     // a refetch: only transitions into and out of
@@ -176,14 +177,30 @@ export function ListChecklist({
         <p className="hl-label rounded-lg bg-success-tint px-4 py-3 text-center text-success">
           {t("hlists.completedConfirm")}
         </p>
-      ) : groups.length > 0 ? (
-        // Deliberately not gated on every item being checked: a shop can
-        // finish with something unavailable, and refusing to close the
-        // list would only teach people to fake the boxes.
-        <PrimaryButton onClick={markDone} disabled={pending}>
-          {t("hlists.markDone")}
-        </PrimaryButton>
-      ) : null}
+      ) : (
+        <>
+          {/* add_item_to_sent_list (20260921100000_add_item_after_send.sql)
+              — "forgot to ask for something" without waiting for the next
+              list. Hidden once completed: the RPC refuses an archived list
+              the same way set_purchase_status already does. */}
+          <Link
+            href={`/home/lists/${summary.id}/add`}
+            className="hl-label flex min-h-12 items-center justify-center gap-2 rounded-lg border border-dashed border-primary bg-primary-tint px-4 text-primary"
+          >
+            <span aria-hidden>+</span>
+            {t("hlists.addItem")}
+          </Link>
+
+          {groups.length > 0 ? (
+            // Deliberately not gated on every item being checked: a shop can
+            // finish with something unavailable, and refusing to close the
+            // list would only teach people to fake the boxes.
+            <PrimaryButton onClick={markDone} disabled={pending}>
+              {t("hlists.markDone")}
+            </PrimaryButton>
+          ) : null}
+        </>
+      )}
 
       <Link
         href={backHref}
@@ -206,6 +223,7 @@ function ChecklistRow({
   unit,
   note,
   status,
+  addedAfterSend,
   onChanged,
   onError,
   readOnly = false,
@@ -220,6 +238,11 @@ function ChecklistRow({
   unit: string;
   note: string | null;
   status: PurchaseStatus;
+  /** True when this row came from add_item_to_sent_list rather than the
+   * original draft (shopping_list_items.added_by_user_id) — shown as a
+   * small marker so nobody mistakes a later addition for part of the
+   * original ask. */
+  addedAfterSend: boolean;
   onChanged: (before: PurchaseStatus, after: PurchaseStatus) => void;
   onError: (code: ListErrorCode) => void;
   /** True once the list itself has been marked done — Postgres refuses
@@ -309,6 +332,9 @@ function ChecklistRow({
             ) : null}
             {note ? (
               <span className="hl-caption block truncate">“{note}”</span>
+            ) : null}
+            {addedAfterSend ? (
+              <span className="hl-caption block text-primary">{t("hlists.addedAfterSend")}</span>
             ) : null}
           </span>
 

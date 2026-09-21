@@ -194,7 +194,9 @@
     "photoUnavailable": "Walang larawan",
     "photoView": "Tingnan ang larawan",
     "addNote": "Magdagdag ng tala",
-    "noteHint": "hal. walang lactose"
+    "noteHint": "hal. walang lactose",
+    "addingToSentList": "Nagdaragdag ka sa isang listahan na ipinadala mo na.",
+    "addMoreToSentList": "Magdagdag pa sa listahang ito"
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",
@@ -233,7 +235,9 @@
     "itemsLeft": "{count} item na natitira",
     "allDone": "Nabili na lahat ng item",
     "delete": "Tanggalin",
-    "deleteConfirm": "Tanggalin ang listahang ito? Hindi na ito maibabalik."
+    "deleteConfirm": "Tanggalin ang listahang ito? Hindi na ito maibabalik.",
+    "addItem": "Magdagdag ng isang item",
+    "addedAfterSend": "Idinagdag pagkatapos ipadala"
   },
   "notif": {
     "title": "Mga abiso",

@@ -8,8 +8,15 @@ import { getUnreadCount } from "@/lib/notifications/queries";
 
 /** Products in one category. Addressed by the category's stable `key`
  * rather than its uuid, so the URL survives a catalogue re-import. */
-export default async function CategoryPage({ params }: { params: Promise<{ key: string }> }) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ key: string }>;
+  searchParams: Promise<{ listId?: string }>;
+}) {
   const { key } = await params;
+  const { listId } = await searchParams;
   const membership = await requireWorkerAccess();
 
   const category = await getCategoryByKey(key);
@@ -31,6 +38,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ key: 
       quantities={quantitiesByProduct(draft)}
       itemCount={draft?.itemCount ?? 0}
       unreadCount={unreadCount}
+      targetListId={listId}
     />
   );
 }
