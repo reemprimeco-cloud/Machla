@@ -29,6 +29,8 @@ import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
  * link, action and RPC underneath is unchanged. */
 export function SettingsScreen({
   phoneNumber,
+  email,
+  username,
   displayName,
   role,
   memberCount,
@@ -38,7 +40,12 @@ export function SettingsScreen({
   trialDaysLeft,
   isAdmin,
 }: {
-  phoneNumber: string;
+  phoneNumber: string | null;
+  /** Real address, or a synthetic <username>@workers.machla.internal
+   * placeholder — never shown directly, see `username` below for that
+   * case (lib/auth/completeAccount.ts / lib/auth/signUp.ts). */
+  email: string | null;
+  username: string | null;
   displayName: string | null;
   role: HouseholdRole;
   memberCount: number;
@@ -48,6 +55,10 @@ export function SettingsScreen({
   trialDaysLeft: number;
   isAdmin: boolean;
 }) {
+  // Prefer whichever identifier this account actually signs in with today
+  // (Phase 2 of removing OTP: phone is no longer guaranteed at all for a
+  // new account) — a synthetic worker email is never shown as-is.
+  const identifier = username ? `@${username}` : email ? email : phoneNumber;
   const router = useRouter();
   const { t } = useLocale();
   const errorMessage = useErrorMessage();
@@ -101,9 +112,11 @@ export function SettingsScreen({
             <span className="hl-heading block truncate text-ink">
               {displayName || t("members.unnamed")}
             </span>
-            <bdi dir="ltr" className="hl-caption block">
-              {phoneNumber}
-            </bdi>
+            {identifier ? (
+              <bdi dir="ltr" className="hl-caption block">
+                {identifier}
+              </bdi>
+            ) : null}
           </span>
         </Card>
       </section>

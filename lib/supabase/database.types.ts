@@ -37,7 +37,10 @@ export interface Database {
       users: {
         Row: {
           id: string;
-          phone_number: string;
+          /** Nullable since 20260920110000_phone_optional_identity.sql
+           * (Phase 2 of removing OTP) — a brand-new sign-up no longer has
+           * one at all. Existing phone+OTP accounts keep theirs. */
+          phone_number: string | null;
           role: HouseholdRole;
           preferred_language: string | null;
           display_name: string | null;
@@ -57,7 +60,6 @@ export interface Database {
         };
         Insert: Partial<Database["public"]["Tables"]["users"]["Row"]> & {
           id: string;
-          phone_number: string;
         };
         Update: Partial<Database["public"]["Tables"]["users"]["Row"]>;
         Relationships: [];
@@ -590,7 +592,7 @@ export interface Database {
         Returns: {
           household_id: string;
           household_name: string;
-          owner_phone: string;
+          owner_phone: string | null;
           owner_name: string | null;
           subscription_status: SubscriptionStatus;
           apple_linked: boolean;
@@ -603,7 +605,7 @@ export interface Database {
         Returns: {
           id: string;
           display_name: string | null;
-          phone_number: string;
+          phone_number: string | null;
           email: string | null;
           created_at: string;
         }[];
@@ -613,7 +615,7 @@ export interface Database {
         Returns: {
           id: string;
           display_name: string | null;
-          phone_number: string;
+          phone_number: string | null;
           email: string | null;
           created_at: string;
         }[];
@@ -624,7 +626,7 @@ export interface Database {
           household_id: string;
           household_name: string;
           owner_name: string | null;
-          owner_phone: string;
+          owner_phone: string | null;
           owner_email: string | null;
           trial_ended_at: string;
         }[];

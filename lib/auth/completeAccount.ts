@@ -1,5 +1,11 @@
 "use server";
 
+import {
+  EMAIL_PATTERN,
+  MIN_PASSWORD_LENGTH,
+  USERNAME_PATTERN,
+  syntheticEmailFor,
+} from "@/lib/auth/identity";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
@@ -31,17 +37,6 @@ export type CompleteAccountErrorCode =
 export type CompleteAccountResult =
   | { ok: true }
   | { ok: false; code: CompleteAccountErrorCode };
-
-/** Nobody reads this inbox — see lib/auth/demoAccount.ts for the
- * established pattern of a *.machla.internal address as a pure
- * identifier, never a real mailbox. */
-const SYNTHETIC_EMAIL_DOMAIN = "workers.machla.internal";
-
-// Lowercase-only (callers normalize first), starts alphanumeric, safe as
-// both a username and an email local-part.
-const USERNAME_PATTERN = /^[a-z0-9][a-z0-9._-]{2,23}$/;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MIN_PASSWORD_LENGTH = 8;
 
 function mapAuthError(message: string | undefined): CompleteAccountErrorCode {
   const text = (message ?? "").toLowerCase();
@@ -114,7 +109,7 @@ export async function completeAccountWithUsernameAction(
   const username = rawUsername.trim().toLowerCase();
   if (!USERNAME_PATTERN.test(username)) return { ok: false, code: "INVALID_USERNAME" };
 
-  const result = await applyIdentity(`${username}@${SYNTHETIC_EMAIL_DOMAIN}`, password, {
+  const result = await applyIdentity(syntheticEmailFor(username), password, {
     username,
     isSynthetic: true,
   });

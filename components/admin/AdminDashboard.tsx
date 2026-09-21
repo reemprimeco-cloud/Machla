@@ -135,7 +135,7 @@ export function AdminDashboard({
                     <td className="p-3 text-ink">{user.displayName ?? "—"}</td>
                     <td className="p-3">
                       <bdi dir="ltr" className="text-ink-muted">
-                        {user.phoneNumber}
+                        {user.phoneNumber ?? "—"}
                       </bdi>
                     </td>
                     <td className="p-3 text-ink-muted">
@@ -190,7 +190,7 @@ export function AdminDashboard({
                     <td className="p-3 text-ink">{row.ownerName ?? "—"}</td>
                     <td className="p-3">
                       <bdi dir="ltr" className="text-ink-muted">
-                        {row.ownerPhone}
+                        {row.ownerPhone ?? "—"}
                       </bdi>
                     </td>
                     <td className="p-3 text-ink-muted">{formatDate(row.trialEndedAt)}</td>
@@ -233,7 +233,7 @@ export function AdminDashboard({
                     <td className="p-3 text-ink">{row.ownerName ?? "—"}</td>
                     <td className="p-3">
                       <bdi dir="ltr" className="text-ink-muted">
-                        {row.ownerPhone}
+                        {row.ownerPhone ?? "—"}
                       </bdi>
                     </td>
                     <td className="p-3 text-ink">{STATUS_LABELS[row.status]}</td>
@@ -267,7 +267,7 @@ export function AdminDashboard({
                   <td className="p-3 text-ink">{user.displayName ?? "—"}</td>
                   <td className="p-3">
                     <bdi dir="ltr" className="text-ink-muted">
-                      {user.phoneNumber}
+                      {user.phoneNumber ?? "—"}
                     </bdi>
                   </td>
                   <td className="p-3 text-ink-muted">{formatDate(user.createdAt)}</td>

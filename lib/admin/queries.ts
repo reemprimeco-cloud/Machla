@@ -27,7 +27,7 @@ export type AdminStats = {
 export type AdminSubscriptionRow = {
   householdId: string;
   householdName: string;
-  ownerPhone: string;
+  ownerPhone: string | null;
   ownerName: string | null;
   status: SubscriptionStatus;
   appleLinked: boolean;
@@ -38,7 +38,7 @@ export type AdminSubscriptionRow = {
 export type AdminUserRow = {
   id: string;
   displayName: string | null;
-  phoneNumber: string;
+  phoneNumber: string | null;
   email: string | null;
   createdAt: string;
 };
@@ -47,7 +47,7 @@ export type AdminLapsedTrialRow = {
   householdId: string;
   householdName: string;
   ownerName: string | null;
-  ownerPhone: string;
+  ownerPhone: string | null;
   ownerEmail: string | null;
   trialEndedAt: string;
 };

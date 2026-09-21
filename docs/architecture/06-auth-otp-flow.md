@@ -1,5 +1,19 @@
 # 06 — Authentication & OTP Flow
 
+> **SUPERSEDED (2026-09-20).** Phone+OTP is no longer this app's
+> authentication method — removed in two steps, both owner-approved:
+> Phase 1 added email/username + password alongside OTP
+> (`20260919120000_email_password_identity.sql`,
+> `lib/auth/completeAccount.ts`) so every existing account could add a
+> password before anything was taken away; Phase 2
+> (`20260920110000_phone_optional_identity.sql`, `lib/auth/signIn.ts`,
+> `lib/auth/signUp.ts`) removed phone+OTP from `/login` entirely and made
+> `phone_number` optional. The reasoning below is kept as the historical
+> record of why phone+OTP was chosen in the first place — see those
+> migrations' own comments for why it was later reversed (in short: OTP
+> only ever reached one country's phone numbers, and the owner wants
+> sign-up open worldwide).
+
 ## 1. Provider decision
 
 **Supabase Auth, phone + OTP (SMS), is the V1 authentication provider.**

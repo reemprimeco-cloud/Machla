@@ -6,21 +6,31 @@
  * OTP, 20260919120000_email_password_identity.sql) — shown disabled
  * rather than omitted, so its absence reads as "no email yet", not a
  * layout glitch. */
-export function ContactIcons({ phone, email }: { phone: string; email: string | null }) {
-  const waNumber = phone.replace(/\D/g, "");
+export function ContactIcons({ phone, email }: { phone: string | null; email: string | null }) {
+  const waNumber = phone?.replace(/\D/g, "") ?? null;
 
   return (
     <div className="flex items-center gap-2">
-      <a
-        href={`https://wa.me/${waNumber}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="راسل واتساب"
-        title="واتساب"
-        className="flex size-8 items-center justify-center rounded-pill bg-success-tint text-base"
-      >
-        <span aria-hidden>💬</span>
-      </a>
+      {waNumber ? (
+        <a
+          href={`https://wa.me/${waNumber}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="راسل واتساب"
+          title="واتساب"
+          className="flex size-8 items-center justify-center rounded-pill bg-success-tint text-base"
+        >
+          <span aria-hidden>💬</span>
+        </a>
+      ) : (
+        <span
+          aria-hidden
+          title="لا يوجد رقم هاتف"
+          className="flex size-8 items-center justify-center rounded-pill bg-surface-2 text-base opacity-40"
+        >
+          💬
+        </span>
+      )}
       {email ? (
         <a
           href={`mailto:${email}`}

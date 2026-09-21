@@ -19,8 +19,8 @@ const ADMIN_PHONE_NUMBERS = ["96565068000"];
  * decide whether to show a link into /admin at all, since the route has
  * no other way to be found: no in-app browser address bar to type it
  * into, and (deliberately) no nav item anyone else would ever see. */
-export function isAdminPhone(phoneNumber: string): boolean {
-  return ADMIN_PHONE_NUMBERS.includes(phoneNumber);
+export function isAdminPhone(phoneNumber: string | null): boolean {
+  return phoneNumber !== null && ADMIN_PHONE_NUMBERS.includes(phoneNumber);
 }
 
 /** Redirects anyone but the admin straight back to /login, so the route

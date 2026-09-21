@@ -30,6 +30,8 @@ export default async function SettingsPage() {
   return (
     <SettingsScreen
       phoneNumber={profile.phone_number}
+      email={profile.is_synthetic_email ? null : profile.email}
+      username={profile.username}
       displayName={profile.display_name}
       role={membership.role}
       memberCount={members.length}
