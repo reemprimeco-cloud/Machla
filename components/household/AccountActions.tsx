@@ -46,6 +46,12 @@ export function AccountActions() {
         >
           {t("settings.privacy")}
         </Link>
+        <Link
+          href="/feedback"
+          className="hl-caption text-primary underline underline-offset-4"
+        >
+          {t("settings.feedback")}
+        </Link>
         <button
           type="button"
           onClick={handleLogout}

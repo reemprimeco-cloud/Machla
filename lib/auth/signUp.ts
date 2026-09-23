@@ -53,7 +53,7 @@ function mapCreateError(message: string | undefined): SignUpErrorCode {
 async function createAndSignIn(
   email: string,
   password: string,
-  extra: { username: string | null; isSynthetic: boolean },
+  extra: { username: string | null; isSynthetic: boolean; countryCode: string | null },
 ): Promise<SignUpResult> {
   if (!isSupabaseConfigured()) return { ok: false, code: "NOT_CONFIGURED" };
   if (password.length < MIN_PASSWORD_LENGTH) return { ok: false, code: "INVALID_PASSWORD" };
@@ -72,12 +72,15 @@ async function createAndSignIn(
 
   // handle_new_user() (20260920110000_phone_optional_identity.sql) only
   // ever sees phone/email — it has no way to know this email is a
-  // synthetic placeholder rather than a real one, so that has to be
-  // recorded here, in the one place that actually knows.
-  if (extra.username) {
+  // synthetic placeholder, or which country the person picked, so both
+  // have to be recorded here, in the one place that actually knows.
+  if (extra.username || extra.countryCode) {
     await admin
       .from("users")
-      .update({ username: extra.username, is_synthetic_email: extra.isSynthetic })
+      .update({
+        ...(extra.username ? { username: extra.username, is_synthetic_email: extra.isSynthetic } : {}),
+        ...(extra.countryCode ? { country_code: extra.countryCode } : {}),
+      })
       .eq("id", created.user.id);
   }
 
@@ -101,11 +104,12 @@ async function createAndSignIn(
 export async function signUpWithEmailAction(
   rawEmail: string,
   password: string,
+  countryCode: string | null = null,
 ): Promise<SignUpResult> {
   const email = rawEmail.trim().toLowerCase();
   if (!EMAIL_PATTERN.test(email)) return { ok: false, code: "INVALID_EMAIL" };
 
-  return createAndSignIn(email, password, { username: null, isSynthetic: false });
+  return createAndSignIn(email, password, { username: null, isSynthetic: false, countryCode });
 }
 
 /** Workers: a username only — see lib/auth/completeAccount.ts for why a
@@ -113,6 +117,7 @@ export async function signUpWithEmailAction(
 export async function signUpWithUsernameAction(
   rawUsername: string,
   password: string,
+  countryCode: string | null = null,
 ): Promise<SignUpResult> {
   const username = rawUsername.trim().toLowerCase();
   if (!USERNAME_PATTERN.test(username)) return { ok: false, code: "INVALID_USERNAME" };
@@ -120,6 +125,7 @@ export async function signUpWithUsernameAction(
   const result = await createAndSignIn(syntheticEmailFor(username), password, {
     username,
     isSynthetic: true,
+    countryCode,
   });
   if (!result.ok && result.code === "EMAIL_TAKEN") return { ok: false, code: "USERNAME_TAKEN" };
   return result;

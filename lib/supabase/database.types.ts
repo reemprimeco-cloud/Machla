@@ -57,6 +57,12 @@ export interface Database {
           username: string | null;
           is_synthetic_email: boolean;
           account_completed_at: string | null;
+          /** ISO 3166-1 alpha-2, chosen at sign-up (app/login/page.tsx) —
+           * null for every account created before
+           * 20260923120000_admin_country_and_feedback.sql, and for one
+           * completed via completeAccountAction rather than signed up
+           * fresh. Never inferred (lib/i18n/countries.ts). */
+          country_code: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["users"]["Row"]> & {
           id: string;
@@ -345,6 +351,24 @@ export interface Database {
           sort_order: number;
         };
         Update: Partial<Database["public"]["Tables"]["shopping_list_items"]["Row"]>;
+        Relationships: [];
+      };
+      // 20260923120000_admin_country_and_feedback.sql. Write-only for an
+      // ordinary user — submit_feedback() is the only insert path, and
+      // admin_list_feedback() the only read path (RLS grants nothing to
+      // `authenticated` directly on this table).
+      app_feedback: {
+        Row: {
+          id: string;
+          user_id: string;
+          message: string;
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["app_feedback"]["Row"]> & {
+          user_id: string;
+          message: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["app_feedback"]["Row"]>;
         Relationships: [];
       };
     };
@@ -643,6 +667,27 @@ export interface Database {
           owner_phone: string | null;
           owner_email: string | null;
           trial_ended_at: string;
+        }[];
+      };
+      // 20260923120000_admin_country_and_feedback.sql.
+      admin_get_country_stats: {
+        Args: Record<string, never>;
+        Returns: { country_code: string | null; signups: number }[];
+      };
+      submit_feedback: {
+        Args: { p_message: string };
+        Returns: string;
+      };
+      admin_list_feedback: {
+        Args: { p_limit?: number };
+        Returns: {
+          id: string;
+          message: string;
+          created_at: string;
+          display_name: string | null;
+          phone_number: string | null;
+          email: string | null;
+          country_code: string | null;
         }[];
       };
     };

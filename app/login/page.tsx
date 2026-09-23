@@ -9,6 +9,11 @@ import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import { safeNextPath } from "@/lib/auth/nextPath";
 import { signInAction } from "@/lib/auth/signIn";
 import { signUpWithEmailAction, signUpWithUsernameAction } from "@/lib/auth/signUp";
+import {
+  COUNTRY_CODES_PINNED,
+  countryLabel,
+  sortedRestOfWorld,
+} from "@/lib/i18n/countries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
@@ -185,12 +190,13 @@ function SignUpForm({
   onAuthenticated: () => void;
   onSwitchToSignIn: () => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [tab, setTab] = useState<SignUpTab>("email");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [country, setCountry] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -208,8 +214,8 @@ function SignUpForm({
 
     const result =
       tab === "email"
-        ? await signUpWithEmailAction(email, password)
-        : await signUpWithUsernameAction(username, password);
+        ? await signUpWithEmailAction(email, password, country || null)
+        : await signUpWithUsernameAction(username, password, country || null);
 
     if (!result.ok) {
       setStatus("error");
@@ -275,6 +281,29 @@ function SignUpForm({
         )}
 
         <label className="flex flex-col gap-2">
+          <span className="hl-label text-ink">{t("auth.completeAccount.countryLabel")}</span>
+          <select
+            value={country}
+            onChange={(event) => setCountry(event.target.value)}
+            className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
+            aria-invalid={status === "error"}
+          >
+            <option value="">{t("auth.completeAccount.countryPlaceholder")}</option>
+            {COUNTRY_CODES_PINNED.map((code) => (
+              <option key={code} value={code}>
+                {countryLabel(code, locale)}
+              </option>
+            ))}
+            <option disabled>——</option>
+            {sortedRestOfWorld(locale).map((code) => (
+              <option key={code} value={code}>
+                {countryLabel(code, locale)}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-2">
           <span className="hl-label text-ink">{t("auth.completeAccount.passwordLabel")}</span>
           <input
             type="password"
@@ -313,6 +342,7 @@ function SignUpForm({
           disabled={
             status === "sending" ||
             !password ||
+            !country ||
             (tab === "email" ? !email : !username)
           }
           className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"

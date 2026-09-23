@@ -202,9 +202,18 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/home/settings/support"
-            className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
           >
             <span className="hl-body text-ink">{t("settings.support")}</span>
+            <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
+              ›
+            </span>
+          </Link>
+          <Link
+            href="/feedback"
+            className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+          >
+            <span className="hl-body text-ink">{t("settings.feedback")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
               ›
             </span>

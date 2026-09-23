@@ -22,6 +22,8 @@
       "usernameTab": "Nom d'utilisateur",
       "emailLabel": "Adresse e-mail",
       "usernameLabel": "Nom d'utilisateur",
+      "countryLabel": "Pays",
+      "countryPlaceholder": "Choisissez votre pays",
       "passwordLabel": "Mot de passe",
       "confirmPasswordLabel": "Confirmer le mot de passe",
       "save": "Enregistrer",
@@ -125,6 +127,7 @@
     "deleteAccountConfirm": "Cela supprimera définitivement votre compte. Cette action est irréversible.",
     "deleteAccountConfirmOwner": "Vous êtes propriétaire de cette maison. Supprimer votre compte supprimera définitivement cette maison pour tout le monde — ses listes, ses membres, tout. Cette action est irréversible.",
     "support": "Assistance",
+    "feedback": "Avis",
     "subscription": "Abonnement",
     "subscriptionActive": "Actif",
     "manageSubscription": "Gérer",
@@ -318,6 +321,17 @@
   "support": {
     "title": "Besoin d'aide ?",
     "body": "Si vous rencontrez un problème ou avez une question sur {name}, écrivez-nous sur Instagram et nous vous répondrons."
+  },
+  "feedback": {
+    "title": "Avis et suggestions",
+    "hint": "Dites-nous ce qui fonctionne bien, ce qui ne fonctionne pas, ou ce que vous aimeriez voir ensuite.",
+    "placeholder": "Écrivez votre avis...",
+    "submit": "Envoyer",
+    "sending": "Envoi…",
+    "thanks": "Merci ! Nous lisons chaque message.",
+    "sendAnother": "Envoyer un autre",
+    "empty": "Écrivez d'abord quelque chose.",
+    "tooLong": "C'est trop long — veuillez raccourcir."
   },
   "paywall": {
     "title": "Abonnez-vous à Machla",

@@ -22,6 +22,8 @@
       "usernameTab": "Nama pengguna",
       "emailLabel": "Alamat email",
       "usernameLabel": "Nama pengguna",
+      "countryLabel": "Negara",
+      "countryPlaceholder": "Pilih negara Anda",
       "passwordLabel": "Kata sandi",
       "confirmPasswordLabel": "Konfirmasi kata sandi",
       "save": "Simpan",
@@ -125,6 +127,7 @@
     "deleteAccountConfirm": "Ini akan menghapus akun Anda secara permanen. Tindakan ini tidak dapat dibatalkan.",
     "deleteAccountConfirmOwner": "Anda adalah pemilik rumah ini. Menghapus akun Anda akan menghapus rumah ini secara permanen untuk semua orang — daftarnya, anggotanya, semuanya. Tindakan ini tidak dapat dibatalkan.",
     "support": "Dukungan",
+    "feedback": "Masukan",
     "subscription": "Langganan",
     "subscriptionActive": "Aktif",
     "manageSubscription": "Kelola",
@@ -318,6 +321,17 @@
   "support": {
     "title": "Butuh bantuan?",
     "body": "Jika Anda mengalami masalah atau punya pertanyaan tentang {name}, kirim pesan kepada kami di Instagram dan kami akan membalasnya."
+  },
+  "feedback": {
+    "title": "Masukan dan Saran",
+    "hint": "Beri tahu kami apa yang bagus, apa yang tidak, atau apa yang ingin Anda lihat selanjutnya.",
+    "placeholder": "Tulis masukan Anda...",
+    "submit": "Kirim",
+    "sending": "Mengirim…",
+    "thanks": "Terima kasih! Kami membaca setiap pesan.",
+    "sendAnother": "Kirim lagi",
+    "empty": "Tulis sesuatu dulu.",
+    "tooLong": "Itu terlalu panjang — silakan persingkat."
   },
   "paywall": {
     "title": "Berlangganan Machla",

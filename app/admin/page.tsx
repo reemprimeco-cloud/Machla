@@ -1,5 +1,7 @@
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
 import {
+  getAdminCountryStats,
+  getAdminFeedback,
   getAdminLapsedTrials,
   getAdminRecentSubscriptions,
   getAdminRecentUsers,
@@ -11,17 +13,21 @@ import { requireAdminAccess } from "@/lib/admin/guard";
 /**
  * The one page in this app that isn't scoped to a household — see
  * lib/admin/guard.ts for who can reach it, and
- * supabase/migrations/*_admin_stats.sql for how it sees past RLS.
+ * 20260923120000_admin_country_and_feedback.sql (extending the original
+ * *_admin_stats.sql) for how it sees past RLS.
  */
 export default async function AdminPage() {
   await requireAdminAccess();
-  const [stats, subscriptions, users, todaySignups, lapsedTrials] = await Promise.all([
-    getAdminStats(),
-    getAdminRecentSubscriptions(),
-    getAdminRecentUsers(),
-    getAdminTodaySignups(),
-    getAdminLapsedTrials(),
-  ]);
+  const [stats, subscriptions, users, todaySignups, lapsedTrials, countryStats, feedback] =
+    await Promise.all([
+      getAdminStats(),
+      getAdminRecentSubscriptions(),
+      getAdminRecentUsers(),
+      getAdminTodaySignups(),
+      getAdminLapsedTrials(),
+      getAdminCountryStats(),
+      getAdminFeedback(),
+    ]);
 
   if (!stats) {
     return (
@@ -38,6 +44,8 @@ export default async function AdminPage() {
       users={users}
       todaySignups={todaySignups}
       lapsedTrials={lapsedTrials}
+      countryStats={countryStats}
+      feedback={feedback}
     />
   );
 }

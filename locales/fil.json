@@ -22,6 +22,8 @@
       "usernameTab": "Username",
       "emailLabel": "Email address",
       "usernameLabel": "Username",
+      "countryLabel": "Bansa",
+      "countryPlaceholder": "Piliin ang iyong bansa",
       "passwordLabel": "Password",
       "confirmPasswordLabel": "Kumpirmahin ang password",
       "save": "I-save",
@@ -125,6 +127,7 @@
     "deleteAccountConfirm": "Permanenteng mabubura ang iyong account. Hindi na ito maibabalik.",
     "deleteAccountConfirmOwner": "Ikaw ang may-ari ng tahanang ito. Ang pagbura ng iyong account ay permanenteng magbubura ng tahanang ito para sa lahat — ang mga listahan nito, mga miyembro nito, lahat. Hindi na ito maibabalik.",
     "support": "Suporta",
+    "feedback": "Puna",
     "subscription": "Subscription",
     "subscriptionActive": "Aktibo",
     "manageSubscription": "Pamahalaan",
@@ -318,6 +321,17 @@
   "support": {
     "title": "Kailangan ng tulong?",
     "body": "Kung may problema ka o may tanong tungkol sa {name}, mag-message sa amin sa Instagram at sasagutin ka namin."
+  },
+  "feedback": {
+    "title": "Puna at Mungkahi",
+    "hint": "Sabihin sa amin kung ano ang maganda, ano ang hindi, o ano ang gusto ninyong makita susunod.",
+    "placeholder": "Isulat ang iyong puna...",
+    "submit": "Ipadala",
+    "sending": "Ipinapadala…",
+    "thanks": "Salamat! Binabasa namin ang bawat mensahe.",
+    "sendAnother": "Magpadala ng isa pa",
+    "empty": "Sumulat muna ng kahit ano.",
+    "tooLong": "Masyadong mahaba iyan — paikliin pakiusap."
   },
   "paywall": {
     "title": "Mag-subscribe sa Machla",

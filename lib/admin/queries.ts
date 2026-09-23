@@ -52,6 +52,24 @@ export type AdminLapsedTrialRow = {
   trialEndedAt: string;
 };
 
+export type AdminCountryRow = {
+  /** null groups every account with no country on file — created before
+   * 20260923120000_admin_country_and_feedback.sql, or completed via
+   * completeAccountAction rather than signed up fresh. */
+  countryCode: string | null;
+  signups: number;
+};
+
+export type AdminFeedbackRow = {
+  id: string;
+  message: string;
+  createdAt: string;
+  displayName: string | null;
+  phoneNumber: string | null;
+  email: string | null;
+  countryCode: string | null;
+};
+
 /** Calls admin_get_stats() — see that migration for why this can see
  * past the caller's own household despite RLS, and for who's allowed
  * to call it at all. Returns null if not configured or not authorized,
@@ -170,5 +188,40 @@ export async function getAdminLapsedTrials(): Promise<AdminLapsedTrialRow[]> {
     ownerPhone: row.owner_phone,
     ownerEmail: row.owner_email,
     trialEndedAt: row.trial_ended_at,
+  }));
+}
+
+/** Registered users grouped by the country they picked at sign-up,
+ * busiest first. */
+export async function getAdminCountryStats(): Promise<AdminCountryRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_get_country_stats");
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    countryCode: row.country_code,
+    signups: row.signups,
+  }));
+}
+
+/** Every suggestion submitted from the in-app Feedback screen, newest
+ * first. */
+export async function getAdminFeedback(): Promise<AdminFeedbackRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("admin_list_feedback", { p_limit: 100 });
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    id: row.id,
+    message: row.message,
+    createdAt: row.created_at,
+    displayName: row.display_name,
+    phoneNumber: row.phone_number,
+    email: row.email,
+    countryCode: row.country_code,
   }));
 }

@@ -22,6 +22,8 @@
       "usernameTab": "የተጠቃሚ ስም",
       "emailLabel": "የኢሜይል አድራሻ",
       "usernameLabel": "የተጠቃሚ ስም",
+      "countryLabel": "ሀገር",
+      "countryPlaceholder": "ሀገርዎን ይምረጡ",
       "passwordLabel": "የይለፍ ቃል",
       "confirmPasswordLabel": "የይለፍ ቃል ያረጋግጡ",
       "save": "አስቀምጥ",
@@ -125,6 +127,7 @@
     "deleteAccountConfirm": "ይህ መለያዎን በቋሚነት ይሰርዛል። ይህ ወደ ኋላ ሊመለስ አይችልም።",
     "deleteAccountConfirmOwner": "ይህ ቤት የእርስዎ ነው። መለያዎን መሰረዝ ይህን ቤት ለሁሉም ሰው በቋሚነት ይሰርዛል — ዝርዝሮቹን፣ አባላቱን፣ ሁሉንም ነገር። ይህ ወደ ኋላ ሊመለስ አይችልም።",
     "support": "ድጋፍ",
+    "feedback": "አስተያየት",
     "subscription": "ምዝገባ",
     "subscriptionActive": "ንቁ",
     "manageSubscription": "አስተዳድር",
@@ -318,6 +321,17 @@
   "support": {
     "title": "እርዳታ ይፈልጋሉ?",
     "body": "ችግር ካጋጠመዎት ወይም ስለ {name} ጥያቄ ካለዎት፣ በInstagram መልእክት ይላኩልን፣ እንመልስልዎታለን።"
+  },
+  "feedback": {
+    "title": "አስተያየት እና ሀሳቦች",
+    "hint": "ምን እንደሚስማማ፣ ምን እንደማይስማማ፣ ወይም ቀጥሎ ማየት የምትፈልጉትን ንገሩን።",
+    "placeholder": "አስተያየትዎን ይጻፉ...",
+    "submit": "ላክ",
+    "sending": "በመላክ ላይ…",
+    "thanks": "እናመሰግናለን! እያንዳንዱን መልእክት እናነባለን።",
+    "sendAnother": "ሌላ ላክ",
+    "empty": "መጀመሪያ የሆነ ነገር ይጻፉ።",
+    "tooLong": "በጣም ረጅም ነው — እባክዎ ያሳጥሩት።"
   },
   "paywall": {
     "title": "ወደ Machla ይመዝገቡ",

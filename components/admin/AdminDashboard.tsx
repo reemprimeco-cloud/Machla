@@ -2,12 +2,16 @@ import Link from "next/link";
 
 import { AdminBroadcastForm } from "@/components/admin/AdminBroadcastForm";
 import { ContactIcons } from "@/components/admin/ContactIcons";
+import { Card } from "@/components/ui/Primitives";
 import type {
+  AdminCountryRow,
+  AdminFeedbackRow,
   AdminLapsedTrialRow,
   AdminStats,
   AdminSubscriptionRow,
   AdminUserRow,
 } from "@/lib/admin/queries";
+import { countryLabel } from "@/lib/i18n/countries";
 import type { SubscriptionStatus } from "@/lib/supabase/database.types";
 
 /** The nominal annual price (App Store Connect) — not stored anywhere
@@ -68,12 +72,16 @@ export function AdminDashboard({
   users,
   todaySignups,
   lapsedTrials,
+  countryStats,
+  feedback,
 }: {
   stats: AdminStats;
   subscriptions: AdminSubscriptionRow[];
   users: AdminUserRow[];
   todaySignups: AdminUserRow[];
   lapsedTrials: AdminLapsedTrialRow[];
+  countryStats: AdminCountryRow[];
+  feedback: AdminFeedbackRow[];
 }) {
   const activeUsers = stats.ownersAndMembers + stats.workers;
   const estimatedRevenue = stats.subscriptionsPaid * ANNUAL_PRICE_USD;
@@ -154,6 +162,60 @@ export function AdminDashboard({
           </div>
         ) : (
           <p className="hl-caption text-ink-muted">محد سجّل اليوم لين الحين.</p>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="hl-label text-ink-muted">التسجيلات حسب الدولة</h2>
+        {countryStats.length === 0 ? (
+          <p className="hl-caption text-ink-muted">ما فيه بيانات دول بعد.</p>
+        ) : (
+          <div className="space-y-1.5 rounded-lg border border-line bg-surface p-4 shadow-sm">
+            {countryStats.map((row) => {
+              const max = countryStats[0]?.signups || 1;
+              const percent = Math.round((row.signups / max) * 100);
+              return (
+                <div key={row.countryCode ?? "—"} className="flex items-center gap-3">
+                  <span className="hl-body w-28 shrink-0 truncate text-ink">
+                    {row.countryCode ? countryLabel(row.countryCode, "ar") : "غير محدد"}
+                  </span>
+                  <div className="h-2.5 flex-1 overflow-hidden rounded-pill bg-surface-2">
+                    <div
+                      className="h-full rounded-pill bg-primary"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                  <span className="hl-caption w-8 shrink-0 text-end tabular-nums text-ink-muted">
+                    {row.signups}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="hl-label text-ink-muted">ملاحظات واقتراحات المستخدمين</h2>
+        {feedback.length === 0 ? (
+          <p className="hl-caption text-ink-muted">ما وصلت ملاحظات بعد.</p>
+        ) : (
+          <div className="space-y-2">
+            {feedback.map((row) => (
+              <Card key={row.id} className="space-y-1.5">
+                <p className="hl-body whitespace-pre-wrap text-ink">{row.message}</p>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="hl-caption text-ink-muted">
+                    {row.displayName ?? "—"}
+                    {row.countryCode ? ` · ${countryLabel(row.countryCode, "ar")}` : ""}
+                    {" · "}
+                    {formatDate(row.createdAt)}
+                  </p>
+                  <ContactIcons phone={row.phoneNumber} email={row.email} />
+                </div>
+              </Card>
+            ))}
+          </div>
         )}
       </section>
 

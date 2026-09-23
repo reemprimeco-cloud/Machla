@@ -22,6 +22,8 @@
       "usernameTab": "Username",
       "emailLabel": "Email adrɛsi",
       "usernameLabel": "Username",
+      "countryLabel": "Tò",
+      "countryPlaceholder": "Sɔ́ tò towe",
       "passwordLabel": "Password",
       "confirmPasswordLabel": "Kpɔ́n ɖɔ password ɔ sɔgbe",
       "save": "Yí dó",
@@ -125,6 +127,7 @@
     "deleteAccountConfirm": "Enɛ ná ɖe hwɛ ce nú kaka. É sixu ma lɛ́ kɔ ǎ.",
     "deleteAccountConfirmOwner": "Xwé elɔ towe wɛ. Ðíde hwɛ towe ná ɖe xwé elɔ nú mɛbǐ kaka — távo tɔn lɛ́, mɛ e ɖò xwé ɔ mɛ lɛ́, nǔbǐ. É sixu ma lɛ́ kɔ ǎ.",
     "support": "Alɔdo",
+    "feedback": "Nùkanbyɔ",
     "subscription": "Abonema",
     "subscriptionActive": "É ɖò azɔ̌ wa wɛ",
     "manageSubscription": "Ðo tɛn",
@@ -318,6 +321,17 @@
   "support": {
     "title": "A byɔ alɔdo?",
     "body": "Enyi nùɖé ma yì ganji nú we alǒ a ɖó nùkanbyɔ dó {name} wu ɔ, sɛ́n wema nú mǐ ɖò Instagram jí, mǐ na yí gbè nú we."
+  },
+  "feedback": {
+    "title": "Nùkanbyɔ kpo Wě kpo",
+    "hint": "Ðɔ nú mǐ nǔ e nyɔ́ é, nǔ e ma nyɔ́ ǎ é, alo nǔ e a jló na mɔ gudo é.",
+    "placeholder": "Wlan nùkanbyɔ towe...",
+    "submit": "Sɛ́n",
+    "sending": "É ɖò sinsɛ́n jí…",
+    "thanks": "Mǐ dó gbè nú we! Mǐ nɔ xà wema ɖokpo ɖokpo bǐ.",
+    "sendAnother": "Sɛ́n ɖě ɖevo",
+    "empty": "Wlan nùɖé nukɔn.",
+    "tooLong": "É ɖò gaga hugǎn — flɔ́ ɛ kpɛví."
   },
   "paywall": {
     "title": "Bló abonema Machla tɔn",
