@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { CategoryBrowser } from "@/components/worker/CategoryBrowser";
-import { getCategories, getCategoryByKey, getProductsInCategory } from "@/lib/catalog/queries";
+import { getCategories, getCategoryByKey, getProductsInCategoryGrouped } from "@/lib/catalog/queries";
 import { requireHouseholdAccess } from "@/lib/household/guard";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -20,8 +20,8 @@ export default async function AddToListCategoryPage({
   const category = await getCategoryByKey(key);
   if (!category) notFound();
 
-  const [products, categories, unreadCount] = await Promise.all([
-    getProductsInCategory(category.id),
+  const [groupedProducts, categories, unreadCount] = await Promise.all([
+    getProductsInCategoryGrouped(category.id),
     getCategories(),
     getUnreadCount(),
   ]);
@@ -29,7 +29,7 @@ export default async function AddToListCategoryPage({
   return (
     <CategoryBrowser
       category={category}
-      products={products}
+      groupedProducts={groupedProducts}
       categories={categories}
       householdId={membership.householdId}
       quantities={{}}

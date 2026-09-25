@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { CategoryBrowser } from "@/components/worker/CategoryBrowser";
-import { getCategories, getCategoryByKey, getProductsInCategory } from "@/lib/catalog/queries";
+import { getCategories, getCategoryByKey, getProductsInCategoryGrouped } from "@/lib/catalog/queries";
 import { requireWorkerAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
@@ -22,8 +22,8 @@ export default async function CategoryPage({
   const category = await getCategoryByKey(key);
   if (!category) notFound();
 
-  const [products, categories, draft, unreadCount] = await Promise.all([
-    getProductsInCategory(category.id),
+  const [groupedProducts, categories, draft, unreadCount] = await Promise.all([
+    getProductsInCategoryGrouped(category.id),
     getCategories(),
     getDraftList(membership.householdId),
     getUnreadCount(),
@@ -32,7 +32,7 @@ export default async function CategoryPage({
   return (
     <CategoryBrowser
       category={category}
-      products={products}
+      groupedProducts={groupedProducts}
       categories={categories}
       householdId={membership.householdId}
       quantities={quantitiesByProduct(draft)}

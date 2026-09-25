@@ -57,6 +57,37 @@ export async function getProductsInCategory(categoryId: string): Promise<Product
   return data ?? [];
 }
 
+export type ProductSubgroup = { subcategory: Category; products: Product[] };
+export type GroupedProducts = { ungrouped: Product[]; groups: ProductSubgroup[] };
+
+/**
+ * Same products as getProductsInCategory, split out by subcategory_id —
+ * for a category like Tamween where most items stay in one flat list
+ * but a handful (baby formula, 20260925130000_tamween_baby_products_
+ * subcategory.sql) are worth their own labeled section. A product with
+ * no subcategory_id lands in `ungrouped`, rendered exactly as before.
+ */
+export async function getProductsInCategoryGrouped(categoryId: string): Promise<GroupedProducts> {
+  const products = await getProductsInCategory(categoryId);
+
+  const subcategoryIds = [...new Set(products.map((p) => p.subcategory_id).filter((id) => id !== null))];
+  if (subcategoryIds.length === 0) return { ungrouped: products, groups: [] };
+
+  const supabase = await createClient();
+  const { data: subcategories } = await supabase
+    .from("categories")
+    .select("*")
+    .in("id", subcategoryIds);
+
+  const ungrouped = products.filter((p) => p.subcategory_id === null);
+  const groups: ProductSubgroup[] = (subcategories ?? []).map((subcategory) => ({
+    subcategory,
+    products: products.filter((p) => p.subcategory_id === subcategory.id),
+  }));
+
+  return { ungrouped, groups };
+}
+
 /**
  * Cross-language product search.
  *
