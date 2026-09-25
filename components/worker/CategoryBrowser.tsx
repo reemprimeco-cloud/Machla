@@ -18,6 +18,7 @@ export function CategoryBrowser({
   unreadCount,
   basePath = "/worker",
   targetListId,
+  favoriteProductIds,
 }: {
   category: Category;
   groupedProducts: GroupedProducts;
@@ -28,6 +29,7 @@ export function CategoryBrowser({
   unreadCount: number;
   basePath?: string;
   targetListId?: string;
+  favoriteProductIds?: Set<string>;
 }) {
   const { t, locale } = useLocale();
 
@@ -61,6 +63,7 @@ export function CategoryBrowser({
               quantities={quantities}
               iconByCategoryId={iconByCategoryId}
               targetListId={targetListId}
+              favoriteProductIds={favoriteProductIds}
             />
           ) : null}
 
@@ -84,6 +87,7 @@ export function CategoryBrowser({
                   quantities={quantities}
                   iconByCategoryId={iconByCategoryId}
                   targetListId={targetListId}
+                  favoriteProductIds={favoriteProductIds}
                 />
               </section>
             ) : null,

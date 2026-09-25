@@ -201,7 +201,12 @@
     "addingToSentList": "तपाईं पहिले नै पठाइसकेको सूचीमा थप्दै हुनुहुन्छ।",
     "addMoreToSentList": "यस सूचीमा थप थप्नुहोस्",
     "priceSubsidized": "अनुदानित",
-    "priceReduced": "घटाइएको मूल्य"
+    "priceReduced": "घटाइएको मूल्य",
+    "favorites": "मनपर्ने",
+    "addToFavorites": "मनपर्नेमा थप्नुहोस्",
+    "removeFromFavorites": "मनपर्नेबाट हटाउनुहोस्",
+    "favoritesEmpty": "अहिलेसम्म कुनै मनपर्ने छैन",
+    "favoritesEmptyHint": "यहाँ सेभ गर्न कुनै पनि उत्पादनमा मुटुमा ट्याप गर्नुहोस्।"
   },
   "errors": {
     "notOwner": "यो केवल घरका मालिकले मात्र गर्न सक्नुहुन्छ।",

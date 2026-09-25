@@ -1,5 +1,6 @@
 import { SearchResults } from "@/components/worker/SearchResults";
 import { getCategories, searchProducts } from "@/lib/catalog/queries";
+import { getFavoriteProductIds } from "@/lib/favorites/queries";
 import { requireHouseholdAccess } from "@/lib/household/guard";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -18,10 +19,11 @@ export default async function AddToListSearchPage({
   const query = (q ?? "").trim();
   const membership = await requireHouseholdAccess();
 
-  const [products, categories, unreadCount] = await Promise.all([
+  const [products, categories, unreadCount, favoriteProductIds] = await Promise.all([
     searchProducts(query),
     getCategories(),
     getUnreadCount(),
+    getFavoriteProductIds(),
   ]);
 
   return (
@@ -35,6 +37,7 @@ export default async function AddToListSearchPage({
       unreadCount={unreadCount}
       basePath={`/home/lists/${id}/add`}
       targetListId={id}
+      favoriteProductIds={favoriteProductIds}
     />
   );
 }

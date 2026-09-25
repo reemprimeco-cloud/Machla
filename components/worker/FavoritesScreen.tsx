@@ -5,10 +5,14 @@ import type { Category, Product } from "@/lib/catalog/queries";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 import { ProductGrid } from "./QuantityStepper";
-import { SearchBox, WorkerBar } from "./WorkerChrome";
+import { WorkerBar } from "./WorkerChrome";
 
-export function SearchResults({
-  query,
+/** The one implicit favorites list every person has — simplified
+ * version (no naming, no multiple lists) the owner chose over the
+ * fuller "named lists + picker" design. Reuses ProductGrid so a saved
+ * product can go straight back into today's list from here, which is
+ * the whole point of favoriting something in the first place. */
+export function FavoritesScreen({
   products,
   categories,
   householdId,
@@ -16,10 +20,7 @@ export function SearchResults({
   itemCount,
   unreadCount,
   basePath = "/worker",
-  targetListId,
-  favoriteProductIds,
 }: {
-  query: string;
   products: Product[];
   categories: Category[];
   householdId: string;
@@ -27,31 +28,26 @@ export function SearchResults({
   itemCount: number;
   unreadCount: number;
   basePath?: string;
-  targetListId?: string;
-  favoriteProductIds?: Set<string>;
 }) {
   const { t } = useLocale();
 
-  const iconByCategoryId = Object.fromEntries(
-    categories.map((category) => [category.id, category.icon]),
-  );
+  const iconByCategoryId = Object.fromEntries(categories.map((c) => [c.id, c.icon]));
+  const favoriteProductIds = new Set(products.map((p) => p.id));
 
   return (
     <Screen>
       <WorkerBar
-        title={t("worker.searchPlaceholder")}
+        title={t("worker.favorites")}
         backHref={basePath}
         itemCount={itemCount}
         unreadCount={unreadCount}
         basePath={basePath}
-        targetListId={targetListId}
       />
-
-      <SearchBox initialQuery={query} basePath={basePath} targetListId={targetListId} />
 
       {products.length === 0 ? (
         <Card>
-          <p className="hl-body text-ink-muted">{t("worker.searchNoResults", { query })}</p>
+          <p className="hl-body text-ink-muted">{t("worker.favoritesEmpty")}</p>
+          <p className="hl-caption text-ink-muted">{t("worker.favoritesEmptyHint")}</p>
         </Card>
       ) : (
         <ProductGrid
@@ -59,7 +55,6 @@ export function SearchResults({
           householdId={householdId}
           quantities={quantities}
           iconByCategoryId={iconByCategoryId}
-          targetListId={targetListId}
           favoriteProductIds={favoriteProductIds}
         />
       )}

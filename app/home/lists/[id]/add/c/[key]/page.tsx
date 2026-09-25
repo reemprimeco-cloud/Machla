@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { CategoryBrowser } from "@/components/worker/CategoryBrowser";
 import { getCategories, getCategoryByKey, getProductsInCategoryGrouped } from "@/lib/catalog/queries";
+import { getFavoriteProductIds } from "@/lib/favorites/queries";
 import { requireHouseholdAccess } from "@/lib/household/guard";
 import { getUnreadCount } from "@/lib/notifications/queries";
 
@@ -20,10 +21,11 @@ export default async function AddToListCategoryPage({
   const category = await getCategoryByKey(key);
   if (!category) notFound();
 
-  const [groupedProducts, categories, unreadCount] = await Promise.all([
+  const [groupedProducts, categories, unreadCount, favoriteProductIds] = await Promise.all([
     getProductsInCategoryGrouped(category.id),
     getCategories(),
     getUnreadCount(),
+    getFavoriteProductIds(),
   ]);
 
   return (
@@ -37,6 +39,7 @@ export default async function AddToListCategoryPage({
       unreadCount={unreadCount}
       basePath={`/home/lists/${id}/add`}
       targetListId={id}
+      favoriteProductIds={favoriteProductIds}
     />
   );
 }

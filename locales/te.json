@@ -201,7 +201,12 @@
     "addingToSentList": "మీరు ఇప్పటికే పంపిన జాబితాకు జోడిస్తున్నారు.",
     "addMoreToSentList": "ఈ జాబితాకు మరిన్ని జోడించండి",
     "priceSubsidized": "సబ్సిడీ",
-    "priceReduced": "తగ్గిన ధర"
+    "priceReduced": "తగ్గిన ధర",
+    "favorites": "ఇష్టమైనవి",
+    "addToFavorites": "ఇష్టమైనవికి జోడించండి",
+    "removeFromFavorites": "ఇష్టమైనవి నుండి తీసివేయండి",
+    "favoritesEmpty": "ఇంకా ఇష్టమైనవి లేవు",
+    "favoritesEmptyHint": "ఏదైనా ఉత్పత్తిపై హృదయాన్ని నొక్కి ఇక్కడ సేవ్ చేయండి."
   },
   "errors": {
     "notOwner": "దీన్ని ఇంటి యజమాని మాత్రమే చేయగలరు.",

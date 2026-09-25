@@ -201,7 +201,12 @@
     "addingToSentList": "ඔබ දැනටමත් යැවූ ලැයිස්තුවකට එකතු කරමින් සිටිනවා.",
     "addMoreToSentList": "මෙම ලැයිස්තුවට තවත් එකතු කරන්න",
     "priceSubsidized": "සහනාධාර",
-    "priceReduced": "අඩු කළ මිල"
+    "priceReduced": "අඩු කළ මිල",
+    "favorites": "ප්‍රියතම",
+    "addToFavorites": "ප්‍රියතමට එක් කරන්න",
+    "removeFromFavorites": "ප්‍රියතමයෙන් ඉවත් කරන්න",
+    "favoritesEmpty": "තවම ප්‍රියතම නැත",
+    "favoritesEmptyHint": "ඕනෑම නිෂ්පාදනයක හදවත මත තට්ටු කර මෙහි සුරකින්න."
   },
   "errors": {
     "notOwner": "මෙය කළ හැක්කේ නිවසේ හිමිකරුට පමණි.",

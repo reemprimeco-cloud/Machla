@@ -57,6 +57,16 @@ export function WorkerBar({
 
       <h1 className="hl-heading min-w-0 flex-1 truncate text-ink">{title}</h1>
 
+      {targetListId ? null : (
+        <Link
+          href={`${basePath}/favorites`}
+          aria-label={t("worker.favorites")}
+          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-lg leading-none"
+        >
+          <span aria-hidden>❤️</span>
+        </Link>
+      )}
+
       <NotificationBell unreadCount={unreadCount} />
 
       {targetListId ? null : (

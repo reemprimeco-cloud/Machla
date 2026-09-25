@@ -7,6 +7,7 @@ import type { Product } from "@/lib/catalog/queries";
 import { setProductQuantityAction } from "@/lib/list/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
+import { FavoriteButton } from "./FavoriteButton";
 import { QuickAddButton } from "./QuickAddButton";
 
 /**
@@ -119,6 +120,7 @@ export function ProductCard({
   quantity,
   categoryIcon,
   targetListId,
+  isFavorite,
 }: {
   product: Product;
   householdId: string;
@@ -129,6 +131,7 @@ export function ProductCard({
    * QuickAddButton, since that's the only thing add_item_to_sent_list
    * supports. Absent everywhere else: the normal draft-building flow. */
   targetListId?: string;
+  isFavorite: boolean;
 }) {
   const { t, locale } = useLocale();
   const name = localizedName(product, locale);
@@ -143,6 +146,7 @@ export function ProductCard({
             {price}
           </span>
         ) : null}
+        <FavoriteButton productId={product.id} initialIsFavorite={isFavorite} />
         {product.image_url ? (
           // Catalogue images are arbitrary remote URLs, set by the offline
           // importer without a redeploy. next/image would need every host
@@ -195,12 +199,14 @@ export function ProductGrid({
   quantities,
   iconByCategoryId,
   targetListId,
+  favoriteProductIds,
 }: {
   products: Product[];
   householdId: string;
   quantities: Record<string, number>;
   iconByCategoryId: Record<string, string | null>;
   targetListId?: string;
+  favoriteProductIds?: Set<string>;
 }) {
   return (
     <ul className="grid grid-cols-2 gap-3">
@@ -212,6 +218,7 @@ export function ProductGrid({
           quantity={quantities[product.id] ?? 0}
           categoryIcon={iconByCategoryId[product.category_id] ?? null}
           targetListId={targetListId}
+          isFavorite={favoriteProductIds?.has(product.id) ?? false}
         />
       ))}
     </ul>

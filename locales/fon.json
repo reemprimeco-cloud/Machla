@@ -201,7 +201,12 @@
     "addingToSentList": "A ɖò nǔ ɖě jó dó wema e a ko sɛ́n xóxó é jí.",
     "addMoreToSentList": "Lɛ́ jó nǔ dó wema elɔ jí",
     "priceSubsidized": "Sɔgbe",
-    "priceReduced": "Axɔ Vɔ"
+    "priceReduced": "Axɔ Vɔ",
+    "favorites": "Nyanyawenu lɛ",
+    "addToFavorites": "Ðɔ nyanyawenu lɛ jí",
+    "removeFromFavorites": "Ɖe sín nyanyawenu lɛ mɛ",
+    "favoritesEmpty": "Nyanyawenu ɖě ɖo te",
+    "favoritesEmptyHint": "Xò alɔ dó lanmɛ ɔ jí ɖò nùɖe ɖé jí bo ɖ'ɛ dó fí."
   },
   "errors": {
     "notOwner": "Xwégán ɔ kɛɖɛ wɛ sixu bló mɔ̌.",

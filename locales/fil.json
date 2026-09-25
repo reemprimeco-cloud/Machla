@@ -201,7 +201,12 @@
     "addingToSentList": "Nagdaragdag ka sa isang listahan na ipinadala mo na.",
     "addMoreToSentList": "Magdagdag pa sa listahang ito",
     "priceSubsidized": "May Subsidyo",
-    "priceReduced": "Binawasan ang Presyo"
+    "priceReduced": "Binawasan ang Presyo",
+    "favorites": "Mga Paborito",
+    "addToFavorites": "Idagdag sa paborito",
+    "removeFromFavorites": "Alisin sa paborito",
+    "favoritesEmpty": "Wala pang paborito",
+    "favoritesEmptyHint": "I-tap ang puso sa anumang produkto para i-save dito."
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",

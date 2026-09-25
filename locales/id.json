@@ -201,7 +201,12 @@
     "addingToSentList": "Anda menambahkan ke daftar yang sudah Anda kirim.",
     "addMoreToSentList": "Tambahkan lagi ke daftar ini",
     "priceSubsidized": "Bersubsidi",
-    "priceReduced": "Harga Diturunkan"
+    "priceReduced": "Harga Diturunkan",
+    "favorites": "Favorit",
+    "addToFavorites": "Tambahkan ke favorit",
+    "removeFromFavorites": "Hapus dari favorit",
+    "favoritesEmpty": "Belum ada favorit",
+    "favoritesEmptyHint": "Ketuk ikon hati pada produk apa pun untuk menyimpannya di sini."
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",

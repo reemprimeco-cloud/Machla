@@ -201,7 +201,12 @@
     "addNote": "أضف ملاحظة",
     "noteHint": "مثال: خالٍ من اللاكتوز",
     "priceSubsidized": "مدعوم",
-    "priceReduced": "مخفض"
+    "priceReduced": "مخفض",
+    "favorites": "المفضلة",
+    "addToFavorites": "أضف للمفضلة",
+    "removeFromFavorites": "إزالة من المفضلة",
+    "favoritesEmpty": "لا يوجد مفضلات بعد",
+    "favoritesEmptyHint": "اضغطي على القلب في أي منتج لحفظه هنا."
   },
   "errors": {
     "notOwner": "صاحب البيت فقط يمكنه القيام بذلك.",

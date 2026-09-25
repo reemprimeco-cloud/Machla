@@ -201,7 +201,12 @@
     "addNote": "Add a note",
     "noteHint": "e.g. lactose-free",
     "priceSubsidized": "Subsidized",
-    "priceReduced": "Reduced price"
+    "priceReduced": "Reduced price",
+    "favorites": "Favorites",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "favoritesEmpty": "No favorites yet",
+    "favoritesEmptyHint": "Tap the heart on any product to save it here."
   },
   "errors": {
     "notOwner": "Only the home owner can do this.",

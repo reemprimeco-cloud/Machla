@@ -201,7 +201,12 @@
     "addingToSentList": "ቀደም ሲል የላኩትን ዝርዝር ላይ እየጨመሩ ነው።",
     "addMoreToSentList": "ወደዚህ ዝርዝር ተጨማሪ ያክሉ",
     "priceSubsidized": "የተደጎመ",
-    "priceReduced": "የቀነሰ ዋጋ"
+    "priceReduced": "የቀነሰ ዋጋ",
+    "favorites": "የተወደዱ",
+    "addToFavorites": "ወደ ተወዳጆች ጨምር",
+    "removeFromFavorites": "ከተወዳጆች አስወግድ",
+    "favoritesEmpty": "እስካሁን ምንም ተወዳጅ የለም",
+    "favoritesEmptyHint": "እዚህ ለማስቀመጥ በማንኛውም ምርት ላይ ልብን ይንኩ።"
   },
   "errors": {
     "notOwner": "ይህን ማድረግ የሚችለው የቤቱ ባለቤት ብቻ ነው።",

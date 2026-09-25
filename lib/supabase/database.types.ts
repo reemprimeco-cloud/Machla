@@ -378,6 +378,23 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["app_feedback"]["Row"]>;
         Relationships: [];
       };
+      // 20260925170000_favorite_items.sql. Personal, per-user — no
+      // household_id. Write-only via toggle_favorite_item(); RLS grants
+      // SELECT of one's own rows directly.
+      favorite_items: {
+        Row: {
+          id: string;
+          user_id: string;
+          product_id: string;
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["favorite_items"]["Row"]> & {
+          user_id: string;
+          product_id: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["favorite_items"]["Row"]>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -722,6 +739,12 @@ export interface Database {
       admin_update_category_image: {
         Args: { p_category_id: string; p_image_url: string };
         Returns: void;
+      };
+      // 20260925170000_favorite_items.sql. Returns the item's new
+      // favorited state (true = now favorited, false = now removed).
+      toggle_favorite_item: {
+        Args: { p_product_id: string };
+        Returns: boolean;
       };
     };
     Enums: Record<string, never>;

@@ -201,7 +201,12 @@
     "addingToSentList": "आप उस सूची में जोड़ रहे हैं जो आप पहले ही भेज चुके हैं।",
     "addMoreToSentList": "इस सूची में और जोड़ें",
     "priceSubsidized": "सब्सिडी प्राप्त",
-    "priceReduced": "कम कीमत"
+    "priceReduced": "कम कीमत",
+    "favorites": "पसंदीदा",
+    "addToFavorites": "पसंदीदा में जोड़ें",
+    "removeFromFavorites": "पसंदीदा से हटाएं",
+    "favoritesEmpty": "अभी तक कोई पसंदीदा नहीं",
+    "favoritesEmptyHint": "किसी भी उत्पाद पर दिल को टैप करें उसे यहां सेव करने के लिए।"
   },
   "errors": {
     "notOwner": "यह केवल घर के मालिक कर सकते हैं।",

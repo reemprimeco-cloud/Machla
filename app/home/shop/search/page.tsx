@@ -1,5 +1,6 @@
 import { SearchResults } from "@/components/worker/SearchResults";
 import { getCategories, searchProducts } from "@/lib/catalog/queries";
+import { getFavoriteProductIds } from "@/lib/favorites/queries";
 import { requireActiveSubscription, requireHouseholdAccess } from "@/lib/household/guard";
 import { getDraftList, quantitiesByProduct } from "@/lib/list/queries";
 import { getUnreadCount } from "@/lib/notifications/queries";
@@ -16,11 +17,12 @@ export default async function ShopSearchPage({
   const membership = await requireHouseholdAccess();
   await requireActiveSubscription(membership);
 
-  const [products, categories, draft, unreadCount] = await Promise.all([
+  const [products, categories, draft, unreadCount, favoriteProductIds] = await Promise.all([
     searchProducts(query),
     getCategories(),
     getDraftList(membership.householdId),
     getUnreadCount(),
+    getFavoriteProductIds(),
   ]);
 
   return (
@@ -34,6 +36,7 @@ export default async function ShopSearchPage({
       unreadCount={unreadCount}
       basePath="/home/shop"
       targetListId={listId}
+      favoriteProductIds={favoriteProductIds}
     />
   );
 }

@@ -201,7 +201,12 @@
     "addingToSentList": "Vous ajoutez à une liste que vous avez déjà envoyée.",
     "addMoreToSentList": "Ajouter plus à cette liste",
     "priceSubsidized": "Subventionné",
-    "priceReduced": "Prix réduit"
+    "priceReduced": "Prix réduit",
+    "favorites": "Favoris",
+    "addToFavorites": "Ajouter aux favoris",
+    "removeFromFavorites": "Retirer des favoris",
+    "favoritesEmpty": "Aucun favori pour le moment",
+    "favoritesEmptyHint": "Appuyez sur le cœur d'un produit pour l'enregistrer ici."
   },
   "errors": {
     "notOwner": "Seul le chef de famille peut faire cela.",
