@@ -68,6 +68,9 @@ function ProductRow({ product }: { product: AdminProductRow }) {
             {product.nameAr}
             {product.brand ? ` — ${product.brand}` : ""}
           </p>
+          {product.categoryNameAr ? (
+            <p className="hl-caption truncate text-ink-muted">{product.categoryNameAr}</p>
+          ) : null}
           {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
         </div>
 
@@ -122,14 +125,23 @@ function ProductRow({ product }: { product: AdminProductRow }) {
   );
 }
 
+/** Cap how many rows render when the list isn't filtered down — with
+ * ~600 products across the whole catalog, an unfiltered render would
+ * be an unusably long unvirtualized list. */
+const UNFILTERED_LIMIT = 30;
+
 export function ProductPhotoUploader({ products }: { products: AdminProductRow[] }) {
   const [query, setQuery] = useState("");
 
   const filtered = useMemo(() => {
-    const q = query.trim();
-    if (!q) return products;
+    const q = query.trim().toLowerCase();
+    if (!q) return products.slice(0, UNFILTERED_LIMIT);
     return products.filter(
-      (p) => p.nameAr.includes(q) || p.nameEn.toLowerCase().includes(q.toLowerCase()),
+      (p) =>
+        p.nameAr.includes(query.trim()) ||
+        p.nameEn.toLowerCase().includes(q) ||
+        p.brand?.toLowerCase().includes(q) ||
+        p.categoryNameAr?.includes(query.trim()),
     );
   }, [products, query]);
 
@@ -139,11 +151,11 @@ export function ProductPhotoUploader({ products }: { products: AdminProductRow[]
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="ابحثي باسم المنتج..."
+        placeholder="ابحثي باسم المنتج أو العلامة أو القسم..."
         className="hl-caption rounded-lg border border-line bg-surface px-3 py-2 text-ink"
       />
       <p className="hl-caption text-ink-muted">
-        {filtered.length} من {products.length} صنف
+        {query.trim() ? `${filtered.length} نتيجة` : `أول ${UNFILTERED_LIMIT} من ${products.length} صنف — اكتبي للبحث في البقية`}
       </p>
       <div className="rounded-lg border border-line bg-surface px-3">
         {filtered.map((product) => (

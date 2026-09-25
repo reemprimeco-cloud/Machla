@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PhotoUploadRow } from "@/components/admin/PhotoUploadRow";
 import { ProductPhotoUploader } from "@/components/admin/ProductPhotoUploader";
 import { requireAdminAccess } from "@/lib/admin/guard";
-import { getCategoryProductsForUpload, getUploadedImagePaths } from "@/lib/admin/queries";
+import { getAllProductsForUpload, getUploadedImagePaths } from "@/lib/admin/queries";
 
 /**
  * Replaces the claude-artifact uploader (2026-09-25): that page ran
@@ -48,10 +48,9 @@ const PENDING: { path: string; label: string }[] = [
 
 export default async function AdminPhotosPage() {
   await requireAdminAccess();
-  const [uploaded, tamweenProducts, kfmProducts] = await Promise.all([
+  const [uploaded, allProducts] = await Promise.all([
     getUploadedImagePaths(PENDING.map((p) => p.path)),
-    getCategoryProductsForUpload("tamween"),
-    getCategoryProductsForUpload("kfm"),
+    getAllProductsForUpload(),
   ]);
 
   return (
@@ -83,19 +82,11 @@ export default async function AdminPhotosPage() {
       ) : null}
 
       <section className="flex flex-col gap-2">
-        <h2 className="hl-label text-ink-muted">صور منتجات المطاحن ({kfmProducts.length})</h2>
+        <h2 className="hl-label text-ink-muted">صور كل المنتجات ({allProducts.length})</h2>
         <p className="hl-caption text-ink-muted">
-          لأي صنف جديد بقسم المطاحن — بالملف أو برابط مباشرة.
+          ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً.
         </p>
-        <ProductPhotoUploader products={kfmProducts} />
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="hl-label text-ink-muted">صور منتجات التموين ({tamweenProducts.length})</h2>
-        <p className="hl-caption text-ink-muted">
-          ارفعي صورة لأي صنف من الـ116 مباشرة — تتربط فيه فوراً، بدون ما تحتاجين ترسلينها بالمحادثة.
-        </p>
-        <ProductPhotoUploader products={tamweenProducts} />
+        <ProductPhotoUploader products={allProducts} />
       </section>
     </main>
   );

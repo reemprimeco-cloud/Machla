@@ -250,6 +250,7 @@ export type AdminProductRow = {
   brand: string | null;
   icon: string | null;
   imageUrl: string | null;
+  categoryNameAr?: string;
 };
 
 /** Every product in one category, for /admin/photos' per-product upload
@@ -281,5 +282,37 @@ export async function getCategoryProductsForUpload(
     brand: row.brand,
     icon: row.icon,
     imageUrl: row.image_url,
+  }));
+}
+
+/** Every product in the whole catalog, across every category — the
+ * general-purpose /admin/photos search-and-upload section. Products
+ * live in dozens of categories (Tamween and KFM among them) and the
+ * owner adds one-off items to any of them, so a single searchable list
+ * scales better than a hand-picked set of per-category sections. ~600
+ * rows today; cheap enough to send whole and filter client-side. */
+export async function getAllProductsForUpload(): Promise<AdminProductRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const [{ data, error }, { data: categories }] = await Promise.all([
+    supabase
+      .from("products")
+      .select("id, name_ar, name_en, brand, icon, image_url, category_id")
+      .order("name_ar"),
+    supabase.from("categories").select("id, name_ar"),
+  ]);
+  if (error || !data) return [];
+
+  const categoryNameById = new Map((categories ?? []).map((c) => [c.id, c.name_ar]));
+
+  return data.map((row) => ({
+    id: row.id,
+    nameAr: row.name_ar,
+    nameEn: row.name_en,
+    brand: row.brand,
+    icon: row.icon,
+    imageUrl: row.image_url,
+    categoryNameAr: categoryNameById.get(row.category_id),
   }));
 }
