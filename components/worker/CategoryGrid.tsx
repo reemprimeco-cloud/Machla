@@ -43,24 +43,24 @@ export function CategoryGrid({
                   ? `${basePath}/c/${category.key}?listId=${targetListId}`
                   : `${basePath}/c/${category.key}`
             }
-            className="flex flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface p-3 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
+            className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-[10px] text-center shadow-card backdrop-blur-[20px] transition-colors duration-150 ease-hl active:bg-white/40"
           >
             {/* Fills the card's width, same proportions as a product photo
                 (QuantityStepper.tsx's ProductCard) — a fixed small image
                 size here read as tiny/lost inside the tile next to how
                 big product photos render. Icon fallback lives in the same
                 box so every tile is the same height, image or not. */}
-            <div className="flex aspect-square w-full items-center justify-center rounded-md bg-surface-2">
+            <div className="flex h-[116px] w-full items-center justify-center overflow-hidden rounded-well bg-primary-tint">
               {category.image_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={category.image_url} alt="" className="size-full rounded-md object-cover" />
+                <img src={category.image_url} alt="" className="size-full object-cover" />
               ) : (
                 <span aria-hidden className="text-4xl leading-none">
                   {category.icon ?? "📦"}
                 </span>
               )}
             </div>
-            <span className="hl-label text-ink">
+            <span className="text-[15px] font-semibold text-ink">
               {localizedName(category, locale)}
             </span>
           </Link>

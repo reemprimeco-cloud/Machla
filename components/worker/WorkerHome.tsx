@@ -72,14 +72,14 @@ export function WorkerHome({
         </p>
       ) : null}
 
-      <p className="hl-title text-ink">{t("worker.browse")}</p>
+      <p className="text-[30px] font-bold leading-tight text-ink">{t("worker.browse")}</p>
 
       <SearchBox basePath={basePath} targetListId={targetListId} />
 
       <InstallGuide />
 
       <section className="space-y-3">
-        <h2 className="hl-label text-ink-muted">{t("worker.categories")}</h2>
+        <h2 className="text-[17px] font-bold text-ink">{t("worker.categories")}</h2>
         <CategoryGrid categories={categories} basePath={basePath} targetListId={targetListId} />
       </section>
 

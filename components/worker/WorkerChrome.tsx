@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { BasketIcon, BellIcon, ChevronIcon, HeartIcon } from "@/components/ui/Icons";
+import { BasketIcon, BellIcon, HeartIcon, SearchIcon } from "@/components/ui/Icons";
+import { BackLink, GlassIconButton, PrimaryPill } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
@@ -20,13 +21,17 @@ export function WorkerBar({
   title,
   backHref,
   itemCount,
-  unreadCount = 0,
   basePath = "/worker",
   targetListId,
 }: {
   title: string;
   backHref?: string;
   itemCount: number;
+  // Kept in the prop type (not part of this component's public API to
+  // remove, and every caller still passes it) even though the header no
+  // longer renders a bell for it — MACHLA_UI_REFRESH.md §4.2: the bottom
+  // tab bar's own Notifications tab already carries this, so the header
+  // copy was a duplicate shortcut.
   unreadCount?: number;
   /** Lets this same chrome serve a second flow — a household owner/member
    * building their own list (`app/home/shop/*`), reusing every worker
@@ -41,46 +46,25 @@ export function WorkerBar({
   const { t } = useLocale();
 
   return (
-    <div className="sticky top-0 z-10 -mx-5 mb-2 flex items-center gap-3 border-b border-line bg-bg/95 px-5 py-3 backdrop-blur">
-      {backHref ? (
-        <Link
-          href={backHref}
-          className="hl-label flex min-h-12 shrink-0 items-center gap-1 rounded-pill border border-line bg-surface px-3 text-ink"
-        >
-          {/* The chevron points right by default; -scale-x-100 mirrors it
-              to point back (left) in LTR, and rtl:scale-x-100 un-mirrors
-              it so it points back (right) in RTL — no per-locale icon
-              swap needed. */}
-          <ChevronIcon className="size-4 -scale-x-100 rtl:scale-x-100" />
-          <span>{t("common.back")}</span>
-        </Link>
-      ) : null}
+    <div className="sticky top-0 z-10 mb-2 flex items-center gap-3 py-2">
+      {backHref ? <BackLink href={backHref} label={t("common.back")} /> : null}
 
-      <h1 className="hl-heading min-w-0 flex-1 truncate text-ink">{title}</h1>
+      <h1 className="min-w-0 flex-1 truncate text-[17px] font-bold text-ink">{title}</h1>
 
       {targetListId ? null : (
-        <Link
-          href={`${basePath}/favorites`}
-          aria-label={t("worker.favorites")}
-          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-ink"
-        >
+        <GlassIconButton href={`${basePath}/favorites`} aria-label={t("worker.favorites")}>
           <HeartIcon className="size-5" />
-        </Link>
+        </GlassIconButton>
       )}
 
-      <NotificationBell unreadCount={unreadCount} />
-
       {targetListId ? null : (
-        <Link
-          href={`${basePath}/list`}
-          className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-primary px-4 text-on-primary"
-        >
+        <PrimaryPill href={`${basePath}/list`}>
           <BasketIcon className="size-5" />
           <span>{itemCount}</span>
           <span className="sr-only">
             {t("worker.myListWithCount", { count: itemCount })}
           </span>
-        </Link>
+        </PrimaryPill>
       )}
     </div>
   );
@@ -116,15 +100,19 @@ export function SearchBox({
         if (targetListId) params.set("listId", targetListId);
         router.push(`${basePath}/search?${params.toString()}`);
       }}
-      className="flex gap-2"
+      className="relative flex gap-2"
     >
+      <SearchIcon
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 start-4 my-auto size-5 text-ink-muted"
+      />
       <input
         type="search"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder={t("worker.searchPlaceholder")}
         aria-label={t("worker.searchPlaceholder")}
-        className="hl-body min-h-12 w-full rounded-pill border border-line bg-surface px-5 text-ink outline-none focus-visible:border-primary"
+        className="hl-body h-[54px] w-full rounded-pill border border-glass-border-strong bg-glass-bg-strong ps-11 pe-5 text-ink outline-none backdrop-blur-[20px] focus-visible:border-primary"
       />
     </form>
   );
