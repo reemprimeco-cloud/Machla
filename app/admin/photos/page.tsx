@@ -19,9 +19,31 @@ import { getCategoryProductsForUpload, getUploadedImagePaths } from "@/lib/admin
  * the owner to upload, remove it once it's live.
  */
 const PENDING: { path: string; label: string }[] = [
-  { path: "biscuits_kfm_lemon_sandwich.webp", label: "بسكويت ليمون ساندوتش — مطاحن الكويت (KFM)" },
-  { path: "kfm_logo.webp", label: "شعار قسم المطاحن الكويتية (KFM)" },
-  { path: "tamween_logo.webp", label: "شعار قسم التموين (وزارة التجارة والصناعة)" },
+  { path: "kfm_burger_buns_gf.webp", label: "خبز برجر خالي من الجلوتين — المطاحن" },
+  { path: "kfm_rolls_gf.webp", label: "خبز رول خالي من الجلوتين — المطاحن" },
+  { path: "kfm_cupcake_gf.webp", label: "كب كيك خالي من الجلوتين — المطاحن" },
+  { path: "kfm_toast_gf.webp", label: "توست خالي من الجلوتين — المطاحن" },
+  { path: "kfm_rusk.webp", label: "شابورة المطاحن" },
+  { path: "kfm_dates_cupcake.webp", label: "كب كيك محشي تمر — المطاحن" },
+  { path: "kfm_french_bread_brown.webp", label: "خبز فرنسي بالحبوب — المطاحن" },
+  { path: "kfm_french_bread_white.webp", label: "خبز فرنسي أبيض — المطاحن" },
+  { path: "kfm_brioche.webp", label: "البريوش — المطاحن" },
+  { path: "kfm_slider_bun.webp", label: "سلايدر خبز البطاطس — المطاحن" },
+  { path: "kfm_hotdog_bun.webp", label: "خبز هوت دوج رول — المطاحن" },
+  { path: "kfm_toast_original.webp", label: "التوست الأصلي — المطاحن" },
+  { path: "kfm_protein_bread.webp", label: "خبز البروتين — المطاحن" },
+  { path: "kfm_shawerma_bread.webp", label: "خبز الشاورما — المطاحن" },
+  { path: "kfm_rugag_white.webp", label: "خبز الرقاق الأبيض — المطاحن" },
+  { path: "kfm_rugag_brown.webp", label: "خبز الرقاق الأسمر — المطاحن" },
+  { path: "kfm_dalal_corn_oil.webp", label: "زيت الذرة دلال" },
+  { path: "kfm_dalal_cottonseed_oil.webp", label: "زيت بذرة القطن دلال" },
+  { path: "kfm_dalal_ghee.webp", label: "سمن نباتي دلال" },
+  { path: "kfm_aljoud_corn_oil.webp", label: "زيت الذرة الجود" },
+  { path: "kfm_aljoud_sunflower_oil.webp", label: "زيت دوار الشمس الجود" },
+  { path: "kfm_biscuits_digestive.webp", label: "بسكويت دايجستيف — المطاحن" },
+  { path: "kfm_biscuits_totally_bran.webp", label: "بسكويت توتالي بران — المطاحن" },
+  { path: "kfm_biscuits_digestive_nosugar.webp", label: "دايجستيف بدون سكر مضاف — المطاحن" },
+  { path: "kfm_biscuits_tik_salty.webp", label: "بسكويت مالح تيك — المطاحن" },
 ];
 
 export default async function AdminPhotosPage() {
