@@ -178,6 +178,12 @@ export function AdminDashboard({
               {refreshing ? "جارٍ التحديث…" : "تحديث الأرقام"}
             </button>
             <Link
+              href="/admin/photos"
+              className="hl-label rounded-lg border border-line bg-surface px-4 py-2 text-ink"
+            >
+              رفع صور
+            </Link>
+            <Link
               href="/home/settings"
               className="hl-label rounded-lg border border-line bg-surface px-4 py-2 text-ink"
             >

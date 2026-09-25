@@ -225,3 +225,20 @@ export async function getAdminFeedback(): Promise<AdminFeedbackRow[]> {
     countryCode: row.country_code,
   }));
 }
+
+/** Which of the given product-images paths already have a file uploaded
+ * — /admin/photos uses this to show each pending item as done or not,
+ * since storage.objects has no per-object read RPC of its own. */
+export async function getUploadedImagePaths(paths: string[]): Promise<Set<string>> {
+  if (!isSupabaseConfigured() || paths.length === 0) return new Set();
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.storage.from("product-images").list("", {
+    limit: 1000,
+    search: "",
+  });
+  if (error || !data) return new Set();
+
+  const existing = new Set(data.map((f) => f.name));
+  return new Set(paths.filter((p) => existing.has(p)));
+}
