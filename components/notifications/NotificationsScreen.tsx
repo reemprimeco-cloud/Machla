@@ -71,13 +71,13 @@ export function NotificationsScreen({
       ) : (
         <>
           <ClearNotificationsButton />
-          <ul className="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <ul className="overflow-hidden rounded-card border border-glass-border bg-glass-bg shadow-card backdrop-blur-[20px]">
             {notifications.map((notification) => {
               const Icon = ICONS[notification.type];
               return (
               <li
                 key={notification.id}
-                className={`flex items-start gap-3 border-b border-line px-4 py-3 last:border-b-0 ${
+                className={`flex items-start gap-3 border-b border-divider px-4 py-3 last:border-b-0 ${
                   notification.read_at ? "" : "bg-primary-tint"
                 }`}
               >
@@ -165,7 +165,7 @@ function ClearNotificationsButton() {
 
   if (confirming) {
     return (
-      <div className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3">
+      <div className="flex flex-col gap-2 rounded-card-sm border border-glass-border bg-glass-bg p-3 shadow-card backdrop-blur-[20px]">
         <p className="hl-caption text-ink-muted">{t("notif.clearConfirm")}</p>
         <div className="flex gap-2">
           <button
@@ -186,7 +186,7 @@ function ClearNotificationsButton() {
             type="button"
             disabled={pending}
             onClick={() => setConfirming(false)}
-            className="hl-caption flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-ink-muted disabled:opacity-60"
+            className="hl-caption flex-1 rounded-lg border border-glass-border-strong bg-glass-bg-strong px-3 py-2 text-ink-muted backdrop-blur-[20px] disabled:opacity-60"
           >
             {t("common.cancel")}
           </button>

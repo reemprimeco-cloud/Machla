@@ -128,7 +128,7 @@ export function SettingsScreen({
         <Card className="overflow-hidden !p-0">
           <Link
             href="/home/members"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("home.people")}</span>
             <span className="hl-caption flex items-center gap-2 text-ink-muted">
@@ -144,7 +144,7 @@ export function SettingsScreen({
           {role === "owner" ? (
             <Link
               href="/home/invitations"
-              className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+              className="flex min-h-14 items-center justify-between px-4 active:bg-white/40"
             >
               <span className="hl-body text-ink">{t("home.invitations")}</span>
               <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -165,7 +165,7 @@ export function SettingsScreen({
         <Card className="overflow-hidden !p-0">
           <Link
             href="/welcome"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">
               {t("common.changeLanguage")}
@@ -176,7 +176,7 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/home/settings/guide"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("settings.guide")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -185,7 +185,7 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/home/settings/about"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("settings.about")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -194,7 +194,7 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/home/settings/privacy"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("settings.privacy")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -203,7 +203,7 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/home/settings/support"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("settings.support")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -212,7 +212,7 @@ export function SettingsScreen({
           </Link>
           <Link
             href="/feedback"
-            className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">{t("settings.feedback")}</span>
             <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">
@@ -231,7 +231,7 @@ export function SettingsScreen({
         <Card className="overflow-hidden !p-0">
           <Link
             href="/home/paywall"
-            className="flex min-h-14 items-center justify-between border-b border-line px-4 active:bg-surface-2"
+            className="flex min-h-14 items-center justify-between border-b border-divider px-4 active:bg-white/40"
           >
             <span className="hl-body text-ink">
               {subscriptionStatus === "active" || subscriptionStatus === "grace_period"
@@ -256,7 +256,7 @@ export function SettingsScreen({
           {isAdmin ? (
             <Link
               href="/admin"
-              className="flex min-h-14 items-center justify-between px-4 active:bg-surface-2"
+              className="flex min-h-14 items-center justify-between px-4 active:bg-white/40"
             >
               <span className="hl-body text-ink">{t("settings.admin")}</span>
               <span aria-hidden className="rtl:-scale-x-100 text-ink-muted">

@@ -55,7 +55,7 @@ export function SentConfirmation({
             </span>
             {localizedName(group.category, locale)}
           </h2>
-          <ul className="rounded-lg border border-line bg-surface shadow-sm">
+          <ul className="rounded-card border border-glass-border bg-glass-bg shadow-card backdrop-blur-[20px]">
             {group.entries.map(({ item, product, photoUrl }) => {
               const label = product
                 ? localizedName(product, locale)
@@ -63,7 +63,7 @@ export function SentConfirmation({
               return (
                 <li
                   key={item.id}
-                  className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 last:border-b-0"
+                  className="flex items-center justify-between gap-3 border-b border-divider px-4 py-3 last:border-b-0"
                 >
                   {photoUrl ||
                   (item.photo_path !== null &&

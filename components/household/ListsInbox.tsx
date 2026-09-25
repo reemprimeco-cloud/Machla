@@ -136,7 +136,7 @@ function DeletableRow({
               type="button"
               onClick={() => setConfirming(false)}
               disabled={deleting}
-              className="hl-caption flex-1 rounded-lg border border-line bg-surface px-3 py-1 text-ink-muted disabled:opacity-60"
+              className="hl-caption flex-1 rounded-lg border border-glass-border-strong bg-glass-bg-strong px-3 py-1 text-ink-muted backdrop-blur-[20px] disabled:opacity-60"
             >
               {t("common.cancel")}
             </button>
@@ -146,7 +146,7 @@ function DeletableRow({
             type="button"
             onClick={() => setConfirming(true)}
             aria-label={t("hlists.delete")}
-            className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-danger active:bg-surface-2"
+            className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-glass-border-strong bg-glass-bg-strong text-danger backdrop-blur-[20px] active:bg-white/40"
           >
             <TrashIcon className="size-5" />
           </button>
@@ -173,8 +173,8 @@ function ListRow({ list }: { list: HouseholdList }) {
   return (
     <Link
       href={`/home/lists/${list.id}`}
-      className={`flex flex-col gap-2 rounded-lg border bg-surface p-4 shadow-sm active:bg-surface-2 ${
-        isNew ? "border-primary" : "border-line"
+      className={`flex flex-col gap-2 rounded-card border bg-glass-bg p-4 shadow-card backdrop-blur-[20px] active:bg-white/40 ${
+        isNew ? "border-primary" : "border-glass-border"
       }`}
     >
       <div className="flex items-baseline justify-between gap-3">
@@ -227,7 +227,7 @@ export function Progress({
       {/* Item-count based, never quantity-weighted: ten units of one
           product is one checklist item (master plan §16A.6). */}
       <div
-        className="h-2 overflow-hidden rounded-pill bg-surface-2"
+        className="h-2 overflow-hidden rounded-pill bg-track"
         role="progressbar"
         aria-valuenow={percent}
         aria-valuemin={0}
@@ -235,8 +235,8 @@ export function Progress({
         aria-label={t("hlists.progress", { done: purchased, total })}
       >
         <div
-          className="h-full rounded-pill bg-primary-hover"
-          style={{ inlineSize: `${percent}%` }}
+          className="h-full rounded-pill transition-[inline-size] duration-300 ease-out"
+          style={{ inlineSize: `${percent}%`, backgroundImage: "var(--hl-gradient-progress)" }}
         />
       </div>
       <p className="hl-caption">

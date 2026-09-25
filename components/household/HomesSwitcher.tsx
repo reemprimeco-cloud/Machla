@@ -62,7 +62,7 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
               type="button"
               onClick={() => handleSelect(home.householdId)}
               disabled={selectingId !== null}
-              className="flex min-h-20 w-full items-center gap-4 rounded-lg border border-line bg-surface p-4 text-start shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2 disabled:opacity-60"
+              className="flex min-h-20 w-full items-center gap-4 rounded-card border border-glass-border bg-glass-bg p-4 text-start shadow-card backdrop-blur-[20px] transition-colors duration-150 ease-hl active:bg-white/40 disabled:opacity-60"
             >
               <span
                 aria-hidden

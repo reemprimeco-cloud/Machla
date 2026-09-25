@@ -32,7 +32,7 @@ export function WorkerHistory({ lists }: { lists: HouseholdList[] }) {
             return (
               <li
                 key={list.id}
-                className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-4 shadow-sm"
+                className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-4 shadow-card backdrop-blur-[20px]"
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="hl-caption">
