@@ -718,6 +718,11 @@ export interface Database {
         };
         Returns: string;
       };
+      // 20260925161000_admin_update_category_image.sql.
+      admin_update_category_image: {
+        Args: { p_category_id: string; p_image_url: string };
+        Returns: void;
+      };
     };
     Enums: Record<string, never>;
   };

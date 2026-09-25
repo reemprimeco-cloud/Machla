@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CatalogManager } from "@/components/admin/CatalogManager";
+import { CategoryPhotoUploader } from "@/components/admin/CategoryPhotoUploader";
 import { CollapsibleSection } from "@/components/admin/CollapsibleSection";
 import { PhotoUploadRow } from "@/components/admin/PhotoUploadRow";
 import { ProductPhotoUploader } from "@/components/admin/ProductPhotoUploader";
@@ -88,6 +89,13 @@ export default async function AdminPhotosPage() {
         subtitle="ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً."
       >
         <ProductPhotoUploader products={activeProducts} />
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        title={`شعارات الأقسام (${catalog.categories.length})`}
+        subtitle="صورة القسم نفسه (تظهر بدل الإيموجي بالشاشة الرئيسية) — مثل شعار المطاحن والتموين."
+      >
+        <CategoryPhotoUploader categories={catalog.categories} />
       </CollapsibleSection>
 
       <CollapsibleSection title="تصفح حسب القسم" subtitle="اختاري قسم لعرض كل منتجاته — ارفعي صورة أو احذفي أو أضيفي منتج.">

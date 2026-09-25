@@ -259,3 +259,99 @@ export async function createProductAction(input: {
   revalidatePath("/admin/photos");
   return { ok: true };
 }
+
+/** Upload a category's own tile image (categories.image_url) — the KFM
+ * and Tamween logos were done by hand in a migration
+ * (20260925110000_categories_image_url.sql); this is the general
+ * version for any category, from a file. */
+export async function uploadCategoryImageAction(
+  categoryId: string,
+  formData: FormData,
+): Promise<UploadCatalogImageResult> {
+  await requireAdminAccess();
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: "No file selected." };
+  }
+
+  const supabase = await createClient();
+  const path = `category_${categoryId}.webp`;
+  const { error: uploadError } = await supabase.storage
+    .from("product-images")
+    .upload(path, file, { upsert: true, contentType: file.type || "image/webp" });
+  if (uploadError) return { ok: false, message: uploadError.message };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("product-images").getPublicUrl(path);
+
+  const { error: updateError } = await supabase.rpc("admin_update_category_image", {
+    p_category_id: categoryId,
+    p_image_url: publicUrl,
+  });
+  if (updateError) return { ok: false, message: updateError.message };
+
+  revalidatePath("/admin/photos");
+  return { ok: true };
+}
+
+/** uploadCategoryImageAction, but sourced from a pasted URL — see
+ * uploadCatalogImageFromUrlAction for the fetch/validation details. */
+export async function uploadCategoryImageFromUrlAction(
+  categoryId: string,
+  imageUrl: string,
+): Promise<UploadCatalogImageResult> {
+  await requireAdminAccess();
+
+  let parsed: URL;
+  try {
+    parsed = new URL(imageUrl);
+  } catch {
+    return { ok: false, message: "الرابط غير صحيح." };
+  }
+  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+    return { ok: false, message: "الرابط غير صحيح." };
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(parsed, { redirect: "follow" });
+  } catch {
+    return { ok: false, message: "تعذر تحميل الصورة من الرابط." };
+  }
+  if (!response.ok) {
+    return { ok: false, message: `تعذر تحميل الصورة (${response.status}).` };
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.startsWith("image/")) {
+    return { ok: false, message: "الرابط لا يشير إلى صورة." };
+  }
+
+  const buffer = await response.arrayBuffer();
+  const maxBytes = 15 * 1024 * 1024;
+  if (buffer.byteLength === 0 || buffer.byteLength > maxBytes) {
+    return { ok: false, message: "حجم الصورة غير مناسب." };
+  }
+
+  const supabase = await createClient();
+  const path = `category_${categoryId}.webp`;
+  const { error: uploadError } = await supabase.storage
+    .from("product-images")
+    .upload(path, buffer, { upsert: true, contentType });
+  if (uploadError) return { ok: false, message: uploadError.message };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("product-images").getPublicUrl(path);
+
+  const { error: updateError } = await supabase.rpc("admin_update_category_image", {
+    p_category_id: categoryId,
+    p_image_url: publicUrl,
+  });
+  if (updateError) return { ok: false, message: updateError.message };
+
+  revalidatePath("/admin/photos");
+  return { ok: true };
+}

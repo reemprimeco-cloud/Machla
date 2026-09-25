@@ -260,6 +260,7 @@ export type AdminCategoryRow = {
   key: string;
   nameAr: string;
   icon: string | null;
+  imageUrl: string | null;
 };
 
 /** Every category and every product in the catalog — /admin/photos'
@@ -279,7 +280,7 @@ export async function getCatalogForAdmin(): Promise<{
       .from("products")
       .select("id, name_ar, name_en, brand, icon, image_url, category_id, is_active")
       .order("name_ar"),
-    supabase.from("categories").select("id, key, name_ar, icon").order("sort_order"),
+    supabase.from("categories").select("id, key, name_ar, icon, image_url").order("sort_order"),
   ]);
   if (error || !products) return { categories: [], products: [] };
 
@@ -291,6 +292,7 @@ export async function getCatalogForAdmin(): Promise<{
       key: c.key,
       nameAr: c.name_ar,
       icon: c.icon,
+      imageUrl: c.image_url,
     })),
     products: products.map((row) => ({
       id: row.id,
