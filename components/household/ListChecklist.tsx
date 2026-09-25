@@ -142,6 +142,7 @@ export function ListChecklist({
                       ? (product.icon ?? group.category.icon)
                       : group.category.icon
                   }
+                  imageUrl={product?.image_url ?? null}
                   photoUrl={photoUrl}
                   photoPurged={
                     item.photo_path !== null && item.photo_deleted_at !== null
@@ -217,6 +218,7 @@ function ChecklistRow({
   name,
   detail,
   icon,
+  imageUrl,
   photoUrl,
   photoPurged,
   quantity,
@@ -232,6 +234,7 @@ function ChecklistRow({
   name: string;
   detail: string;
   icon: string | null;
+  imageUrl: string | null;
   photoUrl: string | null;
   photoPurged: boolean;
   quantity: number;
@@ -304,6 +307,13 @@ function ChecklistRow({
             purged={photoPurged}
             label={name}
             sizeClassName="size-14"
+          />
+        ) : imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imageUrl}
+            alt=""
+            className="size-14 shrink-0 rounded-md object-cover"
           />
         ) : (
           <span aria-hidden className="shrink-0 text-2xl leading-none">

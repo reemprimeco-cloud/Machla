@@ -116,6 +116,13 @@ export function ListReview({
                             label={label}
                             sizeClassName="size-14"
                           />
+                        ) : product?.image_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={product.image_url}
+                            alt=""
+                            className="size-14 shrink-0 rounded-md object-cover"
+                          />
                         ) : (
                           <span aria-hidden className="text-3xl leading-none">
                             {product?.icon ?? group.category.icon ?? "📦"}

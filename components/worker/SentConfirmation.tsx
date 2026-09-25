@@ -76,7 +76,18 @@ export function SentConfirmation({
                       label={label}
                       sizeClassName="size-10"
                     />
-                  ) : null}
+                  ) : product?.image_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={product.image_url}
+                      alt=""
+                      className="size-10 shrink-0 rounded-md object-cover"
+                    />
+                  ) : (
+                    <span aria-hidden className="shrink-0 text-2xl leading-none">
+                      {product?.icon ?? group.category.icon ?? "📦"}
+                    </span>
+                  )}
                   <span className="hl-body min-w-0 flex-1 truncate text-ink">
                     {label}
                   </span>
