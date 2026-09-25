@@ -10,7 +10,7 @@ import { requireWorkerAccess } from "@/lib/household/guard";
  * that layout's own comment for why an otherwise-synchronous layout
  * needs the `await` at all.
  *
- * `pb-20` reserves space for the fixed bar the same way; WorkerTabBar
+ * `pb-32` reserves space for the floating bar the same way; WorkerTabBar
  * itself adds `env(safe-area-inset-bottom)` on top for the iOS home
  * indicator.
  */
@@ -18,7 +18,7 @@ export default async function WorkerLayout({ children }: { children: React.React
   await requireWorkerAccess();
 
   return (
-    <div className="flex min-h-full flex-col pb-20">
+    <div className="flex min-h-full flex-col pb-32">
       {children}
       <WorkerTabBar />
     </div>

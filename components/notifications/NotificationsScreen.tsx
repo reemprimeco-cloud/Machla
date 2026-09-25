@@ -137,11 +137,11 @@ export function NotificationsScreen({
         </Card>
       </section>
 
-      {/* Reserves the space each track's fixed tab bar needs everywhere
+      {/* Reserves the space each track's floating tab bar needs everywhere
           else under /home or /worker — this page sits outside both
           layouts (it's the shared top-level /notifications route), so
           it has to add the padding itself. */}
-      <div className="pb-16" aria-hidden />
+      <div className="pb-32" aria-hidden />
       {variant === "household" ? <HomeTabBar /> : <WorkerTabBar />}
     </Screen>
   );

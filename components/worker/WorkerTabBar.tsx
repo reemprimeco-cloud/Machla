@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { BellGlyph, HomeGlyph } from "@/components/household/HomeTabBar";
+import { PrimaryPill } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
@@ -69,23 +70,26 @@ export function WorkerTabBar() {
   return (
     <nav
       aria-label={t("home.tabBarLabel")}
-      className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface/95 backdrop-blur"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      className="fixed inset-x-0 bottom-0 z-20 flex justify-center px-5"
+      style={{ paddingBottom: "calc(24px + env(safe-area-inset-bottom))" }}
     >
-      <div className="mx-auto flex w-full max-w-[var(--hl-content-max)]">
+      <div className="flex h-[68px] w-full max-w-[calc(var(--hl-content-max)_-_40px)] items-center justify-around rounded-pill border border-glass-border-strong bg-nav-bg px-2 shadow-nav backdrop-blur-[24px]">
         {TABS.map(({ tab, href, Icon, labelKey }) => {
           const active = isActive(tab, href);
-          return (
+          const label = t(labelKey);
+          return active ? (
+            <PrimaryPill key={tab} href={href} aria-current="page">
+              <Icon />
+              <span>{label}</span>
+            </PrimaryPill>
+          ) : (
             <Link
               key={tab}
               href={href}
-              aria-current={active ? "page" : undefined}
-              className={`relative flex min-h-16 flex-1 flex-col items-center justify-center gap-0.5 ${
-                active ? "hl-tab-indicator text-primary" : "text-ink-muted"
-              }`}
+              aria-label={label}
+              className="flex size-12 shrink-0 items-center justify-center rounded-pill text-ink-muted transition-colors duration-150 ease-hl active:text-ink"
             >
               <Icon />
-              <span className="hl-caption">{t(labelKey)}</span>
             </Link>
           );
         })}

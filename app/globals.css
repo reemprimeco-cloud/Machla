@@ -395,22 +395,6 @@ html[data-script="nastaliq"] {
   .hl-gradient-cta:hover::after {
     background: rgba(0, 0, 0, 0.1);
   }
-
-  /* The active tab's gradient underline — components/household/HomeTabBar.tsx. */
-  .hl-tab-indicator::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    width: 28px;
-    height: 3px;
-    border-radius: 0 0 3px 3px;
-    background: var(--hl-gradient);
-  }
-  [dir="rtl"] .hl-tab-indicator::before {
-    transform: translateX(50%);
-  }
 }
 
 @layer utilities {

@@ -20,8 +20,9 @@ import { requireHouseholdAccess } from "@/lib/household/guard";
  * before this fix. Awaiting the same guard up here restores the real
  * status code for every route under this layout.
  *
- * The `pb-20` wrapper reserves space for the fixed-position bar so the
- * last card in a list is never hidden behind it; `HomeTabBar` itself adds
+ * The `pb-32` wrapper reserves space for the floating bar (68px pill + 24px
+ * gap from the bottom, MACHLA_UI_REFRESH.md §3) so the last card in a list
+ * is never hidden behind it; `HomeTabBar` itself adds
  * `env(safe-area-inset-bottom)` on top of that for the iOS home
  * indicator.
  */
@@ -29,7 +30,7 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
   await requireHouseholdAccess();
 
   return (
-    <div className="flex min-h-full flex-col pb-20">
+    <div className="flex min-h-full flex-col pb-32">
       {children}
       <HomeTabBar />
     </div>
