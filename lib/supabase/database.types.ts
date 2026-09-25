@@ -697,6 +697,11 @@ export interface Database {
           country_code: string | null;
         }[];
       };
+      // 20260925123000_admin_update_product_image.sql.
+      admin_update_product_image: {
+        Args: { p_product_id: string; p_image_url: string };
+        Returns: void;
+      };
     };
     Enums: Record<string, never>;
   };

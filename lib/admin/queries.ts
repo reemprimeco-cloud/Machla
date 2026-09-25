@@ -242,3 +242,44 @@ export async function getUploadedImagePaths(paths: string[]): Promise<Set<string
   const existing = new Set(data.map((f) => f.name));
   return new Set(paths.filter((p) => existing.has(p)));
 }
+
+export type AdminProductRow = {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  brand: string | null;
+  icon: string | null;
+  imageUrl: string | null;
+};
+
+/** Every product in one category, for /admin/photos' per-product upload
+ * section — "tamween" today, but takes any categories.key. */
+export async function getCategoryProductsForUpload(
+  categoryKey: string,
+): Promise<AdminProductRow[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  const supabase = await createClient();
+  const { data: category } = await supabase
+    .from("categories")
+    .select("id")
+    .eq("key", categoryKey)
+    .maybeSingle();
+  if (!category) return [];
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, name_ar, name_en, brand, icon, image_url, sort_order")
+    .eq("category_id", category.id)
+    .order("sort_order");
+  if (error || !data) return [];
+
+  return data.map((row) => ({
+    id: row.id,
+    nameAr: row.name_ar,
+    nameEn: row.name_en,
+    brand: row.brand,
+    icon: row.icon,
+    imageUrl: row.image_url,
+  }));
+}

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdminAccess } from "@/lib/admin/guard";
 import { createClient } from "@/lib/supabase/server";
 
+
 export type UploadCatalogImageResult = { ok: true } | { ok: false; message: string };
 
 /**
@@ -36,6 +37,50 @@ export async function uploadCatalogImageAction(
     .upload(path, file, { upsert: true, contentType: file.type || "image/webp" });
 
   if (error) return { ok: false, message: error.message };
+
+  revalidatePath("/admin/photos");
+  return { ok: true };
+}
+
+/**
+ * Uploads a photo for one specific product (any category, not just the
+ * hand-typed PENDING list) and points that product's own image_url at
+ * it — the general-purpose version of uploadCatalogImageAction, for
+ * "upload a photo for this particular item" rather than "upload this
+ * exact fixed file". Storage path is keyed by product id so re-uploading
+ * for the same product overwrites its own file rather than colliding
+ * with another product's.
+ */
+export async function uploadProductImageAction(
+  productId: string,
+  formData: FormData,
+): Promise<UploadCatalogImageResult> {
+  await requireAdminAccess();
+
+  const file = formData.get("file");
+  if (!(file instanceof File) || file.size === 0) {
+    return { ok: false, message: "No file selected." };
+  }
+
+  const supabase = await createClient();
+  const path = `product_${productId}.webp`;
+  const { error: uploadError } = await supabase.storage
+    .from("product-images")
+    .upload(path, file, { upsert: true, contentType: file.type || "image/webp" });
+  if (uploadError) return { ok: false, message: uploadError.message };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("product-images").getPublicUrl(path);
+
+  // products only grants SELECT via RLS — this RPC is the write path
+  // (20260925123000_admin_update_product_image.sql), same shape as
+  // every other write in this schema.
+  const { error: updateError } = await supabase.rpc("admin_update_product_image", {
+    p_product_id: productId,
+    p_image_url: publicUrl,
+  });
+  if (updateError) return { ok: false, message: updateError.message };
 
   revalidatePath("/admin/photos");
   return { ok: true };
