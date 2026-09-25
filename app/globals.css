@@ -245,9 +245,13 @@ html[data-script="nastaliq"] {
     box-sizing: border-box;
   }
 
+  /* min-height, not height: a fixed height on html/body clips a page
+     whose content grows taller than one viewport instead of letting the
+     document scroll — the classic "button below the fold is unreachable"
+     bug (2026-09-25, worker's list review screen). */
   html,
   body {
-    height: 100%;
+    min-height: 100%;
   }
 
   body {

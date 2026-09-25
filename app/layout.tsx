@@ -161,9 +161,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang={initialLocale}
       dir={directionFor(initialLocale)}
       data-script={scriptFor(initialLocale)}
-      className={`${FONT_VARIABLES} h-full`}
+      className={`${FONT_VARIABLES} min-h-full`}
     >
-      <body className="flex h-full min-h-screen flex-col antialiased">
+      <body className="flex min-h-screen flex-col antialiased">
         <LocaleProvider initialLocale={initialLocale}>
           {children}
           <ConnectionBanner />
