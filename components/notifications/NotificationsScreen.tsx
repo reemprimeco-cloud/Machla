@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { HomeTabBar } from "@/components/household/HomeTabBar";
+import { BasketIcon, CheckCircleIcon, EyeIcon } from "@/components/ui/Icons";
 import { Card, Screen } from "@/components/ui/Primitives";
 import { WorkerTabBar } from "@/components/worker/WorkerTabBar";
 import {
@@ -25,10 +26,10 @@ const MESSAGE_KEYS: Record<NotificationType, MessageKey> = {
   list_completed: "notif.listCompleted",
 };
 
-const ICONS: Record<NotificationType, string> = {
-  list_sent: "🧺",
-  list_viewed: "👀",
-  list_completed: "✅",
+const ICONS: Record<NotificationType, (props: { className?: string }) => React.JSX.Element> = {
+  list_sent: BasketIcon,
+  list_viewed: EyeIcon,
+  list_completed: CheckCircleIcon,
 };
 
 const PREF_KEYS: Record<NotificationType, MessageKey> = {
@@ -71,15 +72,17 @@ export function NotificationsScreen({
         <>
           <ClearNotificationsButton />
           <ul className="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
-            {notifications.map((notification) => (
+            {notifications.map((notification) => {
+              const Icon = ICONS[notification.type];
+              return (
               <li
                 key={notification.id}
                 className={`flex items-start gap-3 border-b border-line px-4 py-3 last:border-b-0 ${
                   notification.read_at ? "" : "bg-primary-tint"
                 }`}
               >
-                <span aria-hidden className="text-2xl leading-none">
-                  {ICONS[notification.type]}
+                <span aria-hidden className="text-ink-muted">
+                  <Icon />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="hl-body text-ink">
@@ -112,7 +115,8 @@ export function NotificationsScreen({
                   </Link>
                 ) : null}
               </li>
-            ))}
+              );
+            })}
           </ul>
         </>
       )}

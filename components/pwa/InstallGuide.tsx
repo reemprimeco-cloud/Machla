@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 
+import { InstallIcon } from "@/components/ui/Icons";
 import { Card } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { isNativeApp } from "@/lib/native/bridge";
@@ -141,8 +142,8 @@ export function InstallGuide() {
   return (
     <Card className="border-primary-line bg-primary-tint">
       <div className="flex items-start gap-3">
-        <span aria-hidden className="text-2xl leading-none">
-          📲
+        <span aria-hidden className="text-primary">
+          <InstallIcon className="size-6" />
         </span>
         <div className="min-w-0 flex-1">
           <p className="hl-heading text-ink">{t("install.title")}</p>

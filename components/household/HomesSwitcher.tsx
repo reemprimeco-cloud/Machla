@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { MachlaLockup } from "@/components/brand/MachlaIcon";
+import { ChevronIcon, HomeIcon } from "@/components/ui/Icons";
 import { ErrorText, Screen, useRoleLabel } from "@/components/ui/Primitives";
 import { selectHouseholdAction } from "@/lib/household/actions";
 import type { Membership } from "@/lib/household/queries";
@@ -65,9 +66,9 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
             >
               <span
                 aria-hidden
-                className="flex size-12 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-2xl leading-none"
+                className="flex size-12 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
               >
-                🏠
+                <HomeIcon className="size-6" />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="hl-heading block truncate text-ink">
@@ -79,12 +80,7 @@ export function HomesSwitcher({ homes }: { homes: Membership[] }) {
                     : roleLabel(home.role)}
                 </span>
               </span>
-              <span
-                aria-hidden
-                className="rtl:-scale-x-100 text-lg leading-none text-ink-muted"
-              >
-                ›
-              </span>
+              <ChevronIcon className="size-4 shrink-0 text-ink-muted rtl:-scale-x-100" />
             </button>
           </li>
         ))}

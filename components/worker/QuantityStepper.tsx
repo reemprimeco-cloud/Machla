@@ -2,6 +2,7 @@
 
 import { useOptimistic, useTransition } from "react";
 
+import { TrashIcon } from "@/components/ui/Icons";
 import { localizedName, productDetail, productPrice } from "@/lib/catalog/localized";
 import type { Product } from "@/lib/catalog/queries";
 import { setProductQuantityAction } from "@/lib/list/actions";
@@ -65,7 +66,7 @@ export function QuantityStepper({
       <StepButton
         onClick={() => change(optimisticQuantity - 1)}
         label={`${optimisticQuantity <= 1 ? t("worker.remove") : "−"} — ${label}`}
-        glyph={optimisticQuantity <= 1 ? "🗑" : "−"}
+        glyph={optimisticQuantity <= 1 ? <TrashIcon className="size-4" /> : "−"}
       />
       <span className="hl-label tabular-nums text-ink" aria-live="polite">
         {optimisticQuantity}
@@ -86,7 +87,7 @@ function StepButton({
 }: {
   onClick: () => void;
   label: string;
-  glyph: string;
+  glyph: React.ReactNode;
 }) {
   return (
     <button

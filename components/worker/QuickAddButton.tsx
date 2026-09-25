@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 
+import { CheckIcon } from "@/components/ui/Icons";
 import { addItemToSentListAction } from "@/lib/list/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -40,9 +41,16 @@ export function QuickAddButton({
       type="button"
       onClick={handleAdd}
       aria-label={`${t("worker.add")} — ${label}`}
-      className="hl-label min-h-12 w-full rounded-pill bg-primary px-4 text-on-primary transition-colors duration-150 ease-hl active:bg-primary-hover"
+      className="hl-label flex min-h-12 w-full items-center justify-center gap-1.5 rounded-pill bg-primary px-4 text-on-primary transition-colors duration-150 ease-hl active:bg-primary-hover"
     >
-      {added > 0 ? `✓ ${added}` : t("worker.add")}
+      {added > 0 ? (
+        <>
+          <CheckIcon className="size-4" />
+          {added}
+        </>
+      ) : (
+        t("worker.add")
+      )}
     </button>
   );
 }

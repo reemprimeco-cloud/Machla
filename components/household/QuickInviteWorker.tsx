@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { PersonIcon } from "@/components/ui/Icons";
 import { useErrorMessage } from "@/components/ui/Primitives";
 import { createInvitationAction } from "@/lib/household/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -76,9 +77,9 @@ export function QuickInviteWorker({ householdId }: { householdId: string }) {
       >
         <span
           aria-hidden
-          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary text-lg text-on-primary"
+          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary text-on-primary"
         >
-          🧑‍🍳
+          <PersonIcon className="size-5" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="hl-label block text-ink">{t("invitations.quickInviteWorker")}</span>

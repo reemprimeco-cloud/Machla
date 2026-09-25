@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { LockIcon } from "@/components/ui/Icons";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
@@ -22,9 +23,9 @@ export function CompleteAccountBanner() {
     >
       <span
         aria-hidden
-        className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary text-lg text-on-primary"
+        className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary text-on-primary"
       >
-        🔐
+        <LockIcon className="size-5" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="hl-label block text-ink">{t("auth.completeAccount.title")}</span>

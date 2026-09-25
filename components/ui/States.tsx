@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { WarningIcon } from "@/components/ui/Icons";
 import { Card, PrimaryButton, Screen } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -72,7 +73,7 @@ export function MessageScreen({
   hint,
   action,
 }: {
-  glyph: string;
+  glyph: React.ReactNode;
   title: string;
   hint: string;
   action?: React.ReactNode;
@@ -80,7 +81,7 @@ export function MessageScreen({
   return (
     <Screen>
       <Card className="text-center">
-        <p aria-hidden className="text-6xl leading-none">
+        <p aria-hidden className="flex justify-center text-ink-muted">
           {glyph}
         </p>
         <h1 className="hl-title mt-4 text-ink">{title}</h1>
@@ -96,7 +97,7 @@ export function ErrorScreen({ retry }: { retry?: () => void }) {
 
   return (
     <MessageScreen
-      glyph="⚠️"
+      glyph={<WarningIcon className="size-16" />}
       title={t("state.errorTitle")}
       hint={t("state.errorHint")}
       action={

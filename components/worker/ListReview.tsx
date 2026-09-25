@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
+import { CloseIcon } from "@/components/ui/Icons";
 import {
   Card,
   ErrorText,
@@ -233,9 +234,9 @@ function PhotoItemControls({
             if (!result.ok) onError(result.code);
           })
         }
-        className="flex size-12 items-center justify-center rounded-pill border border-line bg-surface text-lg text-ink disabled:opacity-40"
+        className="flex size-12 items-center justify-center rounded-pill border border-line bg-surface text-ink disabled:opacity-40"
       >
-        <span aria-hidden>✕</span>
+        <CloseIcon className="size-4" />
       </button>
     </div>
   );

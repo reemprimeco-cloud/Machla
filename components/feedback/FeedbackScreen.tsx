@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { CheckCircleIcon } from "@/components/ui/Icons";
 import { Card, ErrorText, PrimaryButton, Screen } from "@/components/ui/Primitives";
 import { submitFeedbackAction, type FeedbackErrorCode } from "@/lib/feedback/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -53,8 +54,8 @@ export function FeedbackScreen({ backHref }: { backHref: string }) {
     <Screen title={t("feedback.title")} description={t("feedback.hint")}>
       {status === "sent" ? (
         <Card className="text-center">
-          <p aria-hidden className="text-4xl leading-none">
-            🙏
+          <p aria-hidden className="flex justify-center text-success">
+            <CheckCircleIcon className="size-10" />
           </p>
           <p className="hl-heading mt-3 text-ink">{t("feedback.thanks")}</p>
           <button

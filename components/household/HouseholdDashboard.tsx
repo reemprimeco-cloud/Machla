@@ -6,6 +6,7 @@ import { MachlaLockup } from "@/components/brand/MachlaIcon";
 import { CompleteAccountBanner } from "@/components/auth/CompleteAccountBanner";
 import { QuickInviteWorker } from "@/components/household/QuickInviteWorker";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
+import { BasketIcon, ChevronIcon, PersonIcon, SearchIcon } from "@/components/ui/Icons";
 import { Card, Screen } from "@/components/ui/Primitives";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -96,17 +97,17 @@ export function HouseholdDashboard({
         <Link
           href="/home/settings"
           aria-label={t("settings.title")}
-          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-lg"
+          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
         >
-          <span aria-hidden>👤</span>
+          <PersonIcon className="size-5" />
         </Link>
         <MachlaLockup size={34} showArabic={false} />
         <Link
           href="/home/shop/search"
           aria-label={t("worker.browse")}
-          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-surface-2 text-lg"
+          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-surface-2 text-ink"
         >
-          <span aria-hidden>🔍</span>
+          <SearchIcon className="size-5" />
         </Link>
       </div>
 
@@ -171,9 +172,9 @@ export function HouseholdDashboard({
           </div>
           <span
             aria-hidden
-            className="flex size-11 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-xl"
+            className="flex size-11 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
           >
-            🧺
+            <BasketIcon className="size-6" />
           </span>
         </Link>
       </div>
@@ -230,9 +231,7 @@ function HeroListCard({ list }: { list: HouseholdList }) {
         </p>
         <span className="hl-label mt-3 inline-flex items-center gap-1 rounded-pill bg-white/25 px-3 py-1.5 text-on-primary">
           {t("hlists.openList")}
-          <span aria-hidden className="rtl:-scale-x-100">
-            →
-          </span>
+          <ChevronIcon className="size-3.5 rtl:-scale-x-100" />
         </span>
       </div>
       <ProgressRing percent={percent} />

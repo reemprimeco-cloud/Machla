@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { SignalOffIcon } from "@/components/ui/Icons";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
@@ -38,7 +39,7 @@ export function ConnectionBanner() {
       role="status"
       className="sticky top-0 z-20 flex min-h-10 items-center justify-center gap-2 bg-warning px-4 text-center text-white"
     >
-      <span aria-hidden>📡</span>
+      <SignalOffIcon className="size-4" />
       <span className="hl-label">{t("state.offlineBanner")}</span>
     </div>
   );

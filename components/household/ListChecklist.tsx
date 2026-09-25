@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useOptimistic, useState, useTransition } from "react";
 
 import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
+import { CheckIcon, CloseIcon } from "@/components/ui/Icons";
 import { Card, ErrorText, PrimaryButton, Screen } from "@/components/ui/Primitives";
 import { localizedName, productDetail } from "@/lib/catalog/localized";
 import {
@@ -291,13 +292,13 @@ function ChecklistRow({
         >
           <span
             aria-hidden
-            className={`flex size-9 items-center justify-center rounded-pill border-2 text-base ${
+            className={`flex size-9 items-center justify-center rounded-pill border-2 ${
               isPurchased
                 ? "border-primary bg-primary text-on-primary"
                 : "border-line bg-surface text-transparent"
             }`}
           >
-            ✓
+            <CheckIcon className="size-4" />
           </span>
         </button>
 
@@ -359,13 +360,13 @@ function ChecklistRow({
           disabled={readOnly}
           aria-pressed={isUnavailable}
           aria-label={`${t("hlists.unavailable")} — ${name}`}
-          className={`flex size-12 shrink-0 items-center justify-center rounded-pill border text-lg disabled:opacity-70 ${
+          className={`flex size-12 shrink-0 items-center justify-center rounded-pill border disabled:opacity-70 ${
             isUnavailable
               ? "border-warning bg-warning text-white"
               : "border-line bg-surface"
           }`}
         >
-          <span aria-hidden>✕</span>
+          <CloseIcon className="size-4" />
         </button>
       </div>
     </li>

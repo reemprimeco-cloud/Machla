@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { TrashIcon } from "@/components/ui/Icons";
 import { Card, ErrorText, Screen } from "@/components/ui/Primitives";
 import { deleteListAction } from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
@@ -145,9 +146,9 @@ function DeletableRow({
             type="button"
             onClick={() => setConfirming(true)}
             aria-label={t("hlists.delete")}
-            className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-xl text-danger active:bg-surface-2"
+            className="flex w-12 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-danger active:bg-surface-2"
           >
-            <span aria-hidden>🗑️</span>
+            <TrashIcon className="size-5" />
           </button>
         )}
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { SignalOffIcon } from "@/components/ui/Icons";
 import { HomeLink, MessageScreen } from "@/components/ui/States";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -8,7 +9,7 @@ export function OfflineScreen() {
 
   return (
     <MessageScreen
-      glyph="📡"
+      glyph={<SignalOffIcon className="size-16" />}
       title={t("state.offlineTitle")}
       // "Your list is safe" is the sentence that matters: the worker's
       // draft lives in Postgres, not in local state, so losing signal

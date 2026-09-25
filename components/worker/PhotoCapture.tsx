@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 
+import { CameraIcon } from "@/components/ui/Icons";
 import {
   Card,
   ErrorText,
@@ -196,9 +197,7 @@ export function PhotoCapture({
           onClick={() => inputRef.current?.click()}
           className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-line bg-surface text-ink"
         >
-          <span aria-hidden className="text-5xl leading-none">
-            📷
-          </span>
+          <CameraIcon className="size-12" />
           <span className="hl-label">{t("worker.photoTake")}</span>
         </button>
       )}

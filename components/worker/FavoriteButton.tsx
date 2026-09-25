@@ -2,6 +2,7 @@
 
 import { useOptimistic, useTransition } from "react";
 
+import { HeartIcon } from "@/components/ui/Icons";
 import { toggleFavoriteAction } from "@/lib/favorites/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
@@ -34,9 +35,11 @@ export function FavoriteButton({
       onClick={toggle}
       aria-label={isFavorite ? t("worker.removeFromFavorites") : t("worker.addToFavorites")}
       aria-pressed={isFavorite}
-      className="absolute end-1.5 top-1.5 flex size-7 items-center justify-center rounded-pill bg-surface/90 text-base leading-none shadow-sm"
+      className={`absolute end-1.5 top-1.5 flex size-7 items-center justify-center rounded-pill bg-surface/90 shadow-sm ${
+        isFavorite ? "text-danger" : "text-ink-muted"
+      }`}
     >
-      <span aria-hidden>{isFavorite ? "❤️" : "🤍"}</span>
+      <HeartIcon filled={isFavorite} className="size-4" />
     </button>
   );
 }

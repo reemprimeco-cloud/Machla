@@ -1,3 +1,4 @@
+import { SearchIcon } from "@/components/ui/Icons";
 import { HomeLink, MessageScreen } from "@/components/ui/States";
 import { getMessages } from "@/lib/i18n/messages";
 import { DEFAULT_LOCALE } from "@/lib/i18n/config";
@@ -15,7 +16,7 @@ export default async function NotFound() {
 
   return (
     <MessageScreen
-      glyph="🔍"
+      glyph={<SearchIcon className="size-16" />}
       title={messages.state.notFoundTitle}
       hint={messages.state.notFoundHint}
       action={<HomeLink />}

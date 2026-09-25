@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { PhotoThumbnail } from "@/components/photo/PhotoThumbnail";
+import { CheckCircleIcon } from "@/components/ui/Icons";
 import { Card, Screen } from "@/components/ui/Primitives";
 import { localizedName } from "@/lib/catalog/localized";
 import type { ListGroup } from "@/lib/list/queries";
@@ -34,8 +35,8 @@ export function SentConfirmation({
   return (
     <Screen>
       <Card className="text-center">
-        <p aria-hidden className="text-5xl leading-none">
-          ✅
+        <p aria-hidden className="flex justify-center text-success">
+          <CheckCircleIcon className="size-14" />
         </p>
         <p className="hl-title mt-3 text-ink">{t("worker.sentTitle")}</p>
         <p className="hl-caption mt-1">{t("worker.sentHint")}</p>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { PushToggle } from "@/components/household/PushToggle";
+import { PersonIcon } from "@/components/ui/Icons";
 import { Card, ErrorText, Screen, useErrorMessage } from "@/components/ui/Primitives";
 import { deleteAccountAction } from "@/lib/auth/deleteAccount";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -104,9 +105,9 @@ export function SettingsScreen({
         <Card className="flex items-center gap-4">
           <span
             aria-hidden
-            className="flex size-14 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-2xl leading-none"
+            className="flex size-14 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
           >
-            👤
+            <PersonIcon className="size-7" />
           </span>
           <span className="min-w-0 flex-1">
             <span className="hl-heading block truncate text-ink">

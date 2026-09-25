@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { BasketIcon, BellIcon, ChevronIcon, HeartIcon } from "@/components/ui/Icons";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
@@ -46,11 +47,11 @@ export function WorkerBar({
           href={backHref}
           className="hl-label flex min-h-12 shrink-0 items-center gap-1 rounded-pill border border-line bg-surface px-3 text-ink"
         >
-          {/* Mirrors automatically in RTL: the glyph is flipped by the
-              parent's direction, so no per-locale icon swap is needed. */}
-          <span aria-hidden className="rtl:-scale-x-100 text-lg leading-none">
-            ‹
-          </span>
+          {/* The chevron points right by default; -scale-x-100 mirrors it
+              to point back (left) in LTR, and rtl:scale-x-100 un-mirrors
+              it so it points back (right) in RTL — no per-locale icon
+              swap needed. */}
+          <ChevronIcon className="size-4 -scale-x-100 rtl:scale-x-100" />
           <span>{t("common.back")}</span>
         </Link>
       ) : null}
@@ -61,9 +62,9 @@ export function WorkerBar({
         <Link
           href={`${basePath}/favorites`}
           aria-label={t("worker.favorites")}
-          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-lg leading-none"
+          className="flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-ink"
         >
-          <span aria-hidden>❤️</span>
+          <HeartIcon className="size-5" />
         </Link>
       )}
 
@@ -74,7 +75,7 @@ export function WorkerBar({
           href={`${basePath}/list`}
           className="hl-label flex min-h-12 shrink-0 items-center gap-2 rounded-pill bg-primary px-4 text-on-primary"
         >
-          <span aria-hidden>🧺</span>
+          <BasketIcon className="size-5" />
           <span>{itemCount}</span>
           <span className="sr-only">
             {t("worker.myListWithCount", { count: itemCount })}
@@ -138,11 +139,9 @@ export function NotificationBell({ unreadCount }: { unreadCount: number }) {
     <Link
       href="/notifications"
       aria-label={t("notif.title")}
-      className="relative flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface"
+      className="relative flex size-12 shrink-0 items-center justify-center rounded-pill border border-line bg-surface text-ink"
     >
-      <span aria-hidden className="text-lg leading-none">
-        🔔
-      </span>
+      <BellIcon className="size-5" />
       {unreadCount > 0 ? (
         <span
           aria-hidden

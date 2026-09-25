@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { CloseIcon, TrashIcon } from "@/components/ui/Icons";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 /**
@@ -38,9 +39,7 @@ export function PhotoThumbnail({
         aria-label={t("worker.photoUnavailable")}
         className={`flex ${sizeClassName} shrink-0 items-center justify-center rounded-lg border border-dashed border-line text-ink-faint`}
       >
-        <span aria-hidden className="text-lg">
-          🗑
-        </span>
+        <TrashIcon className="size-4" />
       </span>
     );
   }
@@ -80,9 +79,7 @@ export function PhotoThumbnail({
             aria-label={t("common.back")}
             className="absolute end-4 top-4 flex size-12 items-center justify-center rounded-pill bg-surface text-ink"
           >
-            <span aria-hidden className="text-lg leading-none">
-              ✕
-            </span>
+            <CloseIcon className="size-4" />
           </button>
           {/* eslint-disable-next-line @next/next/no-img-element --
               same signed URL as the thumbnail above. */}
