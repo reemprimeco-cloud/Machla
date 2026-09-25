@@ -157,6 +157,9 @@ export interface Database {
           name_am: string | null;
           name_fr: string | null;
           name_fon: string | null;
+          // 20260925110000_categories_image_url.sql — optional real image
+          // (e.g. a brand logo) shown instead of the emoji icon.
+          image_url: string | null;
         };
         Insert: Partial<Database["public"]["Tables"]["categories"]["Row"]> & {
           key: string;
