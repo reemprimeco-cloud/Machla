@@ -2,7 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 
-import { uploadCatalogImageAction } from "@/lib/admin/actions";
+import { uploadCatalogImageAction, uploadCatalogImageFromUrlAction } from "@/lib/admin/actions";
 
 export function PhotoUploadRow({
   path,
@@ -17,6 +17,8 @@ export function PhotoUploadRow({
   const [uploaded, setUploaded] = useState(initiallyUploaded);
   const [error, setError] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showUrlInput, setShowUrlInput] = useState(false);
+  const [urlValue, setUrlValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -43,43 +45,88 @@ export function PhotoUploadRow({
     });
   }
 
-  return (
-    <div className="flex items-center gap-3 rounded-lg border border-line bg-surface p-3 shadow-sm">
-      {previewUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={previewUrl} alt="" className="size-14 shrink-0 rounded-md border border-line object-contain bg-surface-2" />
-      ) : (
-        <span className="flex size-14 shrink-0 items-center justify-center rounded-md bg-surface-2 text-2xl">
-          {uploaded ? "✅" : "🖼️"}
-        </span>
-      )}
+  function submitUrl() {
+    if (!urlValue.trim()) return;
+    setError(null);
+    startTransition(async () => {
+      const result = await uploadCatalogImageFromUrlAction(path, urlValue.trim());
+      if (result.ok) {
+        setUploaded(true);
+        setUrlValue("");
+        setShowUrlInput(false);
+      } else {
+        setError(result.message);
+      }
+    });
+  }
 
-      <div className="min-w-0 flex-1">
-        <p className="hl-label text-ink">{label}</p>
-        <p className="hl-caption break-all text-ink-muted" dir="ltr">
-          {path}
-        </p>
-        {uploaded ? <p className="hl-caption text-success">تم الرفع</p> : null}
-        {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
+  return (
+    <div className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm">
+      <div className="flex items-center gap-3">
+        {previewUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={previewUrl} alt="" className="size-14 shrink-0 rounded-md border border-line object-contain bg-surface-2" />
+        ) : (
+          <span className="flex size-14 shrink-0 items-center justify-center rounded-md bg-surface-2 text-2xl">
+            {uploaded ? "✅" : "🖼️"}
+          </span>
+        )}
+
+        <div className="min-w-0 flex-1">
+          <p className="hl-label text-ink">{label}</p>
+          <p className="hl-caption break-all text-ink-muted" dir="ltr">
+            {path}
+          </p>
+          {uploaded ? <p className="hl-caption text-success">تم الرفع</p> : null}
+          {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
+        </div>
+
+        <form action={submit} className="shrink-0">
+          <input
+            ref={inputRef}
+            type="file"
+            name="file"
+            accept="image/*"
+            onChange={onFileChange}
+            className="hl-caption block w-32"
+          />
+          <button
+            type="submit"
+            disabled={pending}
+            className="hl-caption mt-1 w-full rounded-pill bg-primary px-3 py-1 text-on-primary disabled:opacity-50"
+          >
+            {pending ? "جاري الرفع..." : uploaded ? "إعادة الرفع" : "رفع"}
+          </button>
+        </form>
       </div>
 
-      <form action={submit} className="shrink-0">
-        <input
-          ref={inputRef}
-          type="file"
-          name="file"
-          accept="image/*"
-          onChange={onFileChange}
-          className="hl-caption block w-32"
-        />
+      {showUrlInput ? (
+        <div className="flex items-center gap-2" dir="ltr">
+          <input
+            type="url"
+            value={urlValue}
+            onChange={(e) => setUrlValue(e.target.value)}
+            placeholder="https://..."
+            className="hl-caption min-w-0 flex-1 rounded-md border border-line bg-bg px-2 py-1"
+          />
+          <button
+            type="button"
+            disabled={pending || !urlValue.trim()}
+            onClick={submitUrl}
+            className="hl-caption shrink-0 rounded-pill bg-primary px-3 py-1 text-on-primary disabled:opacity-50"
+          >
+            {pending ? "..." : "رفع"}
+          </button>
+        </div>
+      ) : (
         <button
-          type="submit"
-          disabled={pending}
-          className="hl-caption mt-1 w-full rounded-pill bg-primary px-3 py-1 text-on-primary disabled:opacity-50"
+          type="button"
+          onClick={() => setShowUrlInput(true)}
+          className="hl-caption self-start text-primary underline"
         >
-          {pending ? "جاري الرفع..." : uploaded ? "إعادة الرفع" : "رفع"}
+          أو رفع من رابط
         </button>
-      </form>
+      )}
     </div>
   );
 }
