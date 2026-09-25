@@ -37,7 +37,7 @@ export function PhotoThumbnail({
     return (
       <span
         aria-label={t("worker.photoUnavailable")}
-        className={`flex ${sizeClassName} shrink-0 items-center justify-center rounded-lg border border-dashed border-line text-ink-faint`}
+        className={`flex ${sizeClassName} shrink-0 items-center justify-center rounded-icon border border-dashed border-glass-border-strong text-ink-faint`}
       >
         <TrashIcon className="size-4" />
       </span>
@@ -57,7 +57,7 @@ export function PhotoThumbnail({
           setOpen(true);
         }}
         aria-label={`${t("worker.photoView")} — ${label}`}
-        className={`${sizeClassName} shrink-0 overflow-hidden rounded-lg border border-line`}
+        className={`${sizeClassName} shrink-0 overflow-hidden rounded-icon border border-glass-border-strong`}
       >
         {/* eslint-disable-next-line @next/next/no-img-element --
             a signed, short-lived URL; next/image would proxy and cache it

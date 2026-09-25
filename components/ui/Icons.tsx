@@ -269,6 +269,20 @@ export function ListIcon({ className }: IconProps) {
   );
 }
 
+export function LeafIcon({ className }: IconProps) {
+  return (
+    <svg {...BASE} className={className}>
+      <path
+        d="M5 19c-1-7 3-13 14-14 1 11-5 15-14 14z"
+        stroke="currentColor"
+        strokeWidth="1.9"
+        strokeLinejoin="round"
+      />
+      <path d="M6 18c3-4 7-7 12-12" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function ChevronIcon({ className }: IconProps) {
   return (
     <svg {...BASE} className={className}>
