@@ -46,12 +46,15 @@ export function CategoryGrid({
             className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >
             {category.image_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={category.image_url}
-                alt=""
-                className="size-12 rounded-full object-cover"
-              />
+              // Square, rounded-md, object-cover — same treatment as a
+              // product photo (QuantityStepper.tsx's ProductCard), not
+              // a circular avatar: a logo like KFM's or the Ministry of
+              // Commerce's cropped into a circle lost the sides of the
+              // artwork and read as zoomed-in/oversized.
+              <div className="flex aspect-square w-16 items-center justify-center rounded-md bg-surface-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={category.image_url} alt="" className="size-full rounded-md object-cover" />
+              </div>
             ) : (
               <span aria-hidden className="text-4xl leading-none">
                 {category.icon ?? "📦"}
