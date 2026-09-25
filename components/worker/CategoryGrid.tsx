@@ -43,23 +43,23 @@ export function CategoryGrid({
                   ? `${basePath}/c/${category.key}?listId=${targetListId}`
                   : `${basePath}/c/${category.key}`
             }
-            className="flex min-h-28 flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3 py-4 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
+            className="flex flex-col items-center justify-center gap-2 rounded-lg border border-line bg-surface p-3 text-center shadow-sm transition-colors duration-150 ease-hl active:bg-surface-2"
           >
-            {category.image_url ? (
-              // Square, rounded-md, object-cover — same treatment as a
-              // product photo (QuantityStepper.tsx's ProductCard), not
-              // a circular avatar: a logo like KFM's or the Ministry of
-              // Commerce's cropped into a circle lost the sides of the
-              // artwork and read as zoomed-in/oversized.
-              <div className="flex aspect-square w-16 items-center justify-center rounded-md bg-surface-2">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* Fills the card's width, same proportions as a product photo
+                (QuantityStepper.tsx's ProductCard) — a fixed small image
+                size here read as tiny/lost inside the tile next to how
+                big product photos render. Icon fallback lives in the same
+                box so every tile is the same height, image or not. */}
+            <div className="flex aspect-square w-full items-center justify-center rounded-md bg-surface-2">
+              {category.image_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img src={category.image_url} alt="" className="size-full rounded-md object-cover" />
-              </div>
-            ) : (
-              <span aria-hidden className="text-4xl leading-none">
-                {category.icon ?? "📦"}
-              </span>
-            )}
+              ) : (
+                <span aria-hidden className="text-4xl leading-none">
+                  {category.icon ?? "📦"}
+                </span>
+              )}
+            </div>
             <span className="hl-label text-ink">
               {localizedName(category, locale)}
             </span>
