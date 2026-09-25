@@ -19,8 +19,8 @@
 
 :root {
   /* ---- Brand ramp — decoration only, never behind readable text ------
-     Soft Glass refresh (MACHLA_UI_REFRESH.md §2.1), light mode. Dark-mode
-     values land in Step 8 — see that section's own comment when added. */
+     Soft Glass refresh (MACHLA_UI_REFRESH.md §2.1). "Same in both modes"
+     per that section — no dark-mode override exists below for these. */
   --hl-brand-pink: #e00f84;
   --hl-brand-coral: #ff4f72;
   --hl-brand-orange: #ff7e45;
@@ -91,14 +91,14 @@
   --hl-shadow-lg:
     0 4px 8px rgba(0, 35, 61, 0.07), 0 18px 40px rgba(0, 35, 61, 0.12);
   --hl-shadow-primary: 0 6px 18px rgba(224, 27, 106, 0.28); /* under the gradient CTA */
-  /* Soft Glass §2.2 — light mode. Dark-mode variants land in Step 8. */
+  /* Soft Glass §2.2 — light mode; dark-mode variants below. */
   --hl-shadow-card: 0 10px 30px rgba(11, 31, 63, 0.08);
   --hl-shadow-chip: 0 6px 18px rgba(11, 31, 63, 0.08);
   --hl-shadow-nav: 0 14px 34px rgba(11, 31, 63, 0.14);
   --hl-shadow-accent: 0 8px 18px rgba(224, 15, 132, 0.3);
   --hl-shadow-hero: 0 20px 44px rgba(224, 15, 132, 0.32);
 
-  /* ---- Glass surfaces — Soft Glass §2.2, light mode only for now ------ */
+  /* ---- Glass surfaces — Soft Glass §2.2, light mode; dark below ------- */
   --hl-glass-bg: rgba(255, 255, 255, 0.62);
   --hl-glass-bg-strong: rgba(255, 255, 255, 0.65);
   --hl-glass-border: rgba(255, 255, 255, 0.9);
@@ -149,6 +149,96 @@
 
   --font-ui: var(--font-latin);
   --hl-lh-ui: 1.5;
+}
+
+/* ====================================================================
+   Dark mode — Soft Glass §1/§2.2, Step 8 (deliberately last: dark mode
+   is device-setting-only here, no manual toggle exists in this app, so
+   there is nothing to wire a switch to — see §1: "Theme follows the
+   device setting by default. If a manual toggle already exists, wire
+   the tokens to it — do not build a new toggle.").
+
+   Every token the spec's own dark column names is overridden below.
+   The rest — --hl-surface/-surface-2/-line/-line-soft, --hl-ink-faint,
+   the semantic success/warning/danger/info ramp, and the generic
+   --hl-shadow-sm/md/lg — predate this refresh and aren't in that
+   table; without a dark value they'd stay their light colour against a
+   dark background; this is a straight token-value swap under
+   @media, so it costs nothing when the device is in light mode. The
+   brand ramp and all three gradients are "same in both modes" per
+   §2.1 and are not repeated here.
+   ==================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hl-primary: #ff9acb;
+    --hl-primary-hover: #ffafd6;
+    --hl-primary-press: #ffc4e1;
+    --hl-primary-tint: rgba(240, 17, 143, 0.22);
+    --hl-primary-line: rgba(240, 17, 143, 0.4);
+
+    --hl-bg: #0b1330;
+    --hl-surface: #141b3d;
+    --hl-surface-2: #1b234a;
+    --hl-line: rgba(255, 255, 255, 0.12);
+    --hl-line-soft: rgba(255, 255, 255, 0.07);
+
+    --hl-ink: #ffffff;
+    --hl-ink-muted: #aeb8d0;
+    --hl-ink-faint: #7f89a6;
+
+    --hl-success: #2ecc81;
+    --hl-success-tint: rgba(46, 204, 129, 0.16);
+    --hl-warning: #ffc24d;
+    --hl-warning-tint: rgba(255, 194, 77, 0.16);
+    --hl-danger: #ff6b81;
+    --hl-danger-tint: rgba(255, 107, 129, 0.16);
+    --hl-info: #4dd0e1;
+
+    --hl-shadow-sm:
+      0 1px 2px rgba(0, 0, 0, 0.24), 0 2px 6px rgba(0, 0, 0, 0.2);
+    --hl-shadow-md:
+      0 2px 4px rgba(0, 0, 0, 0.24), 0 8px 20px rgba(0, 0, 0, 0.28);
+    --hl-shadow-lg:
+      0 4px 8px rgba(0, 0, 0, 0.28), 0 18px 40px rgba(0, 0, 0, 0.35);
+    --hl-shadow-primary: 0 6px 18px rgba(240, 17, 143, 0.45);
+    --hl-shadow-card: 0 14px 34px rgba(0, 0, 0, 0.3);
+    --hl-shadow-chip: 0 6px 18px rgba(0, 0, 0, 0.25);
+    --hl-shadow-nav: 0 14px 34px rgba(0, 0, 0, 0.4);
+    --hl-shadow-accent: 0 0 20px rgba(240, 17, 143, 0.5); /* glow, per spec */
+    --hl-shadow-hero: 0 20px 50px rgba(240, 17, 143, 0.45);
+
+    --hl-glass-bg: rgba(255, 255, 255, 0.07);
+    --hl-glass-bg-strong: rgba(255, 255, 255, 0.08);
+    --hl-glass-border: rgba(255, 255, 255, 0.12);
+    --hl-glass-border-strong: rgba(255, 255, 255, 0.14);
+    --hl-nav-bg: rgba(22, 32, 68, 0.6);
+
+    --hl-divider: rgba(255, 255, 255, 0.07);
+    --hl-track: rgba(255, 255, 255, 0.1);
+    --hl-chip-neutral-bg: rgba(255, 255, 255, 0.08);
+    --hl-chip-neutral-text: #d5dbea;
+    --hl-badge-pink-bg: rgba(240, 17, 143, 0.22);
+    --hl-badge-pink-text: #ff9acb;
+    --hl-link-accent: #ff9acb;
+    --hl-checkbox-empty-border: rgba(255, 255, 255, 0.32);
+    --hl-strikethrough-text: #7f89a6;
+  }
+}
+
+/* Accessibility §7 fallback: opaque glass on a browser without
+   backdrop-filter support, instead of a translucent panel with nothing
+   blurred behind it. */
+@supports not (backdrop-filter: blur(1px)) {
+  :root {
+    --hl-glass-bg: rgba(255, 255, 255, 0.92);
+    --hl-glass-bg-strong: rgba(255, 255, 255, 0.92);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --hl-glass-bg: rgba(20, 30, 64, 0.92);
+      --hl-glass-bg-strong: rgba(20, 30, 64, 0.92);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
