@@ -6,8 +6,8 @@ import { MachlaLockup } from "@/components/brand/MachlaIcon";
 import { CompleteAccountBanner } from "@/components/auth/CompleteAccountBanner";
 import { QuickInviteWorker } from "@/components/household/QuickInviteWorker";
 import { InstallGuide } from "@/components/pwa/InstallGuide";
-import { BasketIcon, ChevronIcon, PersonIcon, SearchIcon } from "@/components/ui/Icons";
-import { Card, Screen } from "@/components/ui/Primitives";
+import { BasketIcon, ChevronIcon, ListIcon, PersonIcon, SearchIcon } from "@/components/ui/Icons";
+import { Card, GlassIconButton, Screen } from "@/components/ui/Primitives";
 import type { HouseholdList } from "@/lib/list/household";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -94,25 +94,17 @@ export function HouseholdDashboard({
   return (
     <Screen>
       <div className="flex items-center justify-between">
-        <Link
-          href="/home/settings"
-          aria-label={t("settings.title")}
-          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
-        >
+        <GlassIconButton href="/home/settings" aria-label={t("settings.title")}>
           <PersonIcon className="size-5" />
-        </Link>
+        </GlassIconButton>
         <MachlaLockup size={34} showArabic={false} />
-        <Link
-          href="/home/shop/search"
-          aria-label={t("worker.browse")}
-          className="flex size-10 shrink-0 items-center justify-center rounded-pill bg-surface-2 text-ink"
-        >
+        <GlassIconButton href="/home/shop/search" aria-label={t("worker.browse")}>
           <SearchIcon className="size-5" />
-        </Link>
+        </GlassIconButton>
       </div>
 
       <div>
-        <h1 className="hl-title text-ink">
+        <h1 className="text-[28px] font-bold leading-tight tracking-tight text-ink">
           {t(greetingKey, { name: displayName || t("members.unnamed") })}
         </h1>
         <p className="hl-caption mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
@@ -133,80 +125,90 @@ export function HouseholdDashboard({
 
       <InstallGuide />
 
-      {heroList ? (
-        <div className="space-y-2">
-          <p className="hl-caption text-ink-muted">
-            {t("home.receivedLabel", { name: heroList.created_by_name ?? t("hlists.someone") })}
-          </p>
-          <HeroListCard list={heroList} />
-        </div>
-      ) : (
-        <EmptyHero />
-      )}
+      {/* Sender/label now lives inside the card itself (the chip at its
+          top-start) rather than above it — MACHLA_UI_REFRESH.md §4.1. */}
+      {heroList ? <HeroListCard list={heroList} /> : <EmptyHero />}
 
       {/* Same mechanism a helper uses to build and send a list
           (app/home/shop/*, a `basePath`-scoped reuse of the worker
           screens) — for the things the owner/member wants to buy
-          themselves, not through a helper. Styled as a sibling of
-          HeroListCard (same shape, neutral instead of gradient — the
-          gradient CTA slot above is already spent) rather than a flat
-          button, so the two read as one family: "here's a list", twice,
-          each labeled with whose it is.
+          themselves, not through a helper. A 2-column quick-actions grid
+          (§4.1.4) replaces the previous two full-width cards; same
+          destinations and handlers, just laid out side by side when
+          there's a second tile to show.
           Skips the categories grid straight to the review screen once
           there's already something on the draft — that screen's own
           Back link (app/home/shop/list/page.tsx) returns here, one step,
           not to a categories grid this visit never passed through. */}
-      <div className="space-y-2">
-        <p className="hl-caption text-ink-muted">{t("home.ownListLabel")}</p>
-        <Link
-          href={ownListItemCount > 0 ? "/home/shop/list" : "/home/shop"}
-          className="flex items-center justify-between gap-4 rounded-lg border border-line bg-surface p-5 shadow-sm active:bg-surface-2"
-        >
-          <div className="min-w-0">
-            <p className="hl-heading text-ink">{t("home.myOwnList")}</p>
-            <p className="hl-caption mt-1">
-              {ownListItemCount > 0
-                ? t("home.ownListContinue", { count: ownListItemCount })
-                : t("home.ownListHint")}
-            </p>
-          </div>
-          <span
-            aria-hidden
-            className="flex size-11 shrink-0 items-center justify-center rounded-pill bg-primary-tint text-primary"
-          >
-            <BasketIcon className="size-6" />
-          </span>
-        </Link>
-      </div>
-
-      {/* The full list inbox lives at /home/lists (ListsInbox.tsx).
-          Shown only past one open list: with zero or one, heroList above
-          already covers it, and this row would just repeat the same
-          list under a second link. */}
+      {/* The full list inbox lives at /home/lists (ListsInbox.tsx). Its
+          tile is shown only past one open list: with zero or one, heroList
+          above already covers it, and this tile would just repeat the
+          same list under a second link. */}
       {openCount > 1 ? (
-        <Link
-          href="/home/lists"
-          className="flex items-center justify-between rounded-lg border border-line bg-surface px-5 py-4 shadow-sm active:bg-surface-2"
-        >
-          <span className="hl-label text-ink-muted">{t("hlists.lists")}</span>
-          <span className="hl-caption rounded-pill bg-primary-tint px-2 py-0.5 text-primary">
-            {t("hlists.openLists", { count: openCount })}
-          </span>
-        </Link>
-      ) : null}
+        <div className="grid grid-cols-2 gap-3">
+          <OwnListTile ownListItemCount={ownListItemCount} />
+          <Link
+            href="/home/lists"
+            className="flex flex-col gap-3 rounded-card border border-glass-border bg-glass-bg p-[18px] shadow-card backdrop-blur-[20px] transition-colors duration-150 ease-hl active:bg-white/40"
+          >
+            <span
+              aria-hidden
+              className="flex size-[46px] items-center justify-center rounded-icon bg-[#0B1F3F] text-white"
+            >
+              <ListIcon className="size-6" />
+            </span>
+            <div>
+              <p className="text-[17px] font-bold text-ink">{t("hlists.lists")}</p>
+              <span className="mt-1 inline-block rounded-pill bg-badge-pink-bg px-2 py-0.5 text-xs font-semibold text-badge-pink-text">
+                {t("hlists.openLists", { count: openCount })}
+              </span>
+            </div>
+          </Link>
+        </div>
+      ) : (
+        <OwnListTile ownListItemCount={ownListItemCount} />
+      )}
     </Screen>
+  );
+}
+
+/** "قائمتي الخاصة" quick-action tile — §4.1.4. Same destination logic as
+ * before: straight into the review screen once the draft has something on
+ * it, the categories grid to start one when it doesn't. */
+function OwnListTile({ ownListItemCount }: { ownListItemCount: number }) {
+  const { t } = useLocale();
+  return (
+    <Link
+      href={ownListItemCount > 0 ? "/home/shop/list" : "/home/shop"}
+      className="flex flex-col gap-3 rounded-card border border-glass-border bg-glass-bg p-[18px] shadow-card backdrop-blur-[20px] transition-colors duration-150 ease-hl active:bg-white/40"
+    >
+      <span
+        aria-hidden
+        className="hl-gradient-cta flex size-[46px] items-center justify-center rounded-icon text-on-primary"
+      >
+        <BasketIcon className="size-6" />
+      </span>
+      <div>
+        <p className="text-[17px] font-bold text-ink">{t("home.myOwnList")}</p>
+        <p className="hl-caption mt-0.5">
+          {ownListItemCount > 0
+            ? t("home.ownListContinue", { count: ownListItemCount })
+            : t("home.ownListHint")}
+        </p>
+      </div>
+    </Link>
   );
 }
 
 /** The hero panel — one of the two places on any screen the gradient is
  * allowed (app/globals.css: "the mark, hero panels, the single gradient
- * CTA per screen"). A ring rather than a bar here, matching the kit's
- * home screen; the checklist itself (ListDetail) keeps the bar, where a
- * long list makes a ring harder to read at a glance.
- *
- * No "from {name}" line inside the card anymore — the caller already
- * puts that above it as this whole area's label (home.receivedLabel),
- * so repeating the name in here would say it twice. */
+ * CTA per screen"). Soft Glass §4.1.3: gradient-hero (not the CTA
+ * gradient — a distinct 3-stop ending in orange), two decorative
+ * translucent circles clipped to the rounded corners, a glass sender chip,
+ * a glass "open" chip, and a bigger progress ring. A ring rather than a
+ * bar here, matching the kit's home screen; the checklist itself
+ * (ListDetail) keeps the bar, where a long list makes a ring harder to
+ * read at a glance. */
 function HeroListCard({ list }: { list: HouseholdList }) {
   const { t } = useLocale();
 
@@ -221,15 +223,28 @@ function HeroListCard({ list }: { list: HouseholdList }) {
       // instead of to the full list inbox — this hero card is reached
       // from the dashboard, not from /home/lists.
       href={`/home/lists/${list.id}?from=home`}
-      className="hl-gradient-cta relative flex items-center justify-between gap-4 overflow-hidden rounded-lg p-5"
+      className="relative isolate flex items-center justify-between gap-4 overflow-hidden rounded-hero p-[22px] shadow-hero"
+      style={{ backgroundImage: "var(--hl-gradient-hero)" }}
     >
-      <div className="min-w-0">
-        <p className="hl-title text-on-primary">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-10 -start-10 size-[190px] rounded-full bg-white/[0.13]"
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -bottom-10 end-2 size-40 rounded-full bg-white/[0.08]"
+      />
+
+      <div className="relative min-w-0">
+        <span className="inline-flex items-center gap-1 rounded-pill border border-white/40 bg-white/[0.22] px-3 py-1 text-[12px] font-semibold text-white">
+          {t("home.receivedLabel", { name: list.created_by_name ?? t("hlists.someone") })}
+        </span>
+        <p className="mt-3 text-[28px] font-bold leading-tight text-white">
           {remaining > 0
             ? t("hlists.itemsLeft", { count: remaining })
             : t("hlists.allDone")}
         </p>
-        <span className="hl-label mt-3 inline-flex items-center gap-1 rounded-pill bg-white/25 px-3 py-1.5 text-on-primary">
+        <span className="mt-4 inline-flex h-11 items-center gap-1 rounded-pill border border-white/50 bg-white/[0.24] px-4 text-[15px] font-semibold text-white backdrop-blur-[12px]">
           {t("hlists.openList")}
           <ChevronIcon className="size-3.5 rtl:-scale-x-100" />
         </span>
@@ -240,8 +255,8 @@ function HeroListCard({ list }: { list: HouseholdList }) {
 }
 
 function ProgressRing({ percent }: { percent: number }) {
-  const size = 64;
-  const stroke = 6;
+  const size = 92;
+  const stroke = 9;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - percent / 100);
@@ -254,7 +269,7 @@ function ProgressRing({ percent }: { percent: number }) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,0.3)"
+          stroke="rgba(255,255,255,0.28)"
           strokeWidth={stroke}
         />
         <circle
@@ -269,7 +284,7 @@ function ProgressRing({ percent }: { percent: number }) {
           strokeDashoffset={offset}
         />
       </svg>
-      <span className="hl-label absolute inset-0 flex items-center justify-center text-on-primary">
+      <span className="absolute inset-0 flex items-center justify-center text-[21px] font-bold text-white">
         {percent}%
       </span>
     </div>

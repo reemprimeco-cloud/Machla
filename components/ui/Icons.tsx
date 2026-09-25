@@ -258,6 +258,17 @@ export function EyeIcon({ className }: IconProps) {
   );
 }
 
+export function ListIcon({ className }: IconProps) {
+  return (
+    <svg {...BASE} className={className}>
+      <rect x="3.5" y="5" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.9" />
+      <path d="M10.5 7h10" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <rect x="3.5" y="15" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.9" />
+      <path d="M10.5 17h10" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function ChevronIcon({ className }: IconProps) {
   return (
     <svg {...BASE} className={className}>
