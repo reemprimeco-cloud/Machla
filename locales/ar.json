@@ -199,7 +199,9 @@
     "photoUnavailable": "الصورة غير متاحة",
     "photoView": "عرض الصورة",
     "addNote": "أضف ملاحظة",
-    "noteHint": "مثال: خالٍ من اللاكتوز"
+    "noteHint": "مثال: خالٍ من اللاكتوز",
+    "priceSubsidized": "مدعوم",
+    "priceReduced": "مخفض"
   },
   "errors": {
     "notOwner": "صاحب البيت فقط يمكنه القيام بذلك.",

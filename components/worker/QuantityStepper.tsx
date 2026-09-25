@@ -2,7 +2,7 @@
 
 import { useOptimistic, useTransition } from "react";
 
-import { localizedName, productDetail } from "@/lib/catalog/localized";
+import { localizedName, productDetail, productPrice } from "@/lib/catalog/localized";
 import type { Product } from "@/lib/catalog/queries";
 import { setProductQuantityAction } from "@/lib/list/actions";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
@@ -130,13 +130,19 @@ export function ProductCard({
    * supports. Absent everywhere else: the normal draft-building flow. */
   targetListId?: string;
 }) {
-  const { locale } = useLocale();
+  const { t, locale } = useLocale();
   const name = localizedName(product, locale);
   const detail = productDetail(product);
+  const price = productPrice(product);
 
   return (
     <li className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm">
-      <div className="flex aspect-square items-center justify-center rounded-md bg-surface-2">
+      <div className="relative flex aspect-square items-center justify-center rounded-md bg-surface-2">
+        {price ? (
+          <span className="hl-caption absolute start-1.5 top-1.5 rounded-pill bg-primary px-2 py-0.5 text-on-primary">
+            {price}
+          </span>
+        ) : null}
         {product.image_url ? (
           // Catalogue images are arbitrary remote URLs, set by the offline
           // importer without a redeploy. next/image would need every host
@@ -162,6 +168,11 @@ export function ProductCard({
       <div className="min-h-12">
         <p className="hl-label text-ink">{name}</p>
         {detail ? <p className="hl-caption">{detail}</p> : null}
+        {product.price_label ? (
+          <p className="hl-caption text-primary">
+            {product.price_label === "subsidized" ? t("worker.priceSubsidized") : t("worker.priceReduced")}
+          </p>
+        ) : null}
       </div>
 
       {targetListId ? (

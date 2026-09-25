@@ -199,7 +199,9 @@
     "addNote": "ማስታወሻ ጨምር",
     "noteHint": "ለምሳሌ: ላክቶስ የሌለው",
     "addingToSentList": "ቀደም ሲል የላኩትን ዝርዝር ላይ እየጨመሩ ነው።",
-    "addMoreToSentList": "ወደዚህ ዝርዝር ተጨማሪ ያክሉ"
+    "addMoreToSentList": "ወደዚህ ዝርዝር ተጨማሪ ያክሉ",
+    "priceSubsidized": "የተደጎመ",
+    "priceReduced": "የቀነሰ ዋጋ"
   },
   "errors": {
     "notOwner": "ይህን ማድረግ የሚችለው የቤቱ ባለቤት ብቻ ነው።",

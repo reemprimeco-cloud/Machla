@@ -199,7 +199,9 @@
     "addNote": "Ajouter une note",
     "noteHint": "ex. sans lactose",
     "addingToSentList": "Vous ajoutez à une liste que vous avez déjà envoyée.",
-    "addMoreToSentList": "Ajouter plus à cette liste"
+    "addMoreToSentList": "Ajouter plus à cette liste",
+    "priceSubsidized": "Subventionné",
+    "priceReduced": "Prix réduit"
   },
   "errors": {
     "notOwner": "Seul le chef de famille peut faire cela.",

@@ -38,3 +38,12 @@ export function localizedName(row: LocalizedNames, locale: LocaleCode): string {
 export function productDetail(row: { brand: string | null; size: string | null }): string {
   return [row.brand, row.size].filter(Boolean).join(" · ");
 }
+
+/** Tamween's regulated price, formatted "0.120 KD" — the digits and unit
+ * read the same in every language, so this isn't routed through `t()`
+ * the way the subsidized/reduced label text is. Null for every product
+ * outside the "tamween" category (20260925095000_tamween_and_kfm_
+ * categories.sql): this catalog otherwise never shows a price. */
+export function productPrice(row: { price: number | null }): string | null {
+  return row.price == null ? null : `${row.price.toFixed(3)} KD`;
+}

@@ -199,7 +199,9 @@
     "addNote": "Tambah catatan",
     "noteHint": "cth. bebas laktosa",
     "addingToSentList": "Anda menambahkan ke daftar yang sudah Anda kirim.",
-    "addMoreToSentList": "Tambahkan lagi ke daftar ini"
+    "addMoreToSentList": "Tambahkan lagi ke daftar ini",
+    "priceSubsidized": "Bersubsidi",
+    "priceReduced": "Harga Diturunkan"
   },
   "errors": {
     "notOwner": "Hanya pemilik rumah yang bisa melakukan ini.",

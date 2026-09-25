@@ -199,7 +199,9 @@
     "addNote": "Sɔ́ ɖó nùɖiɖɔ",
     "noteHint": "ɖi: lactose kú ɖ'emɛ ǎ",
     "addingToSentList": "A ɖò nǔ ɖě jó dó wema e a ko sɛ́n xóxó é jí.",
-    "addMoreToSentList": "Lɛ́ jó nǔ dó wema elɔ jí"
+    "addMoreToSentList": "Lɛ́ jó nǔ dó wema elɔ jí",
+    "priceSubsidized": "Sɔgbe",
+    "priceReduced": "Axɔ Vɔ"
   },
   "errors": {
     "notOwner": "Xwégán ɔ kɛɖɛ wɛ sixu bló mɔ̌.",

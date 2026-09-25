@@ -199,7 +199,9 @@
     "addNote": "टिप्पणी थप्नुहोस्",
     "noteHint": "जस्तै: ल्याक्टोज रहित",
     "addingToSentList": "तपाईं पहिले नै पठाइसकेको सूचीमा थप्दै हुनुहुन्छ।",
-    "addMoreToSentList": "यस सूचीमा थप थप्नुहोस्"
+    "addMoreToSentList": "यस सूचीमा थप थप्नुहोस्",
+    "priceSubsidized": "अनुदानित",
+    "priceReduced": "घटाइएको मूल्य"
   },
   "errors": {
     "notOwner": "यो केवल घरका मालिकले मात्र गर्न सक्नुहुन्छ।",

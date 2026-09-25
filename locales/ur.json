@@ -199,7 +199,9 @@
     "addNote": "نوٹ شامل کریں",
     "noteHint": "مثلاً: لیکٹوز فری",
     "addingToSentList": "آپ اس فہرست میں شامل کر رہے ہیں جو آپ پہلے ہی بھیج چکے ہیں۔",
-    "addMoreToSentList": "اس فہرست میں مزید شامل کریں"
+    "addMoreToSentList": "اس فہرست میں مزید شامل کریں",
+    "priceSubsidized": "سبسڈی یافتہ",
+    "priceReduced": "کم قیمت"
   },
   "errors": {
     "notOwner": "یہ صرف گھر کے مالک کر سکتے ہیں۔",

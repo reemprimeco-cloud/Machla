@@ -199,7 +199,9 @@
     "addNote": "గమనిక జోడించండి",
     "noteHint": "ఉదా: లాక్టోస్ లేనిది",
     "addingToSentList": "మీరు ఇప్పటికే పంపిన జాబితాకు జోడిస్తున్నారు.",
-    "addMoreToSentList": "ఈ జాబితాకు మరిన్ని జోడించండి"
+    "addMoreToSentList": "ఈ జాబితాకు మరిన్ని జోడించండి",
+    "priceSubsidized": "సబ్సిడీ",
+    "priceReduced": "తగ్గిన ధర"
   },
   "errors": {
     "notOwner": "దీన్ని ఇంటి యజమాని మాత్రమే చేయగలరు.",

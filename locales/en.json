@@ -199,7 +199,9 @@
     "photoUnavailable": "Photo unavailable",
     "photoView": "View photo",
     "addNote": "Add a note",
-    "noteHint": "e.g. lactose-free"
+    "noteHint": "e.g. lactose-free",
+    "priceSubsidized": "Subsidized",
+    "priceReduced": "Reduced price"
   },
   "errors": {
     "notOwner": "Only the home owner can do this.",

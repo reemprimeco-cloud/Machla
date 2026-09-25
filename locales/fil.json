@@ -199,7 +199,9 @@
     "addNote": "Magdagdag ng tala",
     "noteHint": "hal. walang lactose",
     "addingToSentList": "Nagdaragdag ka sa isang listahan na ipinadala mo na.",
-    "addMoreToSentList": "Magdagdag pa sa listahang ito"
+    "addMoreToSentList": "Magdagdag pa sa listahang ito",
+    "priceSubsidized": "May Subsidyo",
+    "priceReduced": "Binawasan ang Presyo"
   },
   "errors": {
     "notOwner": "Ang may-ari lang ng tahanan ang makakagawa nito.",

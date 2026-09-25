@@ -209,6 +209,10 @@ export interface Database {
           // Set by catalog-import/, never by the app — idempotent-upsert
           // key for a type[/brand[/size]] row (build-catalog.mjs).
           natural_key: string | null;
+          // 20260925095000_tamween_and_kfm_categories.sql — KWD, 3
+          // decimals. Only set for regulated Tamween price-list items.
+          price: number | null;
+          price_label: "subsidized" | "reduced" | null;
         };
         Insert: Partial<Database["public"]["Tables"]["products"]["Row"]> & {
           category_id: string;

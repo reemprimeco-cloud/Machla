@@ -199,7 +199,9 @@
     "addNote": "සටහනක් එකතු කරන්න",
     "noteHint": "උදා: ලැක්ටෝස් රහිත",
     "addingToSentList": "ඔබ දැනටමත් යැවූ ලැයිස්තුවකට එකතු කරමින් සිටිනවා.",
-    "addMoreToSentList": "මෙම ලැයිස්තුවට තවත් එකතු කරන්න"
+    "addMoreToSentList": "මෙම ලැයිස්තුවට තවත් එකතු කරන්න",
+    "priceSubsidized": "සහනාධාර",
+    "priceReduced": "අඩු කළ මිල"
   },
   "errors": {
     "notOwner": "මෙය කළ හැක්කේ නිවසේ හිමිකරුට පමණි.",
