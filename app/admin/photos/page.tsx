@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CatalogManager } from "@/components/admin/CatalogManager";
+import { CollapsibleSection } from "@/components/admin/CollapsibleSection";
 import { PhotoUploadRow } from "@/components/admin/PhotoUploadRow";
 import { ProductPhotoUploader } from "@/components/admin/ProductPhotoUploader";
 import { requireAdminAccess } from "@/lib/admin/guard";
@@ -56,7 +57,7 @@ export default async function AdminPhotosPage() {
   const activeProducts = catalog.products.filter((p) => p.isActive);
 
   return (
-    <main dir="rtl" className="mx-auto flex min-h-full w-full max-w-lg flex-col gap-6 bg-bg px-5 py-8">
+    <main dir="rtl" className="mx-auto flex min-h-full w-full max-w-lg flex-col gap-4 bg-bg px-5 py-8">
       <div className="flex items-center justify-between">
         <h1 className="hl-title text-ink">رفع صور المنتجات</h1>
         <Link href="/admin" className="hl-label text-primary underline">
@@ -65,12 +66,11 @@ export default async function AdminPhotosPage() {
       </div>
 
       {PENDING.length > 0 ? (
-        <section className="flex flex-col gap-2">
-          <h2 className="hl-label text-ink-muted">شعارات وصور جاهزها Claude</h2>
-          <p className="hl-caption text-ink-muted">
-            اختاري الصورة من جهازك لكل صنف واضغطي &quot;رفع&quot;.
-          </p>
-          <div className="flex flex-col gap-2">
+        <CollapsibleSection
+          title={`شعارات وصور جاهزها Claude (${PENDING.length})`}
+          subtitle='اختاري الصورة من جهازك لكل صنف واضغطي "رفع".'
+        >
+          <div className="flex flex-col gap-1">
             {PENDING.map((item) => (
               <PhotoUploadRow
                 key={item.path}
@@ -80,22 +80,19 @@ export default async function AdminPhotosPage() {
               />
             ))}
           </div>
-        </section>
+        </CollapsibleSection>
       ) : null}
 
-      <section className="flex flex-col gap-2">
-        <h2 className="hl-label text-ink-muted">صور كل المنتجات ({activeProducts.length})</h2>
-        <p className="hl-caption text-ink-muted">
-          ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً.
-        </p>
+      <CollapsibleSection
+        title={`صور كل المنتجات (${activeProducts.length})`}
+        subtitle="ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً."
+      >
         <ProductPhotoUploader products={activeProducts} />
-      </section>
+      </CollapsibleSection>
 
-      <section className="flex flex-col gap-2">
-        <h2 className="hl-label text-ink-muted">تصفح حسب القسم</h2>
-        <p className="hl-caption text-ink-muted">اختاري قسم لعرض كل منتجاته — احذفي أو أضيفي منتج.</p>
+      <CollapsibleSection title="تصفح حسب القسم" subtitle="اختاري قسم لعرض كل منتجاته — ارفعي صورة أو احذفي أو أضيفي منتج.">
         <CatalogManager categories={catalog.categories} products={catalog.products} />
-      </section>
+      </CollapsibleSection>
     </main>
   );
 }

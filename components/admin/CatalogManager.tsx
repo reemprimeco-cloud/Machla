@@ -1,8 +1,13 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 
-import { createProductAction, setProductActiveAction } from "@/lib/admin/actions";
+import {
+  createProductAction,
+  setProductActiveAction,
+  uploadProductImageAction,
+  uploadProductImageFromUrlAction,
+} from "@/lib/admin/actions";
 import type { AdminCategoryRow, AdminProductRow } from "@/lib/admin/queries";
 
 const UNITS = ["pcs", "kg", "g", "l", "ml", "pack", "box", "bottle", "bag", "other"];
@@ -10,9 +15,14 @@ const UNITS = ["pcs", "kg", "g", "l", "ml", "pack", "box", "bottle", "bag", "oth
 function ProductManageRow({ product }: { product: AdminProductRow }) {
   const [pending, startTransition] = useTransition();
   const [active, setActive] = useState(product.isActive);
+  const [imageUrl, setImageUrl] = useState(product.imageUrl);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showUrlInput, setShowUrlInput] = useState(false);
+  const [urlValue, setUrlValue] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  function toggle() {
+  function toggleActive() {
     setError(null);
     const next = !active;
     startTransition(async () => {
@@ -22,36 +32,119 @@ function ProductManageRow({ product }: { product: AdminProductRow }) {
     });
   }
 
-  return (
-    <div className={`flex items-center gap-2 border-b border-line py-2 last:border-b-0 ${active ? "" : "opacity-50"}`}>
-      {product.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={product.imageUrl} alt="" className="size-10 shrink-0 rounded-md border border-line object-cover" />
-      ) : (
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-2 text-xl">
-          {product.icon ?? "📦"}
-        </span>
-      )}
+  function submitFile(formData: FormData) {
+    setError(null);
+    startTransition(async () => {
+      const result = await uploadProductImageAction(product.id, formData);
+      if (result.ok) {
+        setPreviewUrl(null);
+        if (inputRef.current) inputRef.current.value = "";
+        const file = formData.get("file");
+        if (file instanceof File) setImageUrl(URL.createObjectURL(file));
+      } else {
+        setError(result.message);
+      }
+    });
+  }
 
-      <div className="min-w-0 flex-1">
-        <p className="hl-caption truncate text-ink">
-          {product.nameAr}
-          {product.brand ? ` — ${product.brand}` : ""}
-        </p>
-        {!active ? <p className="hl-caption text-ink-muted">معطّل</p> : null}
-        {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
+  function submitUrl() {
+    if (!urlValue.trim()) return;
+    setError(null);
+    startTransition(async () => {
+      const result = await uploadProductImageFromUrlAction(product.id, urlValue.trim());
+      if (result.ok) {
+        setImageUrl(urlValue.trim());
+        setUrlValue("");
+        setShowUrlInput(false);
+      } else {
+        setError(result.message);
+      }
+    });
+  }
+
+  return (
+    <div className={`flex flex-col gap-1 border-b border-line py-2 last:border-b-0 ${active ? "" : "opacity-50"}`}>
+      <div className="flex items-center gap-2">
+        {previewUrl ?? imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={previewUrl ?? imageUrl ?? undefined}
+            alt=""
+            className="size-10 shrink-0 rounded-md border border-line object-cover"
+          />
+        ) : (
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-2 text-xl">
+            {product.icon ?? "📦"}
+          </span>
+        )}
+
+        <div className="min-w-0 flex-1">
+          <p className="hl-caption truncate text-ink">
+            {product.nameAr}
+            {product.brand ? ` — ${product.brand}` : ""}
+          </p>
+          {!active ? <p className="hl-caption text-ink-muted">معطّل</p> : null}
+          {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
+        </div>
+
+        <form
+          action={submitFile}
+          className="flex shrink-0 items-center gap-1"
+          onSubmit={(e) => {
+            const input = (e.currentTarget.elements.namedItem("file") as HTMLInputElement) ?? null;
+            if (input?.files?.[0]) setPreviewUrl(URL.createObjectURL(input.files[0]));
+          }}
+        >
+          <input ref={inputRef} type="file" name="file" accept="image/*" className="hl-caption w-20 text-xs" />
+          <button
+            type="submit"
+            disabled={pending}
+            className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
+          >
+            {pending ? "..." : "رفع"}
+          </button>
+        </form>
+
+        <button
+          type="button"
+          onClick={() => setShowUrlInput((v) => !v)}
+          className="hl-caption shrink-0 text-primary"
+          aria-label="رفع من رابط"
+        >
+          🔗
+        </button>
+
+        <button
+          type="button"
+          disabled={pending}
+          onClick={toggleActive}
+          className={`hl-caption shrink-0 rounded-pill px-2 py-1 disabled:opacity-50 ${
+            active ? "bg-danger/10 text-danger" : "bg-success/10 text-success"
+          }`}
+        >
+          {pending ? "..." : active ? "حذف" : "استرجاع"}
+        </button>
       </div>
 
-      <button
-        type="button"
-        disabled={pending}
-        onClick={toggle}
-        className={`hl-caption shrink-0 rounded-pill px-2 py-1 disabled:opacity-50 ${
-          active ? "bg-danger/10 text-danger" : "bg-success/10 text-success"
-        }`}
-      >
-        {pending ? "..." : active ? "حذف" : "استرجاع"}
-      </button>
+      {showUrlInput ? (
+        <div className="flex items-center gap-1 ps-12" dir="ltr">
+          <input
+            type="url"
+            value={urlValue}
+            onChange={(e) => setUrlValue(e.target.value)}
+            placeholder="https://..."
+            className="hl-caption min-w-0 flex-1 rounded-md border border-line bg-bg px-2 py-1 text-xs"
+          />
+          <button
+            type="button"
+            disabled={pending || !urlValue.trim()}
+            onClick={submitUrl}
+            className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
+          >
+            {pending ? "..." : "رفع"}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -129,7 +222,7 @@ function AddProductForm({ categoryId }: { categoryId: string }) {
         </select>
       </div>
       {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
-      {done ? <p className="hl-caption text-success">تمت الإضافة — ارفعي صورته من قائمة البحث فوق.</p> : null}
+      {done ? <p className="hl-caption text-success">تمت الإضافة — ارفعي صورته من القائمة فوق.</p> : null}
       <button
         type="button"
         disabled={pending || !nameAr.trim() || !nameEn.trim()}

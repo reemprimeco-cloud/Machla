@@ -4,6 +4,9 @@ import { useRef, useState, useTransition } from "react";
 
 import { uploadCatalogImageAction, uploadCatalogImageFromUrlAction } from "@/lib/admin/actions";
 
+/** Compact single-line row, matching ProductPhotoUploader's ProductRow
+ * density — the earlier full-width card layout made this list (25 KFM
+ * rows) feel much bigger than the Tamween list for the exact same job. */
 export function PhotoUploadRow({
   path,
   label,
@@ -61,72 +64,76 @@ export function PhotoUploadRow({
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm">
-      <div className="flex items-center gap-3">
+    <div className="flex flex-col gap-1 border-b border-line py-2 last:border-b-0">
+      <div className="flex items-center gap-2">
         {previewUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={previewUrl} alt="" className="size-14 shrink-0 rounded-md border border-line object-contain bg-surface-2" />
+          <img src={previewUrl} alt="" className="size-10 shrink-0 rounded-md border border-line object-cover" />
         ) : (
-          <span className="flex size-14 shrink-0 items-center justify-center rounded-md bg-surface-2 text-2xl">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-2 text-xl">
             {uploaded ? "✅" : "🖼️"}
           </span>
         )}
 
         <div className="min-w-0 flex-1">
-          <p className="hl-label text-ink">{label}</p>
-          <p className="hl-caption break-all text-ink-muted" dir="ltr">
-            {path}
-          </p>
-          {uploaded ? <p className="hl-caption text-success">تم الرفع</p> : null}
+          <p className="hl-caption truncate text-ink">{label}</p>
           {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
         </div>
 
-        <form action={submit} className="shrink-0">
+        <form
+          action={submit}
+          className="flex shrink-0 items-center gap-1"
+          onSubmit={(e) => {
+            const input = (e.currentTarget.elements.namedItem("file") as HTMLInputElement) ?? null;
+            if (input?.files?.[0]) setPreviewUrl(URL.createObjectURL(input.files[0]));
+          }}
+        >
           <input
             ref={inputRef}
             type="file"
             name="file"
             accept="image/*"
             onChange={onFileChange}
-            className="hl-caption block w-32"
+            className="hl-caption w-24 text-xs"
           />
           <button
             type="submit"
             disabled={pending}
-            className="hl-caption mt-1 w-full rounded-pill bg-primary px-3 py-1 text-on-primary disabled:opacity-50"
+            className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
           >
-            {pending ? "جاري الرفع..." : uploaded ? "إعادة الرفع" : "رفع"}
+            {pending ? "..." : uploaded ? "إعادة" : "رفع"}
           </button>
         </form>
+
+        <button
+          type="button"
+          onClick={() => setShowUrlInput((v) => !v)}
+          className="hl-caption shrink-0 text-primary"
+          aria-label="رفع من رابط"
+        >
+          🔗
+        </button>
       </div>
 
       {showUrlInput ? (
-        <div className="flex items-center gap-2" dir="ltr">
+        <div className="flex items-center gap-1 ps-12" dir="ltr">
           <input
             type="url"
             value={urlValue}
             onChange={(e) => setUrlValue(e.target.value)}
             placeholder="https://..."
-            className="hl-caption min-w-0 flex-1 rounded-md border border-line bg-bg px-2 py-1"
+            className="hl-caption min-w-0 flex-1 rounded-md border border-line bg-bg px-2 py-1 text-xs"
           />
           <button
             type="button"
             disabled={pending || !urlValue.trim()}
             onClick={submitUrl}
-            className="hl-caption shrink-0 rounded-pill bg-primary px-3 py-1 text-on-primary disabled:opacity-50"
+            className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
           >
             {pending ? "..." : "رفع"}
           </button>
         </div>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setShowUrlInput(true)}
-          className="hl-caption self-start text-primary underline"
-        >
-          أو رفع من رابط
-        </button>
-      )}
+      ) : null}
     </div>
   );
 }
