@@ -702,6 +702,22 @@ export interface Database {
         Args: { p_product_id: string; p_image_url: string };
         Returns: void;
       };
+      // 20260925160000_admin_catalog_manage.sql.
+      admin_set_product_active: {
+        Args: { p_product_id: string; p_is_active: boolean };
+        Returns: void;
+      };
+      admin_create_product: {
+        Args: {
+          p_category_id: string;
+          p_name_ar: string;
+          p_name_en: string;
+          p_brand: string | null;
+          p_icon: string | null;
+          p_unit: string;
+        };
+        Returns: string;
+      };
     };
     Enums: Record<string, never>;
   };

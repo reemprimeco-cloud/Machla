@@ -1,9 +1,10 @@
 import Link from "next/link";
 
+import { CatalogManager } from "@/components/admin/CatalogManager";
 import { PhotoUploadRow } from "@/components/admin/PhotoUploadRow";
 import { ProductPhotoUploader } from "@/components/admin/ProductPhotoUploader";
 import { requireAdminAccess } from "@/lib/admin/guard";
-import { getAllProductsForUpload, getUploadedImagePaths } from "@/lib/admin/queries";
+import { getCatalogForAdmin, getUploadedImagePaths } from "@/lib/admin/queries";
 
 /**
  * Replaces the claude-artifact uploader (2026-09-25): that page ran
@@ -48,10 +49,11 @@ const PENDING: { path: string; label: string }[] = [
 
 export default async function AdminPhotosPage() {
   await requireAdminAccess();
-  const [uploaded, allProducts] = await Promise.all([
+  const [uploaded, catalog] = await Promise.all([
     getUploadedImagePaths(PENDING.map((p) => p.path)),
-    getAllProductsForUpload(),
+    getCatalogForAdmin(),
   ]);
+  const activeProducts = catalog.products.filter((p) => p.isActive);
 
   return (
     <main dir="rtl" className="mx-auto flex min-h-full w-full max-w-lg flex-col gap-6 bg-bg px-5 py-8">
@@ -82,11 +84,17 @@ export default async function AdminPhotosPage() {
       ) : null}
 
       <section className="flex flex-col gap-2">
-        <h2 className="hl-label text-ink-muted">صور كل المنتجات ({allProducts.length})</h2>
+        <h2 className="hl-label text-ink-muted">صور كل المنتجات ({activeProducts.length})</h2>
         <p className="hl-caption text-ink-muted">
           ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً.
         </p>
-        <ProductPhotoUploader products={allProducts} />
+        <ProductPhotoUploader products={activeProducts} />
+      </section>
+
+      <section className="flex flex-col gap-2">
+        <h2 className="hl-label text-ink-muted">تصفح حسب القسم</h2>
+        <p className="hl-caption text-ink-muted">اختاري قسم لعرض كل منتجاته — احذفي أو أضيفي منتج.</p>
+        <CatalogManager categories={catalog.categories} products={catalog.products} />
       </section>
     </main>
   );

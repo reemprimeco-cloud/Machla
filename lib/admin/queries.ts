@@ -245,74 +245,63 @@ export async function getUploadedImagePaths(paths: string[]): Promise<Set<string
 
 export type AdminProductRow = {
   id: string;
+  categoryId: string;
   nameAr: string;
   nameEn: string;
   brand: string | null;
   icon: string | null;
   imageUrl: string | null;
+  isActive: boolean;
   categoryNameAr?: string;
 };
 
-/** Every product in one category, for /admin/photos' per-product upload
- * section — "tamween" today, but takes any categories.key. */
-export async function getCategoryProductsForUpload(
-  categoryKey: string,
-): Promise<AdminProductRow[]> {
-  if (!isSupabaseConfigured()) return [];
+export type AdminCategoryRow = {
+  id: string;
+  key: string;
+  nameAr: string;
+  icon: string | null;
+};
+
+/** Every category and every product in the catalog — /admin/photos'
+ * search-and-upload list and its by-category browser (add/deactivate a
+ * product) both read from this one fetch. ~600 products today; cheap
+ * enough to send whole and filter/group client-side rather than a
+ * round-trip per category the owner clicks into. */
+export async function getCatalogForAdmin(): Promise<{
+  categories: AdminCategoryRow[];
+  products: AdminProductRow[];
+}> {
+  if (!isSupabaseConfigured()) return { categories: [], products: [] };
 
   const supabase = await createClient();
-  const { data: category } = await supabase
-    .from("categories")
-    .select("id")
-    .eq("key", categoryKey)
-    .maybeSingle();
-  if (!category) return [];
-
-  const { data, error } = await supabase
-    .from("products")
-    .select("id, name_ar, name_en, brand, icon, image_url, sort_order")
-    .eq("category_id", category.id)
-    .order("sort_order");
-  if (error || !data) return [];
-
-  return data.map((row) => ({
-    id: row.id,
-    nameAr: row.name_ar,
-    nameEn: row.name_en,
-    brand: row.brand,
-    icon: row.icon,
-    imageUrl: row.image_url,
-  }));
-}
-
-/** Every product in the whole catalog, across every category — the
- * general-purpose /admin/photos search-and-upload section. Products
- * live in dozens of categories (Tamween and KFM among them) and the
- * owner adds one-off items to any of them, so a single searchable list
- * scales better than a hand-picked set of per-category sections. ~600
- * rows today; cheap enough to send whole and filter client-side. */
-export async function getAllProductsForUpload(): Promise<AdminProductRow[]> {
-  if (!isSupabaseConfigured()) return [];
-
-  const supabase = await createClient();
-  const [{ data, error }, { data: categories }] = await Promise.all([
+  const [{ data: products, error }, { data: categories }] = await Promise.all([
     supabase
       .from("products")
-      .select("id, name_ar, name_en, brand, icon, image_url, category_id")
+      .select("id, name_ar, name_en, brand, icon, image_url, category_id, is_active")
       .order("name_ar"),
-    supabase.from("categories").select("id, name_ar"),
+    supabase.from("categories").select("id, key, name_ar, icon").order("sort_order"),
   ]);
-  if (error || !data) return [];
+  if (error || !products) return { categories: [], products: [] };
 
   const categoryNameById = new Map((categories ?? []).map((c) => [c.id, c.name_ar]));
 
-  return data.map((row) => ({
-    id: row.id,
-    nameAr: row.name_ar,
-    nameEn: row.name_en,
-    brand: row.brand,
-    icon: row.icon,
-    imageUrl: row.image_url,
-    categoryNameAr: categoryNameById.get(row.category_id),
-  }));
+  return {
+    categories: (categories ?? []).map((c) => ({
+      id: c.id,
+      key: c.key,
+      nameAr: c.name_ar,
+      icon: c.icon,
+    })),
+    products: products.map((row) => ({
+      id: row.id,
+      categoryId: row.category_id,
+      nameAr: row.name_ar,
+      nameEn: row.name_en,
+      brand: row.brand,
+      icon: row.icon,
+      imageUrl: row.image_url,
+      isActive: row.is_active,
+      categoryNameAr: categoryNameById.get(row.category_id),
+    })),
+  };
 }

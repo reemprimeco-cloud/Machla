@@ -201,3 +201,61 @@ export async function uploadProductImageFromUrlAction(
   revalidatePath("/admin/photos");
   return { ok: true };
 }
+
+export type SimpleActionResult = { ok: true } | { ok: false; message: string };
+
+/** Deactivate/reactivate a product — the catalog browsing/list
+ * ("١ رز ١ دجاج كامل ١ صدرو دجاج") cleanup, from the UI instead of a
+ * one-off SQL migration. Soft delete only: same is_active flag
+ * getProductsInCategory already filters on, never a hard DELETE, since
+ * shopping_list_items/product_usage_stats FK to products.id. */
+export async function setProductActiveAction(
+  productId: string,
+  isActive: boolean,
+): Promise<SimpleActionResult> {
+  await requireAdminAccess();
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("admin_set_product_active", {
+    p_product_id: productId,
+    p_is_active: isActive,
+  });
+  if (error) return { ok: false, message: error.message };
+
+  revalidatePath("/admin/photos");
+  return { ok: true };
+}
+
+/** Add a new product to a category from the admin UI — the quick,
+ * type-a-name-and-go counterpart to the bulk migration-based imports
+ * (Tamween, KFM, ...). Only Arabic/English names are hers to type; the
+ * other nine language columns fall back to the English string via
+ * admin_create_product itself. */
+export async function createProductAction(input: {
+  categoryId: string;
+  nameAr: string;
+  nameEn: string;
+  brand: string;
+  icon: string;
+  unit: string;
+}): Promise<SimpleActionResult> {
+  await requireAdminAccess();
+
+  if (!input.nameAr.trim() || !input.nameEn.trim()) {
+    return { ok: false, message: "اكتبي اسم المنتج بالعربي والإنجليزي." };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("admin_create_product", {
+    p_category_id: input.categoryId,
+    p_name_ar: input.nameAr.trim(),
+    p_name_en: input.nameEn.trim(),
+    p_brand: input.brand.trim() || null,
+    p_icon: input.icon.trim() || null,
+    p_unit: input.unit,
+  });
+  if (error) return { ok: false, message: error.message };
+
+  revalidatePath("/admin/photos");
+  return { ok: true };
+}
