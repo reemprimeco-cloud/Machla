@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { CheckIcon, ChevronIcon } from "@/components/ui/Icons";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { HouseholdErrorCode } from "@/lib/household/errors";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -11,6 +12,13 @@ import type { MessageKey } from "@/lib/i18n/messages";
  * tokens (docs/design/BRAND.md). Everything here is direction-agnostic
  * or uses logical properties, so it mirrors correctly in Arabic/Urdu
  * without per-component RTL handling (docs/design/UI_KIT_NOTES.md).
+ *
+ * Soft Glass refresh (MACHLA_UI_REFRESH.md §3): GlassIconButton, BackLink,
+ * PrimaryPill and Checkbox below are that spec's shared pieces. Each header
+ * icon in this codebase is a Next Link, not a <button> — so the two
+ * link-shaped ones (GlassIconButton, PrimaryPill) render either, chosen by
+ * whether an `href` is passed, instead of forcing every call site onto one
+ * element type.
  */
 
 export function Screen({
@@ -35,6 +43,9 @@ export function Screen({
   );
 }
 
+/** GlassSurface (MACHLA_UI_REFRESH.md §3) — every card in the app renders
+ * through this one component, so the glass treatment (translucent bg,
+ * blur, soft border, tinted shadow) applies everywhere at once. */
 export function Card({
   children,
   className = "",
@@ -44,10 +55,110 @@ export function Card({
 }) {
   return (
     <div
-      className={`rounded-lg border border-line bg-surface p-4 shadow-sm ${className}`}
+      className={`rounded-card border border-glass-border bg-glass-bg p-4 shadow-card backdrop-blur-[20px] ${className}`}
     >
       {children}
     </div>
+  );
+}
+
+type GlassLinkOrButtonProps = {
+  children: React.ReactNode;
+  className?: string;
+  "aria-label"?: string;
+} & (
+  | ({ href: string } & Omit<React.ComponentProps<typeof Link>, "href" | "className" | "children">)
+  | ({ href?: undefined } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">)
+);
+
+/** GlassIconButton (§3) — the 44×44 circular icon control used in every
+ * header. Renders a Link when given `href` (every current call site is a
+ * navigation target), a <button> otherwise. */
+export function GlassIconButton({
+  children,
+  className = "",
+  href,
+  ...props
+}: GlassLinkOrButtonProps) {
+  const classes = `flex size-11 shrink-0 items-center justify-center rounded-full border border-glass-border-strong bg-glass-bg-strong text-ink shadow-chip backdrop-blur-[20px] transition-transform duration-150 ease-hl active:scale-95 disabled:opacity-60 ${className}`;
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={classes}
+        {...(props as Omit<React.ComponentProps<typeof Link>, "href" | "className" | "children">)}
+      >
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" className={classes} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+      {children}
+    </button>
+  );
+}
+
+/** Back button (§3) — glass pill, chevron + label. The chevron mirrors the
+ * same way WorkerChrome.tsx's back pill already did: unmirrored (pointing
+ * start/left) by default, un-mirrored again in RTL so it points end/right. */
+export function BackLink({
+  href,
+  label,
+  className = "",
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`hl-label flex min-h-11 shrink-0 items-center gap-1.5 rounded-pill border border-glass-border-strong bg-glass-bg-strong px-4 text-ink shadow-chip backdrop-blur-[20px] ${className}`}
+    >
+      <ChevronIcon className="size-4 -scale-x-100 rtl:scale-x-100" />
+      <span>{label}</span>
+    </Link>
+  );
+}
+
+/** PrimaryPill (§3) — the small gradient pill (basket counter, active tab),
+ * distinct from PrimaryButton below: shorter, pill-shaped, never full width. */
+export function PrimaryPill({ children, className = "", href, ...props }: GlassLinkOrButtonProps) {
+  const classes = `hl-gradient-cta hl-label flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-pill px-4 text-on-primary shadow-accent ${className}`;
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={classes}
+        {...(props as Omit<React.ComponentProps<typeof Link>, "href" | "className" | "children">)}
+      >
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" className={classes} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+      {children}
+    </button>
+  );
+}
+
+/** Checkbox (§3) — presentational only; the row around it keeps the
+ * existing toggle handler (ListChecklist.tsx's ChecklistRow), this just
+ * draws the 36×36 circle. */
+export function Checkbox({ checked, className = "" }: { checked: boolean; className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={`flex size-9 shrink-0 items-center justify-center rounded-full transition-transform duration-150 ease-hl ${
+        checked
+          ? "hl-gradient-cta text-on-primary shadow-accent"
+          : "border-2 border-checkbox-empty-border bg-transparent text-transparent"
+      } ${className}`}
+    >
+      <CheckIcon className="size-4" />
+    </span>
   );
 }
 
