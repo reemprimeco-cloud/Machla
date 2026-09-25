@@ -36,7 +36,7 @@ const PENDING: { path: string; label: string }[] = [
   { path: "kfm_rugag_white.webp", label: "خبز الرقاق الأبيض — المطاحن" },
   { path: "kfm_rugag_brown.webp", label: "خبز الرقاق الأسمر — المطاحن" },
   { path: "kfm_dalal_corn_oil.webp", label: "زيت الذرة دلال" },
-  { path: "kfm_dalal_cottonseed_oil.webp", label: "زيت بذرة القطن دلال" },
+  { path: "kfm_dalal_sunflower_oil.webp", label: "زيت دوار الشمس دلال" },
   { path: "kfm_dalal_ghee.webp", label: "سمن نباتي دلال" },
   { path: "kfm_aljoud_corn_oil.webp", label: "زيت الذرة الجود" },
   { path: "kfm_aljoud_sunflower_oil.webp", label: "زيت دوار الشمس الجود" },
@@ -48,9 +48,10 @@ const PENDING: { path: string; label: string }[] = [
 
 export default async function AdminPhotosPage() {
   await requireAdminAccess();
-  const [uploaded, tamweenProducts] = await Promise.all([
+  const [uploaded, tamweenProducts, kfmProducts] = await Promise.all([
     getUploadedImagePaths(PENDING.map((p) => p.path)),
     getCategoryProductsForUpload("tamween"),
+    getCategoryProductsForUpload("kfm"),
   ]);
 
   return (
@@ -80,6 +81,14 @@ export default async function AdminPhotosPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="flex flex-col gap-2">
+        <h2 className="hl-label text-ink-muted">صور منتجات المطاحن ({kfmProducts.length})</h2>
+        <p className="hl-caption text-ink-muted">
+          لأي صنف جديد بقسم المطاحن — بالملف أو برابط مباشرة.
+        </p>
+        <ProductPhotoUploader products={kfmProducts} />
+      </section>
 
       <section className="flex flex-col gap-2">
         <h2 className="hl-label text-ink-muted">صور منتجات التموين ({tamweenProducts.length})</h2>
