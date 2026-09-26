@@ -61,6 +61,8 @@ function LoginForm() {
 
       <MachlaIcon size={56} variant="flat" title={branding.name} />
 
+      <p className="hl-heading -mt-4 text-center text-ink">{t("auth.welcomeGreeting")}</p>
+
       {mode === "signin" ? (
         <SignInForm onAuthenticated={handleAuthenticated} onSwitchToSignUp={() => setMode("signup")} />
       ) : (

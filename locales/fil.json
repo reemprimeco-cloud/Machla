@@ -56,7 +56,8 @@
     "newPasswordTitle": "Magtakda ng bagong password",
     "setNewPassword": "Itakda ang bagong password",
     "passwordUpdated": "Na-update na ang iyong password.",
-    "backToLogin": "Bumalik sa pag-sign in"
+    "backToLogin": "Bumalik sa pag-sign in",
+    "welcomeGreeting": "Maligayang pagdating sa Machla"
   },
   "roles": {
     "owner": "May-ari ng tahanan",
@@ -371,5 +372,16 @@
     "step5": "Tapusin ang listahan kapag tapos na lahat. Mamarkahan itong tapos na at awtomatikong mawawala sa home screen.",
     "step6": "Paggawa ng sarili mong listahan: pindutin ang “My Own List” sa home screen para mamili at magpadala ng listahan nang mag-isa, nang walang katulong.",
     "step7": "Pamahalaan ang iyong subscription anumang oras mula sa Settings → Subscription."
+  },
+  "tips": {
+    "step1Title": "Mag-sign up",
+    "step1Body": "Gumawa ng account para makapagsimula.",
+    "step2Title": "Magdagdag ng katulong",
+    "step2Body": "Mag-imbita ng worker o miyembro ng pamilya para mamili para sa iyo.",
+    "step3Title": "Sila ang mamimili, ikaw ang magrelax",
+    "step3Body": "Idadagdag nila ang mga item sa listahan at ipapadala ito sa iyo — at puwede kang mag-save ng mga paborito para maiorder ulit anumang oras.",
+    "skip": "Laktawan",
+    "next": "Susunod",
+    "start": "Simulan"
   }
 }

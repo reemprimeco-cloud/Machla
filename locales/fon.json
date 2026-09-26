@@ -56,7 +56,8 @@
     "newPasswordTitle": "Bló password yɔyɔ ɖé",
     "setNewPassword": "Bló password yɔyɔ ɔ",
     "passwordUpdated": "Password towe yì ayihɔngbe.",
-    "backToLogin": "Lɛ́ yì byɔbyɔ tɔn"
+    "backToLogin": "Lɛ́ yì byɔbyɔ tɔn",
+    "welcomeGreeting": "Kú bo wá Machla"
   },
   "roles": {
     "owner": "Xwégán",
@@ -371,5 +372,16 @@
     "step5": "Fó távo ɔ hwenu e nǔ bǐ wa vɔ é. È ná ɖexlɛ́ ɖɔ é fó bo ná gosín xwé aximɛ towe jí éɖéé.",
     "step6": "Bló távo towe éɖéé tɔn: xò “Távo ce éɖéé tɔn” ɖò xwé aximɛ jí bo ná xɔ nǔ bo sɛ́n távo éɖéé, azɔ̌watɔ́ ɖě ma ɖó ǎ.",
     "step7": "A sixu kpɔ́n abonema towe hwebǐnu sín Ayidonu lɛ́ → Abonema."
+  },
+  "tips": {
+    "step1Title": "Bló akɔ́n",
+    "step1Body": "Bló akɔ́n towe bo jɛ tɛ̀n.",
+    "step2Title": "Ðɔ mɛ e na d'alɔ we",
+    "step2Body": "Ylɔ azɔ̌watɔ́ alo hɛnnu ɖé bo ni yì axi nú we.",
+    "step3Title": "Ye na yì axi, hwi na jɛ ayihɔn",
+    "step3Body": "Ye na sɔ́ nǔ dó wema ɔ jí bo sɛ́dó we — a sixu save wɛn e a yí wǎn na lɛ́ ylɔ hwebǐnu.",
+    "skip": "Sɔ́ ɖó",
+    "next": "É bo xwedó",
+    "start": "Jɛ tɛ̀n"
   }
 }

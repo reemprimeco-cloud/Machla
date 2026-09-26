@@ -56,7 +56,8 @@
     "newPasswordTitle": "Atur kata sandi baru",
     "setNewPassword": "Atur kata sandi baru",
     "passwordUpdated": "Kata sandi Anda telah diperbarui.",
-    "backToLogin": "Kembali ke halaman masuk"
+    "backToLogin": "Kembali ke halaman masuk",
+    "welcomeGreeting": "Selamat datang di Machla"
   },
   "roles": {
     "owner": "Pemilik rumah",
@@ -371,5 +372,16 @@
     "step5": "Selesaikan daftar setelah semuanya ditangani. Daftar ditandai selesai dan otomatis hilang dari layar utama Anda.",
     "step6": "Membuat daftar sendiri: ketuk “Daftar Saya Sendiri” di layar utama untuk berbelanja dan mengirim daftar sendiri, tanpa asisten.",
     "step7": "Kelola langganan Anda kapan saja dari Pengaturan → Langganan."
+  },
+  "tips": {
+    "step1Title": "Daftar",
+    "step1Body": "Buat akun Anda untuk memulai.",
+    "step2Title": "Tambahkan bantuan Anda",
+    "step2Body": "Undang pekerja atau anggota keluarga untuk berbelanja untuk Anda.",
+    "step3Title": "Mereka belanja, Anda santai",
+    "step3Body": "Mereka menambahkan barang ke daftar dan mengirimkannya kepada Anda — dan Anda bisa menyimpan favorit untuk dipesan lagi kapan saja.",
+    "skip": "Lewati",
+    "next": "Berikutnya",
+    "start": "Mulai"
   }
 }

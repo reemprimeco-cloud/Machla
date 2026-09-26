@@ -56,7 +56,8 @@
     "newPasswordTitle": "Set a new password",
     "setNewPassword": "Set new password",
     "passwordUpdated": "Your password has been updated.",
-    "backToLogin": "Back to sign in"
+    "backToLogin": "Back to sign in",
+    "welcomeGreeting": "Welcome to Machla"
   },
   "roles": {
     "owner": "Home owner",
@@ -371,5 +372,16 @@
     "step5": "Finish the list once everything's handled. It's marked done and clears off your home screen automatically.",
     "step6": "Building your own list: tap “My Own List” on the home screen to shop and send a list yourself, without a helper.",
     "step7": "Manage your subscription anytime from Settings → Subscription."
+  },
+  "tips": {
+    "step1Title": "Sign up",
+    "step1Body": "Create your account to get started.",
+    "step2Title": "Add your help",
+    "step2Body": "Invite a worker or a family member to shop for you.",
+    "step3Title": "They shop, you relax",
+    "step3Body": "They add items to the list and send it to you — and you can save favorites to reorder anytime.",
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Get started"
   }
 }

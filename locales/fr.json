@@ -56,7 +56,8 @@
     "newPasswordTitle": "Définir un nouveau mot de passe",
     "setNewPassword": "Définir le nouveau mot de passe",
     "passwordUpdated": "Votre mot de passe a été mis à jour.",
-    "backToLogin": "Retour à la connexion"
+    "backToLogin": "Retour à la connexion",
+    "welcomeGreeting": "Bienvenue sur Machla"
   },
   "roles": {
     "owner": "Chef de famille",
@@ -371,5 +372,16 @@
     "step5": "Terminez la liste une fois tout géré. Elle est marquée terminée et disparaît automatiquement de votre écran d'accueil.",
     "step6": "Créer votre propre liste : appuyez sur «Ma propre liste» sur l'écran d'accueil pour faire vos achats et envoyer une liste vous-même, sans aide.",
     "step7": "Gérez votre abonnement à tout moment depuis Réglages → Abonnement."
+  },
+  "tips": {
+    "step1Title": "Inscrivez-vous",
+    "step1Body": "Créez votre compte pour commencer.",
+    "step2Title": "Ajoutez de l'aide",
+    "step2Body": "Invitez une aide ménagère ou un membre de la famille à faire vos courses.",
+    "step3Title": "Ils font les courses, vous vous détendez",
+    "step3Body": "Ils ajoutent des articles à la liste et vous l'envoient — et vous pouvez enregistrer des favoris pour les recommander à tout moment.",
+    "skip": "Passer",
+    "next": "Suivant",
+    "start": "Commencer"
   }
 }
