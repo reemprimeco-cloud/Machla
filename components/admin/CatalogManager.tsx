@@ -12,9 +12,18 @@ import type { AdminCategoryRow, AdminProductRow } from "@/lib/admin/queries";
 
 const UNITS = ["pcs", "kg", "g", "l", "ml", "pack", "box", "bottle", "bag", "other"];
 
-function ProductManageRow({ product }: { product: AdminProductRow }) {
+function ProductManageRow({
+  product,
+  onDeleted,
+}: {
+  product: AdminProductRow;
+  /** Removes this product from the parent's list the instant the delete
+   * succeeds — there is no "restore" affordance to fall back to, so the
+   * row simply has to disappear (2026-09-26 feedback), not grey out. */
+  onDeleted: (productId: string) => void;
+}) {
   const [pending, startTransition] = useTransition();
-  const [active, setActive] = useState(product.isActive);
+  const [confirming, setConfirming] = useState(false);
   const [imageUrl, setImageUrl] = useState(product.imageUrl);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [showUrlInput, setShowUrlInput] = useState(false);
@@ -22,13 +31,15 @@ function ProductManageRow({ product }: { product: AdminProductRow }) {
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  function toggleActive() {
+  function confirmDelete() {
     setError(null);
-    const next = !active;
     startTransition(async () => {
-      const result = await setProductActiveAction(product.id, next);
-      if (result.ok) setActive(next);
-      else setError(result.message);
+      const result = await setProductActiveAction(product.id, false);
+      if (result.ok) onDeleted(product.id);
+      else {
+        setError(result.message);
+        setConfirming(false);
+      }
     });
   }
 
@@ -63,7 +74,7 @@ function ProductManageRow({ product }: { product: AdminProductRow }) {
   }
 
   return (
-    <div className={`flex flex-col gap-1 border-b border-line py-2 last:border-b-0 ${active ? "" : "opacity-50"}`}>
+    <div className="flex flex-col gap-1 border-b border-line py-2 last:border-b-0">
       <div className="flex items-center gap-2">
         {previewUrl ?? imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -83,47 +94,66 @@ function ProductManageRow({ product }: { product: AdminProductRow }) {
             {product.nameAr}
             {product.brand ? ` — ${product.brand}` : ""}
           </p>
-          {!active ? <p className="hl-caption text-ink-muted">معطّل</p> : null}
           {error ? <p className="hl-caption text-danger">فشل: {error}</p> : null}
         </div>
 
-        <form
-          action={submitFile}
-          className="flex shrink-0 items-center gap-1"
-          onSubmit={(e) => {
-            const input = (e.currentTarget.elements.namedItem("file") as HTMLInputElement) ?? null;
-            if (input?.files?.[0]) setPreviewUrl(URL.createObjectURL(input.files[0]));
-          }}
-        >
-          <input ref={inputRef} type="file" name="file" accept="image/*" className="hl-caption w-20 text-xs" />
-          <button
-            type="submit"
-            disabled={pending}
-            className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
-          >
-            {pending ? "..." : "رفع"}
-          </button>
-        </form>
+        {confirming ? (
+          <div className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              disabled={pending}
+              onClick={confirmDelete}
+              className="hl-caption shrink-0 rounded-pill bg-danger px-2 py-1 text-white disabled:opacity-50"
+            >
+              {pending ? "..." : "تأكيد الحذف"}
+            </button>
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => setConfirming(false)}
+              className="hl-caption shrink-0 rounded-pill border border-line px-2 py-1 text-ink-muted disabled:opacity-50"
+            >
+              إلغاء
+            </button>
+          </div>
+        ) : (
+          <>
+            <form
+              action={submitFile}
+              className="flex shrink-0 items-center gap-1"
+              onSubmit={(e) => {
+                const input = (e.currentTarget.elements.namedItem("file") as HTMLInputElement) ?? null;
+                if (input?.files?.[0]) setPreviewUrl(URL.createObjectURL(input.files[0]));
+              }}
+            >
+              <input ref={inputRef} type="file" name="file" accept="image/*" className="hl-caption w-20 text-xs" />
+              <button
+                type="submit"
+                disabled={pending}
+                className="hl-caption shrink-0 rounded-pill bg-primary px-2 py-1 text-on-primary disabled:opacity-50"
+              >
+                {pending ? "..." : "رفع"}
+              </button>
+            </form>
 
-        <button
-          type="button"
-          onClick={() => setShowUrlInput((v) => !v)}
-          className="hl-caption shrink-0 text-primary"
-          aria-label="رفع من رابط"
-        >
-          🔗
-        </button>
+            <button
+              type="button"
+              onClick={() => setShowUrlInput((v) => !v)}
+              className="hl-caption shrink-0 text-primary"
+              aria-label="رفع من رابط"
+            >
+              🔗
+            </button>
 
-        <button
-          type="button"
-          disabled={pending}
-          onClick={toggleActive}
-          className={`hl-caption shrink-0 rounded-pill px-2 py-1 disabled:opacity-50 ${
-            active ? "bg-danger/10 text-danger" : "bg-success/10 text-success"
-          }`}
-        >
-          {pending ? "..." : active ? "حذف" : "استرجاع"}
-        </button>
+            <button
+              type="button"
+              onClick={() => setConfirming(true)}
+              className="hl-caption shrink-0 rounded-pill bg-danger/10 px-2 py-1 text-danger"
+            >
+              حذف
+            </button>
+          </>
+        )}
       </div>
 
       {showUrlInput ? (
@@ -244,20 +274,34 @@ export function CatalogManager({
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  // Removes a deleted product from every list on this screen immediately,
+  // without waiting for the server action's revalidatePath to reach this
+  // already-rendered page — getCatalogForAdmin excludes it server-side too,
+  // so a reload agrees with this the moment it happens.
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set());
+
+  const visibleProducts = useMemo(
+    () => products.filter((p) => !deletedIds.has(p.id)),
+    [products, deletedIds],
+  );
 
   const countByCategory = useMemo(() => {
     const map = new Map<string, number>();
-    for (const p of products) map.set(p.categoryId, (map.get(p.categoryId) ?? 0) + 1);
+    for (const p of visibleProducts) map.set(p.categoryId, (map.get(p.categoryId) ?? 0) + 1);
     return map;
-  }, [products]);
+  }, [visibleProducts]);
 
   const selectedProducts = useMemo(() => {
     if (!selectedId) return [];
-    const inCategory = products.filter((p) => p.categoryId === selectedId);
+    const inCategory = visibleProducts.filter((p) => p.categoryId === selectedId);
     const q = query.trim();
     if (!q) return inCategory;
     return inCategory.filter((p) => p.nameAr.includes(q) || p.nameEn.toLowerCase().includes(q.toLowerCase()));
-  }, [products, selectedId, query]);
+  }, [visibleProducts, selectedId, query]);
+
+  function handleDeleted(productId: string) {
+    setDeletedIds((prev) => new Set(prev).add(productId));
+  }
 
   const selectedCategory = categories.find((c) => c.id === selectedId) ?? null;
 
@@ -294,7 +338,9 @@ export function CatalogManager({
             {selectedProducts.length === 0 ? (
               <p className="hl-caption py-3 text-ink-muted">لا يوجد منتجات</p>
             ) : (
-              selectedProducts.map((p) => <ProductManageRow key={p.id} product={p} />)
+              selectedProducts.map((p) => (
+                <ProductManageRow key={p.id} product={p} onDeleted={handleDeleted} />
+              ))
             )}
           </div>
           <AddProductForm categoryId={selectedCategory.id} />

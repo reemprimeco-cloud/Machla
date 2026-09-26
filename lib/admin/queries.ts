@@ -251,7 +251,6 @@ export type AdminProductRow = {
   brand: string | null;
   icon: string | null;
   imageUrl: string | null;
-  isActive: boolean;
   categoryNameAr?: string;
 };
 
@@ -263,11 +262,16 @@ export type AdminCategoryRow = {
   imageUrl: string | null;
 };
 
-/** Every category and every product in the catalog — /admin/photos'
- * search-and-upload list and its by-category browser (add/deactivate a
+/** Every category and every ACTIVE product in the catalog — /admin/photos'
+ * search-and-upload list and its by-category browser (add/delete a
  * product) both read from this one fetch. ~600 products today; cheap
  * enough to send whole and filter/group client-side rather than a
- * round-trip per category the owner clicks into. */
+ * round-trip per category the owner clicks into.
+ *
+ * Filters out is_active = false: a deleted product (setProductActiveAction)
+ * must not still show up here, greyed out or otherwise (2026-09-26
+ * feedback) — there is deliberately no admin surface left that lists
+ * inactive products, so there is nothing left to offer a "restore" on. */
 export async function getCatalogForAdmin(): Promise<{
   categories: AdminCategoryRow[];
   products: AdminProductRow[];
@@ -278,7 +282,8 @@ export async function getCatalogForAdmin(): Promise<{
   const [{ data: products, error }, { data: categories }] = await Promise.all([
     supabase
       .from("products")
-      .select("id, name_ar, name_en, brand, icon, image_url, category_id, is_active")
+      .select("id, name_ar, name_en, brand, icon, image_url, category_id")
+      .eq("is_active", true)
       .order("name_ar"),
     supabase.from("categories").select("id, key, name_ar, icon, image_url").order("sort_order"),
   ]);
@@ -302,7 +307,6 @@ export async function getCatalogForAdmin(): Promise<{
       brand: row.brand,
       icon: row.icon,
       imageUrl: row.image_url,
-      isActive: row.is_active,
       categoryNameAr: categoryNameById.get(row.category_id),
     })),
   };

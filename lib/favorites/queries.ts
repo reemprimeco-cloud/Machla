@@ -32,6 +32,7 @@ export async function getFavoriteProducts(): Promise<Product[]> {
   const { data: products } = await supabase
     .from("products")
     .select("*")
+    .eq("is_active", true)
     .in(
       "id",
       favorites.map((f) => f.product_id),

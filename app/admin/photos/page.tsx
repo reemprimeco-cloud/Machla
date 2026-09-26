@@ -55,7 +55,7 @@ export default async function AdminPhotosPage() {
     getUploadedImagePaths(PENDING.map((p) => p.path)),
     getCatalogForAdmin(),
   ]);
-  const activeProducts = catalog.products.filter((p) => p.isActive);
+  // getCatalogForAdmin() already excludes inactive (deleted) products.
 
   return (
     <main dir="rtl" className="mx-auto flex min-h-full w-full max-w-lg flex-col gap-4 bg-bg px-5 py-8">
@@ -85,10 +85,10 @@ export default async function AdminPhotosPage() {
       ) : null}
 
       <CollapsibleSection
-        title={`صور كل المنتجات (${activeProducts.length})`}
+        title={`صور كل المنتجات (${catalog.products.length})`}
         subtitle="ابحثي عن أي منتج من أي قسم وارفعي صورته — بالملف أو برابط مباشرة. تتربط فيه فوراً."
       >
-        <ProductPhotoUploader products={activeProducts} />
+        <ProductPhotoUploader products={catalog.products} />
       </CollapsibleSection>
 
       <CollapsibleSection

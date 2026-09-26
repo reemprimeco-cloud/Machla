@@ -204,11 +204,18 @@ export async function uploadProductImageFromUrlAction(
 
 export type SimpleActionResult = { ok: true } | { ok: false; message: string };
 
-/** Deactivate/reactivate a product — the catalog browsing/list
+/** Delete a product — the catalog browsing/list
  * ("١ رز ١ دجاج كامل ١ صدرو دجاج") cleanup, from the UI instead of a
- * one-off SQL migration. Soft delete only: same is_active flag
- * getProductsInCategory already filters on, never a hard DELETE, since
- * shopping_list_items/product_usage_stats FK to products.id. */
+ * one-off SQL migration. Still a soft delete under the hood (same
+ * is_active flag getProductsInCategory/getCatalogForAdmin already filter
+ * on), never a hard DELETE, since shopping_list_items/product_usage_stats
+ * FK to products.id — but the UI only ever calls this with `false` now:
+ * getCatalogForAdmin excludes inactive rows entirely (2026-09-26
+ * feedback: a deleted product must not stay visible, and there is no
+ * "restore" left to offer on a row nothing renders any more). Kept
+ * generic (accepts `isActive`) rather than a hard-coded `false` only so a
+ * genuine mistaken delete can still be reversed with a one-off SQL
+ * update, the same way it was fixed before this action existed. */
 export async function setProductActiveAction(
   productId: string,
   isActive: boolean,
