@@ -43,7 +43,7 @@ export function CategoryGrid({
                   ? `${basePath}/c/${category.key}?listId=${targetListId}`
                   : `${basePath}/c/${category.key}`
             }
-            className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-[10px] text-center shadow-card backdrop-blur-[20px] transition-colors duration-150 ease-hl active:bg-white/40"
+            className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-[10px] text-center shadow-card backdrop-blur-[20px] transition-all duration-150 ease-hl active:scale-95 active:border-primary-line active:bg-primary-tint active:shadow-accent"
           >
             {/* Fills the card's width, same proportions as a product photo
                 (QuantityStepper.tsx's ProductCard) — a fixed small image
