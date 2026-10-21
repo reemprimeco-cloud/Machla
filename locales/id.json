@@ -382,6 +382,10 @@
     "step3Body": "Mereka menambahkan barang ke daftar dan mengirimkannya kepada Anda — dan Anda bisa menyimpan favorit untuk dipesan lagi kapan saja.",
     "skip": "Lewati",
     "next": "Berikutnya",
-    "start": "Mulai"
+    "start": "Mulai",
+    "joinStep1Title": "Lengkapi akun Anda",
+    "joinStep1Body": "Seseorang sudah menggunakan Machla dan mengundang Anda untuk bergabung — lengkapi akun Anda untuk melanjutkan.",
+    "joinStep2Title": "Lihat daftar belanja",
+    "joinStep2Body": "Setelah bergabung, buka daftar dan tambahkan apa yang mereka butuhkan."
   }
 }

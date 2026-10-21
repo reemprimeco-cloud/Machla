@@ -35,11 +35,11 @@ export function FavoriteButton({
       onClick={toggle}
       aria-label={isFavorite ? t("worker.removeFromFavorites") : t("worker.addToFavorites")}
       aria-pressed={isFavorite}
-      className={`absolute end-1.5 top-1.5 flex size-7 items-center justify-center rounded-pill bg-surface/90 shadow-sm ${
+      className={`absolute end-1 top-1 flex size-11 items-center justify-center rounded-pill bg-surface/90 shadow-sm ${
         isFavorite ? "text-danger" : "text-ink-muted"
       }`}
     >
-      <HeartIcon filled={isFavorite} className="size-4" />
+      <HeartIcon filled={isFavorite} className="size-5" />
     </button>
   );
 }

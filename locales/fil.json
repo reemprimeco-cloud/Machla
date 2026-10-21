@@ -382,6 +382,10 @@
     "step3Body": "Idadagdag nila ang mga item sa listahan at ipapadala ito sa iyo — at puwede kang mag-save ng mga paborito para maiorder ulit anumang oras.",
     "skip": "Laktawan",
     "next": "Susunod",
-    "start": "Simulan"
+    "start": "Simulan",
+    "joinStep1Title": "Kumpletuhin ang iyong account",
+    "joinStep1Body": "May gumagamit na ng Machla at inimbitahan ka niyang sumali — kumpletuhin ang iyong account para magpatuloy.",
+    "joinStep2Title": "Tingnan ang listahan ng pamimili",
+    "joinStep2Body": "Pagkasali mo, buksan ang listahan at idagdag ang kailangan nila."
   }
 }

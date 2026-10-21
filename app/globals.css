@@ -479,11 +479,16 @@ html[data-script="nastaliq"] {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: rgba(0, 0, 0, 0);
+    /* Always-on, not just a hover darken: the gradient's own lightest
+       stop measured 3.8:1 for white label text where it actually sits
+       (AA needs 4.5:1) — this permanent veil is the fix (2026-10-21
+       critique), not a decoration, so it can't be removed on :hover's
+       base state. */
+    background: rgba(0, 0, 0, 0.12);
     transition: background 140ms var(--hl-ease);
   }
   .hl-gradient-cta:hover::after {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
   }
 }
 

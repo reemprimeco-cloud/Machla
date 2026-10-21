@@ -140,8 +140,8 @@ export function ProductCard({
   const price = productPrice(product);
 
   return (
-    <li className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm">
-      <div className="relative flex aspect-square items-center justify-center rounded-md bg-surface-2">
+    <li className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-3 shadow-card backdrop-blur-[20px]">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-well bg-primary-tint">
         {price ? (
           <span className="hl-caption absolute start-1.5 top-1.5 rounded-pill bg-primary px-2 py-0.5 text-on-primary">
             {price}

@@ -104,7 +104,7 @@ export function ListReview({
                   return (
                     <li
                       key={item.id}
-                      className="flex flex-col gap-2 rounded-lg border border-line bg-surface p-3 shadow-sm"
+                      className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-3 shadow-card backdrop-blur-[20px]"
                     >
                       <div className="flex items-center gap-3">
                         {photoUrl ? (

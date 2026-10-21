@@ -1,11 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import { branding } from "@/lib/branding";
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import { PrimaryButton } from "@/components/ui/Primitives";
+import { safeNextPath } from "@/lib/auth/nextPath";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 import { writeTipsSeenCookieClient } from "@/lib/onboarding/tipsCookie";
@@ -15,26 +16,41 @@ import { writeTipsSeenCookieClient } from "@/lib/onboarding/tipsCookie";
  * after the language is chosen and before sign-in/up — app/page.tsx's root
  * gate sends anyone without the TIPS_SEEN_COOKIE_NAME cookie here, ahead of
  * the sign-in check, since there's no user yet at this point in the flow.
- * Three steps: sign up, add a worker/family member, and how a sent list +
- * favorites work — the app's actual golden path, not marketing copy.
+ * app/welcome/page.tsx routes here too when the deep-link join flow
+ * (app/join/[code]/page.tsx) needs the tutorial before it's been seen.
+ *
+ * Slides 1-2 branch on whether a `next=` destination is itself a
+ * /join/<code> path — someone arriving with an invitation already in
+ * hand is joining an existing household, not setting one up, so "add a
+ * worker" copy written for the household owner would be describing a
+ * third person to the exact person it's talking about (2026-10-21
+ * critique). Slide 3 (favorites) is genuinely the same for both.
  */
-const SLIDES: { titleKey: MessageKey; bodyKey: MessageKey }[] = [
+const OWNER_SLIDES: { titleKey: MessageKey; bodyKey: MessageKey }[] = [
   { titleKey: "tips.step1Title", bodyKey: "tips.step1Body" },
   { titleKey: "tips.step2Title", bodyKey: "tips.step2Body" },
   { titleKey: "tips.step3Title", bodyKey: "tips.step3Body" },
 ];
 
-export default function TipsPage() {
+const JOINING_SLIDES: { titleKey: MessageKey; bodyKey: MessageKey }[] = [
+  { titleKey: "tips.joinStep1Title", bodyKey: "tips.joinStep1Body" },
+  { titleKey: "tips.joinStep2Title", bodyKey: "tips.joinStep2Body" },
+  { titleKey: "tips.step3Title", bodyKey: "tips.step3Body" },
+];
+
+function TipsForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { t } = useLocale();
   const [index, setIndex] = useState(0);
-  const isLast = index === SLIDES.length - 1;
+
+  const nextPath = safeNextPath(searchParams.get("next"));
+  const slides = nextPath.startsWith("/join/") ? JOINING_SLIDES : OWNER_SLIDES;
+  const isLast = index === slides.length - 1;
 
   function finish() {
     writeTipsSeenCookieClient();
-    // Re-enters the root gate rather than a fixed destination — it decides
-    // /login vs /onboarding vs /home/worker from the real session state.
-    router.push("/");
+    router.push(nextPath);
   }
 
   return (
@@ -50,16 +66,16 @@ export default function TipsPage() {
       <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
         <MachlaIcon size={56} variant="flat" title={branding.name} />
         <span className="hl-ltr-num hl-label rounded-pill bg-primary-tint px-3 py-1 text-primary">
-          {index + 1} / {SLIDES.length}
+          {index + 1} / {slides.length}
         </span>
         <h1 className="text-[24px] font-bold leading-snug text-ink">
-          {t(SLIDES[index].titleKey)}
+          {t(slides[index].titleKey)}
         </h1>
-        <p className="hl-body text-ink-muted">{t(SLIDES[index].bodyKey)}</p>
+        <p className="hl-body text-ink-muted">{t(slides[index].bodyKey)}</p>
       </div>
 
       <div className="flex items-center justify-center gap-2 pb-6" aria-hidden>
-        {SLIDES.map((_, slideIndex) => (
+        {slides.map((_, slideIndex) => (
           <span
             key={slideIndex}
             className={`h-2 rounded-pill transition-all duration-150 ease-hl ${
@@ -76,5 +92,14 @@ export default function TipsPage() {
         {isLast ? t("tips.start") : t("tips.next")}
       </PrimaryButton>
     </div>
+  );
+}
+
+// useSearchParams requires a Suspense boundary in the App Router.
+export default function TipsPage() {
+  return (
+    <Suspense fallback={null}>
+      <TipsForm />
+    </Suspense>
   );
 }

@@ -382,6 +382,10 @@
     "step3Body": "They add items to the list and send it to you — and you can save favorites to reorder anytime.",
     "skip": "Skip",
     "next": "Next",
-    "start": "Get started"
+    "start": "Get started",
+    "joinStep1Title": "Complete your account",
+    "joinStep1Body": "Someone already uses Machla and invited you to join them — finish your account to continue.",
+    "joinStep2Title": "See the shopping list",
+    "joinStep2Body": "Once you're in, open the list and add whatever they need."
   }
 }

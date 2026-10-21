@@ -65,6 +65,7 @@ export function SettingsScreen({
   const errorMessage = useErrorMessage();
   const [signingOut, setSigningOut] = useState(false);
   const [deletingAccount, setDeletingAccount] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   async function handleLogout() {
@@ -81,20 +82,22 @@ export function SettingsScreen({
    * inside the app. Owners get a sharper warning — deleting their
    * account also deletes the household they own, for everyone
    * (lib/auth/deleteAccount.ts). `deleteAccountAction` redirects on
-   * success, so `result` is only ever reached on failure. */
+   * success, so `result` is only ever reached on failure.
+   *
+   * No window.confirm() here — ListsInbox.tsx's DeletableRow already
+   * found that dialog silently never appears in this app's iOS WKWebView
+   * shell, with nothing in any log to explain why, and was replaced with
+   * plain React confirm state everywhere else for exactly that reason.
+   * This was the one call site that hadn't been migrated yet, on the
+   * single most destructive action in the app (2026-10-21 critique). */
   async function handleDeleteAccount() {
-    const confirmKey =
-      role === "owner"
-        ? "settings.deleteAccountConfirmOwner"
-        : "settings.deleteAccountConfirm";
-    if (!window.confirm(t(confirmKey))) return;
-
     setDeletingAccount(true);
     setDeleteError(null);
 
     const result = await deleteAccountAction();
 
     setDeletingAccount(false);
+    setConfirmingDelete(false);
     if (!result.ok) setDeleteError(errorMessage(result.code));
   }
 
@@ -280,16 +283,45 @@ export function SettingsScreen({
             would read as no different from Logout above it. */}
         <p className="hl-caption pt-2 text-ink-faint">{t("settings.dangerZone")}</p>
         <ErrorText>{deleteError}</ErrorText>
-        <button
-          type="button"
-          onClick={handleDeleteAccount}
-          disabled={deletingAccount}
-          className="hl-label min-h-12 w-full rounded-lg border border-danger px-4 text-danger disabled:opacity-60"
-        >
-          {deletingAccount
-            ? t("settings.deletingAccount")
-            : t("settings.deleteAccount")}
-        </button>
+        {confirmingDelete ? (
+          <div className="flex flex-col gap-2 rounded-card-sm border border-glass-border bg-glass-bg p-3 shadow-card backdrop-blur-[20px]">
+            <p className="hl-caption text-ink-muted">
+              {t(
+                role === "owner"
+                  ? "settings.deleteAccountConfirmOwner"
+                  : "settings.deleteAccountConfirm",
+              )}
+            </p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                disabled={deletingAccount}
+                onClick={handleDeleteAccount}
+                className="hl-label flex-1 rounded-lg bg-danger px-3 py-2 text-on-primary disabled:opacity-60"
+              >
+                {deletingAccount
+                  ? t("settings.deletingAccount")
+                  : t("settings.deleteAccount")}
+              </button>
+              <button
+                type="button"
+                disabled={deletingAccount}
+                onClick={() => setConfirmingDelete(false)}
+                className="hl-label flex-1 rounded-lg border border-glass-border-strong bg-glass-bg-strong px-3 py-2 text-ink-muted backdrop-blur-[20px] disabled:opacity-60"
+              >
+                {t("common.cancel")}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setConfirmingDelete(true)}
+            className="hl-label min-h-12 w-full rounded-lg border border-danger px-4 text-danger disabled:opacity-60"
+          >
+            {t("settings.deleteAccount")}
+          </button>
+        )}
       </section>
 
       {/* A fixed, un-translated line by design — a copyright notice reads

@@ -382,6 +382,10 @@
     "step3Body": "Ils ajoutent des articles à la liste et vous l'envoient — et vous pouvez enregistrer des favoris pour les recommander à tout moment.",
     "skip": "Passer",
     "next": "Suivant",
-    "start": "Commencer"
+    "start": "Commencer",
+    "joinStep1Title": "Complétez votre compte",
+    "joinStep1Body": "Quelqu'un utilise déjà Machla et vous a invité à le rejoindre — complétez votre compte pour continuer.",
+    "joinStep2Title": "Consultez la liste de courses",
+    "joinStep2Body": "Une fois inscrit, ouvrez la liste et ajoutez ce dont ils ont besoin."
   }
 }

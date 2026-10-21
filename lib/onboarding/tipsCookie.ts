@@ -11,6 +11,14 @@ export const TIPS_SEEN_COOKIE_NAME = "machla_tips_seen";
 
 const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365;
 
+export function readTipsSeenCookieClient(): boolean {
+  if (typeof document === "undefined") return false;
+
+  return document.cookie
+    .split("; ")
+    .some((row) => row === `${TIPS_SEEN_COOKIE_NAME}=1`);
+}
+
 export function writeTipsSeenCookieClient(): void {
   if (typeof document === "undefined") return;
 

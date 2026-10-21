@@ -1,12 +1,15 @@
 "use client";
 
 import { branding } from "@/lib/branding";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
+import { safeNextPath } from "@/lib/auth/nextPath";
 import type { LocaleCode, LocaleMeta } from "@/lib/i18n/config";
 import { LOCALES, pickerScriptFor } from "@/lib/i18n/config";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { readTipsSeenCookieClient } from "@/lib/onboarding/tipsCookie";
 
 /**
  * Language picker (master plan route map: /welcome). Design ported from
@@ -80,13 +83,25 @@ function CheckIcon() {
   );
 }
 
-export default function WelcomePage() {
+function WelcomeForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { locale: active, setLocale } = useLocale();
+  // Preserves a deep-link destination (e.g. an invitation code's
+  // /join/<code>) through the language choice — app/join/[code]/page.tsx
+  // sends a worker here first instead of straight to /login when no
+  // locale cookie is set yet (2026-10-21 critique: a worker tapping a
+  // shared invite link cold used to join entirely in English, never
+  // seeing this screen at all).
+  const nextPath = safeNextPath(searchParams.get("next"));
 
   function choose(code: LocaleCode) {
     setLocale(code);
-    router.push("/");
+    // The deep-link join flow (app/join/[code]/page.tsx) can land here
+    // before the tutorial has ever been seen — route through it with the
+    // real destination carried along, same as it would via the root
+    // gate (app/page.tsx), instead of skipping straight past it.
+    router.push(readTipsSeenCookieClient() ? nextPath : `/tips?next=${encodeURIComponent(nextPath)}`);
   }
 
   return (
@@ -133,7 +148,7 @@ export default function WelcomePage() {
                     dir="ltr"
                     className={[
                       "truncate text-[13px]",
-                      selected ? "text-white/70" : "text-ink-muted",
+                      selected ? "text-on-primary" : "text-ink-muted",
                     ].join(" ")}
                   >
                     {language.englishName}
@@ -147,5 +162,14 @@ export default function WelcomePage() {
         })}
       </ul>
     </div>
+  );
+}
+
+// useSearchParams requires a Suspense boundary in the App Router.
+export default function WelcomePage() {
+  return (
+    <Suspense fallback={null}>
+      <WelcomeForm />
+    </Suspense>
   );
 }

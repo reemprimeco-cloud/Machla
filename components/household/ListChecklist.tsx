@@ -390,7 +390,7 @@ function ChecklistRow({
           disabled={readOnly}
           aria-pressed={isUnavailable}
           aria-label={`${t("hlists.unavailable")} — ${name}`}
-          className={`flex size-8 shrink-0 items-center justify-center rounded-full transition-colors duration-150 ease-hl disabled:opacity-70 ${
+          className={`flex size-11 shrink-0 items-center justify-center rounded-full transition-colors duration-150 ease-hl disabled:opacity-70 ${
             isUnavailable ? "bg-warning text-white" : "text-ink-muted"
           }`}
         >

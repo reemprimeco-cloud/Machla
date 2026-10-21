@@ -382,6 +382,10 @@
     "step3Body": "Ye na sɔ́ nǔ dó wema ɔ jí bo sɛ́dó we — a sixu save wɛn e a yí wǎn na lɛ́ ylɔ hwebǐnu.",
     "skip": "Sɔ́ ɖó",
     "next": "É bo xwedó",
-    "start": "Jɛ tɛ̀n"
+    "start": "Jɛ tɛ̀n",
+    "joinStep1Title": "Bló akɔ́n towe fó",
+    "joinStep1Body": "Mɛ ɖé ko nɔ zán Machla bo ylɔ we bo a ní wá xo kpó é — bló akɔ́n towe fó bo yì nukɔn.",
+    "joinStep2Title": "Kpɔ́n wema axɔ́sú ɔ",
+    "joinStep2Body": "Ðò hwenu e a wá xo kpó ɔ, hun wema ɔ bo sɔ́ nǔ e ye hwɛ́ ɖ'é jí."
   }
 }
