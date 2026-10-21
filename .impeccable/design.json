@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T06:30:00Z",
+  "title": "Design System: Machla",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Interactive Magenta", "canonical": "#b80c6c" },
+      "primary-hover": { "role": "primary", "displayName": "Interactive Magenta — Hover", "canonical": "#a20b5f" },
+      "primary-press": { "role": "primary", "displayName": "Interactive Magenta — Press", "canonical": "#8a0951" },
+      "brand-pink": { "role": "secondary", "displayName": "Brand Pink", "canonical": "#e00f84" },
+      "brand-coral": { "role": "secondary", "displayName": "Brand Coral", "canonical": "#ff4f72" },
+      "brand-orange": { "role": "secondary", "displayName": "Brand Orange", "canonical": "#ff7e45" },
+      "brand-amber": { "role": "secondary", "displayName": "Brand Amber", "canonical": "#ff9a3d" },
+      "bg": { "role": "neutral", "displayName": "Canvas Lavender", "canonical": "#f5f2f8" },
+      "surface": { "role": "neutral", "displayName": "Surface White", "canonical": "#ffffff" },
+      "surface-2": { "role": "neutral", "displayName": "Surface Tint", "canonical": "#f1f4f7" },
+      "ink": { "role": "neutral", "displayName": "Navy Ink", "canonical": "#0b1f3f" },
+      "ink-muted": { "role": "neutral", "displayName": "Muted Slate", "canonical": "#55617a" },
+      "ink-faint": { "role": "neutral", "displayName": "Faint Slate", "canonical": "#6b8095" },
+      "success": { "role": "semantic", "displayName": "Confirm Green", "canonical": "#007a4d" },
+      "warning": { "role": "semantic", "displayName": "Warning Amber", "canonical": "#8a5a00" },
+      "danger": { "role": "semantic", "displayName": "Danger Red", "canonical": "#c2183c" },
+      "info": { "role": "semantic", "displayName": "Info Teal", "canonical": "#00838c" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The single biggest number or headline on a screen (progress %, greeting)." },
+      "headline": { "displayName": "Headline", "purpose": "Screen titles." },
+      "title": { "displayName": "Title", "purpose": "Card and section headings." },
+      "body": { "displayName": "Body", "purpose": "Default reading text." },
+      "label": { "displayName": "Label", "purpose": "Buttons, form labels, UI chrome text." },
+      "caption": { "displayName": "Caption", "purpose": "Secondary/meta text; bumps 1px on non-Latin scripts." }
+    },
+    "shadows": [
+      { "name": "shadow-card", "value": "0 10px 30px rgba(11,31,63,0.08)", "purpose": "Standard glass-surface shadow (light mode)." },
+      { "name": "shadow-chip", "value": "0 6px 18px rgba(11,31,63,0.08)", "purpose": "Small glass controls — icon buttons, back pill." },
+      { "name": "shadow-nav", "value": "0 14px 34px rgba(11,31,63,0.14)", "purpose": "Floating tab bar." },
+      { "name": "shadow-accent", "value": "0 8px 18px rgba(224,15,132,0.3)", "purpose": "Filled interactive-magenta surfaces (pills, checked checkbox); becomes a 0 0 20px glow in dark mode." },
+      { "name": "shadow-hero", "value": "0 20px 44px rgba(224,15,132,0.32)", "purpose": "The one hero gradient panel per screen." },
+      { "name": "shadow-primary", "value": "0 6px 18px rgba(224,27,106,0.28)", "purpose": "Under the gradient CTA specifically." }
+    ],
+    "motion": [
+      { "name": "ease-hl", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "purpose": "Default easing for all state transitions." }
+    ],
+    "breakpoints": [
+      { "name": "content-max", "value": "480px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single gradient CTA allowed per screen — full-width, pill or rounded-lg depending on context.",
+      "html": "<button class=\"ds-btn-primary\">Send</button>",
+      "css": ".ds-btn-primary { position: relative; min-height: 48px; width: 100%; border: none; border-radius: 999px; padding: 0 16px; background: linear-gradient(225deg, #e00f84 0%, #ff4f72 100%); color: #ffffff; font-size: 14px; font-weight: 500; box-shadow: 0 6px 18px rgba(224,27,106,0.28); cursor: pointer; transition: transform 150ms cubic-bezier(0.2,0.8,0.2,1); } .ds-btn-primary::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: rgba(0,0,0,0.12); transition: background 140ms cubic-bezier(0.2,0.8,0.2,1); } .ds-btn-primary:hover::after { background: rgba(0,0,0,0.2); } .ds-btn-primary:active { transform: scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid #b80c6c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Glass Surface",
+      "kind": "card",
+      "refersTo": "glass-surface",
+      "description": "The base translucent, blurred card every list row, section, and panel in the app renders through.",
+      "html": "<div class=\"ds-glass-surface\">Card content</div>",
+      "css": ".ds-glass-surface { border-radius: 24px; border: 1px solid rgba(255,255,255,0.9); background: rgba(255,255,255,0.62); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 10px 30px rgba(11,31,63,0.08); padding: 16px; }"
+    },
+    {
+      "name": "Glass Icon Button",
+      "kind": "button",
+      "refersTo": "glass-icon-button",
+      "description": "44x44 circular icon control used in every header (back, search, profile, favorites).",
+      "html": "<button class=\"ds-glass-icon-btn\" aria-label=\"Search\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\" stroke=\"currentColor\" stroke-width=\"1.9\"/><path d=\"M19.5 19.5L15.3 15.3\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\"/></svg></button>",
+      "css": ".ds-glass-icon-btn { width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.95); background: rgba(255,255,255,0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 6px 18px rgba(11,31,63,0.08); color: #0b1f3f; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 150ms cubic-bezier(0.2,0.8,0.2,1); } .ds-glass-icon-btn:active { transform: scale(0.95); } .ds-glass-icon-btn:focus-visible { outline: 2px solid #b80c6c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Checkbox",
+      "kind": "input",
+      "refersTo": "checkbox",
+      "description": "36x36 circular purchased-toggle used on list rows.",
+      "html": "<span class=\"ds-checkbox ds-checkbox--checked\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span>",
+      "css": ".ds-checkbox { width: 36px; height: 36px; border-radius: 999px; display: flex; align-items: center; justify-content: center; } .ds-checkbox--checked { background: linear-gradient(225deg, #e00f84 0%, #ff4f72 100%); color: #ffffff; box-shadow: 0 8px 18px rgba(224,15,132,0.3); } .ds-checkbox:not(.ds-checkbox--checked) { border: 2px solid #c9cfdc; background: transparent; color: transparent; }"
+    },
+    {
+      "name": "Floating Tab Bar",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Bottom navigation, inset from the screen edges rather than docked flush, with the active tab as a gradient pill.",
+      "html": "<nav class=\"ds-tabbar\"><a class=\"ds-tabbar-item ds-tabbar-item--active\">Home</a><a class=\"ds-tabbar-item\">Notifications</a></nav>",
+      "css": ".ds-tabbar { display: flex; align-items: center; justify-content: space-around; height: 68px; border-radius: 999px; background: rgba(255,255,255,0.72); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.95); box-shadow: 0 14px 34px rgba(11,31,63,0.14); padding: 0 8px; } .ds-tabbar-item { display: flex; align-items: center; justify-content: center; height: 48px; width: 48px; border-radius: 999px; color: #55617a; } .ds-tabbar-item--active { width: auto; padding: 0 16px; gap: 8px; background: linear-gradient(225deg, #e00f84 0%, #ff4f72 100%); color: #ffffff; font-size: 14px; font-weight: 600; box-shadow: 0 8px 18px rgba(224,15,132,0.3); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Soft Glass",
+    "overview": "Soft Glass is a frosted, light-filled surface language built for one specific condition: a phone held in one hand, in a supermarket aisle, by someone who may not read the screen's language well. Every surface is a translucent, blurred panel floating a few millimeters above a pale lavender-tinted canvas, never a flat opaque card, so the interface reads as light and layered rather than boxy. Color is rationed deliberately: a single magenta-to-orange gradient is the system's one loud gesture, reserved for exactly one call-to-action per screen, while everything a person must read or press lives on a separate, deliberately darkened interactive ramp that passes WCAG AA on its own. Dark mode is not a second design — it's the same glass system lit from the inside instead of from outside, following the OS setting only.",
+    "keyCharacteristics": [
+      "Frosted glass surfaces (backdrop-filter: blur(20px)) over a pale, never-pure-white background",
+      "Exactly one gradient CTA per screen — a hard, enforced rule",
+      "A strict two-layer color split: vivid decorative hues vs. darkened AA-safe interactive hues, never mixed",
+      "Generous radii (22-28px) and large (44-48px) touch targets throughout",
+      "Script-aware typography: line-height and optical size shift per active script"
+    ],
+    "rules": [
+      { "name": "The Two-Layer Rule", "body": "The brand gradient ramp is decoration; the interactive ramp is for anything a user must read or press.", "section": "colors" },
+      { "name": "The One Gradient Rule", "body": "Exactly one .hl-gradient-cta element is allowed per screen.", "section": "colors" },
+      { "name": "The Script-Bump Rule", "body": "Any script other than Latin gets a 1px bump on caption and label sizes.", "section": "typography" },
+      { "name": "The Tinted Shadow Rule", "body": "Every shadow carries a hue (navy for neutral, magenta for accent) — pure black/grey shadows don't appear.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the brand gradient to one CTA element per screen.",
+      "Do use the interactive magenta and its hover/press darkenings for every readable, clickable, or focusable element.",
+      "Do pair every glass surface's backdrop-filter with an opaque fallback for unsupported browsers.",
+      "Do keep touch targets at 44-48px minimum everywhere.",
+      "Do let dark mode follow prefers-color-scheme only.",
+      "Do keep the three brand gradients identical between light and dark mode."
+    ],
+    "donts": [
+      "Don't use any raw brand-ramp hue or its light tint as text color.",
+      "Don't use .hl-gradient-cta more than once per screen.",
+      "Don't replace the icon fallback chain with a plain broken-image state.",
+      "Don't add a manual light/dark toggle without a product decision.",
+      "Don't reach for a flat, opaque card style for a new screen without a reason."
+    ]
+  }
+}
