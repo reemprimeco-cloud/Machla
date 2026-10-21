@@ -6,7 +6,10 @@ import { Suspense, useEffect, useState } from "react";
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import { branding } from "@/lib/branding";
 import { exchangeRecoveryCodeAction, setNewPasswordAction } from "@/lib/auth/resetPassword";
+import { ErrorText, PrimaryButton, TextField } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+
+const ERROR_ID = "reset-confirm-error";
 
 /** Step 2-3 of "forgot password" — see lib/auth/resetPassword.ts. The
  * emailed link lands here with `?code=`, exchanged for a recovery
@@ -60,74 +63,66 @@ function ConfirmForm() {
     setStatus("done");
   }
 
-  if (exchangeStatus === "pending") return null;
-
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-8 px-6 py-16">
       <MachlaIcon size={56} variant="flat" title={branding.name} />
 
-      {exchangeStatus === "error" ? (
+      {exchangeStatus === "pending" ? (
+        // Was a bare `return null` — a fully blank screen for however long
+        // the code exchange takes, which this app's own loading/skeleton
+        // convention (components/ui/States.tsx) exists specifically to
+        // avoid elsewhere (2026-10-21 audit).
+        <p className="hl-body text-ink-muted" role="status">
+          {t("state.loading")}
+        </p>
+      ) : exchangeStatus === "error" ? (
         <p role="alert" className="hl-body text-center text-danger">
           {t("auth.genericError")}
         </p>
       ) : status === "done" ? (
         <>
           <p className="hl-body text-center text-ink">{t("auth.passwordUpdated")}</p>
-          <button
+          <PrimaryButton
+            variant="solid"
             type="button"
             onClick={() => {
               router.push("/login");
               router.refresh();
             }}
-            className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm"
           >
             {t("auth.backToLogin")}
-          </button>
+          </PrimaryButton>
         </>
       ) : (
         <>
           <h1 className="hl-title text-ink">{t("auth.newPasswordTitle")}</h1>
           <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
-            <label className="flex flex-col gap-2">
-              <span className="hl-label text-ink">{t("auth.completeAccount.passwordLabel")}</span>
-              <input
-                type="password"
-                dir="ltr"
-                autoComplete="new-password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-                aria-invalid={status === "error"}
-              />
-            </label>
-            <label className="flex flex-col gap-2">
-              <span className="hl-label text-ink">
-                {t("auth.completeAccount.confirmPasswordLabel")}
-              </span>
-              <input
-                type="password"
-                dir="ltr"
-                autoComplete="new-password"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-                className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-                aria-invalid={status === "error"}
-              />
-            </label>
+            <TextField
+              label={t("auth.completeAccount.passwordLabel")}
+              type="password"
+              dir="ltr"
+              autoComplete="new-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              aria-invalid={status === "error"}
+              aria-describedby={status === "error" ? ERROR_ID : undefined}
+            />
+            <TextField
+              label={t("auth.completeAccount.confirmPasswordLabel")}
+              type="password"
+              dir="ltr"
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              aria-invalid={status === "error"}
+              aria-describedby={status === "error" ? ERROR_ID : undefined}
+            />
 
-            {error ? (
-              <p role="alert" className="hl-caption text-danger">
-                {error}
-              </p>
-            ) : null}
+            <ErrorText id={ERROR_ID}>{error}</ErrorText>
 
-            <button
-              type="submit"
-              disabled={status === "saving" || !password}
-              className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
-            >
+            <PrimaryButton variant="solid" type="submit" disabled={status === "saving" || !password}>
               {status === "saving" ? t("auth.completeAccount.saving") : t("auth.setNewPassword")}
-            </button>
+            </PrimaryButton>
           </form>
         </>
       )}

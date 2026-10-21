@@ -56,6 +56,10 @@ export function NoteField({
           }
         }}
         placeholder={t("worker.noteHint")}
+        // A persistent accessible name, not just the placeholder — which
+        // vanishes the instant typing starts and gives a screen reader
+        // nothing once the field has a value (2026-10-21 audit).
+        aria-label={t("worker.addNote")}
         maxLength={140}
         disabled={pending}
         className="hl-caption min-h-10 w-full rounded-md border border-line bg-surface px-3 text-ink outline-none focus-visible:border-primary"

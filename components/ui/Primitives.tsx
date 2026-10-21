@@ -163,18 +163,28 @@ export function Checkbox({ checked, className = "" }: { checked: boolean; classN
 }
 
 /** The single hero action on a screen — reviews, sends, confirms. Carries
- * the brand gradient (`.hl-gradient-cta`, app/globals.css): reserved for
- * exactly one per screen by convention (Machla UI Kit), which every
- * screen already followed before this existed, since a Server Action
- * flow only ever has one thing that moves it forward. */
+ * the brand gradient (`.hl-gradient-cta`, app/globals.css) by default:
+ * reserved for exactly one per screen by convention (Machla UI Kit), which
+ * every screen already followed before this existed, since a Server
+ * Action flow only ever has one thing that moves it forward.
+ *
+ * `variant="solid"` is the one legitimate exception: the pre-account auth
+ * family (login, password reset, complete-account) sits before any
+ * screen-level "one gradient" context even applies and has always used a
+ * flat `bg-primary` fill instead — previously hand-duplicated identically
+ * across those files rather than sharing this component (2026-10-21
+ * audit). Same component, same semantics ("the one thing that moves this
+ * screen forward"), just the other of this app's two confirmed button
+ * fills. */
 export function PrimaryButton({
   children,
+  variant = "gradient",
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: { variant?: "gradient" | "solid" } & React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       {...props}
-      className={`hl-gradient-cta hl-label min-h-12 w-full rounded-lg px-4 transition-transform duration-150 ease-hl active:scale-[0.98] disabled:opacity-60 disabled:active:scale-100 ${props.className ?? ""}`}
+      className={`${variant === "gradient" ? "hl-gradient-cta" : "bg-primary text-on-primary shadow-sm"} hl-label min-h-12 w-full rounded-lg px-4 transition-transform duration-150 ease-hl active:scale-[0.98] disabled:opacity-60 disabled:active:scale-100 ${props.className ?? ""}`}
     >
       {children}
     </button>
@@ -210,10 +220,19 @@ export function TextField({
   );
 }
 
-export function ErrorText({ children }: { children: React.ReactNode }) {
+export function ErrorText({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  /** Lets a caller wire a field's aria-describedby to this exact text,
+   * instead of only the one-time role="alert" announcement a screen
+   * reader may have missed (2026-10-21 audit). */
+  id?: string;
+}) {
   if (!children) return null;
   return (
-    <p role="alert" className="hl-caption text-danger">
+    <p id={id} role="alert" className="hl-caption text-danger">
       {children}
     </p>
   );

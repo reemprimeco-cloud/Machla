@@ -163,11 +163,16 @@ export function InvitationsManager({
                   </span>
                 </div>
 
-                <div className="flex items-center gap-4">
+                {/* Each action gets its own bordered, 44px-tall tap zone
+                    with a real gap between them — "Revoke" is
+                    irreversible, and two bare adjacent underlined text
+                    links had nothing stopping a mis-tap (2026-10-21
+                    audit). */}
+                <div className="flex items-stretch gap-3">
                   <button
                     type="button"
                     onClick={() => handleShare(invitation)}
-                    className="hl-label text-primary underline underline-offset-4"
+                    className="hl-label flex min-h-11 flex-1 items-center justify-center rounded-lg border border-line text-primary"
                   >
                     {copiedId === invitation.id
                       ? t("invitations.copied")
@@ -177,7 +182,7 @@ export function InvitationsManager({
                     type="button"
                     onClick={() => handleRevoke(invitation.id)}
                     disabled={revokingId === invitation.id}
-                    className="hl-label text-danger underline underline-offset-4 disabled:opacity-60"
+                    className="hl-label flex min-h-11 flex-1 items-center justify-center rounded-lg border border-danger text-danger disabled:opacity-60"
                   >
                     {revokingId === invitation.id
                       ? t("invitations.revoking")

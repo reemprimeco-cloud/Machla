@@ -6,7 +6,10 @@ import { useState } from "react";
 import { MachlaIcon } from "@/components/brand/MachlaIcon";
 import { branding } from "@/lib/branding";
 import { requestPasswordResetAction } from "@/lib/auth/resetPassword";
+import { ErrorText, PrimaryButton, TextField } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+
+const ERROR_ID = "reset-request-error";
 
 /** Step 1 of "forgot password" — see lib/auth/resetPassword.ts. */
 export default function ResetRequestPage() {
@@ -51,32 +54,22 @@ export default function ResetRequestPage() {
         <p className="hl-body text-center text-ink">{t("auth.resetLinkSent")}</p>
       ) : (
         <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
-          <label className="flex flex-col gap-2">
-            <span className="hl-label text-ink">{t("auth.completeAccount.emailLabel")}</span>
-            <input
-              type="email"
-              dir="ltr"
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-              aria-invalid={status === "error"}
-            />
-          </label>
+          <TextField
+            label={t("auth.completeAccount.emailLabel")}
+            type="email"
+            dir="ltr"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            aria-invalid={status === "error"}
+            aria-describedby={status === "error" ? ERROR_ID : undefined}
+          />
 
-          {error ? (
-            <p role="alert" className="hl-caption text-danger">
-              {error}
-            </p>
-          ) : null}
+          <ErrorText id={ERROR_ID}>{error}</ErrorText>
 
-          <button
-            type="submit"
-            disabled={status === "sending" || !email}
-            className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
-          >
+          <PrimaryButton variant="solid" type="submit" disabled={status === "sending" || !email}>
             {status === "sending" ? t("auth.sending") : t("auth.sendResetLink")}
-          </button>
+          </PrimaryButton>
         </form>
       )}
 

@@ -8,10 +8,13 @@ import {
   completeAccountWithUsernameAction,
   type CompleteAccountErrorCode,
 } from "@/lib/auth/completeAccount";
+import { ErrorText, PrimaryButton, TextField } from "@/components/ui/Primitives";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { MessageKey } from "@/lib/i18n/messages";
 
 type Mode = "email" | "username";
+
+const ERROR_ID = "complete-account-error";
 
 const ERROR_KEYS: Record<CompleteAccountErrorCode, MessageKey> = {
   AUTH_REQUIRED: "auth.genericError",
@@ -114,80 +117,66 @@ export function CompleteAccountScreen({
 
       <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
         {mode === "email" ? (
-          <label className="flex flex-col gap-2">
-            <span className="hl-label text-ink">{t("auth.completeAccount.emailLabel")}</span>
-            <input
-              type="email"
-              dir="ltr"
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-              aria-invalid={status === "error"}
-            />
-          </label>
+          <TextField
+            label={t("auth.completeAccount.emailLabel")}
+            type="email"
+            dir="ltr"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            aria-invalid={status === "error"}
+            aria-describedby={status === "error" ? ERROR_ID : undefined}
+          />
         ) : (
-          <label className="flex flex-col gap-2">
-            <span className="hl-label text-ink">{t("auth.completeAccount.usernameLabel")}</span>
-            <input
-              type="text"
-              dir="ltr"
-              autoComplete="username"
-              value={username}
-              onChange={(event) =>
-                setUsername(event.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))
-              }
-              className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-              aria-invalid={status === "error"}
-            />
-          </label>
+          <TextField
+            label={t("auth.completeAccount.usernameLabel")}
+            type="text"
+            dir="ltr"
+            autoComplete="username"
+            value={username}
+            onChange={(event) =>
+              setUsername(event.target.value.toLowerCase().replace(/[^a-z0-9._-]/g, ""))
+            }
+            aria-invalid={status === "error"}
+            aria-describedby={status === "error" ? ERROR_ID : undefined}
+          />
         )}
 
-        <label className="flex flex-col gap-2">
-          <span className="hl-label text-ink">{t("auth.completeAccount.passwordLabel")}</span>
-          <input
-            type="password"
-            dir="ltr"
-            autoComplete="new-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-            aria-invalid={status === "error"}
-          />
-        </label>
+        <TextField
+          label={t("auth.completeAccount.passwordLabel")}
+          type="password"
+          dir="ltr"
+          autoComplete="new-password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          aria-invalid={status === "error"}
+          aria-describedby={status === "error" ? ERROR_ID : undefined}
+        />
 
-        <label className="flex flex-col gap-2">
-          <span className="hl-label text-ink">
-            {t("auth.completeAccount.confirmPasswordLabel")}
-          </span>
-          <input
-            type="password"
-            dir="ltr"
-            autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            className="hl-body min-h-12 rounded-lg border border-line bg-surface px-4 text-ink outline-none focus-visible:border-primary"
-            aria-invalid={status === "error"}
-          />
-        </label>
+        <TextField
+          label={t("auth.completeAccount.confirmPasswordLabel")}
+          type="password"
+          dir="ltr"
+          autoComplete="new-password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          aria-invalid={status === "error"}
+          aria-describedby={status === "error" ? ERROR_ID : undefined}
+        />
 
-        {error ? (
-          <p role="alert" className="hl-caption text-danger">
-            {error}
-          </p>
-        ) : null}
+        <ErrorText id={ERROR_ID}>{error}</ErrorText>
 
-        <button
+        <PrimaryButton
+          variant="solid"
           type="submit"
           disabled={
             status === "saving" ||
             !password ||
             (mode === "email" ? !email : !username)
           }
-          className="hl-label min-h-12 rounded-lg bg-primary px-4 text-on-primary shadow-sm transition-colors duration-150 ease-hl disabled:opacity-60"
         >
           {status === "saving" ? t("auth.completeAccount.saving") : t("auth.completeAccount.save")}
-        </button>
+        </PrimaryButton>
 
         <button
           type="button"
