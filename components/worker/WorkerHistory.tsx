@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { Card, Screen } from "@/components/ui/Primitives";
 import { Progress } from "@/components/household/ListsInbox";
 import type { HouseholdList } from "@/lib/list/household";
@@ -30,28 +32,34 @@ export function WorkerHistory({ lists }: { lists: HouseholdList[] }) {
             const total = Number(list.total_items);
             const purchased = Number(list.purchased_items);
             return (
-              <li
-                key={list.id}
-                className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-4 shadow-card backdrop-blur-[20px]"
-              >
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="hl-caption">
-                    {list.sent_at
-                      ? new Date(list.sent_at).toLocaleString(locale, {
-                          dateStyle: "medium",
-                          timeStyle: "short",
-                        })
-                      : null}
-                  </span>
-                  <span className="hl-caption rounded-pill bg-surface-2 px-2 py-0.5 text-ink-muted">
-                    {t(STATUS_KEYS[list.status] ?? "hlists.statusSent")}
-                  </span>
-                </div>
-                <Progress
-                  purchased={purchased}
-                  total={total}
-                  percent={total ? Math.round((purchased / total) * 100) : 0}
-                />
+              <li key={list.id}>
+                {/* Each list is now a real link to its item-by-item outcome
+                    (ListOutcome.tsx) — previously this row was a dead end,
+                    the aggregate count was all a worker could ever see of
+                    what happened to her own request (2026-10-22 critique). */}
+                <Link
+                  href={`/worker/lists/${list.id}`}
+                  className="flex flex-col gap-2 rounded-card border border-glass-border bg-glass-bg p-4 shadow-card backdrop-blur-[20px] transition-transform duration-150 ease-hl active:scale-[0.98]"
+                >
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="hl-caption">
+                      {list.sent_at
+                        ? new Date(list.sent_at).toLocaleString(locale, {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })
+                        : null}
+                    </span>
+                    <span className="hl-caption rounded-pill bg-surface-2 px-2 py-0.5 text-ink-muted">
+                      {t(STATUS_KEYS[list.status] ?? "hlists.statusSent")}
+                    </span>
+                  </div>
+                  <Progress
+                    purchased={purchased}
+                    total={total}
+                    percent={total ? Math.round((purchased / total) * 100) : 0}
+                  />
+                </Link>
               </li>
             );
           })}

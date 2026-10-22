@@ -60,7 +60,12 @@ export function WorkerBar({
       {targetListId ? null : (
         <PrimaryPill href={`${basePath}/list`}>
           <BasketIcon className="size-5" />
-          <span>{itemCount}</span>
+          {/* Keyed on itemCount so the number pops on every change — the
+              worker's main "my tap worked" signal had no animation at all
+              (2026-10-22 critique). */}
+          <span key={itemCount} className="hl-pop-in" aria-hidden>
+            {itemCount}
+          </span>
           <span className="sr-only">
             {t("worker.myListWithCount", { count: itemCount })}
           </span>

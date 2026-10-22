@@ -101,13 +101,14 @@ export function NotificationsScreen({
                 </div>
                 {notification.list_id ? (
                   <Link
-                    // A worker has no /home/lists/{id} route to reach — send
-                    // them to their own list history instead. The household
-                    // variant is the only one that can open a specific list.
+                    // Each side has its own list-detail route now
+                    // (ListOutcome.tsx, added for the worker 2026-10-22) —
+                    // the household's checklist is interactive, the
+                    // worker's is a read-only record of what happened.
                     href={
                       variant === "household"
                         ? `/home/lists/${notification.list_id}`
-                        : "/worker/lists"
+                        : `/worker/lists/${notification.list_id}`
                     }
                     className="hl-caption shrink-0 self-center text-primary underline"
                   >

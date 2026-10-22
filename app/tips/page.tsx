@@ -68,10 +68,17 @@ function TipsForm() {
         <span className="hl-ltr-num hl-label rounded-pill bg-primary-tint px-3 py-1 text-primary">
           {index + 1} / {slides.length}
         </span>
-        <h1 className="text-[24px] font-bold leading-snug text-ink">
+        {/* Keyed on index so each replays the same fade/slide timing as
+            the pagination dot below, instead of jump-cutting against it
+            (2026-10-22 critique). Two separate keyed elements, not a
+            wrapping div, so the original gap-6 rhythm between them and
+            the badge above is unchanged. */}
+        <h1 key={`title-${index}`} className="hl-fade-slide-in text-[24px] font-bold leading-snug text-ink">
           {t(slides[index].titleKey)}
         </h1>
-        <p className="hl-body text-ink-muted">{t(slides[index].bodyKey)}</p>
+        <p key={`body-${index}`} className="hl-fade-slide-in hl-body text-ink-muted">
+          {t(slides[index].bodyKey)}
+        </p>
       </div>
 
       <div className="flex items-center justify-center gap-2 pb-6" aria-hidden>

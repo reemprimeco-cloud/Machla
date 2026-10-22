@@ -490,6 +490,41 @@ html[data-script="nastaliq"] {
   .hl-gradient-cta:hover::after {
     background: rgba(0, 0, 0, 0.2);
   }
+
+  /* Two small, targeted entrance animations (2026-10-22 critique: the
+     app was correctly restrained everywhere EXCEPT a few feedback loops
+     that genuinely needed motion — the basket count, the favorite
+     toggle, and the one moment the whole product exists for). Both
+     respect the prefers-reduced-motion override above since that rule
+     zeroes every animation-duration globally. Applied via a changing
+     `key` prop so React remounts the node and the animation replays. */
+  @keyframes hl-pop-in {
+    from {
+      transform: scale(0.82);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .hl-pop-in {
+    animation: hl-pop-in 240ms var(--hl-ease) both;
+  }
+
+  @keyframes hl-fade-slide-in {
+    from {
+      transform: translateY(6px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .hl-fade-slide-in {
+    animation: hl-fade-slide-in 200ms var(--hl-ease) both;
+  }
 }
 
 @layer utilities {

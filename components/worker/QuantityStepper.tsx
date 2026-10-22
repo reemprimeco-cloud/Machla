@@ -94,7 +94,7 @@ function StepButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="flex size-12 items-center justify-center rounded-pill bg-surface text-xl leading-none text-ink shadow-sm"
+      className="flex size-12 items-center justify-center rounded-pill bg-surface text-xl leading-none text-ink shadow-sm transition-transform duration-150 ease-hl active:scale-90"
     >
       <span aria-hidden>{glyph}</span>
     </button>

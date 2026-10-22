@@ -35,7 +35,12 @@ export function SentConfirmation({
   return (
     <Screen>
       <Card className="text-center">
-        <p aria-hidden className="flex justify-center text-success">
+        {/* A static checkmark under-delivered at the one moment this whole
+            product exists for — a request successfully crossing the trust
+            gap (2026-10-22 critique). This mounts once per page view, so
+            no key-remount trick is needed the way the basket count and
+            favorite toggle (re-rendered in place) require. */}
+        <p aria-hidden className="hl-pop-in flex justify-center text-success">
           <CheckCircleIcon className="size-14" />
         </p>
         <p className="hl-title mt-3 text-ink">{t("worker.sentTitle")}</p>

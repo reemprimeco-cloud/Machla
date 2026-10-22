@@ -35,11 +35,15 @@ export function FavoriteButton({
       onClick={toggle}
       aria-label={isFavorite ? t("worker.removeFromFavorites") : t("worker.addToFavorites")}
       aria-pressed={isFavorite}
-      className={`absolute end-1 top-1 flex size-11 items-center justify-center rounded-pill bg-surface/90 shadow-sm ${
+      className={`absolute end-1 top-1 flex size-11 items-center justify-center rounded-pill bg-surface/90 shadow-sm transition-transform duration-150 ease-hl active:scale-90 ${
         isFavorite ? "text-danger" : "text-ink-muted"
       }`}
     >
-      <HeartIcon filled={isFavorite} className="size-5" />
+      {/* Keyed on isFavorite so the icon remounts and replays the pop on
+          every toggle, not just the first time it becomes true (2026-10-22
+          critique: this was the one conventionally-animated pattern in
+          mobile design that was fully static here). */}
+      <HeartIcon key={String(isFavorite)} filled={isFavorite} className="hl-pop-in size-5" />
     </button>
   );
 }

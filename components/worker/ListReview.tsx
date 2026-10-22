@@ -186,6 +186,16 @@ export function ListReview({
             {error ? t(ERROR_KEYS[error] ?? "errors.generic") : null}
           </ErrorText>
 
+          {/* The one truly irreversible tap in the app had no reassurance
+              at all before this — every other destructive action (delete
+              account, delete list) explains itself at the point of
+              commitment, sending a list didn't (2026-10-22 critique). No
+              blocking confirm dialog: that would add friction to the
+              common case this button exists for. */}
+          <p className="hl-caption text-center text-ink-muted">
+            {t("worker.sendReassurance")}
+          </p>
+
           <PrimaryButton onClick={send} disabled={pending || !listId}>
             {pending ? t("worker.sending") : t("worker.send")}
           </PrimaryButton>
