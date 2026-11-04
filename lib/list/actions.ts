@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 
 import { toListErrorCode, type ListActionResult } from "./errors";
 import { sendPendingPushes } from "@/lib/push/send";
@@ -265,7 +266,12 @@ export async function sendListAction(
   // Best-effort, after the status change that created the underlying
   // notification rows has already committed — see sendPendingPushes'
   // own comment for why a push failure must never surface here.
-  await sendPendingPushes(listId, "list_sent");
+  // Deferred via after() rather than awaited: the sender has already
+  // gotten everything they need (the status change, the confirmation
+  // screen) the instant this RPC succeeds — making them wait on however
+  // long a push provider takes, on top of that, was pure latency with no
+  // upside (2026-11-04 performance audit).
+  after(() => sendPendingPushes(listId, "list_sent"));
   return { ok: true, value: data };
 }
 
@@ -284,8 +290,9 @@ export async function markListViewedAction(listId: string): Promise<void> {
   const { data, error } = await supabase.rpc("mark_list_viewed", { p_list_id: listId });
   // mark_list_viewed is idempotent and returns null on a no-op call
   // (already viewed, or not sent yet) — only a real sent -> viewed
-  // transition created a notification row worth reading back.
-  if (!error && data) await sendPendingPushes(listId, "list_viewed");
+  // transition created a notification row worth reading back. Deferred
+  // via after(), same reasoning as sendListAction.
+  if (!error && data) after(() => sendPendingPushes(listId, "list_viewed"));
 }
 
 /**
@@ -353,10 +360,13 @@ export async function setListCompletedAction(
   // The only purge path (see setPurchaseStatusAction's own comment for
   // why it no longer purges on tick). Completing the list is the point at
   // which no photograph on it has any remaining purpose, whatever each
-  // item's final purchase_status ended up being.
+  // item's final purchase_status ended up being. Both deferred via
+  // after(): neither the storage delete nor the push send is anything
+  // the person closing the shop needs to wait on — set_list_completed
+  // above has already committed by the time either runs.
   if (completed) {
-    await purgePhotosForList(listId);
-    await sendPendingPushes(listId, "list_completed");
+    after(() => purgePhotosForList(listId));
+    after(() => sendPendingPushes(listId, "list_completed"));
   }
 
   // Deliberately NOT `revalidatePath("/home", "layout")`: that revalidates
@@ -397,7 +407,10 @@ export async function deleteListAction(listId: string): Promise<ListActionResult
     return { ok: false, code: toListErrorCode(error.message) };
   }
 
-  await purgePhotosForList(listId);
+  // Deferred via after() — same reasoning as setListCompletedAction's own
+  // purge call, this list is already gone from the caller's perspective
+  // the moment archive_list above commits.
+  after(() => purgePhotosForList(listId));
 
   revalidatePath("/home", "layout");
   revalidatePath("/notifications", "layout");
@@ -421,7 +434,11 @@ async function purgePhotosForList(listId: string): Promise<void> {
   if (paths.length === 0) return;
 
   await supabase.storage.from("list-photos").remove(paths);
-  for (const item of items ?? []) {
-    await supabase.rpc("mark_photo_purged", { p_item_id: item.id });
-  }
+  // Each item's mark is independent of the others — no reason to run
+  // them one at a time (2026-11-04 performance audit).
+  await Promise.all(
+    (items ?? []).map((item) =>
+      supabase.rpc("mark_photo_purged", { p_item_id: item.id }),
+    ),
+  );
 }

@@ -15,7 +15,7 @@ import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { addPhotoItemAction, ensureDraftAction } from "@/lib/list/actions";
 import type { ListErrorCode } from "@/lib/list/errors";
 import { createClient } from "@/lib/supabase/client";
-import { downscaleToJpeg, PHOTO_MAX_BYTES } from "@/lib/list/photo";
+import { downscalePhoto, PHOTO_MAX_BYTES } from "@/lib/list/photo";
 
 /**
  * "It isn't in the list" — the worker photographs the thing instead.
@@ -58,7 +58,7 @@ export function PhotoCapture({
       // limit and pointless for a thumbnail someone glances at in an
       // aisle. Downscaling in the browser also means the upload finishes
       // on a slow connection.
-      const shrunk = await downscaleToJpeg(picked);
+      const shrunk = await downscalePhoto(picked);
       if (shrunk.size > PHOTO_MAX_BYTES) {
         setError("TOO_LARGE");
         return;
@@ -97,12 +97,21 @@ export function PhotoCapture({
       // household id from its first segment. The list id is here so the
       // RPC can bind the object to this specific list — the policy alone
       // cannot see that part.
-      const name = `${crypto.randomUUID()}.jpg`;
+      //
+      // The extension and contentType both follow downscalePhoto's own
+      // result (webp when the browser could encode it, jpeg otherwise)
+      // rather than assuming jpeg — the bucket's allowed_mime_types
+      // already lists image/webp alongside jpeg/png
+      // (20260810140000_photo_items.sql), so this was never a backend
+      // constraint, just a client assumption that stopped matching what
+      // downscalePhoto actually produces.
+      const extension = file.type === "image/webp" ? "webp" : "jpg";
+      const name = `${crypto.randomUUID()}.${extension}`;
       const path = `${householdId}/${draft.value}/${name}`;
 
       const { error: uploadError } = await supabase.storage
         .from("list-photos")
-        .upload(path, file, { contentType: "image/jpeg", upsert: false });
+        .upload(path, file, { contentType: file.type || "image/jpeg", upsert: false });
 
       if (uploadError) {
         setError("UNKNOWN");

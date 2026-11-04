@@ -37,6 +37,12 @@ function ensureVapid(): boolean {
  * transport it belongs to (20260814100000_apns_push.sql). */
 const APNS_PREFIX = "apns://";
 
+/** Same socket-timeout discipline as apns.ts's own REQUEST_TIMEOUT_MS —
+ * web-push had no timeout at all before this (2026-11-04 performance
+ * audit), so a hung push endpoint could otherwise stall the whole
+ * Promise.all fan-out below it belongs to. */
+const WEB_PUSH_TIMEOUT_MS = 10_000;
+
 /**
  * Reads back this caller's own fallout from the status change they just
  * made (get_pending_pushes — scoped to actor_user_id = auth.uid(), see
@@ -154,6 +160,7 @@ export async function sendPendingPushes(listId: string, type: NotificationType):
           await webpush.sendNotification(
             { endpoint: row.endpoint, keys: { p256dh: row.p256dh, auth: row.auth_key } },
             JSON.stringify({ title, body, tag: threadId, url }),
+            { timeout: WEB_PUSH_TIMEOUT_MS },
           );
           sentIds.push(row.notification_id);
         } catch (err) {
@@ -304,6 +311,7 @@ export async function sendListSentReminders(delayMinutes: number): Promise<Remin
               await webpush.sendNotification(
                 { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth_key } },
                 JSON.stringify({ title, body, tag: threadId, url }),
+                { timeout: WEB_PUSH_TIMEOUT_MS },
               );
               delivered = true;
             } catch (err) {

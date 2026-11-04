@@ -3,6 +3,7 @@ import "server-only";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 import type { Database } from "./database.types";
+import { fetchWithTimeout } from "./fetchWithTimeout";
 
 /**
  * The one client in this codebase authorized by something other than
@@ -52,5 +53,6 @@ export function createAdminClient() {
 
   return createSupabaseClient<Database>(url, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
+    global: { fetch: fetchWithTimeout() },
   });
 }

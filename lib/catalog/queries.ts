@@ -1,10 +1,12 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
 import type { Database } from "@/lib/supabase/database.types";
 import { isSupabaseConfigured } from "@/lib/supabase/isConfigured";
 import { createClient } from "@/lib/supabase/server";
+import { getPublicCatalogClient } from "@/lib/supabase/public";
 
 /**
  * Read paths into the catalogue.
@@ -19,21 +21,35 @@ import { createClient } from "@/lib/supabase/server";
 export type Category = Database["public"]["Tables"]["categories"]["Row"];
 export type Product = Database["public"]["Tables"]["products"]["Row"];
 
-/** All active categories in aisle order. cache()'d because the worker
- * home, the category screen, and the list review all need it in one
- * request. */
+/** The actual Supabase read behind getCategories, cached across requests
+ * (not just within one) — categories change only through the admin
+ * screen's own actions, which call revalidateTag("catalog") the moment
+ * they write, so this TTL is a safety net, not the only invalidation
+ * path (2026-11-04 performance audit: this was re-queried from Postgres
+ * on every single request before). */
+const fetchCategories = unstable_cache(
+  async (): Promise<Category[]> => {
+    const supabase = getPublicCatalogClient();
+    const { data, error } = await supabase
+      .from("categories")
+      .select("*")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (error) return [];
+    return data ?? [];
+  },
+  ["catalog-categories"],
+  { tags: ["catalog"], revalidate: 300 },
+);
+
+/** All active categories in aisle order. cache()'d on top of
+ * fetchCategories because the worker home, the category screen, and the
+ * list review all need it in one request — this layer dedupes within a
+ * single request, fetchCategories dedupes across requests. */
 export const getCategories = cache(async (): Promise<Category[]> => {
   if (!isSupabaseConfigured()) return [];
-
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
-
-  if (error) return [];
-  return data ?? [];
+  return fetchCategories();
 });
 
 export const getCategoryByKey = cache(async (key: string): Promise<Category | null> => {
@@ -41,20 +57,30 @@ export const getCategoryByKey = cache(async (key: string): Promise<Category | nu
   return categories.find((category) => category.key === key) ?? null;
 });
 
+/** Same cross-request caching as fetchCategories, keyed per category —
+ * products.is_active changes through the same admin actions, same
+ * revalidateTag("catalog") call. */
+const fetchProductsInCategory = unstable_cache(
+  async (categoryId: string): Promise<Product[]> => {
+    const supabase = getPublicCatalogClient();
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("category_id", categoryId)
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (error) return [];
+    return data ?? [];
+  },
+  ["catalog-products-by-category"],
+  { tags: ["catalog"], revalidate: 300 },
+);
+
 /** Products in one category, in the order the importer assigned. */
 export async function getProductsInCategory(categoryId: string): Promise<Product[]> {
   if (!isSupabaseConfigured()) return [];
-
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("category_id", categoryId)
-    .eq("is_active", true)
-    .order("sort_order", { ascending: true });
-
-  if (error) return [];
-  return data ?? [];
+  return fetchProductsInCategory(categoryId);
 }
 
 export type ProductSubgroup = { subcategory: Category; products: Product[] };

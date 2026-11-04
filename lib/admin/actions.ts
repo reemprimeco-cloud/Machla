@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import { requireAdminAccess } from "@/lib/admin/guard";
 import { createClient } from "@/lib/supabase/server";
@@ -139,6 +139,11 @@ export async function uploadProductImageAction(
   if (updateError) return { ok: false, message: updateError.message };
 
   revalidatePath("/admin/photos");
+  // Worker/household browsing (lib/catalog/queries.ts) caches products
+  // across requests now (2026-11-04 performance audit) — without this,
+  // a freshly-uploaded photo would sit behind that cache's TTL instead
+  // of showing up immediately.
+  updateTag("catalog");
   return { ok: true };
 }
 
@@ -199,6 +204,7 @@ export async function uploadProductImageFromUrlAction(
   if (updateError) return { ok: false, message: updateError.message };
 
   revalidatePath("/admin/photos");
+  updateTag("catalog");
   return { ok: true };
 }
 
@@ -230,6 +236,7 @@ export async function setProductActiveAction(
   if (error) return { ok: false, message: error.message };
 
   revalidatePath("/admin/photos");
+  updateTag("catalog");
   return { ok: true };
 }
 
@@ -264,6 +271,7 @@ export async function createProductAction(input: {
   if (error) return { ok: false, message: error.message };
 
   revalidatePath("/admin/photos");
+  updateTag("catalog");
   return { ok: true };
 }
 
@@ -300,6 +308,7 @@ export async function uploadCategoryImageAction(
   if (updateError) return { ok: false, message: updateError.message };
 
   revalidatePath("/admin/photos");
+  updateTag("catalog");
   return { ok: true };
 }
 
@@ -360,5 +369,6 @@ export async function uploadCategoryImageFromUrlAction(
   if (updateError) return { ok: false, message: updateError.message };
 
   revalidatePath("/admin/photos");
+  updateTag("catalog");
   return { ok: true };
 }
