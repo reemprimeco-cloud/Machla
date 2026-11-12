@@ -448,6 +448,11 @@ export interface Database {
         Args: { p_household_id: string; p_roles?: string[] };
         Returns: boolean;
       };
+      // 20261112130000_admin_operators_table.sql — reads admin_operators.
+      is_admin_operator: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
 
       // Phase 5 — supabase/migrations/*_phase5_catalog.sql.
       search_products: {

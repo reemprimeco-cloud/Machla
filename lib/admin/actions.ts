@@ -2,11 +2,29 @@
 
 import { revalidatePath, updateTag } from "next/cache";
 
+import { fetchRemoteImage, type FetchRemoteImageFailure } from "@/lib/admin/fetchRemoteImage";
 import { requireAdminAccess } from "@/lib/admin/guard";
 import { createClient } from "@/lib/supabase/server";
 
 
 export type UploadCatalogImageResult = { ok: true } | { ok: false; message: string };
+
+// Deliberately coarse: the upstream HTTP status is no longer echoed back,
+// so a failed fetch can't be used to probe what's listening where.
+const FETCH_FAILURE_MESSAGES: Record<FetchRemoteImageFailure, string> = {
+  INVALID_URL: "الرابط غير صحيح.",
+  FETCH_FAILED: "تعذر تحميل الصورة من الرابط.",
+  NOT_IMAGE: "الرابط لا يشير إلى صورة.",
+  BAD_SIZE: "حجم الصورة غير مناسب.",
+};
+
+async function imageFromUrl(
+  imageUrl: string,
+): Promise<{ ok: true; buffer: Buffer; contentType: string } | { ok: false; message: string }> {
+  const result = await fetchRemoteImage(imageUrl);
+  if (!result.ok) return { ok: false, message: FETCH_FAILURE_MESSAGES[result.reason] };
+  return result;
+}
 
 /**
  * Uploads one file straight into the public product-images bucket at an
@@ -47,8 +65,10 @@ export async function uploadCatalogImageAction(
  * the owner pastes in (e.g. a Google Photos/Drive direct-image link)
  * instead of a file from her device — she asked for this so she doesn't
  * have to save each photo locally before uploading it. Fetches the URL
- * server-side on Vercel and re-uploads the bytes; admin-gated the same
- * as every other action here, so this isn't an open image-fetch proxy.
+ * server-side on Vercel and re-uploads the bytes — through
+ * fetchRemoteImage, which refuses internal addresses and non-image bytes
+ * (2026-11-12 security audit: this used to be a plain fetch that would
+ * request anything, including the cloud metadata endpoint).
  */
 export async function uploadCatalogImageFromUrlAction(
   path: string,
@@ -56,41 +76,13 @@ export async function uploadCatalogImageFromUrlAction(
 ): Promise<UploadCatalogImageResult> {
   await requireAdminAccess();
 
-  let parsed: URL;
-  try {
-    parsed = new URL(imageUrl);
-  } catch {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-
-  let response: Response;
-  try {
-    response = await fetch(parsed, { redirect: "follow" });
-  } catch {
-    return { ok: false, message: "تعذر تحميل الصورة من الرابط." };
-  }
-  if (!response.ok) {
-    return { ok: false, message: `تعذر تحميل الصورة (${response.status}).` };
-  }
-
-  const contentType = response.headers.get("content-type") ?? "";
-  if (!contentType.startsWith("image/")) {
-    return { ok: false, message: "الرابط لا يشير إلى صورة." };
-  }
-
-  const buffer = await response.arrayBuffer();
-  const maxBytes = 15 * 1024 * 1024;
-  if (buffer.byteLength === 0 || buffer.byteLength > maxBytes) {
-    return { ok: false, message: "حجم الصورة غير مناسب." };
-  }
+  const image = await imageFromUrl(imageUrl);
+  if (!image.ok) return image;
 
   const supabase = await createClient();
   const { error } = await supabase.storage
     .from("product-images")
-    .upload(path, buffer, { upsert: true, contentType });
+    .upload(path, image.buffer, { upsert: true, contentType: image.contentType });
 
   if (error) return { ok: false, message: error.message };
 
@@ -155,42 +147,14 @@ export async function uploadProductImageFromUrlAction(
 ): Promise<UploadCatalogImageResult> {
   await requireAdminAccess();
 
-  let parsed: URL;
-  try {
-    parsed = new URL(imageUrl);
-  } catch {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-
-  let response: Response;
-  try {
-    response = await fetch(parsed, { redirect: "follow" });
-  } catch {
-    return { ok: false, message: "تعذر تحميل الصورة من الرابط." };
-  }
-  if (!response.ok) {
-    return { ok: false, message: `تعذر تحميل الصورة (${response.status}).` };
-  }
-
-  const contentType = response.headers.get("content-type") ?? "";
-  if (!contentType.startsWith("image/")) {
-    return { ok: false, message: "الرابط لا يشير إلى صورة." };
-  }
-
-  const buffer = await response.arrayBuffer();
-  const maxBytes = 15 * 1024 * 1024;
-  if (buffer.byteLength === 0 || buffer.byteLength > maxBytes) {
-    return { ok: false, message: "حجم الصورة غير مناسب." };
-  }
+  const image = await imageFromUrl(imageUrl);
+  if (!image.ok) return image;
 
   const supabase = await createClient();
   const path = `product_${productId}.webp`;
   const { error: uploadError } = await supabase.storage
     .from("product-images")
-    .upload(path, buffer, { upsert: true, contentType });
+    .upload(path, image.buffer, { upsert: true, contentType: image.contentType });
   if (uploadError) return { ok: false, message: uploadError.message };
 
   const {
@@ -320,42 +284,14 @@ export async function uploadCategoryImageFromUrlAction(
 ): Promise<UploadCatalogImageResult> {
   await requireAdminAccess();
 
-  let parsed: URL;
-  try {
-    parsed = new URL(imageUrl);
-  } catch {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-  if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
-    return { ok: false, message: "الرابط غير صحيح." };
-  }
-
-  let response: Response;
-  try {
-    response = await fetch(parsed, { redirect: "follow" });
-  } catch {
-    return { ok: false, message: "تعذر تحميل الصورة من الرابط." };
-  }
-  if (!response.ok) {
-    return { ok: false, message: `تعذر تحميل الصورة (${response.status}).` };
-  }
-
-  const contentType = response.headers.get("content-type") ?? "";
-  if (!contentType.startsWith("image/")) {
-    return { ok: false, message: "الرابط لا يشير إلى صورة." };
-  }
-
-  const buffer = await response.arrayBuffer();
-  const maxBytes = 15 * 1024 * 1024;
-  if (buffer.byteLength === 0 || buffer.byteLength > maxBytes) {
-    return { ok: false, message: "حجم الصورة غير مناسب." };
-  }
+  const image = await imageFromUrl(imageUrl);
+  if (!image.ok) return image;
 
   const supabase = await createClient();
   const path = `category_${categoryId}.webp`;
   const { error: uploadError } = await supabase.storage
     .from("product-images")
-    .upload(path, buffer, { upsert: true, contentType });
+    .upload(path, image.buffer, { upsert: true, contentType: image.contentType });
   if (uploadError) return { ok: false, message: uploadError.message };
 
   const {

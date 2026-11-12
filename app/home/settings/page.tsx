@@ -20,9 +20,10 @@ export default async function SettingsPage() {
   if (!profile) redirect("/login");
 
   const membership = await requireHouseholdAccess();
-  const [members, subscription] = await Promise.all([
+  const [members, subscription, isAdmin] = await Promise.all([
     getHouseholdMembers(membership.householdId),
     getHouseholdSubscription(membership.householdId),
+    isAdminUser(),
   ]);
 
   const trial = subscription ? computeTrialState(subscription) : { active: false, daysLeft: 0 };
@@ -39,7 +40,7 @@ export default async function SettingsPage() {
       subscriptionHasAccess={subscription ? hasAccess(subscription) : false}
       trialActive={trial.active}
       trialDaysLeft={trial.daysLeft}
-      isAdmin={isAdminUser(profile)}
+      isAdmin={isAdmin}
     />
   );
 }
