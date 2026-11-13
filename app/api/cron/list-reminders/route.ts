@@ -1,6 +1,19 @@
+import { createHash, timingSafeEqual } from "node:crypto";
+
 import { NextResponse } from "next/server";
 
 import { sendListSentReminders } from "@/lib/push/send";
+
+/** Constant-time compare (2026-11-12 security audit: this was a plain
+ * `!==`, which can leak how many leading characters matched). Both sides
+ * are hashed first so they're always equal-length — timingSafeEqual
+ * throws on a length mismatch, and the hash also hides the secret's
+ * length. */
+function safeEqual(a: string, b: string): boolean {
+  const digestA = createHash("sha256").update(a).digest();
+  const digestB = createHash("sha256").update(b).digest();
+  return timingSafeEqual(digestA, digestB);
+}
 
 /**
  * Scheduled sweep: re-pushes any `list_sent` notification that is still
@@ -19,7 +32,7 @@ import { sendListSentReminders } from "@/lib/push/send";
  */
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
-  if (!secret || request.headers.get("authorization") !== `Bearer ${secret}`) {
+  if (!secret || !safeEqual(request.headers.get("authorization") ?? "", `Bearer ${secret}`)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 

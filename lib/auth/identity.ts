@@ -20,3 +20,14 @@ export const MIN_PASSWORD_LENGTH = 8;
 export function syntheticEmailFor(username: string): string {
   return `${username}@${SYNTHETIC_EMAIL_DOMAIN}`;
 }
+
+/** Real-email entry points must refuse the internal namespace. Without
+ * this, anyone could register <name>@workers.machla.internal as an
+ * ordinary email account and permanently squat that worker username —
+ * the worker signing up later would hit EMAIL_TAKEN, surfaced as
+ * USERNAME_TAKEN (2026-11-12 security audit). Callers pass an
+ * already-lowercased address. */
+export function isReservedEmail(email: string): boolean {
+  const domain = email.slice(email.lastIndexOf("@") + 1);
+  return domain === "machla.internal" || domain.endsWith(".machla.internal");
+}

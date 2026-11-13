@@ -4,6 +4,7 @@ import {
   EMAIL_PATTERN,
   MIN_PASSWORD_LENGTH,
   USERNAME_PATTERN,
+  isReservedEmail,
   syntheticEmailFor,
 } from "@/lib/auth/identity";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -95,7 +96,9 @@ export async function completeAccountWithEmailAction(
   password: string,
 ): Promise<CompleteAccountResult> {
   const email = rawEmail.trim().toLowerCase();
-  if (!EMAIL_PATTERN.test(email)) return { ok: false, code: "INVALID_EMAIL" };
+  if (!EMAIL_PATTERN.test(email) || isReservedEmail(email)) {
+    return { ok: false, code: "INVALID_EMAIL" };
+  }
 
   return applyIdentity(email, password, { username: null, isSynthetic: false });
 }
